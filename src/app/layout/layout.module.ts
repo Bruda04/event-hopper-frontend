@@ -16,6 +16,9 @@ import { HomeComponent } from './home/home.component';
     MaterialModule,
     RouterModule
   ],
-  exports: [NavBarComponent]
+  exports: [
+    NavBarComponent,
+    HomeComponent 
+  ]
 })
 export class LayoutModule { }
