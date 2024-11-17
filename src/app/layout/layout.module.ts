@@ -4,6 +4,8 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { MaterialModule } from '../infrastructure/material/material.module';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatGridListModule} from '@angular/material/grid-list';
 
 
 
@@ -14,7 +16,9 @@ import { HomeComponent } from './home/home.component';
   imports: [
     CommonModule,
     MaterialModule,
-    RouterModule
+    RouterModule,
+    MatCardModule,
+    MatGridListModule
   ],
   exports: [
     NavBarComponent,

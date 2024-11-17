@@ -1,0 +1,15 @@
+html{
+    background-color: #FFFDF5;
+}
+
+.header1{
+    color:#073B4C;
+    font-size: 64px;
+    display: block;
+}
+
+.header2{
+    font-size: 44px;
+    color: #118ab2;
+    display: block;
+}

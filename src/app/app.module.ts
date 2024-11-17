@@ -14,7 +14,8 @@ import { HomeComponent } from './layout/home/home.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    LayoutModule
+    LayoutModule,
+    Event
   ],
   providers: [
     provideAnimationsAsync()

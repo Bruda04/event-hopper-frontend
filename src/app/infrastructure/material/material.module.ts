@@ -7,6 +7,8 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
 import {MatFormFieldModule, MatLabel} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
+import {MatCardModule} from '@angular/material/card';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [],
@@ -28,7 +30,9 @@ import {MatInputModule} from "@angular/material/input";
     MatSortModule,
     MatFormFieldModule,
     MatInputModule,
-    MatLabel
+    MatLabel,
+    MatCardModule,
+    MatGridListModule
   ]
 })
 export class MaterialModule { }
