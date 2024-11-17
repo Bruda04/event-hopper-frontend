@@ -1,0 +1,87 @@
+<div class="table-container mat-elevation-z8">
+  <table *ngIf="dataSource" mat-table [dataSource]="dataSource" class="mat-table" matSort>
+    <!-- Service Name Column -->
+    <ng-container matColumnDef="product">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <!-- Description Column -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+    </ng-container>
+
+    <!-- Base Price Column -->
+    <ng-container matColumnDef="basePrice">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Base Price </th>
+      <td mat-cell *matCellDef="let element"> {{element.basePrice}} € </td>
+    </ng-container>
+
+    <!-- Discount Column -->
+    <ng-container matColumnDef="discount">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Discount </th>
+      <td mat-cell *matCellDef="let element">
+        {{element.discount}}%
+        <mat-icon>trending_up</mat-icon>
+      </td>
+    </ng-container>
+
+    <!-- Final Price Column -->
+    <ng-container matColumnDef="finalPrice">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Final Price </th>
+      <td mat-cell *matCellDef="let element"> {{element.finalPrice}} € </td>
+    </ng-container>
+
+    <!-- Visible Column -->
+    <ng-container matColumnDef="visible">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Visible </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon *ngIf="element.visible">check</mat-icon>
+      </td>
+    </ng-container>
+
+    <!-- Available Column -->
+    <ng-container matColumnDef="available">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Available </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon *ngIf="element.available">check</mat-icon>
+      </td>
+    </ng-container>
+
+    <!-- Duration Column -->
+    <ng-container matColumnDef="duration">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Duration </th>
+      <td mat-cell *matCellDef="let element"> {{element.duration}} min </td>
+    </ng-container>
+
+    <!-- Cancellation Window Column -->
+    <ng-container matColumnDef="cancellationWindow">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Cancellation Window </th>
+      <td mat-cell *matCellDef="let element"> {{element.cancellationWindow}} day(s) </td>
+    </ng-container>
+
+    <!-- Reservation Window Column -->
+    <ng-container matColumnDef="reservationWindow">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Reservation Window </th>
+      <td mat-cell *matCellDef="let element"> {{element.reservationWindow}} day(s) </td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button>
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="remove(element)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>
