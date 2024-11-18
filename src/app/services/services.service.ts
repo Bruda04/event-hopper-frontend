@@ -156,7 +156,9 @@ export class ServicesService {
         available: data.available,
         duration: data.duration,
         cancellationWindow: data.cancellationWindow,
-        reservationWindow: data.reservationWindow
+        reservationWindow: data.reservationWindow,
+        autoAccept: Math.random() > 0.5,
+        category: 'Candles'
       }
       this.servicesList.push(service);
     }
@@ -166,11 +168,12 @@ export class ServicesService {
     return this.servicesList;
   }
 
-  add(service: Service) {
+  add(service: Service): void {
+    service.id = Math.random();
     this.servicesList.push(service);
   }
 
-  remove(service: Service) {
-    this.servicesList = this.servicesList.filter(s => s.id !== service.id);
+  remove(service: Service): void {
+    this.servicesList = this.servicesList.filter((s: Service) => s.id !== service.id);
   }
 }

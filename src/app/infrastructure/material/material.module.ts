@@ -10,6 +10,14 @@ import {MatInputModule} from "@angular/material/input";
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatRadioGroup} from '@angular/material/radio';
+import {MatRadioButton} from '@angular/material/radio';
+import {MatDialogRef} from '@angular/material/dialog';
+
 
 @NgModule({
   declarations: [],
@@ -20,11 +28,16 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatPaginator,
+    MatSort,
     MatFormFieldModule,
     MatInputModule,
     MatTabsModule,
     MatIconModule,
     MatCheckboxModule,
+    MatDialogModule,
+    MatRadioGroup,
+    MatRadioButton,
   ],
   exports: [
     MatToolbarModule,
@@ -32,12 +45,19 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatPaginator,
+    MatSort,
     MatFormFieldModule,
     MatInputModule,
     MatLabel,
     MatTabsModule,
     MatIconModule,
     MatCheckboxModule,
+    MatDialogModule,
+    MatRadioGroup,
+    MatRadioButton,
   ]
 })
 export class MaterialModule { }
+export { MatPaginator, MatSort, MatDialog, MatRadioGroup, MatRadioButton, MatDialogRef };
+
