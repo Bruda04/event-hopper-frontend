@@ -4,12 +4,10 @@ html{
 
 .header1{
     color:#073B4C;
-    font-size: 64px;
-    display: block;
+    font-size: 5em;
 }
 
 .header2{
-    font-size: 44px;
+    font-size: 10px;
     color: #118ab2;
-    display: block;
 }
