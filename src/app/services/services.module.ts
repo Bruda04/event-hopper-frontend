@@ -18,6 +18,8 @@ import {ReactiveFormsModule} from '@angular/forms';
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
+  ],
+  exports:[
   ]
 })
 export class ServicesModule { }
