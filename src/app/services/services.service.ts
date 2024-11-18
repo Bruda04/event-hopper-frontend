@@ -176,4 +176,9 @@ export class ServicesService {
   remove(service: Service): void {
     this.servicesList = this.servicesList.filter((s: Service) => s.id !== service.id);
   }
+
+  update(service: Service): void {
+    const index: number = this.servicesList.findIndex((s: Service) => s.id === service.id);
+    this.servicesList[index] = service;
+  }
 }

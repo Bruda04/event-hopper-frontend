@@ -6,6 +6,7 @@ import {CreateServiceComponent} from '../create-service/create-service.component
 import {MatPaginator, MatSort, MatDialog} from '../../infrastructure/material/material.module';
 import {Dialog, DialogRef} from '@angular/cdk/dialog';
 import {MatDialogRef} from '@angular/material/dialog';
+import {EditServiceComponent} from '../edit-service/edit-service.component';
 
 
 @Component({
@@ -67,5 +68,22 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
     this.serviceService.remove(service);
     this.services = this.serviceService.getAll();
     this.dataSource.data = this.services;
+  }
+
+  edit(element: Service):void {
+    const dialogRef: MatDialogRef<EditServiceComponent> = this.dialog.open(EditServiceComponent, {
+      minWidth: '70vw',
+      minHeight: '70vh',
+      data: element
+    });
+
+    dialogRef.afterClosed().subscribe((updatedService: Service | null) => {
+      if(updatedService) {
+        this.serviceService.update(updatedService);
+        console.log(updatedService);
+        this.services = this.serviceService.getAll();
+        this.dataSource.data = this.services;
+      }
+    });
   }
 }

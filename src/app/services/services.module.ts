@@ -5,6 +5,7 @@ import { PUPServiceProductManagementComponent } from './pupservice-product-manag
 import { PUPServiceManagementComponent } from './pupservice-management/pupservice-management.component';
 import { CreateServiceComponent } from './create-service/create-service.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import { EditServiceComponent } from './edit-service/edit-service.component';
 
 
 
@@ -12,7 +13,8 @@ import {ReactiveFormsModule} from '@angular/forms';
   declarations: [
     PUPServiceProductManagementComponent,
     PUPServiceManagementComponent,
-    CreateServiceComponent
+    CreateServiceComponent,
+    EditServiceComponent
   ],
   imports: [
     CommonModule,

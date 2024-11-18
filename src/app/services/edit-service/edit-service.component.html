@@ -1,0 +1,54 @@
+<h2 mat-dialog-title>Create New Service</h2>
+<mat-dialog-content [formGroup]="editServiceForm">
+  <form>
+    <div class="dialog-container">
+      <!-- Left Column -->
+      <div class="left-column">
+        <mat-form-field appearance="fill">
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="Enter service name" name="name" type="text" formControlName="name" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Description</mat-label>
+          <textarea matInput placeholder="Enter description" name="description" formControlName="description"></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Duration (min)</mat-label>
+          <input matInput placeholder="Enter duration" name="duration" type="number" formControlName="duration" min="0" max="1440"/>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Reservation window (days)</mat-label>
+          <input matInput placeholder="Enter reservation window" name="reservationWindow" type="number" formControlName="reservationWindow" min="0" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Cancellation window (days)</mat-label>
+          <input matInput placeholder="Enter cancellation window" name="cancellationWindow" type="number" formControlName="cancellationWindow" min="0" />
+        </mat-form-field>
+      </div>
+
+      <!-- Right Column -->
+      <div class="right-column">
+        <button mat-raised-button color="primary">Upload Pictures</button>
+
+        <mat-radio-group formControlName="acceptance">
+          <mat-radio-button name="acceptance" value="auto">Auto accept</mat-radio-button>
+          <mat-radio-button name="acceptance" value="manual">Manual accept</mat-radio-button>
+        </mat-radio-group>
+
+        <div class="checkbox-container">
+          <mat-checkbox name="visible" formControlName="visible">Visible</mat-checkbox>
+          <mat-checkbox name="available" formControlName="available">Available</mat-checkbox>
+        </div>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close color="warn">CANCEL</button>
+  <button mat-raised-button color="primary" (click)="update()">SAVE</button>
+</mat-dialog-actions>
