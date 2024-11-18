@@ -6,6 +6,11 @@ import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule} from '@angular/material/grid-list';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
+import { EventModule } from '../event/event.module';
+import { MatInputModule } from '@angular/material/input';
 
 
 
@@ -18,7 +23,12 @@ import { MatGridListModule} from '@angular/material/grid-list';
     MaterialModule,
     RouterModule,
     MatCardModule,
-    MatGridListModule
+    MatGridListModule,
+    CarouselModule,
+    BrowserAnimationsModule,
+    BrowserModule,
+    EventModule,
+    MatInputModule
   ],
   exports: [
     NavBarComponent,

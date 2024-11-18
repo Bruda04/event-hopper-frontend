@@ -1,0 +1,40 @@
+mat-card{
+    /* height: 360px;
+    width: 300px; */
+    height: 18em;
+    width: 16em;
+    position: relative;
+}
+
+img{
+    height: 8em;
+    width: 16em;
+}
+
+mat-card-title{
+    font-size: 1em;
+}
+
+mat-card-content{
+    font-size: 0.5em;
+    line-height: normal;
+}
+
+button{
+    position: absolute;
+    background-color: #0d5b75 !important;
+    font-family: Poppins;
+    height: 4em;
+    width: 12em;
+    text-align: center;
+    text-wrap: nowrap;
+    border-radius: 20px;
+    font-size: 0.5em;
+    box-shadow: none;
+    bottom: 2em; /* Udaljenost od dna roditelja */
+    right: 2em;
+    font-size: 0.5em;
+}
+
+
+

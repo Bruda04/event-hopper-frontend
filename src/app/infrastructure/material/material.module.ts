@@ -19,6 +19,9 @@ import {MatSort} from '@angular/material/sort';
 import {MatRadioGroup} from '@angular/material/radio';
 import {MatRadioButton} from '@angular/material/radio';
 import {MatDialogRef} from '@angular/material/dialog';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 @NgModule({
@@ -40,6 +43,9 @@ import {MatDialogRef} from '@angular/material/dialog';
     MatDialogModule,
     MatRadioGroup,
     MatRadioButton,
+    CarouselModule,
+    BrowserAnimationsModule,
+    BrowserModule
   ],
   exports: [
     MatToolbarModule,
@@ -60,6 +66,9 @@ import {MatDialogRef} from '@angular/material/dialog';
     MatDialogModule,
     MatRadioGroup,
     MatRadioButton,
+    CarouselModule,
+    BrowserAnimationsModule,
+    BrowserModule
   ]
 })
 export class MaterialModule { }

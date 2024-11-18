@@ -9,6 +9,7 @@ import { HomeComponent } from './layout/home/home.component';
 import { EventModule } from './event/event.module';
 import {ServicesModule} from './services/services.module';
 
+
 @NgModule({
   declarations: [
     AppComponent
@@ -18,7 +19,7 @@ import {ServicesModule} from './services/services.module';
     AppRoutingModule,
     LayoutModule,
     EventModule,
-    ServicesModule,
+    ServicesModule
   ],
   providers: [
     provideAnimationsAsync()
