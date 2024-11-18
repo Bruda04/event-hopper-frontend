@@ -4,7 +4,6 @@ import {MatTableDataSource} from '@angular/material/table';
 import {ServicesService} from '../services.service';
 import {CreateServiceComponent} from '../create-service/create-service.component';
 import {MatPaginator, MatSort, MatDialog} from '../../infrastructure/material/material.module';
-import {Dialog, DialogRef} from '@angular/cdk/dialog';
 import {MatDialogRef} from '@angular/material/dialog';
 import {EditServiceComponent} from '../edit-service/edit-service.component';
 
@@ -57,6 +56,13 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.services = this.serviceService.getAll();
     this.dataSource = new MatTableDataSource(this.services);
+
+    this.dataSource.filterPredicate = (data: Service, filter: string): boolean => {
+      const filterText: string = filter.trim().toLowerCase();
+      return data.name.toLowerCase().includes(filterText) ||
+        data.description.toLowerCase().includes(filterText) ||
+        data.category.toLowerCase().includes(filterText);
+    };
   }
 
   ngAfterViewInit(): void {
@@ -85,5 +91,10 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
         this.dataSource.data = this.services;
       }
     });
+  }
+
+  applyFilter(event: Event): void {
+    const inputValue: string = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = inputValue.trim().toLowerCase();
   }
 }
