@@ -9,6 +9,17 @@ import {MatFormFieldModule, MatLabel} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatCardModule} from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatIconModule} from '@angular/material/icon';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatRadioGroup} from '@angular/material/radio';
+import {MatRadioButton} from '@angular/material/radio';
+import {MatDialogRef} from '@angular/material/dialog';
+
 
 @NgModule({
   declarations: [],
@@ -19,8 +30,16 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatPaginator,
+    MatSort,
     MatFormFieldModule,
     MatInputModule,
+    MatTabsModule,
+    MatIconModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatRadioGroup,
+    MatRadioButton,
   ],
   exports: [
     MatToolbarModule,
@@ -28,11 +47,21 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatPaginator,
+    MatSort,
     MatFormFieldModule,
     MatInputModule,
     MatLabel,
     MatCardModule,
-    MatGridListModule
+    MatGridListModule,
+    MatTabsModule,
+    MatIconModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatRadioGroup,
+    MatRadioButton,
   ]
 })
 export class MaterialModule { }
+export { MatPaginator, MatSort, MatDialog, MatRadioGroup, MatRadioButton, MatDialogRef };
+
