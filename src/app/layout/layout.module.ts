@@ -11,7 +11,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { EventModule } from '../event/event.module';
 import { MatInputModule } from '@angular/material/input';
-
+import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatSelectModule} from '@angular/material/select';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -28,7 +30,10 @@ import { MatInputModule } from '@angular/material/input';
     BrowserAnimationsModule,
     BrowserModule,
     EventModule,
-    MatInputModule
+    MatInputModule,
+    MatTooltipModule,
+    MatSelectModule,
+    ReactiveFormsModule
   ],
   exports: [
     NavBarComponent,

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Event } from '../../event/model/event.model';
 import { Service } from '../../services/model/service.model';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -67,5 +68,19 @@ export class HomeComponent {
       this.currentIndex = 0;
     }
   }
+
+  showFilterPanel: boolean = false; // Inicijalno stanje filter panela
+
+  toggleFilterPanel(): void {
+    this.showFilterPanel = !this.showFilterPanel; // Menja stanje panela
+  }
+
+  locations = new FormControl('');
+
+  locationsList: string[] = ['Novi Sad', 'Belgrade', 'Budapest', 'New York'];
+  
+  eventTypes = new FormControl('');
+
+  eventTypesList: string[] = ['Wedding', 'Birthday', 'Concert'];
   
 }
