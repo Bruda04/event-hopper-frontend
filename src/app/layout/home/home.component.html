@@ -193,6 +193,12 @@
         </mat-select>
       </mat-form-field>
 
+      <mat-radio-group aria-label="Sort by"> 
+        <mat-label>Sort by</mat-label>                    
+        <mat-radio-button value="1">Date</mat-radio-button>
+        <mat-radio-button value="2">Name</mat-radio-button>
+      </mat-radio-group>
+
       <div class="filter-actions">
         <button mat-mini-fab [ngStyle]="{'background-color':'#073b4c'}" (click)="applyFilters()">
           <mat-icon [ngStyle]="{'color':'white'}">filter_alt</mat-icon>
