@@ -1,4 +1,17 @@
 <div class="grid-container-top5events">
+  <form>
+    <mat-form-field appearance="fill" class="filter-field">
+      <mat-label>Category</mat-label>
+      <mat-select formControlName="category">
+        <mat-option value="aa">
+          category
+        </mat-option>
+        <mat-option value="aaa">
+          category
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
 
   <div class="grid-item">
     <div class="headers">
@@ -39,28 +52,23 @@
 
   <div class="top-bar" >
     <p class="header2">All events</p>
-
     <div class="search-container">
 
-      <button  class="filter-button" (click)="toggleFilterPanel()" matTooltip="Filter options">
+      <!-- <button  class="filter-button" (click)="toggleFilterPanel()" matTooltip="Filter options">
         <mat-icon class="filter-icon">tune</mat-icon>
-      </button>
+      </button> -->
 
       <div class="search-bar">
         <input class="search" type="search" placeholder="Search all events" >
-
         <button class="search-button">
           <mat-icon class="search-icon">search</mat-icon>
         </button>
-        
       </div>
-      
     </div>
   </div>
 
-  <div *ngIf="showFilterPanel" class="filter-panel">
+  <!-- <div *ngIf="showEventFilterPanel" class="filter-panel">
     <form >
-      <!-- Primer opcije za filter -->
       <mat-form-field>
         <mat-label class = "menu-location">Choose location</mat-label>
         <mat-select class = "menu-location" [formControl]="locations" multiple>
@@ -85,14 +93,14 @@
               (+{{ (eventTypes.value?.length || 0) - 1 }} {{ eventTypes.value?.length === 2 ? 'other' : 'others' }})
             </span>
           </mat-select-trigger>
-          <mat-option *ngFor="let eventTypes of eventTypesList" [value]="eventTypes">
+          <mat-option *ngFor="let eventTypes of eventTypes" [value]="eventTypes">
             {{ eventTypes }}
           </mat-option>
         </mat-select>
       </mat-form-field>
       
     </form>
-  </div>
+  </div> -->
 
   <div class="events-cards">
     <div class="row-events">
@@ -136,25 +144,21 @@
     <div class="paginator">
       <mat-paginator [length]="100"
               [pageSize]="10"
-              aria-label="Select page">
-             
+              aria-label="Select page">        
     </mat-paginator>
     </div>
-    
-
-    
   </div>
-
 </div>
 
 <div class="all-solutions">
 
   <div class="top-bar" >
-    <p class="header2">All solutions</p>
+    <p class="header2">All services/products</p>
 
     <div class="search-container">
 
-      <button  class="filter-button">
+
+      <button  class="filter-button" (click)="toggleSolutionFilterPanel()" matTooltip="Filter options">
         <mat-icon class="filter-icon">tune</mat-icon>
       </button>
 
@@ -168,6 +172,63 @@
       </div>
       
     </div>
+  </div>
+
+  <div *ngIf="showSolutionFilterPanel" class="filter-panel">
+    <form [formGroup]="filterForm" class="filter-form">
+      <mat-form-field appearance="fill" class="filter-field">
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="category">
+          <mat-option *ngFor="let category of categories" [value]="category">
+            {{ category }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="filter-field">
+        <mat-label>Event Type</mat-label>
+        <mat-select formControlName="eventType" multiple>
+          <mat-option *ngFor="let event of eventTypes" [value]="event">
+            {{ event }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Min Price Field -->
+      <mat-form-field appearance="fill" class="filter-field">
+        <mat-label>Min Price</mat-label>
+        <input matInput formControlName="minPrice" min="0" type="number" placeholder="Enter min price">
+      </mat-form-field>
+
+      <!-- Max Price Field -->
+      <mat-form-field appearance="fill" class="filter-field">
+        <mat-label>Max Price</mat-label>
+        <input matInput formControlName="maxPrice" min="0" type="number" placeholder="Enter max price">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="filter-field">
+        <mat-label>Availability</mat-label>
+        <mat-select formControlName="availability">
+          <mat-option value="available">
+            Available
+          </mat-option>
+          <mat-option value="unavailable">
+            Unavailable
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="filter-actions">
+        <button mat-mini-fab [ngStyle]="{'background-color':'#073b4c'}" (click)="applyFilters()">
+          <mat-icon [ngStyle]="{'color':'white'}">filter_alt</mat-icon>
+        </button>
+      </div>
+      <div class="filter-actions">
+        <button mat-mini-fab [ngStyle]="{'background-color':'#fffdf5'}" (click)="resetFilters()">
+          <mat-icon [ngStyle]="{'color':'#073b4c'}">filter_alt_off</mat-icon>
+        </button>
+      </div>
+    </form>
   </div>
 
   <div class="solutions-cards">
@@ -216,11 +277,7 @@
              
     </mat-paginator>
     </div>
-    
-
-    
   </div>
-
 </div>
 
 

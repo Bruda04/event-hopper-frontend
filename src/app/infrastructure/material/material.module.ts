@@ -9,6 +9,7 @@ import {MatFormFieldModule, MatLabel} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatCardModule} from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatOption, MatSelect} from '@angular/material/select';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -19,10 +20,6 @@ import {MatSort} from '@angular/material/sort';
 import {MatRadioGroup} from '@angular/material/radio';
 import {MatRadioButton} from '@angular/material/radio';
 import {MatDialogRef} from '@angular/material/dialog';
-import { CarouselModule } from 'ngx-owl-carousel-o';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
-import {MatOption, MatSelect} from '@angular/material/select';
 
 
 
@@ -45,9 +42,6 @@ import {MatOption, MatSelect} from '@angular/material/select';
     MatDialogModule,
     MatRadioGroup,
     MatRadioButton,
-    CarouselModule,
-    BrowserAnimationsModule,
-    BrowserModule,
     MatOption,
     MatSelect,
   ],
@@ -70,9 +64,6 @@ import {MatOption, MatSelect} from '@angular/material/select';
     MatDialogModule,
     MatRadioGroup,
     MatRadioButton,
-    CarouselModule,
-    BrowserAnimationsModule,
-    BrowserModule,
     MatOption,
     MatSelect,
   ]

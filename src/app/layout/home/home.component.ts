@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Event } from '../../event/model/event.model';
 import { Service } from '../../services/model/service.model';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-home',
@@ -9,6 +10,7 @@ import { FormControl } from '@angular/forms';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+
   events: Event[] = [
     {
       id: 1,
@@ -42,17 +44,22 @@ export class HomeComponent {
     // }
   ];
 
-  // carouselOptions = {
-  //   items: 1,         // Broj stavki po stranici
-  //   loop: false,       // Da li se carousel ponavlja
-  //   margin: 10,       // Razmak između stavki
-  //   autoplay: true,   // Da li carousel automatski prelazi na sledeći slide
-  //   nav: true,        // Omogućava navigacione strelice
-  //   dots: true,       // Omogućava indikatore tačaka
-    
-  // };
-
   currentIndex = 0;
+  showEventFilterPanel: boolean = false; // Inicijalno stanje filter panela
+  showSolutionFilterPanel: boolean = false; // Inicijalno stanje filter panela
+
+  locations: string[] = ['Novi Sad', 'Belgrade', 'Budapest', 'New York'];
+  eventTypes: string[] = ['Wedding', 'Birthday', 'Concert'];
+  categories: string[] = ['Catering','Decoration', 'Music'];
+
+  filterForm: FormGroup= new FormGroup({
+    category: new FormControl<string>(''),
+    eventType: new FormControl<string>(''),
+    minPrice: new FormControl<number>(null, [Validators.min(0)]),
+    maxPrice: new FormControl<number>(null, [Validators.min(0)]),
+    availability: new FormControl<string>(''),
+  });
+
 
   get transformStyle(): string {
     return `translateX(-${this.currentIndex * 100}%)`;
@@ -69,18 +76,33 @@ export class HomeComponent {
     }
   }
 
-  showFilterPanel: boolean = false; // Inicijalno stanje filter panela
 
-  toggleFilterPanel(): void {
-    this.showFilterPanel = !this.showFilterPanel; // Menja stanje panela
+  toggleEventFilterPanel(): void {
+    this.showEventFilterPanel = !this.showEventFilterPanel; // Menja stanje panela
   }
 
-  locations = new FormControl('');
 
-  locationsList: string[] = ['Novi Sad', 'Belgrade', 'Budapest', 'New York'];
-  
-  eventTypes = new FormControl('');
+  toggleSolutionFilterPanel(): void {
+    this.showSolutionFilterPanel = !this.showSolutionFilterPanel; // Menja stanje panela
+  }
 
-  eventTypesList: string[] = ['Wedding', 'Birthday', 'Concert'];
-  
+  applyFilters(): void {
+    if (this.filterForm.valid) {
+      return;
+    } else {
+      this.filterForm.markAsTouched();
+    }
+  }
+
+  resetFilters(): void {
+    this.filterForm.patchValue({
+      category: '',
+      eventType: '',
+      minPrice: null,
+      maxPrice: null,
+      availability: ''
+    });
+  }
+
+
 }
