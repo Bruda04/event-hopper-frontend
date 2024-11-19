@@ -3,6 +3,7 @@ export interface Service {
     name: string;
     description: string;
     category: string;
+    eventType: string;
     basePrice: number;
     discount: number;
     finalPrice: number;

@@ -22,6 +22,8 @@ import {MatDialogRef} from '@angular/material/dialog';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
+import {MatOption, MatSelect} from '@angular/material/select';
+
 
 
 @NgModule({
@@ -45,7 +47,9 @@ import { BrowserModule } from '@angular/platform-browser';
     MatRadioButton,
     CarouselModule,
     BrowserAnimationsModule,
-    BrowserModule
+    BrowserModule,
+    MatOption,
+    MatSelect,
   ],
   exports: [
     MatToolbarModule,
@@ -68,7 +72,9 @@ import { BrowserModule } from '@angular/platform-browser';
     MatRadioButton,
     CarouselModule,
     BrowserAnimationsModule,
-    BrowserModule
+    BrowserModule,
+    MatOption,
+    MatSelect,
   ]
 })
 export class MaterialModule { }
