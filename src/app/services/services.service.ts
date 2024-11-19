@@ -159,7 +159,7 @@ export class ServicesService {
         reservationWindow: data.reservationWindow,
         autoAccept: Math.random() > 0.5,
         category: 'Candles',
-        eventType: 'Movie night'
+        eventType: ['Movie night']
       }
       this.servicesList.push(service);
     }
