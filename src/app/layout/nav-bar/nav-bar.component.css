@@ -27,6 +27,8 @@
   
   .nav-button {
     height: 3em;
+    font-weight: normal;
+
     background-color: var(--secondary-color) !important; 
     color: white !important;
     border: none;

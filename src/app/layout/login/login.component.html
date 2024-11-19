@@ -1,1 +1,22 @@
-<p>login works!</p>
+<div class="login-container">
+    <img src="logo.png" alt="Login Image" class="login-image">
+    <h3 class="login-title">Effortlessly Bringing Plans to Life, <br>
+        one step away</h3>
+    <form class="login-form">
+        <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Email" name="email" type="text" formControlName="email" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Password" name="Password" type="password" formControlName="password" />
+        </mat-form-field>
+        
+        <button mat-raised-button class="login-button" id="login_btn">LOGIN</button>
+    </form>
+    <p class="regular-text">You dont have an account? <a [routerLink]="'/register'">MAKE ONE FOR FREE</a>.</p>
+    <a class="regular-text" [routerLink]="'/home'">Continue without an account</a>
+
+</div>
+  
