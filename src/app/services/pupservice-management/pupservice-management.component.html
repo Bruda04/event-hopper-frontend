@@ -3,7 +3,7 @@
 
   <div class="toolbar">
     <div class="search-container">
-      <button class="filter-button">
+      <button class="filter-button" (click)="showFilters()">
         <mat-icon class="filter-icon">tune</mat-icon>
       </button>
 
@@ -12,7 +12,7 @@
           class="search"
           type="search"
           placeholder="Search"
-          (input)="applyFilter($event)"
+          (input)="applySearch($event)"
         />
         <button class="search-button">
           <mat-icon class="search-icon">search</mat-icon>
@@ -25,6 +25,57 @@
       CREATE
     </button>
   </div>
+
+  <div *ngIf="showFilterPanel" class="filter-panel">
+    <form [formGroup]="filterForm" class="filter-form">
+      <mat-form-field appearance="fill" class="filter-field">
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="category">
+          <mat-option *ngFor="let category of categories" [value]="category">
+            {{ category }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="filter-field">
+        <mat-label>Event Type</mat-label>
+        <mat-select formControlName="eventType" multiple>
+          <mat-option *ngFor="let event of eventTypes" [value]="event">
+            {{ event }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Min Price Field -->
+      <mat-form-field appearance="fill" class="filter-field">
+        <mat-label>Min Price</mat-label>
+        <input matInput formControlName="minPrice" min="0" type="number" placeholder="Enter min price">
+      </mat-form-field>
+
+      <!-- Max Price Field -->
+      <mat-form-field appearance="fill" class="filter-field">
+        <mat-label>Max Price</mat-label>
+        <input matInput formControlName="maxPrice" min="0" type="number" placeholder="Enter max price">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="filter-field">
+        <mat-label>Available</mat-label>
+        <mat-select formControlName="availablitiy">
+          <mat-option value="available">
+            Available
+          </mat-option>
+          <mat-option value="unavailable">
+            Unavailable
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="filter-actions">
+        <button mat-raised-button color="primary" (click)="applyFilters()">Apply Filters</button>
+      </div>
+    </form>
+  </div>
+
 
   <div class="table-container mat-elevation-z8">
     <table *ngIf="dataSource" mat-table [dataSource]="dataSource" class="mat-table" matSort>

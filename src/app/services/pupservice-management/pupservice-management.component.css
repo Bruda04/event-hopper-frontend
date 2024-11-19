@@ -89,3 +89,31 @@
 .table-header {
   background-color: #E5F9FF;
 }
+
+
+.filter-panel {
+  background-color: #118AB2;
+  padding: 1em;
+  border-radius: 4px;
+  margin-bottom: 1em;
+}
+
+.filter-form {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap; /* Ensures responsiveness for smaller screens */
+  gap: 1em; /* Space between items */
+  vertical-align: center;
+}
+
+.filter-field {
+  flex: 1 1 200px; /* Adjust width of dropdowns */
+}
+
+/*.price-slider {*/
+/*  flex: 1 1 300px; !* Adjust width of the slider *!*/
+/*}*/
+
+.filter-actions {
+  flex: 0 0 auto; /* Keep the button its natural size */
+}

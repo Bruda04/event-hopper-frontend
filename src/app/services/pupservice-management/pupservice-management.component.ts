@@ -6,6 +6,7 @@ import {CreateServiceComponent} from '../create-service/create-service.component
 import {MatPaginator, MatSort, MatDialog} from '../../infrastructure/material/material.module';
 import {MatDialogRef} from '@angular/material/dialog';
 import {EditServiceComponent} from '../edit-service/edit-service.component';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 
 @Component({
@@ -33,6 +34,20 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+
+  showFilterPanel: boolean = false;
+  categories: string[] = ['Category 1', 'Category 2', 'Category 3'];
+  eventTypes: string[] = ['Event Type 1', 'Event Type 2', 'Event Type 3', 'Event Type 4'];
+  filterForm: FormGroup= new FormGroup({
+    category: new FormControl<string>(''),
+    eventType: new FormControl<string>(''),
+    minPrice: new FormControl<number>(0, [Validators.min(0)]),
+    maxPrice: new FormControl<number>(1000, [Validators.min(0)]),
+    availability: new FormControl<string>(''),
+
+  });
+
+
 
   constructor(private serviceService: ServicesService, public dialog: MatDialog) {
   }
@@ -93,8 +108,17 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
     });
   }
 
-  applyFilter(event: Event): void {
+  applySearch(event: Event): void {
     const inputValue: string = (event.target as HTMLInputElement).value;
     this.dataSource.filter = inputValue.trim().toLowerCase();
   }
+
+  showFilters():void {
+    this.showFilterPanel = !this.showFilterPanel;
+  }
+
+  applyFilters(): void {
+
+  }
+
 }

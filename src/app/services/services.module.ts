@@ -4,7 +4,7 @@ import {MaterialModule} from '../infrastructure/material/material.module';
 import { PUPServiceProductManagementComponent } from './pupservice-product-management/pupservice-product-management.component';
 import { PUPServiceManagementComponent } from './pupservice-management/pupservice-management.component';
 import { CreateServiceComponent } from './create-service/create-service.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { EditServiceComponent } from './edit-service/edit-service.component';
 
 
@@ -20,6 +20,7 @@ import { EditServiceComponent } from './edit-service/edit-service.component';
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
+    FormsModule,
   ]
 })
 export class ServicesModule { }
