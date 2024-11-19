@@ -16,7 +16,7 @@ export class CreateServiceComponent {
     basePrice: new FormControl<number | null>(null, [Validators.required, Validators.min(0)]),
     discount: new FormControl<number | null>(null, [Validators.required, Validators.max(100), Validators.min(0)]),
     category: new FormControl<string>('', [Validators.required]),
-    eventType: new FormControl<string>('', [Validators.required]),
+    eventType: new FormControl<string[]>([], [Validators.required]),
     acceptance: new FormControl<string>('auto', [Validators.required]),
     available: new FormControl<boolean>(true, [Validators.required]),
     visible: new FormControl<boolean>(true, [Validators.required]),
