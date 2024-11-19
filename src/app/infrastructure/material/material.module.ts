@@ -17,6 +17,8 @@ import {MatSort} from '@angular/material/sort';
 import {MatRadioGroup} from '@angular/material/radio';
 import {MatRadioButton} from '@angular/material/radio';
 import {MatDialogRef} from '@angular/material/dialog';
+import {MatOption, MatSelect} from '@angular/material/select';
+
 
 
 @NgModule({
@@ -38,6 +40,8 @@ import {MatDialogRef} from '@angular/material/dialog';
     MatDialogModule,
     MatRadioGroup,
     MatRadioButton,
+    MatOption,
+    MatSelect,
   ],
   exports: [
     MatToolbarModule,
@@ -56,6 +60,8 @@ import {MatDialogRef} from '@angular/material/dialog';
     MatDialogModule,
     MatRadioGroup,
     MatRadioButton,
+    MatOption,
+    MatSelect,
   ]
 })
 export class MaterialModule { }

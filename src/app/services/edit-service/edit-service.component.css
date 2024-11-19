@@ -2,16 +2,10 @@
   background: rgba(0, 0, 0, 0.15);
 }
 
-h2 {
-  align-self: center;
-  color: #073B4C !important;
-}
-
 .dialog-container {
   display: flex;
   gap: 2rem;
   column-gap: 10rem;
-  min-height: 100%; /* Adjust this value as needed */
 }
 
 .left-column,
@@ -26,11 +20,6 @@ h2 {
   display: flex;
   gap: 1rem;
   align-items: center;
-}
-
-.color {
-  background-color: #E5F9FF;
-  color: #073B4C;
 }
 
 .actions-container {
@@ -54,3 +43,5 @@ h2 {
 .cancel-button {
   background-color: #1082A8;
 }
+
+

@@ -42,7 +42,7 @@ const dataSource = [
     name: "Ocean Breeze",
     description: 'Fresh ocean breeze scented candle',
     basePrice: 320,
-    discount: 30,
+    discount: 0,
     finalPrice: 224,
     visible: true,
     available: true,
@@ -54,7 +54,7 @@ const dataSource = [
     name: "Citrus Burst",
     description: 'Energizing citrus scented candle',
     basePrice: 270,
-    discount: 15,
+    discount: 0,
     finalPrice: 229.5,
     visible: true,
     available: true,
@@ -158,7 +158,8 @@ export class ServicesService {
         cancellationWindow: data.cancellationWindow,
         reservationWindow: data.reservationWindow,
         autoAccept: Math.random() > 0.5,
-        category: 'Candles'
+        category: 'Candles',
+        eventType: 'Movie night'
       }
       this.servicesList.push(service);
     }
@@ -175,5 +176,10 @@ export class ServicesService {
 
   remove(service: Service): void {
     this.servicesList = this.servicesList.filter((s: Service) => s.id !== service.id);
+  }
+
+  update(service: Service): void {
+    const index: number = this.servicesList.findIndex((s: Service) => s.id === service.id);
+    this.servicesList[index] = service;
   }
 }
