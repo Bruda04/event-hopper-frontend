@@ -5,7 +5,7 @@
 
 .title {
   font-size: 2.5em;
-  color: #073B4C;
+  color: var(--font-dark-blue);
 }
 
 /* Toolbar: Search and Create Button Row */
@@ -23,7 +23,7 @@
 
 .filter-button {
   border: none;
-  background-color: #fffdf5;
+  background-color: var(--light-beige);
   margin-right: 0.5em;
   height: 3em;
   padding: 0.5em;
@@ -32,7 +32,7 @@
 .search-bar {
   display: flex;
   align-items: center;
-  background-color: #e5f9ff;
+  background-color: var(--light-blue);
   border-radius: 20px;
   height: 3em;
   width: 30em;
@@ -40,7 +40,7 @@
 }
 
 .search {
-  background-color: #e5f9ff;
+  background-color: var(--light-blue);
   border: none;
   border-radius: 20px;
   height: 3em;
@@ -49,31 +49,31 @@
 }
 
 .search::placeholder {
-  color: #073b4c;
+  color: var(--font-dark-blue);
 }
 
 .search-icon {
   position: absolute;
   top: 0.6em;
   right: 0.5em;
-  color: #073b4c;
+  color: var(--font-dark-blue);
 }
 
 .search-button {
   border: none;
-  background-color: #e5f9ff;
+  background-color: var(--light-blue);
   height: 3em;
   margin: 1em;
 }
 
 .filter-icon {
-  color: #073b4c;
+  color: var(--font-dark-blue);
 }
 
 /* CREATE Button */
 .create-button {
   height: 3em;
-  background-color: #0D5B75 !important;
+  background-color: var(--secondary-color) !important;
   color: white !important;
 }
 
@@ -87,12 +87,12 @@
 }
 
 .table-header {
-  background-color: #E5F9FF;
+  background-color: var(--light-blue);
 }
 
 
 .filter-panel {
-  background-color: #118AB2;
+  background-color: var(--primary-color);
   padding: 1em;
   border-radius: 4px;
   margin-bottom: 1em;

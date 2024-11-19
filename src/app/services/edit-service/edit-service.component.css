@@ -36,12 +36,12 @@
 }
 
 .primary-button {
-  background-color: #0D5B75;
+  background-color: var(--secondary-color);
   color: white;
 }
 
 .cancel-button {
-  background-color: #1082A8;
+  background-color: var(--primary-color);
 }
 
 
