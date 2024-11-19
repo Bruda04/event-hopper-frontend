@@ -59,8 +59,8 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="filter-field">
-        <mat-label>Available</mat-label>
-        <mat-select formControlName="availablitiy">
+        <mat-label>Availability</mat-label>
+        <mat-select formControlName="availability">
           <mat-option value="available">
             Available
           </mat-option>
@@ -71,7 +71,14 @@
       </mat-form-field>
 
       <div class="filter-actions">
-        <button mat-raised-button color="primary" (click)="applyFilters()">Apply Filters</button>
+        <button mat-mini-fab [ngStyle]="{'background-color':'#073b4c'}" (click)="applyFilters()">
+          <mat-icon [ngStyle]="{'color':'white'}">filter_alt</mat-icon>
+        </button>
+      </div>
+      <div class="filter-actions">
+        <button mat-mini-fab [ngStyle]="{'background-color':'#fffdf5'}" (click)="resetFilters()">
+          <mat-icon [ngStyle]="{'color':'#073b4c'}">filter_alt_off</mat-icon>
+        </button>
       </div>
     </form>
   </div>
@@ -117,7 +124,9 @@
       <ng-container matColumnDef="visible">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Visible </th>
         <td mat-cell *matCellDef="let element">
-          <mat-icon *ngIf="element.visible">check</mat-icon>
+          <mat-icon *ngIf="element.visible" [ngStyle]="{'color':'#7E9B08'}">check</mat-icon>
+          <mat-icon *ngIf="!element.visible" [ngStyle]="{'color':'red'}">close</mat-icon>
+
         </td>
       </ng-container>
 
@@ -125,7 +134,8 @@
       <ng-container matColumnDef="available">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Available </th>
         <td mat-cell *matCellDef="let element">
-          <mat-icon *ngIf="element.available">check</mat-icon>
+          <mat-icon *ngIf="element.visible" [ngStyle]="{'color':'#7E9B08'}">check</mat-icon>
+          <mat-icon *ngIf="!element.visible" [ngStyle]="{'color':'red'}">close</mat-icon>
         </td>
       </ng-container>
 
@@ -151,10 +161,10 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let element">
-          <button mat-icon-button (click)="edit(element)">
+          <button mat-icon-button (click)="edit(element)" [ngStyle]="{color: '#1082A8'}">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button (click)="remove(element)">
+          <button mat-icon-button (click)="remove(element)" [ngStyle]="{color: 'red'}">
             <mat-icon>delete</mat-icon>
           </button>
         </td>

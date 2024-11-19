@@ -41,10 +41,9 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
   filterForm: FormGroup= new FormGroup({
     category: new FormControl<string>(''),
     eventType: new FormControl<string>(''),
-    minPrice: new FormControl<number>(0, [Validators.min(0)]),
-    maxPrice: new FormControl<number>(1000, [Validators.min(0)]),
+    minPrice: new FormControl<number>(null, [Validators.min(0)]),
+    maxPrice: new FormControl<number>(null, [Validators.min(0)]),
     availability: new FormControl<string>(''),
-
   });
 
 
@@ -118,7 +117,20 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
   }
 
   applyFilters(): void {
-
+    if (this.filterForm.valid) {
+      return;
+    } else {
+      this.filterForm.markAsTouched();
+    }
   }
 
+  resetFilters(): void {
+    this.filterForm.patchValue({
+      category: '',
+      eventType: '',
+      minPrice: null,
+      maxPrice: null,
+      availability: ''
+    });
+  }
 }

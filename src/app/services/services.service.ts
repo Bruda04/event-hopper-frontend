@@ -158,7 +158,8 @@ export class ServicesService {
         cancellationWindow: data.cancellationWindow,
         reservationWindow: data.reservationWindow,
         autoAccept: Math.random() > 0.5,
-        category: 'Candles'
+        category: 'Candles',
+        eventType: 'Movie night'
       }
       this.servicesList.push(service);
     }

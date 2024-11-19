@@ -11,6 +11,7 @@ h2 {
   display: flex;
   gap: 2rem;
   column-gap: 10rem;
+  min-height: 100%; /* Adjust this value as needed */
 }
 
 .left-column,

@@ -110,10 +110,11 @@
   flex: 1 1 200px; /* Adjust width of dropdowns */
 }
 
-/*.price-slider {*/
-/*  flex: 1 1 300px; !* Adjust width of the slider *!*/
-/*}*/
-
 .filter-actions {
+  margin-top: -1em;
   flex: 0 0 auto; /* Keep the button its natural size */
+}
+
+.filter-actions button {
+  border-radius: 50%;
 }
