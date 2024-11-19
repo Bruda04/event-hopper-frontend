@@ -1,1 +1,18 @@
-<p>nav-bar works!</p>
+<nav class="navbar">
+    <div class="navbar-logo">
+        <a href="/" class="logo-link">
+            <img src="logo_and_text.png" alt="Logo" class="logo">
+        </a>
+    </div>
+    <div class="navbar-right">
+    <button mat-icon-button class="profile-button small-button" [routerLink]="'/profile'" aria-label="Profile">
+        <mat-icon>account_circle</mat-icon>
+        </button>
+      <button mat-icon-button class="notification-button small-button" aria-label="Notifications">
+        <mat-icon>notifications</mat-icon>
+      </button>
+      <button mat-raised-button class="nav-button" id="login_nav_btn" [routerLink]="'/login'">LOG IN</button>
+      <button mat-raised-button class="nav-button" id="register_nav_btn" [routerLink]="'/register'">REGISTER</button>
+
+    </div>
+</nav>
