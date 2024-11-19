@@ -78,6 +78,7 @@
     margin-right: 0.5em; /* Space between the filter button and search bar */
     height: 3em;
     padding: 0.5em;
+    cursor: pointer;
 }
 
 .search-bar {
@@ -118,6 +119,7 @@
     margin-right: 0.5em; /* Space between the filter button and search bar */
     height: 3em;
     margin: 1em;
+    cursor: pointer;
 }
 
 .search::placeholder {
@@ -184,6 +186,7 @@ mat-paginator{
   
   .filter-actions button {
     border-radius: 50%;
+    cursor: pointer;
   }
   
 
@@ -194,3 +197,28 @@ mat-paginator{
 mat-datepicker{                         /*odraditi bolji styling datepickera*/
     background-color: #07779c;
 }
+
+
+.fixed-button {
+    position: fixed; /* Fiksira dugme u odnosu na viewport */
+    bottom: 5em;    /* Razmak od dna */
+    right: 5em;     /* Razmak od desne ivice */
+    background-color: #0D5B75; /* Primer boje pozadine */
+    color: #e5f9ff;    /* Boja teksta */
+    border: none;    /* Bez ivica */
+    padding: 1em 2em; /* Unutrašnji razmaci */
+    border-radius: 20px; /* Zaobljeni uglovi */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Blaga senka */
+    cursor: pointer; /* Ikonica pokazivača */
+    z-index: 1000; /* Osigurava da je iznad ostalih elemenata */
+    display: flex; /* Centriranje sadržaja */
+    align-items: center;
+    gap: 8px; /* Razmak između ikone i teksta */
+    transition: background-color 0.3s ease; /* Animacija promene boje */
+  }
+  
+  .fixed-button:hover {
+    background-color: #118ab2; /* Promena boje na hover */
+    color: #073B4C;
+  }
+  

@@ -23,16 +23,25 @@ button{
     background-color: #0d5b75 !important;
     font-family: Poppins;
     height: 4em;
-    width: 12em;
+    width: 11em !important;
     text-align: center;
     text-wrap: nowrap;
     border-radius: 20px;
-    font-size: 0.5em;
+    font-size: 0.6em !important;
+    cursor: pointer;
     box-shadow: none;
     bottom: 2em; /* Udaljenost od dna roditelja */
     right: 2em;
-    font-size: 0.5em;
+    font-size: 0.6em;
+    transition: background-color 0.3s ease !important;  /* Animacija promene boje */
+
 }
+
+button:hover {
+    background-color: #118ab2 !important; /* Promena boje na hover */
+    color: #073B4C;
+  }
+  
 
 
 
