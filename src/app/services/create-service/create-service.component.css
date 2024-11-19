@@ -4,7 +4,7 @@
 
 h2 {
   align-self: center;
-  color: #073B4C !important;
+  color: var(--font-dark-blue) !important;
 }
 
 .dialog-container {
@@ -29,8 +29,8 @@ h2 {
 }
 
 .color {
-  background-color: #E5F9FF;
-  color: #073B4C;
+  background-color: var(--light-blue);
+  color: var(--font-dark-blue);
 }
 
 .actions-container {
@@ -47,10 +47,10 @@ h2 {
 }
 
 .primary-button {
-  background-color: #0D5B75;
+  background-color: var(--secondary-color);
   color: white;
 }
 
 .cancel-button {
-  background-color: #1082A8;
+  background-color: var(--primary-color);
 }
