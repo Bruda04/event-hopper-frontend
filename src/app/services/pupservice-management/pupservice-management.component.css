@@ -1,5 +1,5 @@
 .component {
-  background-color: #fffdf5;
+  background-color: var(--light-beige);
   padding: 2em;
 }
 
