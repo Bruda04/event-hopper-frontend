@@ -162,6 +162,7 @@ mat-paginator{
     border-radius: 20px;
     margin-bottom: 1em;
     margin-top: 1em;
+    padding-top: 1.5em;
   }
 
   .filter-form {
@@ -189,4 +190,7 @@ mat-paginator{
 .menu-location{
     background-color: #07779c;
 }
-  
+
+mat-datepicker{                         /*odraditi bolji styling datepickera*/
+    background-color: #07779c;
+}

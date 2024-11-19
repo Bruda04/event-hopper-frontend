@@ -16,7 +16,7 @@ export class EventCardComponent {
   @Output()
   clicked: EventEmitter<Event> = new EventEmitter<Event>();
 
-  onWineClicked(): void {
+  onCardClicked(): void {
     this.clicked.emit(this.event)
   }
 

@@ -20,6 +20,9 @@ import {MatSort} from '@angular/material/sort';
 import {MatRadioGroup} from '@angular/material/radio';
 import {MatRadioButton} from '@angular/material/radio';
 import {MatDialogRef} from '@angular/material/dialog';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -44,6 +47,9 @@ import {MatDialogRef} from '@angular/material/dialog';
     MatRadioButton,
     MatOption,
     MatSelect,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    BrowserAnimationsModule,
   ],
   exports: [
     MatToolbarModule,
@@ -66,6 +72,9 @@ import {MatDialogRef} from '@angular/material/dialog';
     MatRadioButton,
     MatOption,
     MatSelect,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    BrowserAnimationsModule,
   ]
 })
 export class MaterialModule { }

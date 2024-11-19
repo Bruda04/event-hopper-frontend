@@ -1,18 +1,4 @@
 <div class="grid-container-top5events">
-  <form>
-    <mat-form-field appearance="fill" class="filter-field">
-      <mat-label>Category</mat-label>
-      <mat-select formControlName="category">
-        <mat-option value="aa">
-          category
-        </mat-option>
-        <mat-option value="aaa">
-          category
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </form>
-
   <div class="grid-item">
     <div class="headers">
       <p class="header1">Get ready to experience the best of what’s happening near you!</p>
@@ -21,8 +7,7 @@
   </div>
 
   <div class="grid-item">
-    <!-- Ovde možeš implementirati karusel sa mat-card, ili drugi element za prikaz događaja -->
-    <div *ngFor="let event of events; let i = index" class="carousel-item">
+    <div *ngFor="let event of top5events; let i = index" class="carousel-item">
       <app-event-card [event]="event"></app-event-card>
     </div>
   </div>
@@ -30,10 +15,8 @@
 
 <div class="grid-container-top5solutions">
   <div class="grid-item">
-    <!-- Ovde možeš dodati karusel sa owl-carousel ili drugi tip prikaza -->
-    <!-- Na primer, ako koristiš owl-carousel, možeš koristiti sledeći kod: -->
     
-    <div *ngFor="let event of events; let i = index" class="carousel-item">
+    <div *ngFor="let event of top5events; let i = index" class="carousel-item">
       <app-event-card [event]="event"></app-event-card>
     </div>
     
@@ -54,9 +37,9 @@
     <p class="header2">All events</p>
     <div class="search-container">
 
-      <!-- <button  class="filter-button" (click)="toggleFilterPanel()" matTooltip="Filter options">
+      <button  class="filter-button" (click)="toggleEventFilterPanel()" matTooltip="Filter options">
         <mat-icon class="filter-icon">tune</mat-icon>
-      </button> -->
+      </button>
 
       <div class="search-bar">
         <input class="search" type="search" placeholder="Search all events" >
@@ -67,80 +50,68 @@
     </div>
   </div>
 
-  <!-- <div *ngIf="showEventFilterPanel" class="filter-panel">
-    <form >
-      <mat-form-field>
-        <mat-label class = "menu-location">Choose location</mat-label>
-        <mat-select class = "menu-location" [formControl]="locations" multiple>
-          <mat-select-trigger>
-            {{ locations.value?.[0] || '' }}
-            <span *ngIf="(locations.value?.length || 0) > 1" class="example-additional-selection">
-              (+{{ (locations.value?.length || 0) - 1 }} {{ locations.value?.length === 2 ? 'other' : 'others' }})
-            </span>
-          </mat-select-trigger>
-          <mat-option *ngFor="let location of locationsList" [value]="location">
+  <div *ngIf="showEventFilterPanel"  @slideInOut class="filter-panel">
+    <form [formGroup]="filterForm" class="filter-form">
+      <mat-form-field appearance="fill" class="filter-field">
+        <mat-label>Location</mat-label>
+        <mat-select formControlName="location">
+          <mat-option *ngFor="let location of locations" [value]="location">
             {{ location }}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field>
-        <mat-label class = "menu-event-type">Choose event type</mat-label>
-        <mat-select [formControl]="eventTypes" multiple>
-          <mat-select-trigger>
-            {{ eventTypes.value?.[0] || '' }}
-            <span *ngIf="(eventTypes.value?.length || 0) > 1" class="example-additional-selection">
-              (+{{ (eventTypes.value?.length || 0) - 1 }} {{ eventTypes.value?.length === 2 ? 'other' : 'others' }})
-            </span>
-          </mat-select-trigger>
-          <mat-option *ngFor="let eventTypes of eventTypes" [value]="eventTypes">
-            {{ eventTypes }}
+      <mat-form-field appearance="fill" class="filter-field">
+        <mat-label>Event Type</mat-label>
+        <mat-select formControlName="eventType" multiple>
+          <mat-option *ngFor="let event of eventTypes" [value]="event">
+            {{ event }}
           </mat-option>
         </mat-select>
       </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Choose a date</mat-label>
+        <input matInput [matDatepicker]="picker">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+
+      <!-- mozda dodati asc i desc opcije -->
+      <mat-radio-group aria-label="Sort by"> 
+        <mat-label>Sort by</mat-label>                    
+        <mat-radio-button value="1">Date</mat-radio-button>
+        <mat-radio-button value="2">Name</mat-radio-button>
+      </mat-radio-group>
       
+      
+
+      <div class="filter-actions">
+        <button mat-mini-fab [ngStyle]="{'background-color':'#073b4c'}" (click)="applyFilters()">
+          <mat-icon [ngStyle]="{'color':'white'}">filter_alt</mat-icon>
+        </button>
+      </div>
+      <div class="filter-actions">
+        <button mat-mini-fab [ngStyle]="{'background-color':'#fffdf5'}" (click)="resetFilters()">
+          <mat-icon [ngStyle]="{'color':'#073b4c'}">filter_alt_off</mat-icon>
+        </button>
+      </div>
     </form>
-  </div> -->
+  </div>
+
 
   <div class="events-cards">
     <div class="row-events">
 
-      <div class="grid-item">
-        <app-event-card></app-event-card>
-      </div>
-      <div class="grid-item">
-        <app-event-card></app-event-card>
-      </div>
-      <div class="grid-item">
-        <app-event-card></app-event-card>
-      </div>
-      <div class="grid-item">
-        <app-event-card></app-event-card>
-      </div>
-      <div class="grid-item">
-        <app-event-card></app-event-card>
+      <div *ngFor="let event of events; let i = index" class="carousel-item">
+        <app-event-card [event]="event"></app-event-card>
       </div>
       
     </div>
-    <div class="row-events">
 
-      <div class="grid-item">
-        <app-event-card></app-event-card>
-      </div>
-      <div class="grid-item">
-        <app-event-card></app-event-card>
-      </div>
-      <div class="grid-item">
-        <app-event-card></app-event-card>
-      </div>
-      <div class="grid-item">
-        <app-event-card></app-event-card>
-      </div>
-      <div class="grid-item">
-        <app-event-card></app-event-card>
-      </div>
-      
-    </div>
+    
     <div class="paginator">
       <mat-paginator [length]="100"
               [pageSize]="10"
@@ -148,6 +119,8 @@
     </mat-paginator>
     </div>
   </div>
+
+
 </div>
 
 <div class="all-solutions">
@@ -162,6 +135,7 @@
         <mat-icon class="filter-icon">tune</mat-icon>
       </button>
 
+
       <div class="search-bar">
         <input class="search" type="search" placeholder="Search all services" >
 
@@ -174,7 +148,8 @@
     </div>
   </div>
 
-  <div *ngIf="showSolutionFilterPanel" class="filter-panel">
+
+  <div *ngIf="showSolutionFilterPanel"   @slideInOut  class="filter-panel">
     <form [formGroup]="filterForm" class="filter-form">
       <mat-form-field appearance="fill" class="filter-field">
         <mat-label>Category</mat-label>
@@ -232,52 +207,26 @@
   </div>
 
   <div class="solutions-cards">
+
     <div class="row-services">
 
-      <div class="grid-item">
-        <app-event-card></app-event-card>
-      </div>
-      <div class="grid-item">
-        <app-event-card></app-event-card>
-      </div>
-      <div class="grid-item">
-        <app-event-card></app-event-card>
-      </div>
-      <div class="grid-item">
-        <app-event-card></app-event-card>
-      </div>
-      <div class="grid-item">
-        <app-event-card></app-event-card>
+      <div *ngFor="let event of events; let i = index" class="carousel-item">
+        <app-event-card [event]="event"></app-event-card>
       </div>
       
     </div>
-    <div class="row-services">
 
-      <div class="grid-item">
-        <app-event-card></app-event-card>
-      </div>
-      <div class="grid-item">
-        <app-event-card></app-event-card>
-      </div>
-      <div class="grid-item">
-        <app-event-card></app-event-card>
-      </div>
-      <div class="grid-item">
-        <app-event-card></app-event-card>
-      </div>
-      <div class="grid-item">
-        <app-event-card></app-event-card>
-      </div>
-      
-    </div>
+    
     <div class="paginator">
       <mat-paginator [length]="100"
               [pageSize]="10"
               aria-label="Select page">
              
-    </mat-paginator>
+      </mat-paginator>
     </div>
   </div>
+
+
 </div>
 
 
