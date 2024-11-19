@@ -6,10 +6,16 @@ import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { LayoutModule } from './layout/layout.module';
 import {ServicesModule} from './services/services.module';
+import { LoginComponent } from './layout/login/login.component';
+import { RegisterComponent } from './layout/register/register.component';
+import { ProfileComponent } from './layout/profile/profile.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    RegisterComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
