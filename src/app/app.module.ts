@@ -9,6 +9,7 @@ import {ServicesModule} from './services/services.module';
 import { LoginComponent } from './layout/login/login.component';
 import { RegisterComponent } from './layout/register/register.component';
 import { ProfileComponent } from './layout/profile/profile.component';
+import { MaterialModule } from './infrastructure/material/material.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ProfileComponent } from './layout/profile/profile.component';
     AppRoutingModule,
     LayoutModule,
     ServicesModule,
+    MaterialModule
   ],
   providers: [
     provideAnimationsAsync()
