@@ -2,6 +2,10 @@
   background: rgba(0, 0, 0, 0.15);
 }
 
+h2 {
+  align-self: center;
+  color: #073B4C !important;
+}
 
 .dialog-container {
   display: flex;
@@ -23,3 +27,29 @@
   align-items: center;
 }
 
+.color {
+  background-color: #E5F9FF;
+  color: #073B4C;
+}
+
+.actions-container {
+  display: flex;
+  justify-content: space-between; /* Positions buttons at opposite ends */
+  align-items: center;
+  width: 100%; /* Ensure full width for proper spacing */
+  padding: 0.5em 1em; /* Optional: Adjust spacing inside the container */
+}
+
+.actions-container button {
+  min-width: 100px; /* Ensures buttons are visually balanced */
+  color: white;
+}
+
+.primary-button {
+  background-color: #0D5B75;
+  color: white;
+}
+
+.cancel-button {
+  background-color: #1082A8;
+}
