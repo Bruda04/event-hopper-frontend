@@ -1,13 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NavigationStateService } from '../../authentication/services/navigation-state.service';
+
 import { Event } from '../../event/model/event.model';
 import { Service } from '../../services/model/service.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 //import { getAll } from '../../services/services.service';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
+
   styleUrl: './home.component.css',
   animations: [
     trigger('slideInOut', [
@@ -19,8 +24,21 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     ])
   ]
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+  user: any; 
 
+  constructor(private router: Router, private navigationStateService: NavigationStateService) { }
+
+  ngOnInit(): void {
+    this.user = this.navigationStateService.getUserData();
+
+    if (!this.user) {
+      console.log('No user data found!');
+    } else {
+      console.log(this.user);
+      
+    }
+  }
   top5events: Event[] = [
     {
       id: 1,

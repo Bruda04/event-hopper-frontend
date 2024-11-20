@@ -1,0 +1,35 @@
+<div class="login-container">
+    <img src="logo.png" alt="Login Image" class="login-image">
+    <h3 class="login-title">Effortlessly Bringing Plans to Life, <br> one step away</h3>
+    
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <!-- Email Field -->
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Email" formControlName="email" />
+        <mat-error *ngIf="email?.hasError('required')">Email is required</mat-error>
+      </mat-form-field>
+  
+      <!-- Password Field -->
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Password" formControlName="password" />
+        <button mat-icon-button type="button" (click)="togglePasswordVisibility()" matSuffix>
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="password?.hasError('required')">Password is required</mat-error>
+      </mat-form-field>
+       <!-- Error Message Display -->
+      <div *ngIf="loginErrorMessage" class="error-message">
+        <mat-icon>error</mat-icon>
+        <span>{{ loginErrorMessage }}</span>
+      </div>
+  
+      <!-- Submit Button -->
+      <button mat-raised-button class="login-button" id="login_btn" [disabled]="loginForm.invalid">LOGIN</button>
+    </form>
+  
+    <p class="regular-text">You don't have an account? <a [routerLink]="'/register'">MAKE ONE FOR FREE</a>.</p>
+    <a class="regular-text" [routerLink]="'/home'">Continue without an account</a>
+  </div>
+  
