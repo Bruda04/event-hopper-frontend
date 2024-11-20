@@ -11,9 +11,10 @@ import { NavigationStateService } from '../services/navigation-state.service';
 })
 export class LoginComponent {
   hidePassword = true; // Variable to toggle password visibility
+  loginErrorMessage: string | null = null; 
 
   loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl('', [Validators.required]),
     password: new FormControl('', [
       Validators.required,
     ])
@@ -46,9 +47,11 @@ export class LoginComponent {
             this.router.navigate(['/home']);
           } else {
             console.log('Invalid credentials!');
+            this.loginErrorMessage = 'Provided credentials dont match any users.';
           }
         },
         (error) => {
+          this.loginErrorMessage = 'An error occurred. Please try again later.';
           console.error('Login error:', error);
         }
       );

@@ -9,6 +9,17 @@
 
 }
 
+
+.error-message {
+    color: var(--error-color-lighter);
+    display: flex;
+    align-items: center;
+  }
+  
+  .error-message mat-icon {
+    margin-right: 5px;
+  }
+
 mat-error {
     color: var(--error-color-lighter) !important;
     font-size: 14px;  

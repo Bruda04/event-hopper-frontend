@@ -8,7 +8,6 @@
         <mat-label>Email</mat-label>
         <input matInput placeholder="Email" formControlName="email" />
         <mat-error *ngIf="email?.hasError('required')">Email is required</mat-error>
-        <mat-error *ngIf="email?.hasError('email')">Invalid email format</mat-error>
       </mat-form-field>
   
       <!-- Password Field -->
@@ -20,6 +19,11 @@
         </button>
         <mat-error *ngIf="password?.hasError('required')">Password is required</mat-error>
       </mat-form-field>
+       <!-- Error Message Display -->
+      <div *ngIf="loginErrorMessage" class="error-message">
+        <mat-icon>error</mat-icon>
+        <span>{{ loginErrorMessage }}</span>
+      </div>
   
       <!-- Submit Button -->
       <button mat-raised-button class="login-button" id="login_btn" [disabled]="loginForm.invalid">LOGIN</button>
