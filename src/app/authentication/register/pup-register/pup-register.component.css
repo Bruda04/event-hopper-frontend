@@ -33,6 +33,25 @@
     margin: 0px;
   }
   
+
+
+  .profile-pic {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .image-preview {
+    margin-top: 10px;
+  }
+
+  .image-preview img {
+    max-width: 100px;
+    max-height: 100px;
+  }
+
+
+
   .register-form {
     margin-top: 15px;
     display: flex;
@@ -45,7 +64,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.5em;
-    width: 100%;
   }
   
   .form-column {
@@ -55,7 +73,7 @@
   }
   
   mat-form-field {
-    width: 100%;
+    width: 400px;
    
   }
   
