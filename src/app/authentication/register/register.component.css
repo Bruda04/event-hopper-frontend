@@ -1,0 +1,85 @@
+:host {
+    background-color: var(--primary-color); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+    margin: 0;
+    overflow: hidden; 
+}
+
+.mat-form-field .mat-icon{
+    margin-right: 20px;
+}
+
+.register-container {
+    text-align: center;
+    align-items: center;
+    margin-top: -15%;
+    width: 100%;
+    max-width: 80%; 
+    display: flex;
+    flex-direction: column; 
+}
+
+.register-image {
+    max-width: 100px; 
+    height: auto; 
+    margin-bottom: 1em; 
+}
+
+.register-title {
+    color: var(--beige);
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column; /* Stack inputs vertically */
+    align-items: center;
+    width: 100%;
+}
+
+mat-form-field {
+    width: 80%; 
+    max-width: 400px; 
+    margin-bottom: 1em;
+}
+
+.register-button {
+    width: 30%; 
+    padding: 0.8em;
+    font-weight: normal;
+    background-color: var(--secondary-color) !important; 
+    color: white !important;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-top: 1em; 
+}
+
+.register-button:hover {
+    background-color: var(--font-dark-blue); 
+    color: white;
+}
+
+
+.regular-text {
+    margin-top: 1em;
+    font-size: 0.9em;
+    text-decoration: none;
+    color: var(--font-dark-blue);
+}
+
+.regular-text a {
+color: var(--yellow-accent);
+
+}
+
+.regular-text a:hover {
+text-decoration: underline;
+}
+
+
+
+.regular-text + .regular-text {
+    margin-top: 0.5em;
+}

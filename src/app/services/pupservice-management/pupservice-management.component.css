@@ -1,0 +1,121 @@
+.component {
+  background-color: var(--light-beige);
+  padding: 2em;
+}
+
+.title {
+  font-size: 2.5em;
+  color: var(--font-dark-blue);
+}
+
+/* Toolbar: Search and Create Button Row */
+.toolbar {
+  display: flex;
+  justify-content: space-between; /* Align search container left and button right */
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+.filter-button {
+  border: none;
+  background-color: var(--light-beige);
+  margin-right: 0.5em;
+  height: 3em;
+  padding: 0.5em;
+  cursor: pointer;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: var(--light-blue);
+  border-radius: 20px;
+  height: 3em;
+  width: 30em;
+  position: relative;
+}
+
+.search {
+  background-color: var(--light-blue);
+  border: none;
+  border-radius: 20px;
+  height: 3em;
+  width: 100%;
+  padding-left: 2em;
+}
+
+.search::placeholder {
+  color: var(--font-dark-blue);
+}
+
+.search-icon {
+  position: absolute;
+  top: 0.6em;
+  right: 0.5em;
+  color: var(--font-dark-blue);
+}
+
+.search-button {
+  border: none;
+  background-color: var(--light-blue);
+  height: 3em;
+  margin: 1em;
+}
+
+.filter-icon {
+  color: var(--font-dark-blue);
+}
+
+/* CREATE Button */
+.create-button {
+  height: 3em;
+  background-color: var(--secondary-color) !important;
+  color: white !important;
+}
+
+.create-button mat-icon {
+  margin-right: 0.5em;
+}
+
+/* Table Styling */
+.table-container {
+  margin-top: 1em;
+}
+
+.table-header {
+  background-color: var(--light-blue);
+}
+
+
+.filter-panel {
+  background-color: var(--primary-color);
+  padding: 1em;
+  border-radius: 4px;
+  margin-bottom: 1em;
+}
+
+.filter-form {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap; /* Ensures responsiveness for smaller screens */
+  gap: 1em; /* Space between items */
+  vertical-align: center;
+}
+
+.filter-field {
+  flex: 1 1 200px; /* Adjust width of dropdowns */
+}
+
+.filter-actions {
+  margin-top: -1em;
+  flex: 0 0 auto; /* Keep the button its natural size */
+}
+
+.filter-actions button {
+  border-radius: 50%;
+}

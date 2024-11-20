@@ -1,0 +1,19 @@
+<nav class="navbar">
+    <div class="navbar-logo">
+        <a href="/" class="logo-link">
+            <img src="logo_and_text.png" alt="Logo" class="logo">
+        </a>
+    </div>
+    <div class="navbar-right">
+    <button mat-icon-button class="profile-button small-button" [routerLink]="'/profile'" aria-label="Profile" *ngIf="loggedIn  && !isLoginRoute">
+        <mat-icon>account_circle</mat-icon>
+        </button>
+      <button mat-icon-button class="notification-button small-button" aria-label="Notifications"  *ngIf="loggedIn  && !isLoginRoute">
+        <mat-icon>notifications</mat-icon>
+      </button>
+      <button mat-raised-button class="nav-button" id="logout_nav_btn" [routerLink]="'/login'" *ngIf="loggedIn && !isLoginRoute" (click)="logout()">LOG OUT</button>
+      <button mat-raised-button class="nav-button" id="login_nav_btn" [routerLink]="'/login'" *ngIf="!isLoginRoute && !loggedIn">LOG IN</button>
+      <button mat-raised-button class="nav-button" id="register_nav_btn" [routerLink]="'/register'" *ngIf="!isRegisterRoute && !loggedIn">REGISTER</button>
+
+    </div>
+</nav>

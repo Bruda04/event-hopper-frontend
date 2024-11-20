@@ -1,0 +1,307 @@
+.header1{
+    color:var(--font-dark-blue);
+    font-size: 3em;
+    text-wrap: wrap;
+    line-height: 1em;
+}
+
+.header2{
+    font-size: 2em;
+    color: var(--primary-color);
+    text-wrap: wrap;
+    line-height: 1em;
+}
+
+.grid-container-top5events .header1,
+.grid-container-top5events .header2{
+    text-align: left;
+}
+
+.grid-container-top5solutions .header1,
+.grid-container-top5solutions .header2{
+    text-align: right;
+}
+
+  
+.grid-container-top5events {
+    margin-top: 4em;
+    margin-left: 8em;
+    margin-right: 8em;
+    display: grid;
+    grid-template-columns: 55% 45%; 
+    grid-gap: 1em; 
+}
+
+.grid-container-top5solutions {
+    margin-top: 2em;
+    margin-left: 8em;
+    margin-right: 8em;
+    display: grid;
+    grid-template-columns: 45% 55%; 
+    grid-gap: 1em; 
+}
+
+.all-events {
+    position: relative;
+    margin-top: 2em;
+    margin-left: 6em;
+    margin-right: 6em;
+}
+
+.all-solutions{
+    position: relative;
+    margin-top: 2em;
+    margin-left: 6em;
+    margin-right: 6em;
+}
+
+.top-bar{
+    display: flex; /* Use flexbox for row layout */
+    align-items: center; /* Vertically center the items */
+    justify-content: space-between; /* Space out the elements */
+}
+
+.header2 {
+    font-size: 2em;
+    margin: 0;
+}
+
+.search-container {
+    display: flex; /* Align filter button and search bar horizontally */
+    align-items: center;
+    margin-left: 2em;
+}
+
+.filter-button {
+    border: none;
+    background-color:  var(--light-beige);
+    margin-right: 0.5em; /* Space between the filter button and search bar */
+    height: 3em;
+    padding: 0.5em;
+    cursor: pointer;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: var(--light-blue);
+    border: var(--light-blue);
+    border-radius: 20px;
+    height: 3em;
+    width: 30em;
+    position: relative;
+}
+
+.search {
+    background-color: var(--light-blue);
+    border: none;
+    border-radius: 20px;
+    height: 3em;
+    width: 100%;
+    padding-left: 2em; /* Ensure padding for the search icon */
+}
+
+.search-icon {
+    position: absolute;
+    top: 0.6em;
+    right: 0.5em;
+    color: var(--font-dark-blue);
+}
+
+.filter-icon {
+    color: var(--font-dark-blue);
+}
+
+
+.search-button {
+    border: none;
+    background-color:  var(--light-blue);
+    margin-right: 0.5em; /* Space between the filter button and search bar */
+    height: 3em;
+    margin: 1em;
+    cursor: pointer;
+}
+
+.search::placeholder {
+    color: var(--font-dark-blue);
+}
+
+
+.events-cards{
+    padding-top: 2em;
+    margin-right: 2em;
+}
+
+.solutions-cards{
+    padding-top: 2em;
+    margin-right: 2em;
+}
+
+.row-events{
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20% ; 
+    margin-top: 1em;
+    grid-gap: 1em
+}
+
+/* .single-card-item:hover{
+    background-color: #e0f7fa !important; 
+    transition: transform 0.3s ease background-color 0.3s ease !important; 
+}  */
+
+.row-services{
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20% ; 
+    margin-top: 1em;
+    grid-gap: 1em;
+    transition: transform 0.3s ease !important;
+
+}
+
+mat-paginator{
+    background-color: var(--light-beige);
+}
+
+
+.filter-panel {
+    background-color: var(--primary-color);
+    color: var(--font-dark-blue); 
+    padding: 1em;
+    border-radius: 20px;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    padding-top: 1.5em;
+  }
+
+  .filter-form {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; /* Ensures responsiveness for smaller screens */
+    gap: 1em; /* Space between items */
+    vertical-align: center;
+  }
+  
+  .filter-field {
+    flex: 1 1 200px; /* Adjust width of dropdowns */
+  }
+  
+  .filter-actions {
+    margin-top: -1em;
+    flex: 0 0 auto; /* Keep the button its natural size */
+  }
+  
+  .filter-actions button {
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+
+.menu-location{
+    background-color: #07779c;
+}
+
+mat-datepicker{                         /*odraditi bolji styling datepickera*/
+    background-color: #07779c;
+}
+
+
+.fixed-button {
+    position: fixed; /* Fiksira dugme u odnosu na viewport */
+    bottom: 5em;    /* Razmak od dna */
+    right: 5em;     /* Razmak od desne ivice */
+    background-color: var(--secondary-color); /* Primer boje pozadine */
+    color: var(--light-blue);    /* Boja teksta */
+    border: none;    /* Bez ivica */
+    padding: 1em 2em; /* Unutrašnji razmaci */
+    border-radius: 20px; /* Zaobljeni uglovi */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Blaga senka */
+    cursor: pointer; /* Ikonica pokazivača */
+    z-index: 1000; /* Osigurava da je iznad ostalih elemenata */
+    display: flex; /* Centriranje sadržaja */
+    align-items: center;
+    gap: 8px; /* Razmak između ikone i teksta */
+    transition: background-color 0.3s ease; /* Animacija promene boje */
+  }
+  
+  .fixed-button:hover {
+    background-color: var(--primary-color); /* Promena boje na hover */
+    color: var(--font-dark-blue);
+  }
+  
+/* Stilizuj dugme za prethodni slajd */
+::ng-deep .p-carousel-prev {
+    background-color: var(--font-dark-blue);
+    width: 2.5em;
+    height: 2.5em;
+    color: white;
+    border-radius: 50%;
+    font-size: 1rem;
+    padding: 0.5em;
+    border: none;
+    margin: 2em;
+    margin-right: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Stilizuj dugme za sledeći slajd */
+  ::ng-deep .p-carousel-next {
+    background-color: var(--font-dark-blue);
+    width: 2.5em;
+    height: 2.5em;
+    color: white;
+    border-radius: 50%;
+    font-size: 1rem;
+    padding: 0.5em;
+    border: none;
+    margin: 2em;
+    margin-right: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+ }
+  
+  /* Hover efekat na dugmadi */
+  ::ng-deep .p-carousel-prev:hover, ::ng-deep .p-carousel-next:hover {
+    background-color: var(--primary-color); /* Promena boje na hover */
+    color: var(--font-dark-blue);
+  }
+
+  ::ng-deep .p-carousel-item.p-carousel-item-active	{
+    margin-right: 1.5em;
+    margin-left: 1.5em;
+  }
+
+
+  /* Kontrola razmaka između dugmića */
+  /* ::ng-deep .p-carousel-indicators {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;  
+  } */
+  
+  /* Stilizovanje dugmadi (tačaka) */
+  /* ::ng-deep .p-carousel-indicator > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;  
+    height: 16px; 
+    border-radius: 50%; 
+    background-color: #ccc; 
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  } */
+  
+  /* Aktivna tačka */
+  /* ::ng-deep .p-carousel-indicator > button.p-highlight {
+    background-color: #007bff; 
+  } */
+  
+  /* Hover efekat za dugmadi */
+  /* ::ng-deep .p-carousel-indicator > button:hover {
+    background-color: #0056b3; 
+  } */
+  
