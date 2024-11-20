@@ -1,5 +1,5 @@
 .header1{
-    color:#073B4C;
+    color:var(--font-dark-blue);
     font-size: 3em;
     text-wrap: wrap;
     line-height: 1em;
@@ -7,7 +7,7 @@
 
 .header2{
     font-size: 2em;
-    color: #118ab2;
+    color: var(--primary-color);
     text-wrap: wrap;
     line-height: 1em;
 }
@@ -74,7 +74,7 @@
 
 .filter-button {
     border: none;
-    background-color:  #fffdf5;
+    background-color:  var(--light-beige);
     margin-right: 0.5em; /* Space between the filter button and search bar */
     height: 3em;
     padding: 0.5em;
@@ -84,8 +84,8 @@
 .search-bar {
     display: flex;
     align-items: center;
-    background-color: #e5f9ff;
-    border: #e5f9ff;
+    background-color: var(--light-blue);
+    border: var(--light-blue);
     border-radius: 20px;
     height: 3em;
     width: 30em;
@@ -93,7 +93,7 @@
 }
 
 .search {
-    background-color: #e5f9ff;
+    background-color: var(--light-blue);
     border: none;
     border-radius: 20px;
     height: 3em;
@@ -105,17 +105,17 @@
     position: absolute;
     top: 0.6em;
     right: 0.5em;
-    color: #073B4C;
+    color: var(--font-dark-blue);
 }
 
 .filter-icon {
-    color: #073B4C;
+    color: var(--font-dark-blue);
 }
 
 
 .search-button {
     border: none;
-    background-color:  #e5f9ff;
+    background-color:  var(--light-blue);
     margin-right: 0.5em; /* Space between the filter button and search bar */
     height: 3em;
     margin: 1em;
@@ -123,7 +123,7 @@
 }
 
 .search::placeholder {
-    color: #073B4C;
+    color: var(--font-dark-blue);
 }
 
 
@@ -159,13 +159,13 @@
 }
 
 mat-paginator{
-    background-color: #fffdf5;
+    background-color: var(--light-beige);
 }
 
 
 .filter-panel {
-    background-color: #118AB2;
-    color: #073B4C; 
+    background-color: var(--primary-color);
+    color: var(--font-dark-blue); 
     padding: 1em;
     border-radius: 20px;
     margin-bottom: 1em;
@@ -209,8 +209,8 @@ mat-datepicker{                         /*odraditi bolji styling datepickera*/
     position: fixed; /* Fiksira dugme u odnosu na viewport */
     bottom: 5em;    /* Razmak od dna */
     right: 5em;     /* Razmak od desne ivice */
-    background-color: #0D5B75; /* Primer boje pozadine */
-    color: #e5f9ff;    /* Boja teksta */
+    background-color: var(--secondary-color); /* Primer boje pozadine */
+    color: var(--light-blue);    /* Boja teksta */
     border: none;    /* Bez ivica */
     padding: 1em 2em; /* Unutrašnji razmaci */
     border-radius: 20px; /* Zaobljeni uglovi */
@@ -224,13 +224,13 @@ mat-datepicker{                         /*odraditi bolji styling datepickera*/
   }
   
   .fixed-button:hover {
-    background-color: #118ab2; /* Promena boje na hover */
-    color: #073B4C;
+    background-color: var(--primary-color); /* Promena boje na hover */
+    color: var(--font-dark-blue);
   }
   
 /* Stilizuj dugme za prethodni slajd */
 ::ng-deep .p-carousel-prev {
-    background-color: #073B4C;
+    background-color: var(--font-dark-blue);
     width: 2.5em;
     height: 2.5em;
     color: white;
@@ -246,7 +246,7 @@ mat-datepicker{                         /*odraditi bolji styling datepickera*/
   
   /* Stilizuj dugme za sledeći slajd */
   ::ng-deep .p-carousel-next {
-    background-color: #073B4C;
+    background-color: var(--font-dark-blue);
     width: 2.5em;
     height: 2.5em;
     color: white;
@@ -262,8 +262,8 @@ mat-datepicker{                         /*odraditi bolji styling datepickera*/
   
   /* Hover efekat na dugmadi */
   ::ng-deep .p-carousel-prev:hover, ::ng-deep .p-carousel-next:hover {
-    background-color: #118ab2; /* Promena boje na hover */
-    color: #073B4C;
+    background-color: var(--primary-color); /* Promena boje na hover */
+    color: var(--font-dark-blue);
   }
 
   ::ng-deep .p-carousel-item.p-carousel-item-active	{

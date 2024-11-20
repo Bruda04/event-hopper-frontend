@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
+import { User } from './user.modul';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NavigationStateService {
-  private userData: any = null;
+  private userData: User = null;
 
-  setUserData(data: any): void {
+  setUserData(data: User): void {
     this.userData = data;
   }
 
-  getUserData(): any {
+  getUserData(): User {
     return this.userData;
   }
 

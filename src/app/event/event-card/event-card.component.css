@@ -21,7 +21,7 @@ mat-card-content{
 
 button{
     position: absolute;
-    background-color: #0d5b75 !important;
+    background-color: var(--secondary-color) !important;
     font-family: Poppins;
     height: 4em;
     width: 11em !important;
@@ -39,7 +39,7 @@ button{
 }
 
 button:hover {
-    background-color: #118ab2 !important; /* Promena boje na hover */
+    background-color: var(--primary-color) !important; /* Promena boje na hover */
     color: #073B4C;
   }
   

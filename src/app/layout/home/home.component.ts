@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavigationStateService } from '../../authentication/services/navigation-state.service';
-
+import { User } from '../../authentication/services/user.modul';
 import { Event } from '../../event/model/event.model';
 import { Service } from '../../services/model/service.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -25,7 +25,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   ]
 })
 export class HomeComponent implements OnInit {
-  user: any; 
+  user: User; 
 
   constructor(private router: Router, private navigationStateService: NavigationStateService) { }
 

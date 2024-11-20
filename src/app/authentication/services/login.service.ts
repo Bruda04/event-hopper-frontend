@@ -1,13 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { User } from './user.modul';
 
-interface User {
-  id: number;
-  email: string;
-  password: string;
-  name: string;
-  role: string; 
-}
 
 @Injectable({
   providedIn: 'root' // This means the service is available globally in the app
