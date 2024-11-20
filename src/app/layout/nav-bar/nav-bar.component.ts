@@ -24,9 +24,13 @@ export class NavBarComponent {
         this.loggedIn = false;
       }
       this.isLoginRoute = this.router.url === '/login';
-      this.isRegisterRoute = this.router.url === '/register';
-      this.isHomeRoute = this.router.url === '/home';
-      this.isHomeRoute = this.router.url === '/';
+      this.isRegisterRoute = 
+        this.router.url === '/register' ||
+        this.router.url === '/register-organizer' ||
+        this.router.url === '/register-pup';
+      this.isHomeRoute = 
+        this.router.url === '/home' ||
+        this.router.url === '/';
 
     });
   }

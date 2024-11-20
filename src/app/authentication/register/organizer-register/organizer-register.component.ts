@@ -10,6 +10,7 @@ export class OrganizerRegisterComponent {
   registerForm: FormGroup;
   hidePassword = true;
   hideConfirmPassword = true;
+  imagePreview: string | null = null;
 
   constructor(private fb: FormBuilder) {
     this.registerForm = this.fb.group({
@@ -18,6 +19,9 @@ export class OrganizerRegisterComponent {
       password: ['', [Validators.required, Validators.minLength(8), Validators.pattern('.*[A-Z].*'), Validators.pattern('.*[0-9].*')]],
       confirmPassword: ['', [Validators.required]],
       phoneNumber: ['', Validators.required],
+      address: ['', Validators.required],
+      city: ['', Validators.required],
+      surname: ['', Validators.required],
     });
 
     // Custom validator for password matching
@@ -44,5 +48,29 @@ export class OrganizerRegisterComponent {
 
   toggleConfirmPasswordVisibility() {
     this.hideConfirmPassword = !this.hideConfirmPassword;
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imagePreview = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  triggerFileInput() {
+    // Trigger the file input click event programmatically when the "Upload" button is clicked
+    const fileInput = document.getElementById('profilePic') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.click();
+    }
+  }
+
+  uploadProfilePicture() {
+    // Handle the file upload logic here (e.g., sending it to the server)
+    console.log('Profile picture uploaded');
   }
 }

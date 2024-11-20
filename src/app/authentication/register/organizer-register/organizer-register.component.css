@@ -1,61 +1,83 @@
-:host{
-  background-color: var(--primary-color); 
+:host {
+  display: block;
+  background-color: var(--primary-color);
+  min-height: 100vh;
+  padding: 2em;
+}
+
+mat-error {
+  color: var(--error-color-lighter) !important;
+  font-size: 14px;  
+  display: block;
 }
 
 .register-container {
-    text-align: center;
-    width: 100%;
-    max-width: 800px; /* Adjust based on your design */
-    margin: 0 auto;
-  }
-  
-  .register-image {
-    max-width: 100px;
-    height: auto;
-    margin-bottom: 1em;
-  }
-  
-  .register-title {
-    color: var(--beige);
-  }
-  
-  .register-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-  }
-  
-  .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5em;
-    width: 100%;
-    margin-bottom: 2em;
-  }
-  
-  .form-column {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5em;
-  }
-  
-  mat-form-field {
-    width: 100%;
-  }
-  
-  .register-button {
-    width: 50%;
-    padding: 0.8em;
-    background-color: var(--secondary-color) !important;
-    color: white !important;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    margin-top: 1em;
-  }
-  
-  .register-button:hover {
-    background-color: var(--font-dark-blue);
-    color: white;
-  }
-  
+  text-align: center;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.register-image {
+  max-width: 100px;
+  height: auto;
+}
+
+.register-title {
+  color: var(--beige);
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5em;
+  width: 100%;
+}
+
+.form-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+
+mat-form-field {
+  width: 100%;
+ 
+}
+
+.register-button {
+  width: 50%;
+  padding: 0.8em;
+  background-color: var(--secondary-color) !important;
+  color: white !important;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin-top: 1em;
+}
+
+.register-button:hover {
+  background-color: var(--font-dark-blue);
+  color: white;
+}
+
+.upload-button {
+  margin-top: 1em;
+}
+
+.profile-pic {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-preview img {
+  max-width: 150px;
+  margin-top: 1em;
+}
