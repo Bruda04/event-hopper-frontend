@@ -25,16 +25,6 @@ export class OrganizerRegisterComponent {
       {
         fullName: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
-        password: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(8),
-            Validators.pattern('.*[A-Z].*'),
-            Validators.pattern('.*[0-9].*')
-          ]
-        ],
-        confirmPassword: ['', Validators.required],
         phoneNumber: ['', [Validators.required, phoneMinLengthValidator, Validators.pattern('[0-9]*')]],
         address: ['', Validators.required],
         city: ['', Validators.required],
