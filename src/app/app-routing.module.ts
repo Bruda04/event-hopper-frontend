@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './layout/home/home.component';
-import { LoginComponent } from './layout/login/login.component';
-import { RegisterComponent } from './layout/register/register.component';
-import { ProfileComponent } from './layout/profile/profile.component';
+import { LoginComponent } from './authentication/login/login.component';
+import { RegisterComponent } from './authentication/register/register.component';
+import { ProfileComponent } from './authentication/profile/profile.component';
 
 
 import {
   PUPServiceProductManagementComponent
 } from './services/pupservice-product-management/pupservice-product-management.component';
-import { PupRegisterSlide1Component } from './layout/register/pup/pup-register-slide1/pup-register-slide1.component';
-import { PupRegisterSlide2Component } from './layout/register/pup/pup-register-slide2/pup-register-slide2.component';
-import { OrganizerRegisterComponent } from './layout/register/organizer-register/organizer-register.component';
-import { ConfirmEmailComponent } from './layout/register/confirm-email/confirm-email.component';
+import { PupRegisterSlide1Component } from './authentication/register/pup/pup-register-slide1/pup-register-slide1.component';
+import { PupRegisterSlide2Component } from './authentication/register/pup/pup-register-slide2/pup-register-slide2.component';
+import { OrganizerRegisterComponent } from './authentication/organizer-register/organizer-register.component';
+import { ConfirmEmailComponent } from './authentication/confirm-email/confirm-email.component';
 
 
 const routes: Routes = [

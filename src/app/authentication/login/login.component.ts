@@ -31,7 +31,6 @@ export class LoginComponent {
 
 
   constructor(private loginService: LoginService, private router: Router) { }
-
   onSubmit() {
     if (this.loginForm.valid) {
       this.email = this.loginForm.value.email;
@@ -41,8 +40,7 @@ export class LoginComponent {
         (user) => {
           console.log(user);
           if (user) {
-            // Pass the user data as a query parameter (converted to string)
-            this.router.navigate(['/home'], { queryParams: { user: JSON.stringify(user) } });
+            this.router.navigate(['/home'], { state: { user } });
           } else {
             console.log('Invalid credentials!');
           }
@@ -55,4 +53,5 @@ export class LoginComponent {
       console.log('Form is invalid');
     }
   }
+  
 }

@@ -15,6 +15,7 @@ export class NavBarComponent {
     this.router.events.subscribe(() => {
       this.isLoginRoute = this.router.url === '/login';
       this.isRegisterRoute = this.router.url === '/register';
+
     });
   }
 

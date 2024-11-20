@@ -11,6 +11,7 @@
       <button mat-icon-button class="notification-button small-button" aria-label="Notifications"  *ngIf="!isLoginRoute && !isRegisterRoute">
         <mat-icon>notifications</mat-icon>
       </button>
+      <button mat-raised-button class="nav-button" id="logout_nav_btn" [routerLink]="'/login'" *ngIf="!isLoginRoute && !isRegisterRoute">LOG OUT</button>
       <button mat-raised-button class="nav-button" id="login_nav_btn" [routerLink]="'/login'" *ngIf="!isLoginRoute">LOG IN</button>
       <button mat-raised-button class="nav-button" id="register_nav_btn" [routerLink]="'/register'" *ngIf="!isRegisterRoute">REGISTER</button>
 

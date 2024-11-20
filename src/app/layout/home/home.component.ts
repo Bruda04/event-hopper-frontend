@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
@@ -7,19 +9,17 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  user: any; // Variable to store the user object
+  user: any; 
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
-    // Retrieve the user object passed via router state using ActivatedRoute
-    this.route.queryParams.subscribe(params => {
-      if (params['user']) {
-        this.user = JSON.parse(params['user']);
-        console.log('User data:', this.user);
-      } else {
-        console.log('No user data found!');
-      }
-    });
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation?.extras.state?.['user']) {
+      this.user = navigation.extras.state['user'];
+      console.log(this.user);
+    } else {
+      console.log('No user data found!');
+    }
   }
 }
