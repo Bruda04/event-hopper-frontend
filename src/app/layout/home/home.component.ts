@@ -167,7 +167,14 @@ export class HomeComponent {
   eventTypes: string[] = ['Wedding', 'Birthday', 'Concert'];
   categories: string[] = ['Catering','Decoration', 'Music'];
 
-  filterForm: FormGroup= new FormGroup({
+  filterEventForm: FormGroup= new FormGroup({
+    location: new FormControl<string>(''),
+    eventType: new FormControl<string>(''),
+    date: new FormControl<Date | null>(null),
+
+  });
+
+  filterSolutionForm: FormGroup= new FormGroup({
     category: new FormControl<string>(''),
     eventType: new FormControl<string>(''),
     minPrice: new FormControl<number>(null, [Validators.min(0)]),
@@ -201,21 +208,33 @@ export class HomeComponent {
     this.showSolutionFilterPanel = !this.showSolutionFilterPanel; // Menja stanje panela
   }
 
+
+  //proveriti da li radi
+  
   applyFilters(): void {
-    if (this.filterForm.valid) {
+    if (this.filterSolutionForm.valid || this.filterEventForm.valid) {
       return;
-    } else {
-      this.filterForm.markAsTouched();
+    } else if (!this.filterSolutionForm.valid) {
+      this.filterSolutionForm.markAsTouched();
+      
+    }else if (!this.filterEventForm.valid){
+      this.filterEventForm.markAsTouched();
     }
   }
 
   resetFilters(): void {
-    this.filterForm.patchValue({
+    this.filterSolutionForm.patchValue({
       category: '',
       eventType: '',
       minPrice: null,
       maxPrice: null,
       availability: ''
+    });
+
+    this.filterEventForm.patchValue({
+      location: '',
+      eventType: '',
+      date: null
     });
   }
 

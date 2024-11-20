@@ -25,10 +25,6 @@
 <div class="grid-container-top5solutions">
   <div class="grid-item">
     
-    <!-- <div *ngFor="let event of top5events; let i = index" class="carousel-item">
-      <app-event-card [event]="event"></app-event-card>
-    </div> -->
-
     <p-carousel 
         [value]="top5events" 
         [numVisible]="1.5" 
@@ -73,7 +69,10 @@
   </div>
 
   <div *ngIf="showEventFilterPanel"  @slideInOut class="filter-panel">
-    <form [formGroup]="filterForm" class="filter-form">
+
+    <form [formGroup]="filterEventForm" class="filter-form">
+
+    
       <mat-form-field appearance="fill" class="filter-field">
         <mat-label>Location</mat-label>
         <mat-select formControlName="location">
@@ -172,7 +171,8 @@
 
 
   <div *ngIf="showSolutionFilterPanel"   @slideInOut  class="filter-panel">
-    <form [formGroup]="filterForm" class="filter-form">
+    
+    <form [formGroup]="filterSolutionForm" class="filter-form">
       <mat-form-field appearance="fill" class="filter-field">
         <mat-label>Category</mat-label>
         <mat-select formControlName="category">
