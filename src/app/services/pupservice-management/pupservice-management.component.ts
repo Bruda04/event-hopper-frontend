@@ -7,12 +7,22 @@ import {MatPaginator, MatSort, MatDialog} from '../../infrastructure/material/ma
 import {MatDialogRef} from '@angular/material/dialog';
 import {EditServiceComponent} from '../edit-service/edit-service.component';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 
 @Component({
   selector: 'app-pupservice-management',
   templateUrl: './pupservice-management.component.html',
-  styleUrl: './pupservice-management.component.css'
+  styleUrl: './pupservice-management.component.css',
+  animations: [
+    trigger('slideInOut', [
+      state('void', style({ height: '0px', opacity: 0, overflow: 'hidden' })),
+      state('*', style({ height: '*', opacity: 1 })),
+      transition('void <=> *', [
+        animate('300ms ease-in-out')
+      ])
+    ])
+  ]
 })
 export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
   services: Service[];
