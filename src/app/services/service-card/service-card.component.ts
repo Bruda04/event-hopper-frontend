@@ -8,7 +8,7 @@ import { Service } from '../model/service.model';
 })
 export class ServiceCardComponent {
 
-  @Input() service: any;
+  @Input() service: Service;
 
   @Output()
   clicked: EventEmitter<Service> = new EventEmitter<Service>();

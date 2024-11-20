@@ -108,12 +108,13 @@ export class PupRegisterComponent {
 
 
   
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
+  onFileSelected(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const file = inputElement.files?.[0]; // Use optional chaining to safely access the file
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.imagePreview = e.target.result;
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        this.imagePreview = e.target?.result as string; // Cast result as string since it's a Data URL
       };
       reader.readAsDataURL(file);
     }

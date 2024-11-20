@@ -1,7 +1,8 @@
 <div class="register-container">
   <img src="logo.png" alt="Logo Image" class="register-image">
   <h3 class="register-title">Product/Service Provider</h3>
-  <label>Please provide us with some information about yourself.</label>
+  <label *ngIf="currentStep === 0">Please provide us with some information about yourself.</label>
+  <label *ngIf="currentStep === 1">Please provide us with some information about your company.</label>
 
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
     <!-- Step 1: Personal Data -->

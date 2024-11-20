@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavigationStateService } from '../../authentication/services/navigation-state.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { User } from '../../authentication/services/user.modul';
 
 @Component({
   selector: 'app-nav-bar',
@@ -12,7 +13,7 @@ export class NavBarComponent {
   isLoginRoute: boolean = false;
   isRegisterRoute: boolean = false;
   isHomeRoute: boolean = false;
-  user: any;
+  user: User;
   loggedIn: boolean = false;
 
   constructor(

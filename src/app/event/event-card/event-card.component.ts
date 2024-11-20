@@ -11,7 +11,7 @@ export class EventCardComponent {
   // @Input()
   // event: Event;
 
-  @Input() event: any;
+  @Input() event: Event;
 
   @Output()
   clicked: EventEmitter<Event> = new EventEmitter<Event>();
