@@ -21,10 +21,9 @@ import { EventModule } from './event/event.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
-
     AuthenticationModule, 
     ReactiveFormsModule, 
-    MaterialModule
+    MaterialModule,
     EventModule,
     ServicesModule
   ],
