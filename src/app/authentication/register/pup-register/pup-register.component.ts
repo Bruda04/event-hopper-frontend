@@ -1,77 +1,101 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AbstractControl, ValidationErrors } from '@angular/forms';
-
-function phoneMinLengthValidator(control: AbstractControl): ValidationErrors | null {
-  const value = control.value?.toString() || ''; // Convert the number to a string
-  return value.length >= 8 ? null : { minlength: true };
-}
 
 @Component({
   selector: 'app-pup-register',
   templateUrl: './pup-register.component.html',
-  styleUrl: './pup-register.component.css'
+  styleUrls: ['./pup-register.component.css'],
 })
 export class PupRegisterComponent {
   registerForm: FormGroup;
-  hidePassword = true;
-  hideConfirmPassword = true;
-  imagePreview: string | null = null;
+  currentStep: number = 0; // Track which step/page is being displayed
 
   constructor(private fb: FormBuilder, private router: Router) {
-    this.registerForm = this.fb.group(
-      {
-        fullName: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
-        phoneNumber: ['', [Validators.required, phoneMinLengthValidator, Validators.pattern('[0-9]*')]],
-        address: ['', Validators.required],
-        city: ['', Validators.required],
-      },
-      { validators: this.passwordMatchValidator } // Add custom validator here
-    );
+    this.registerForm = this.fb.group({
+      // Step 1 Fields
+      fullName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phoneNumber: [
+        '',
+        [Validators.required, Validators.pattern('^[0-9]{8,}$')],
+      ],
+      address: ['', Validators.required],
+
+      // Step 2 Fields
+      city: ['', Validators.required],
+      businessName: ['', Validators.required],
+      businessCategory: ['', Validators.required],
+      terms: [false, Validators.requiredTrue], // Checkbox for agreeing to terms
+    });
   }
 
-  // Custom validator to check if passwords match
-  passwordMatchValidator(group: FormGroup) {
-    const password = group.get('password')?.value;
-    const confirmPassword = group.get('confirmPassword')?.value;
-    return password === confirmPassword ? null : { passwordMismatch: true };
+  // Accessors for step 1 and step 2 fields
+  get step1Controls() {
+    return {
+      fullName: this.registerForm.get('fullName'),
+      email: this.registerForm.get('email'),
+      phoneNumber: this.registerForm.get('phoneNumber'),
+      address: this.registerForm.get('address'),
+    };
   }
 
+  get step2Controls() {
+    return {
+      city: this.registerForm.get('city'),
+      businessName: this.registerForm.get('businessName'),
+      businessCategory: this.registerForm.get('businessCategory'),
+      terms: this.registerForm.get('terms'),
+    };
+  }
+
+  // Navigate to the next step, validating the current step first
+  onNext() {
+    if (this.currentStep === 0) {
+      if (this.isStepValid(0)) {
+        this.currentStep++;
+      }
+    }
+  }
+
+  // Navigate back to the previous step
+  onBack() {
+    if (this.currentStep > 0) {
+      this.currentStep--;
+    }
+  }
+
+  // Submit the form after final validation
   onSubmit() {
-    if (this.registerForm.valid) {
+    if (this.isStepValid(1)) {
       console.log('Form Submitted:', this.registerForm.value);
       this.router.navigate(['/email-confirmation-sent']);
-    } else {
-      this.registerForm.markAllAsTouched();
-      console.log('Form is invalid:', this.registerForm.value);
-    }
-  }
-  
-  togglePasswordVisibility() {
-    this.hidePassword = !this.hidePassword;
-  }
-
-  toggleConfirmPasswordVisibility() {
-    this.hideConfirmPassword = !this.hideConfirmPassword;
-  }
-
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.imagePreview = e.target.result;
-      };
-      reader.readAsDataURL(file);
     }
   }
 
-  triggerFileInput() {
-    const fileInput = document.getElementById('profilePic') as HTMLInputElement;
-    if (fileInput) {
-      fileInput.click();
+  // Validate fields for a specific step
+  isStepValid(step: number): boolean {
+    if (step === 0) {
+      Object.values(this.step1Controls).forEach((control) =>
+        control?.markAsTouched()
+      );
+      return (
+        this.step1Controls.fullName?.valid &&
+        this.step1Controls.email?.valid &&
+        this.step1Controls.phoneNumber?.valid &&
+        this.step1Controls.address?.valid
+      );
+    } else if (step === 1) {
+      Object.values(this.step2Controls).forEach((control) =>
+        control?.markAsTouched()
+      );
+      return (
+        this.step2Controls.city?.valid &&
+        this.step2Controls.businessName?.valid &&
+        this.step2Controls.businessCategory?.valid &&
+        this.step2Controls.terms?.valid
+      );
     }
+    return false;
   }
 }
