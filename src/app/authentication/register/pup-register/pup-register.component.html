@@ -68,6 +68,9 @@
               <img [src]="imagePreview" alt="Profile Preview" />
             </div>
           </div>
+
+
+
         </div>
       </div>
     </div>
@@ -130,7 +133,20 @@
               Phone Number is required
             </mat-error>
           </mat-form-field>
+
+
+
+          <div class="profile-pic">
+            <input type="file" id="profilePic" (change)="onFileSelected($event)" style="display: none;" />
+            <button mat-raised-button class="upload-button" (click)="triggerFileInput()">UPLOAD PICTURES (OPTIONAL)</button>
+            <div *ngIf="imagePreview" class="image-preview">
+              <img [src]="imagePreview" alt="Profile Preview" />
+            </div>
+          </div>
+
+
         </div>
+
 
         <!-- Second Column of Inputs -->
         <div class="form-column">
@@ -165,6 +181,11 @@
               Description is required
             </mat-error>
           </mat-form-field>
+
+
+
+
+
         </div>
       </div>
     </div>
@@ -175,7 +196,7 @@
         BACK
       </button>
 
-      <button mat-raised-button class="back-button" *ngIf="currentStep > 0" type="button" (click)="onBack()">
+      <button mat-raised-button class="back-button" id="back-button2" *ngIf="currentStep > 0" type="button" (click)="onBack()">
         BACK
       </button>
       <button mat-raised-button class="next-button" *ngIf="currentStep === 0" type="button" (click)="onNext()">

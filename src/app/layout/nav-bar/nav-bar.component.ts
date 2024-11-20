@@ -18,7 +18,7 @@ export class NavBarComponent {
   constructor(
     private router: Router, 
     private navigationStateService: NavigationStateService,
-    private cdr: ChangeDetectorRef  // Inject ChangeDetectorRef
+    private cdr: ChangeDetectorRef  
   ) {
     // Listen for route changes
     this.router.events.subscribe(() => {
