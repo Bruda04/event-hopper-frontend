@@ -1,36 +1,37 @@
-/* Set background color and center all content */
 :host {
-    background-color: var(--primary-color); /* Use your primary blue */
+    background-color: var(--primary-color); 
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Full viewport height */
+    height: 100vh; 
     margin: 0;
-    overflow: hidden; /* Prevent scrollbars */
+    overflow: hidden; 
 
 }
 
-/* Center the login container and add top padding */
+.mat-error {
+    color: #FFFF !important; /* Custom red color (Soft Red) */
+    font-size: 14px;  /* Adjust font size if needed */
+    font-weight: bold; /* Optionally, make the font bold */
+}
+
 .login-container {
     text-align: center;
     margin-top: -5%;
-    width: 100%; /* Take up full width */
-    max-width: 80%; /* Restrict max width for better readability */
+    width: 100%;
+    max-width: 80%; 
 }
 
-/* Style the image */
 .login-image {
-    max-width: 100px; /* Adjust size as needed */
-    height: auto; /* Maintain aspect ratio */
-    margin-bottom: 1em; /* Add space below the image */
+    max-width: 100px; 
+    height: auto; 
+    margin-bottom: 1em; 
 }
 
-/* Style the title */
 .login-title {
-    color: var(--beige); /* Beige text */
+    color: var(--beige);
 }
 
-/* Form and input fields */
 .login-form {
     display: flex;
     flex-direction: column; /* Stack inputs vertically */
@@ -39,24 +40,23 @@
 }
 
 mat-form-field {
-    width: 80%; /* Responsive width for input fields */
-    max-width: 400px; /* Limit max width for larger screens */
+    width: 80%; 
+    max-width: 400px; 
 }
 
-/* Style the button */
 .login-button {
-    width: 20%; /* Make button narrower than inputs */
-    padding: 0.8em; /* Adjust padding for a better look */
+    width: 20%; 
+    padding: 0.8em;
     font-weight: normal;
     background-color: var(--secondary-color) !important; 
     color: white !important;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
-    margin-top: 1em; /* Add spacing above the button */
+    margin-top: 1em; 
 }
 
 .login-button:hover {
-    background-color: var(--font-dark-blue); /* Change background on hover */
+    background-color: var(--font-dark-blue); 
     color: white;
 }
 
@@ -66,20 +66,19 @@ mat-form-field {
     font-size: 0.9em;
     text-decoration: none;
     color: var(--font-dark-blue);
-  }
-  
-  .regular-text a {
-    color: var(--yellow-accent);
+}
 
-  }
-  
-  .regular-text a:hover {
-    text-decoration: underline;
-  }
+.regular-text a {
+color: var(--yellow-accent);
+
+}
+
+.regular-text a:hover {
+text-decoration: underline;
+}
 
 
 
-/* Ensure consistent spacing between text links */
 .regular-text + .regular-text {
     margin-top: 0.5em;
 }
