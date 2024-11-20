@@ -6,6 +6,9 @@ import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { EventModule } from '../event/event.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CarouselModule } from 'primeng/carousel';
+import { ButtonModule } from 'primeng/button';
+import { TagModule } from 'primeng/tag';
 
 
 @NgModule({
@@ -18,10 +21,16 @@ import { ReactiveFormsModule } from '@angular/forms';
     RouterModule,
     EventModule,
     ReactiveFormsModule,
+    CarouselModule,
+    ButtonModule,
+    TagModule,
   ],
   exports: [
     NavBarComponent,
-    HomeComponent 
+    HomeComponent ,
+    CarouselModule,
+    ButtonModule,
+    TagModule,
   ]
 })
 export class LayoutModule { }

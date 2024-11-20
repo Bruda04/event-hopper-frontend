@@ -28,7 +28,7 @@
     margin-left: 8em;
     margin-right: 8em;
     display: grid;
-    grid-template-columns: 60% 40%; 
+    grid-template-columns: 55% 45%; 
     grid-gap: 1em; 
 }
 
@@ -37,7 +37,7 @@
     margin-left: 8em;
     margin-right: 8em;
     display: grid;
-    grid-template-columns: 40% 60%; 
+    grid-template-columns: 45% 55%; 
     grid-gap: 1em; 
 }
 
@@ -144,11 +144,17 @@
     grid-gap: 1em
 }
 
+/* .single-card-item:hover{
+    background-color: #e0f7fa !important; 
+    transition: transform 0.3s ease background-color 0.3s ease !important; 
+}  */
+
 .row-services{
     display: grid;
     grid-template-columns: 20% 20% 20% 20% 20% ; 
     margin-top: 1em;
-    grid-gap: 1em
+    grid-gap: 1em;
+    transition: transform 0.3s ease !important;
 
 }
 
@@ -221,4 +227,81 @@ mat-datepicker{                         /*odraditi bolji styling datepickera*/
     background-color: #118ab2; /* Promena boje na hover */
     color: #073B4C;
   }
+  
+/* Stilizuj dugme za prethodni slajd */
+::ng-deep .p-carousel-prev {
+    background-color: #073B4C;
+    width: 2.5em;
+    height: 2.5em;
+    color: white;
+    border-radius: 50%;
+    font-size: 1rem;
+    padding: 0.5em;
+    border: none;
+    margin: 2em;
+    margin-right: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Stilizuj dugme za sledeći slajd */
+  ::ng-deep .p-carousel-next {
+    background-color: #073B4C;
+    width: 2.5em;
+    height: 2.5em;
+    color: white;
+    border-radius: 50%;
+    font-size: 1rem;
+    padding: 0.5em;
+    border: none;
+    margin: 2em;
+    margin-right: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+ }
+  
+  /* Hover efekat na dugmadi */
+  ::ng-deep .p-carousel-prev:hover, ::ng-deep .p-carousel-next:hover {
+    background-color: #118ab2; /* Promena boje na hover */
+    color: #073B4C;
+  }
+
+  ::ng-deep .p-carousel-item.p-carousel-item-active	{
+    margin-right: 1.5em;
+    margin-left: 1.5em;
+  }
+
+
+  /* Kontrola razmaka između dugmića */
+  /* ::ng-deep .p-carousel-indicators {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;  
+  } */
+  
+  /* Stilizovanje dugmadi (tačaka) */
+  /* ::ng-deep .p-carousel-indicator > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;  
+    height: 16px; 
+    border-radius: 50%; 
+    background-color: #ccc; 
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  } */
+  
+  /* Aktivna tačka */
+  /* ::ng-deep .p-carousel-indicator > button.p-highlight {
+    background-color: #007bff; 
+  } */
+  
+  /* Hover efekat za dugmadi */
+  /* ::ng-deep .p-carousel-indicator > button:hover {
+    background-color: #0056b3; 
+  } */
   

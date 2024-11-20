@@ -31,27 +31,27 @@ export class HomeComponent {
       time: new Date('2024-12-15T10:00:00'),
       location: "123 Tech Street, Silicon Valley, CA",
       picture: "https://www.spiceworks.com/tech/tech-general/articles/top-10-tech-events-september/"
+    },
+    {
+      id: 2,
+      name: "Music Festival",
+      maxAttendence: 2000,
+      description: "An outdoor music festival featuring local and international artists.",
+      privacy: false,
+      time: new Date('2024-12-20T18:00:00'),
+      location: "Central Park, New York, NY",
+      picture: "https://via.placeholder.com/300x200"
+    },
+    {
+      id: 3,
+      name: "Private Networking Dinner",
+      maxAttendence: 50,
+      description: "Exclusive dinner for top professionals in the tech industry.",
+      privacy: true,
+      time: new Date('2024-12-18T20:00:00'),
+      location: "The Grand Hotel, Room 305, San Francisco, CA",
+      picture: "https://via.placeholder.com/300x200"
     }
-    // {
-    //   id: 2,
-    //   name: "Music Festival",
-    //   maxAttendence: 2000,
-    //   description: "An outdoor music festival featuring local and international artists.",
-    //   privacy: false,
-    //   time: new Date('2024-12-20T18:00:00'),
-    //   location: "Central Park, New York, NY",
-    //   picture: "https://via.placeholder.com/300x200"
-    // },
-    // {
-    //   id: 3,
-    //   name: "Private Networking Dinner",
-    //   maxAttendence: 50,
-    //   description: "Exclusive dinner for top professionals in the tech industry.",
-    //   privacy: true,
-    //   time: new Date('2024-12-18T20:00:00'),
-    //   location: "The Grand Hotel, Room 305, San Francisco, CA",
-    //   picture: "https://via.placeholder.com/300x200"
-    // }
   ];
 
 

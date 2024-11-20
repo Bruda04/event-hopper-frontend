@@ -7,18 +7,40 @@
   </div>
 
   <div class="grid-item">
-    <div *ngFor="let event of top5events; let i = index" class="carousel-item">
-      <app-event-card [event]="event"></app-event-card>
-    </div>
+      <p-carousel 
+        [value]="top5events" 
+        [numVisible]="1.5" 
+        [numScroll]="1" 
+        [showIndicators]="false"
+        [circular]="false">
+        <ng-template pTemplate="item" let-event>
+          <div class="carousel-item">
+            <app-event-card [event]="event"></app-event-card>
+          </div>
+        </ng-template>
+      </p-carousel>
   </div>
 </div>
 
 <div class="grid-container-top5solutions">
   <div class="grid-item">
     
-    <div *ngFor="let event of top5events; let i = index" class="carousel-item">
+    <!-- <div *ngFor="let event of top5events; let i = index" class="carousel-item">
       <app-event-card [event]="event"></app-event-card>
-    </div>
+    </div> -->
+
+    <p-carousel 
+        [value]="top5events" 
+        [numVisible]="1.5" 
+        [numScroll]="1"
+        [showIndicators]="false" 
+        [circular]="false">
+        <ng-template pTemplate="item" let-event>
+          <div class="carousel-item">
+            <app-event-card [event]="event"></app-event-card>
+          </div>
+        </ng-template>
+      </p-carousel>
     
   </div>
 
@@ -105,7 +127,7 @@
   <div class="events-cards">
     <div class="row-events">
 
-      <div *ngFor="let event of events; let i = index" class="carousel-item">
+      <div *ngFor="let event of events; let i = index" class="single-card-item">
         <app-event-card [event]="event"></app-event-card>
       </div>
       
@@ -216,7 +238,7 @@
 
     <div class="row-services">
 
-      <div *ngFor="let event of events; let i = index" class="carousel-item">
+      <div *ngFor="let event of events; let i = index" class="single-card-item">
         <app-event-card [event]="event"></app-event-card>
       </div>
       
@@ -236,9 +258,4 @@
 <button class="fixed-button" >
   <mat-icon>chat</mat-icon> Chat
 </button>
-
-
-
-
-
 
