@@ -9,63 +9,52 @@ import { Router } from '@angular/router';
 })
 export class PupRegisterComponent {
   registerForm: FormGroup;
-  currentStep: number = 0; // Track which step/page is being displayed
+  currentStep: number = 0;
+  hidePassword: boolean = true;
+  hideConfirmPassword: boolean = true;
+  imagePreview: string | null = null;
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.registerForm = this.fb.group({
-      // Step 1 Fields
+      // Step 1
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phoneNumber: [
-        '',
-        [Validators.required, Validators.pattern('^[0-9]{8,}$')],
-      ],
+      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{8,}$')]],
+      city: ['', Validators.required],
       address: ['', Validators.required],
 
-      // Step 2 Fields
-      city: ['', Validators.required],
-      businessName: ['', Validators.required],
-      businessCategory: ['', Validators.required],
-      terms: [false, Validators.requiredTrue], // Checkbox for agreeing to terms
+      // Step 2
+      companyEmail: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
+      companyName: ['', Validators.required],
+      companyPhoneNumber: ['', Validators.required],
+      companyCity: ['', Validators.required],
+      companyAddress: ['', Validators.required],
+      description: ['', Validators.required],
     });
   }
 
-  // Accessors for step 1 and step 2 fields
-  get step1Controls() {
-    return {
-      fullName: this.registerForm.get('fullName'),
-      email: this.registerForm.get('email'),
-      phoneNumber: this.registerForm.get('phoneNumber'),
-      address: this.registerForm.get('address'),
-    };
+  togglePasswordVisibility() {
+    this.hidePassword = !this.hidePassword;
   }
 
-  get step2Controls() {
-    return {
-      city: this.registerForm.get('city'),
-      businessName: this.registerForm.get('businessName'),
-      businessCategory: this.registerForm.get('businessCategory'),
-      terms: this.registerForm.get('terms'),
-    };
+  toggleConfirmPasswordVisibility() {
+    this.hideConfirmPassword = !this.hideConfirmPassword;
   }
 
-  // Navigate to the next step, validating the current step first
   onNext() {
-    if (this.currentStep === 0) {
-      if (this.isStepValid(0)) {
-        this.currentStep++;
-      }
+    if (this.currentStep === 0 && this.isStepValid(0)) {
+      this.currentStep++;
     }
   }
 
-  // Navigate back to the previous step
   onBack() {
     if (this.currentStep > 0) {
       this.currentStep--;
     }
   }
 
-  // Submit the form after final validation
   onSubmit() {
     if (this.isStepValid(1)) {
       console.log('Form Submitted:', this.registerForm.value);
@@ -73,29 +62,26 @@ export class PupRegisterComponent {
     }
   }
 
-  // Validate fields for a specific step
   isStepValid(step: number): boolean {
-    if (step === 0) {
-      Object.values(this.step1Controls).forEach((control) =>
-        control?.markAsTouched()
-      );
-      return (
-        this.step1Controls.fullName?.valid &&
-        this.step1Controls.email?.valid &&
-        this.step1Controls.phoneNumber?.valid &&
-        this.step1Controls.address?.valid
-      );
-    } else if (step === 1) {
-      Object.values(this.step2Controls).forEach((control) =>
-        control?.markAsTouched()
-      );
-      return (
-        this.step2Controls.city?.valid &&
-        this.step2Controls.businessName?.valid &&
-        this.step2Controls.businessCategory?.valid &&
-        this.step2Controls.terms?.valid
-      );
-    }
-    return false;
+    const fields = step === 0
+      ? ['fullName', 'email', 'phoneNumber', 'city', 'address']
+      : [
+          'companyEmail',
+          'password',
+          'confirmPassword',
+          'companyName',
+          'companyPhoneNumber',
+          'companyCity',
+          'companyAddress',
+          'description',
+        ];
+
+    fields.forEach((field) => this.registerForm.get(field)?.markAsTouched());
+    return fields.every((field) => this.registerForm.get(field)?.valid);
+  }
+
+  uploadImage() {
+    // Placeholder for upload logic
+    console.log('Upload Profile Picture button clicked');
   }
 }
