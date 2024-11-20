@@ -1,1 +1,8 @@
-<p>home works!</p>
+<div *ngIf="user">
+    <h1>Welcome, {{ user.name }}!</h1>
+    <p>Your role is: <strong>{{ user.role }}</strong></p>
+  </div>
+  <div *ngIf="!user">
+    <p>No user data found!</p>
+  </div>
+  

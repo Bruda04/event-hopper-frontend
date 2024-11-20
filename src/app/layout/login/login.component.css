@@ -15,6 +15,10 @@
     font-weight: bold; /* Optionally, make the font bold */
 }
 
+.mat-form-field .mat-icon{
+    margin-right: 20px;
+}
+
 .login-container {
     text-align: center;
     margin-top: -5%;
@@ -45,7 +49,7 @@ mat-form-field {
 }
 
 .login-button {
-    width: 20%; 
+    width: 30%; 
     padding: 0.8em;
     font-weight: normal;
     background-color: var(--secondary-color) !important; 

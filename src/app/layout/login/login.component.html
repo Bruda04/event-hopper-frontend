@@ -14,7 +14,10 @@
       <!-- Password Field -->
       <mat-form-field appearance="fill">
         <mat-label>Password</mat-label>
-        <input matInput placeholder="Password" type="password" formControlName="password" />
+        <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Password" formControlName="password" />
+        <button mat-icon-button type="button" (click)="togglePasswordVisibility()" matSuffix>
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
         <mat-error *ngIf="password?.hasError('required')">Password is required</mat-error>
         <mat-error *ngIf="password?.hasError('minlength')">Password must be at least 8 characters</mat-error>
         <mat-error *ngIf="password?.hasError('pattern')">Password must contain at least one uppercase letter and one number</mat-error>
