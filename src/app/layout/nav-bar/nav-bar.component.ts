@@ -10,8 +10,9 @@ import { NavigationStateService } from '../../authentication/services/navigation
 export class NavBarComponent {
   isLoginRoute: boolean = false;
   isRegisterRoute: boolean = false;
+  isHomeRoute: boolean = false;
   user:any;
-  loggedIn: boolean;
+  loggedIn: boolean = false;
 
   constructor(private router: Router, private navigationStateService: NavigationStateService) {
     // Listen for route changes
@@ -24,6 +25,8 @@ export class NavBarComponent {
       }
       this.isLoginRoute = this.router.url === '/login';
       this.isRegisterRoute = this.router.url === '/register';
+      this.isHomeRoute = this.router.url === '/home';
+      this.isHomeRoute = this.router.url === '/';
 
     });
   }

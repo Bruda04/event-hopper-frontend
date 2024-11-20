@@ -4,7 +4,8 @@ import { HomeComponent } from './layout/home/home.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { RegisterComponent } from './authentication/register/register.component';
 import { ProfileComponent } from './authentication/profile/profile.component';
-
+import { OrganizerRegisterComponent } from './authentication/register/organizer-register/organizer-register.component';
+import { PupRegisterComponent } from './authentication/register/pup-register/pup-register.component';
 
 import {
   PUPServiceProductManagementComponent
@@ -17,8 +18,11 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent },
   {path: 'profile', component: ProfileComponent },
   {path: 'register', component: RegisterComponent },
+  {path: 'register-pup', component: PupRegisterComponent },
+  {path: 'register-organizer', component:  OrganizerRegisterComponent},
   {path: 'home', component: HomeComponent}, 
-  {path: 'confirm-email', component: ConfirmEmailComponent}
+  {path: 'confirm-email', component: ConfirmEmailComponent},
+  {path: 'pup', component: PUPServiceProductManagementComponent}
 ];
 
 @NgModule({

@@ -4,7 +4,8 @@ import { LoginComponent } from './login/login.component';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
-import { OrganizerRegisterComponent } from './organizer-register/organizer-register.component';
+import { OrganizerRegisterComponent } from './register/organizer-register/organizer-register.component';
+import { PupRegisterComponent } from './register/pup-register/pup-register.component';
 import { LayoutModule } from '../layout/layout.module';
 import { ServicesModule } from '../services/services.module';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -13,14 +14,14 @@ import { AppRoutingModule } from '../app-routing.module';
 import { RouterModule } from '@angular/router'; // Import RouterModule
 
 
-
 @NgModule({
   declarations: [
     LoginComponent,
     ConfirmEmailComponent,
     ProfileComponent,
     RegisterComponent,
-    OrganizerRegisterComponent
+    OrganizerRegisterComponent,
+    PupRegisterComponent
   ],
   imports: [
     CommonModule,
