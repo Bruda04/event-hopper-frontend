@@ -22,7 +22,7 @@ const routes: Routes = [
   {path: 'register-organizer', component:  OrganizerRegisterComponent},
   {path: 'home', component: HomeComponent}, 
   {path: 'email-confirmation-sent', component: EmailConfirmationSentComponent}, 
-  {path: 'pup', component: PUPServiceProductManagementComponent}
+  {path: 'my-solutions', component: PUPServiceProductManagementComponent}
 ];
 
 @NgModule({

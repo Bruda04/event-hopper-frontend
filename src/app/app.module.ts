@@ -10,11 +10,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './infrastructure/material/material.module';
 import { HomeComponent } from './layout/home/home.component';
 import { EventModule } from './event/event.module';
-
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

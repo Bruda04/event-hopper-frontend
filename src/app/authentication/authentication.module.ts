@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
-import { ProfileComponent } from '../profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 import { OrganizerRegisterComponent } from './register/organizer-register/organizer-register.component';
 import { PupRegisterComponent } from './register/pup-register/pup-register.component';
@@ -16,11 +15,10 @@ import { EmailConfirmationSentComponent } from './email-confirmation-sent/email-
 @NgModule({
   declarations: [
     LoginComponent,
-    ProfileComponent,
     RegisterComponent,
     OrganizerRegisterComponent,
     PupRegisterComponent,
-    EmailConfirmationSentComponent
+    EmailConfirmationSentComponent,
   ],
   imports: [
     CommonModule,
@@ -33,7 +31,6 @@ import { EmailConfirmationSentComponent } from './email-confirmation-sent/email-
   ],
   exports: [
     LoginComponent,
-    ProfileComponent,
     RegisterComponent,
     OrganizerRegisterComponent
   ]
