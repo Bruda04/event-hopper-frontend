@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
-import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 import { OrganizerRegisterComponent } from './register/organizer-register/organizer-register.component';
@@ -11,17 +10,17 @@ import { ServicesModule } from '../services/services.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../infrastructure/material/material.module';
 import { AppRoutingModule } from '../app-routing.module';
-import { RouterModule } from '@angular/router'; // Import RouterModule
-
+import { RouterModule } from '@angular/router';
+import { EmailConfirmationSentComponent } from './email-confirmation-sent/email-confirmation-sent.component'; // Import RouterModule
 
 @NgModule({
   declarations: [
     LoginComponent,
-    ConfirmEmailComponent,
     ProfileComponent,
     RegisterComponent,
     OrganizerRegisterComponent,
-    PupRegisterComponent
+    PupRegisterComponent,
+    EmailConfirmationSentComponent
   ],
   imports: [
     CommonModule,
@@ -34,7 +33,6 @@ import { RouterModule } from '@angular/router'; // Import RouterModule
   ],
   exports: [
     LoginComponent,
-    ConfirmEmailComponent,
     ProfileComponent,
     RegisterComponent,
     OrganizerRegisterComponent

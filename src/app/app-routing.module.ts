@@ -6,11 +6,11 @@ import { RegisterComponent } from './authentication/register/register.component'
 import { ProfileComponent } from './authentication/profile/profile.component';
 import { OrganizerRegisterComponent } from './authentication/register/organizer-register/organizer-register.component';
 import { PupRegisterComponent } from './authentication/register/pup-register/pup-register.component';
+import { EmailConfirmationSentComponent } from './authentication/email-confirmation-sent/email-confirmation-sent.component';
 
 import {
   PUPServiceProductManagementComponent
 } from './services/pupservice-product-management/pupservice-product-management.component';
-import { ConfirmEmailComponent } from './authentication/confirm-email/confirm-email.component';
 
 
 const routes: Routes = [
@@ -21,7 +21,7 @@ const routes: Routes = [
   {path: 'register-pup', component: PupRegisterComponent },
   {path: 'register-organizer', component:  OrganizerRegisterComponent},
   {path: 'home', component: HomeComponent}, 
-  {path: 'confirm-email', component: ConfirmEmailComponent},
+  {path: 'email-confirmation-sent', component: EmailConfirmationSentComponent}, 
   {path: 'pup', component: PUPServiceProductManagementComponent}
 ];
 
