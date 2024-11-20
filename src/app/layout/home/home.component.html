@@ -26,14 +26,14 @@
   <div class="grid-item">
     
     <p-carousel 
-        [value]="top5events" 
+        [value]="top5solutions" 
         [numVisible]="1.5" 
         [numScroll]="1"
         [showIndicators]="false" 
         [circular]="false">
-        <ng-template pTemplate="item" let-event>
+        <ng-template pTemplate="item" let-service>
           <div class="carousel-item">
-            <app-event-card [event]="event"></app-event-card>
+            <app-service-card [service]="service"></app-service-card>
           </div>
         </ng-template>
       </p-carousel>
@@ -238,8 +238,8 @@
 
     <div class="row-services">
 
-      <div *ngFor="let event of events; let i = index" class="single-card-item">
-        <app-event-card [event]="event"></app-event-card>
+      <div *ngFor="let solution of solutions; let i = index" class="single-card-item">
+        <app-service-card [service]="solution"></app-service-card>
       </div>
       
     </div>

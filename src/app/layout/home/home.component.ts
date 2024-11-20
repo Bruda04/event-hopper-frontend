@@ -3,7 +3,7 @@ import { Event } from '../../event/model/event.model';
 import { Service } from '../../services/model/service.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-
+//import { getAll } from '../../services/services.service';
 
 @Component({
   selector: 'app-home',
@@ -54,6 +54,88 @@ export class HomeComponent {
     }
   ];
 
+  top5solutions: Service[] = [
+    {
+      id: 1,
+      name: "Web Development",
+      description: "Complete web development including front-end and back-end solutions.",
+      category: "Technology",
+      eventType: ["Conference", "Workshop"],
+      basePrice: 500,
+      discount: 10,
+      finalPrice: 450,
+      visible: true,
+      available: true,
+      duration: 8,
+      cancellationWindow: 24,
+      reservationWindow: 48,
+      autoAccept: true
+    },
+    {
+      id: 2,
+      name: "Graphic Design",
+      description: "Custom logo and branding design for businesses.",
+      category: "Design",
+      eventType: ["Meeting", "Workshop"],
+      basePrice: 300,
+      discount: 15,
+      finalPrice: 255,
+      visible: true,
+      available: true,
+      duration: 5,
+      cancellationWindow: 12,
+      reservationWindow: 24,
+      autoAccept: false
+    },
+    {
+      id: 3,
+      name: "SEO Optimization",
+      description: "Improving website visibility and search rankings.",
+      category: "Marketing",
+      eventType: ["Consultation", "Webinar"],
+      basePrice: 200,
+      discount: 5,
+      finalPrice: 190,
+      visible: true,
+      available: false,
+      duration: 6,
+      cancellationWindow: 48,
+      reservationWindow: 72,
+      autoAccept: true
+    },
+    {
+      id: 4,
+      name: "Mobile App Development",
+      description: "Design and development of mobile applications for Android and iOS.",
+      category: "Technology",
+      eventType: ["Workshop", "Conference"],
+      basePrice: 800,
+      discount: 20,
+      finalPrice: 640,
+      visible: true,
+      available: true,
+      duration: 10,
+      cancellationWindow: 24,
+      reservationWindow: 48,
+      autoAccept: false
+    },
+    {
+      id: 5,
+      name: "Digital Marketing Strategy",
+      description: "Developing strategies for online marketing, social media, and advertising.",
+      category: "Marketing",
+      eventType: ["Consultation", "Seminar"],
+      basePrice: 400,
+      discount: 10,
+      finalPrice: 360,
+      visible: true,
+      available: true,
+      duration: 7,
+      cancellationWindow: 12,
+      reservationWindow: 24,
+      autoAccept: true
+    },
+  ]
 
   events: Event[] = [
     {
@@ -157,6 +239,169 @@ export class HomeComponent {
       picture: "https://via.placeholder.com/300x200"
     }
 ];
+
+  solutions: Service[]=[
+    {
+      id: 1,
+      name: "Web Development",
+      description: "Complete web development including front-end and back-end solutions.",
+      category: "Technology",
+      eventType: ["Conference", "Workshop"],
+      basePrice: 500,
+      discount: 10,
+      finalPrice: 450,
+      visible: true,
+      available: true,
+      duration: 8,
+      cancellationWindow: 24,
+      reservationWindow: 48,
+      autoAccept: true
+    },
+    {
+      id: 2,
+      name: "Graphic Design",
+      description: "Custom logo and branding design for businesses.",
+      category: "Design",
+      eventType: ["Meeting", "Workshop"],
+      basePrice: 300,
+      discount: 15,
+      finalPrice: 255,
+      visible: true,
+      available: true,
+      duration: 5,
+      cancellationWindow: 12,
+      reservationWindow: 24,
+      autoAccept: false
+    },
+    {
+      id: 3,
+      name: "SEO Optimization",
+      description: "Improving website visibility and search rankings.",
+      category: "Marketing",
+      eventType: ["Consultation", "Webinar"],
+      basePrice: 200,
+      discount: 5,
+      finalPrice: 190,
+      visible: true,
+      available: false,
+      duration: 6,
+      cancellationWindow: 48,
+      reservationWindow: 72,
+      autoAccept: true
+    },
+    {
+      id: 4,
+      name: "Mobile App Development",
+      description: "Design and development of mobile applications for Android and iOS.",
+      category: "Technology",
+      eventType: ["Workshop", "Conference"],
+      basePrice: 800,
+      discount: 20,
+      finalPrice: 640,
+      visible: true,
+      available: true,
+      duration: 10,
+      cancellationWindow: 24,
+      reservationWindow: 48,
+      autoAccept: false
+    },
+    {
+      id: 5,
+      name: "Digital Marketing Strategy",
+      description: "Developing strategies for online marketing, social media, and advertising.",
+      category: "Marketing",
+      eventType: ["Consultation", "Seminar"],
+      basePrice: 400,
+      discount: 10,
+      finalPrice: 360,
+      visible: true,
+      available: true,
+      duration: 7,
+      cancellationWindow: 12,
+      reservationWindow: 24,
+      autoAccept: true
+    },
+    {
+      id: 6,
+      name: "Photography Services",
+      description: "Professional photography for events, products, and portraits.",
+      category: "Photography",
+      eventType: ["Event", "Wedding"],
+      basePrice: 600,
+      discount: 25,
+      finalPrice: 450,
+      visible: true,
+      available: true,
+      duration: 5,
+      cancellationWindow: 48,
+      reservationWindow: 72,
+      autoAccept: false
+    },
+    {
+      id: 7,
+      name: "Content Writing",
+      description: "High-quality blog posts, articles, and web content writing services.",
+      category: "Writing",
+      eventType: ["Consultation", "Workshop"],
+      basePrice: 150,
+      discount: 10,
+      finalPrice: 135,
+      visible: true,
+      available: true,
+      duration: 4,
+      cancellationWindow: 24,
+      reservationWindow: 48,
+      autoAccept: true
+    },
+    {
+      id: 8,
+      name: "Video Production",
+      description: "Creating promotional, training, and event videos.",
+      category: "Media",
+      eventType: ["Workshop", "Event"],
+      basePrice: 1000,
+      discount: 30,
+      finalPrice: 700,
+      visible: true,
+      available: true,
+      duration: 12,
+      cancellationWindow: 72,
+      reservationWindow: 96,
+      autoAccept: true
+    },
+    {
+      id: 9,
+      name: "IT Support",
+      description: "Providing technical support for hardware and software issues.",
+      category: "Technology",
+      eventType: ["Consultation", "Service"],
+      basePrice: 100,
+      discount: 5,
+      finalPrice: 95,
+      visible: true,
+      available: true,
+      duration: 3,
+      cancellationWindow: 24,
+      reservationWindow: 48,
+      autoAccept: false
+    },
+    {
+      id: 10,
+      name: "Virtual Assistant",
+      description: "Providing remote administrative and personal assistance.",
+      category: "Services",
+      eventType: ["Consultation", "Meeting"],
+      basePrice: 250,
+      discount: 10,
+      finalPrice: 225,
+      visible: true,
+      available: true,
+      duration: 8,
+      cancellationWindow: 24,
+      reservationWindow: 48,
+      autoAccept: true
+    }
+  ];
 
 
   currentIndex = 0;

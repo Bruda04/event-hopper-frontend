@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
+import { ServicesModule } from '../services/services.module';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { TagModule } from 'primeng/tag';
     MaterialModule,
     RouterModule,
     EventModule,
+    ServicesModule,
     ReactiveFormsModule,
     CarouselModule,
     ButtonModule,
