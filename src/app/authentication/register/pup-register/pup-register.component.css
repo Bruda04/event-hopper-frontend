@@ -46,8 +46,10 @@
   }
 
   .image-preview img {
-    max-width: 100px;
-    max-height: 100px;
+    /**max-width: 100px;
+    max-height: 100px;**/
+    max-width: 150px;
+    margin-top: 1em;
   }
 
 
@@ -85,7 +87,7 @@
     width: 100%; /* Make sure the button container spans the full width */
   }
   
-  .back-button, .next-button {
+  .back-button  {
     width: 30%; /* Set width to less than 50% to allow space between the buttons */
     padding: 0.8em;
     font-weight: normal;
@@ -99,7 +101,7 @@
     background-color: var(--primary-color) !important;
   }
   
-  .back-button:hover, .next-button:hover {
+  .back-button:hover {
     background-color: var(--font-dark-blue);
     color: white;
   }
@@ -112,13 +114,27 @@
   }
   
   
-  .upload-button {
+  .upload-button{
     width: 100%;
     margin-top: 5px;
     font-weight: normal;
     background-color: var(--secondary-color) !important;
     color: white;
   }
+
+  .next-button, .register-button {
+    width: 30%;
+    margin-top: 5px;
+    font-weight: normal;
+    background-color: var(--secondary-color) !important;
+    color: white;
+  }
+
+  .next-button:hover, .register-button:hover {
+    background-color: var(--font-dark-blue);
+    color: white;
+  }
+  
   
   .profile-pic {
     display: flex;

@@ -81,14 +81,15 @@
         <div class="profile-pic">
           <input type="file" id="profilePic" (change)="onFileSelected($event)" style="display: none;" />
           <button mat-raised-button class="upload-button" (click)="triggerFileInput()">UPLOAD PROFILE PICTURE (OPTIONAL)</button>
+          <div *ngIf="imagePreview" class="image-preview">
+            <img [src]="imagePreview" alt="Profile Preview" />
+          </div>
         </div>
       </div>
     </div>
 
 
-    <div *ngIf="imagePreview" class="image-preview">
-      <img [src]="imagePreview" alt="Profile Picture Preview" />
-    </div>
+
     <div class="button-group">
       <button mat-raised-button class="back-button" routerLink="/register">BACK</button>
       <button mat-raised-button 

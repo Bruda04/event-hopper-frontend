@@ -84,4 +84,24 @@ export class PupRegisterComponent {
     // Placeholder for upload logic
     console.log('Upload Profile Picture button clicked');
   }
+
+
+  
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imagePreview = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  triggerFileInput() {
+    const fileInput = document.getElementById('profilePic') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.click();
+    }
+  }
 }

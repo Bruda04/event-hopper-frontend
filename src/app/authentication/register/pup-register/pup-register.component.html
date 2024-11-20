@@ -1,4 +1,5 @@
 <div class="register-container">
+  <img src="logo.png" alt="Logo Image" class="register-image">
   <h3 class="register-title">Product/Service Provider</h3>
   <label>Please provide us with some information about yourself.</label>
 
@@ -57,10 +58,12 @@
             </mat-error>
           </mat-form-field>
 
+
+
+
           <div class="profile-pic">
-            <button mat-raised-button type="button" (click)="uploadImage()">
-              Upload Profile Picture
-            </button>
+            <input type="file" id="profilePic" (change)="onFileSelected($event)" style="display: none;" />
+            <button mat-raised-button class="upload-button" (click)="triggerFileInput()">UPLOAD PROFILE PICTURE (OPTIONAL)</button>
             <div *ngIf="imagePreview" class="image-preview">
               <img [src]="imagePreview" alt="Profile Preview" />
             </div>
@@ -101,25 +104,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="fill">
-            <mat-label>Company Name</mat-label>
-            <input matInput placeholder="Company Name" formControlName="companyName" />
-            <mat-error *ngIf="registerForm.get('companyName')?.hasError('required')">
-              Company Name is required
-            </mat-error>
-          </mat-form-field>
 
-          <mat-form-field appearance="fill">
-            <mat-label>Phone Number</mat-label>
-            <input matInput placeholder="Phone Number" formControlName="companyPhoneNumber" />
-            <mat-error *ngIf="registerForm.get('companyPhoneNumber')?.hasError('required')">
-              Phone Number is required
-            </mat-error>
-          </mat-form-field>
-        </div>
-
-        <!-- Second Column of Inputs -->
-        <div class="form-column">
           <mat-form-field appearance="fill">
             <mat-label>Confirm Password</mat-label>
             <input
@@ -133,6 +118,27 @@
             </button>
             <mat-error *ngIf="registerForm.get('confirmPassword')?.hasError('passwordMismatch')">
               Passwords do not match
+            </mat-error>
+          </mat-form-field>
+
+          
+
+          <mat-form-field appearance="fill">
+            <mat-label>Phone Number</mat-label>
+            <input matInput placeholder="Phone Number" formControlName="companyPhoneNumber" />
+            <mat-error *ngIf="registerForm.get('companyPhoneNumber')?.hasError('required')">
+              Phone Number is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <!-- Second Column of Inputs -->
+        <div class="form-column">
+          <mat-form-field appearance="fill">
+            <mat-label>Company Name</mat-label>
+            <input matInput placeholder="Company Name" formControlName="companyName" />
+            <mat-error *ngIf="registerForm.get('companyName')?.hasError('required')">
+              Company Name is required
             </mat-error>
           </mat-form-field>
 
@@ -165,6 +171,10 @@
 
     <!-- Navigation Buttons -->
     <div class="button-group">
+      <button mat-raised-button class="back-button" *ngIf="currentStep == 0" type="button" [routerLink]="'/register'">
+        BACK
+      </button>
+
       <button mat-raised-button class="back-button" *ngIf="currentStep > 0" type="button" (click)="onBack()">
         BACK
       </button>
