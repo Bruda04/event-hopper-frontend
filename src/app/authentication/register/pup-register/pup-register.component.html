@@ -61,13 +61,17 @@
   
 
 
+      <div *ngIf="imagePreview" class="image-preview">
+        <img [src]="imagePreview" alt="Profile Picture Preview" />
+      </div>
+
+
+
       <div class="button-group">
-        <div *ngIf="imagePreview" class="image-preview">
-          <img [src]="imagePreview" alt="Profile Picture Preview" />
-        </div>
 
 
         <button mat-raised-button class="back-button" routerLink="/register">BACK</button>
+        
         <button mat-raised-button 
                 class="next-button"
                 (click)="onSubmit()">NEXT</button>
