@@ -10,6 +10,7 @@ import { ServicesModule } from '../services/services.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../infrastructure/material/material.module';
 import { AppRoutingModule } from '../app-routing.module';
+import { RouterModule } from '@angular/router'; // Import RouterModule
 
 
 
@@ -27,7 +28,8 @@ import { AppRoutingModule } from '../app-routing.module';
     ServicesModule,
     ReactiveFormsModule,
     MaterialModule,
-    AppRoutingModule
+    AppRoutingModule,
+    RouterModule
   ],
   exports: [
     LoginComponent,

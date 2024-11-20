@@ -20,7 +20,7 @@
         </button>
         <mat-error *ngIf="password?.hasError('required')">Password is required</mat-error>
         <mat-error *ngIf="password?.hasError('minlength')">Password must be at least 8 characters</mat-error>
-        <mat-error *ngIf="password?.hasError('pattern')">Password must contain at least one uppercase letter and one number</mat-error>
+        <mat-error *ngIf="password?.hasError('pattern')">Password must contain at least one uppercase and one number</mat-error>
       </mat-form-field>
   
       <!-- Submit Button -->

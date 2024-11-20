@@ -9,10 +9,10 @@
 
 }
 
-.mat-error {
-    color: #FFFF !important; /* Custom red color (Soft Red) */
-    font-size: 14px;  /* Adjust font size if needed */
-    font-weight: bold; /* Optionally, make the font bold */
+mat-error {
+    color: var(--error-color-lighter) !important;
+    font-size: 14px;  
+    display: block;
 }
 
 .mat-form-field .mat-icon{
