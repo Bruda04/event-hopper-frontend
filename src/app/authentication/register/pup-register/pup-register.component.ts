@@ -57,6 +57,27 @@ export class PupRegisterComponent {
 
   onSubmit() {
     if (this.isStepValid(1)) {
+        const formData = {
+        personalInfo: {
+          fullName: this.registerForm.get('fullName')?.value,
+          email: this.registerForm.get('email')?.value,
+          phoneNumber: this.registerForm.get('phoneNumber')?.value,
+          city: this.registerForm.get('city')?.value,
+          address: this.registerForm.get('address')?.value,
+        },
+        companyInfo: {
+          companyEmail: this.registerForm.get('companyEmail')?.value,
+          password: this.registerForm.get('password')?.value,
+          confirmPassword: this.registerForm.get('confirmPassword')?.value,
+          companyName: this.registerForm.get('companyName')?.value,
+          companyPhoneNumber: this.registerForm.get('companyPhoneNumber')?.value,
+          companyCity: this.registerForm.get('companyCity')?.value,
+          companyAddress: this.registerForm.get('companyAddress')?.value,
+          description: this.registerForm.get('description')?.value,
+        },
+      };
+      console.log(formData);
+
       console.log('Form Submitted:', this.registerForm.value);
       this.router.navigate(['/email-confirmation-sent']);
     }
