@@ -6,7 +6,7 @@ import { PUPServiceManagementComponent } from './pupservice-management/pupservic
 import { CreateServiceComponent } from './create-service/create-service.component';
 import { EditServiceComponent } from './edit-service/edit-service.component';
 import {ReactiveFormsModule} from '@angular/forms';
-
+import { ServiceCardComponent } from './service-card/service-card.component';
 
 
 @NgModule({
@@ -14,12 +14,16 @@ import {ReactiveFormsModule} from '@angular/forms';
     PUPServiceProductManagementComponent,
     PUPServiceManagementComponent,
     CreateServiceComponent,
-    EditServiceComponent
+    EditServiceComponent,
+    ServiceCardComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
+  ],
+  exports:[
+    ServiceCardComponent
   ]
 })
 export class ServicesModule { }

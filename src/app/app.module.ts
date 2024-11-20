@@ -8,6 +8,8 @@ import { ServicesModule } from './services/services.module';
 import { AuthenticationModule } from './authentication/authentication.module'; // Import AuthenticationModule here
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './infrastructure/material/material.module';
+import { HomeComponent } from './layout/home/home.component';
+import { EventModule } from './event/event.module';
 
 
 @NgModule({
@@ -19,10 +21,12 @@ import { MaterialModule } from './infrastructure/material/material.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
-    ServicesModule,
+
     AuthenticationModule, 
     ReactiveFormsModule, 
     MaterialModule
+    EventModule,
+    ServicesModule
   ],
   providers: [],
   bootstrap: [AppComponent]
