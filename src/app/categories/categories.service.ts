@@ -54,6 +54,7 @@ export class CategoriesService {
 
   add(category: Category): void {
     category.id = Math.random();
+    category.status = "APPROVED";
     this.categoriesList.push(category);
   }
 

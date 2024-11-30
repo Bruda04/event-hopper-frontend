@@ -6,6 +6,8 @@ import {CategoriesService} from '../categories.service';
 import {MatDialogRef} from '@angular/material/dialog';
 import {EditServiceComponent} from '../../services/edit-service/edit-service.component';
 import {CreateServiceComponent} from '../../services/create-service/create-service.component';
+import {EditCategoryComponent} from '../edit-category/edit-category.component';
+import {CreateCategoryComponent} from '../create-category/create-category.component';
 
 @Component({
   selector: 'app-admin-approved-categories-management',
@@ -43,11 +45,34 @@ export class AdminApprovedCategoriesManagementComponent implements OnInit, After
   }
 
   edit(element: Category):void {
+    const dialogRef: MatDialogRef<EditCategoryComponent> = this.dialog.open(EditCategoryComponent, {
+      minWidth: '30vw',
+      minHeight: '40vh',
+      data: element
+    });
 
+    dialogRef.afterClosed().subscribe((updatedCategory: Category | null) => {
+      if (updatedCategory) {
+        this.categoriesService.update(updatedCategory);
+        this.categories = this.categoriesService.getApproved();
+        this.dataSource.data = this.categories;
+      }
+    });
   }
 
   create(): void {
+    const dialogRef: MatDialogRef<CreateCategoryComponent> = this.dialog.open(CreateCategoryComponent, {
+      minWidth: '30vw',
+      minHeight: '40vh'
+    });
 
+    dialogRef.afterClosed().subscribe((newCategory: Category | null) => {
+      if (newCategory) {
+        this.categoriesService.add(newCategory);
+        this.categories = this.categoriesService.getApproved();
+        this.dataSource.data = this.categories
+      }
+    });
   }
 
 }

@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Edit Category</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="editCategoryForm">
+    <div class="form-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Enter category name" name="name" type="text" formControlName="name" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea matInput placeholder="Enter description" name="description" formControlName="description"></textarea>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="actions-container">
+  <button mat-raised-button mat-dialog-close class="cancel-button">CANCEL</button>
+  <button mat-raised-button (click)="update()" class="primary-button">SAVE</button>
+</mat-dialog-actions>
