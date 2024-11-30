@@ -26,8 +26,24 @@ const dataSource = [
     name: "Bath Salts",
     description: "Relaxing bath salts",
     status: "APPROVED"
+  },
+  {
+    name: "Face Masks",
+    description: "Hydrating and cleansing masks",
+    status: "PENDING"
+  },
+  {
+    name: "Room Sprays",
+    description: "Refreshing room sprays",
+    status: "PENDING"
+  },
+  {
+    name: "Massage Oils",
+    description: "Therapeutic massage oils",
+    status: "PENDING"
   }
 ];
+
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +68,10 @@ export class CategoriesService {
     return this.categoriesList.filter((c: Category) => c.status === "APPROVED");
   }
 
+  getSuggestions(): Category[] {
+    return this.categoriesList.filter((c: Category) => c.status === "PENDING");
+  }
+
   add(category: Category): void {
     category.id = Math.random();
     category.status = "APPROVED";
@@ -65,5 +85,10 @@ export class CategoriesService {
   update(category: Category): void {
     const index: number = this.categoriesList.findIndex((c: Category) => c.id === category.id);
     this.categoriesList[index] = category;
+  }
+
+  approve(category: Category) {
+    category.status = "APPROVED"
+    this.update(category);
   }
 }

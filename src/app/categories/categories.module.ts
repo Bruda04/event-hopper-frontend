@@ -8,6 +8,8 @@ import { CreateCategoryComponent } from './create-category/create-category.compo
 import { EditCategoryComponent } from './edit-category/edit-category.component';
 import {PaginatorModule} from 'primeng/paginator';
 import {ReactiveFormsModule} from '@angular/forms';
+import { ApproveSuggestionComponent } from './approve-suggestion/approve-suggestion.component';
+import { EditSuggestionComponent } from './edit-suggestion/edit-suggestion.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,8 @@ import {ReactiveFormsModule} from '@angular/forms';
     AdminSuggestionsManagementComponent,
     CreateCategoryComponent,
     EditCategoryComponent,
+    ApproveSuggestionComponent,
+    EditSuggestionComponent,
   ],
   imports: [
     CommonModule,

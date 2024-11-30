@@ -1,0 +1,33 @@
+<div class="component">
+  <h2 mat-dialog-title>Choose fitting category <br> for <b>Candles</b></h2>
+
+
+  <mat-dialog-content>
+    <form [formGroup]="editProductsCategoryForm">
+      <div class="form-container">
+        <mat-form-field appearance="fill">
+          <mat-label>Category</mat-label>
+          <mat-select formControlName="category">
+            <mat-option value="Category 1">
+              Category 1
+            </mat-option>
+            <mat-option value="Category 1">
+              Category 2
+            </mat-option>
+            <mat-option value="Category 1">
+              Category 3
+            </mat-option>
+            <mat-option value="Category 1">
+              Category 4
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="actions-container">
+    <button mat-raised-button mat-dialog-close class="cancel-button">CANCEL</button>
+    <button mat-raised-button (click)="onSave()" class="primary-button">SAVE</button>
+  </mat-dialog-actions>
+</div>

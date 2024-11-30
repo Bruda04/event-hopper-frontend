@@ -1,16 +1,15 @@
+.component {
+  text-align: center;
+  color: var(--font-dark-blue);
+}
+
 h2 {
-  align-self: center;
-  color: var(--font-dark-blue) !important;
+  font-size: 20px;
+  margin-bottom: 10px;
 }
 
-.form-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem; /* Adds spacing between fields */
-}
-
-.mat-form-field {
-  width: 100%; /* Ensures fields take up full width */
+h3 {
+  font-weight: bold;
 }
 
 .actions-container {
@@ -34,3 +33,4 @@ h2 {
 .cancel-button {
   background-color: var(--primary-color);
 }
+

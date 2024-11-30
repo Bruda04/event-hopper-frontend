@@ -1,3 +1,8 @@
+h2 {
+  align-self: center;
+  color: var(--font-dark-blue) !important;
+}
+
 .form-container {
   display: flex;
   flex-direction: column;
