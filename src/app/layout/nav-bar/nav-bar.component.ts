@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavigationStateService } from '../../authentication/services/navigation-state.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { User } from '../../authentication/services/user.modul';
+import { NotificationComponent } from '../../notification/notification/notification.component';
 
 @Component({
   selector: 'app-nav-bar',
@@ -16,10 +17,12 @@ export class NavBarComponent {
   user: User;
   loggedIn: boolean = false;
 
+  showNotificationsPanel: boolean = false;
+
   constructor(
     private router: Router, 
     private navigationStateService: NavigationStateService,
-    private cdr: ChangeDetectorRef  
+    private cdr: ChangeDetectorRef  ,
   ) {
     // Listen for route changes
     this.router.events.subscribe(() => {
@@ -48,5 +51,12 @@ export class NavBarComponent {
 
     // Manually trigger change detection to update the view
     this.cdr.detectChanges();
+  }
+
+  //@ViewChild('notificationContainer', { read: ViewContainerRef }) container!: ViewContainerRef;
+
+  
+  toggleNotificationsPanel(): void {
+    this.showNotificationsPanel = !this.showNotificationsPanel;
   }
 }

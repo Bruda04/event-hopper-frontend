@@ -10,6 +10,7 @@ import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { ServicesModule } from '../services/services.module';
+import { NotificationModule } from '../notification/notification.module';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { ServicesModule } from '../services/services.module';
     CarouselModule,
     ButtonModule,
     TagModule,
+    NotificationModule,
   ],
   exports: [
     NavBarComponent,
