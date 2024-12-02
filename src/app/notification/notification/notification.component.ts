@@ -10,10 +10,10 @@ export class NotificationComponent {
     mute = false;
 
     notifications = [
-      { title: 'Metal Head Concert CANCELED', content: 'A dialog is a type of modal window that appears in front.' },
-    { title: 'Florist “Amina” sent you a message', content: 'A dialog is a type of modal window that appears in front.' },
-    { title: 'Anika Molaw accepted your invite!', content: 'A dialog is a type of modal window that appears in front.' },
-    { title: '“Hiko” Gallery Opening Postponed', content: 'A dialog is a type of modal window that appears in front.' },
+      { title: 'Metal Head Concert CANCELED',timestamp:'02/12/2024 23:05', content: 'A dialog is a type of modal window that appears in front.' },
+    { title: 'Florist “Amina” sent you a message',timestamp:'01/12/2024 10:05', content: 'A dialog is a type of modal window that appears in front.' },
+    { title: 'Anika Molaw accepted your invite!',timestamp:'29/11/2024 23:00', content: 'A dialog is a type of modal window that appears in front.' },
+    { title: '“Hiko” Gallery Opening Postponed',timestamp:'26/11/2024 17:05', content: 'A dialog is a type of modal window that appears in front.' },
  
     ];
 

@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, HostListener, ViewChild, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavigationStateService } from '../../authentication/services/navigation-state.service';
 import { ChangeDetectorRef } from '@angular/core';
@@ -58,5 +58,16 @@ export class NavBarComponent {
   
   toggleNotificationsPanel(): void {
     this.showNotificationsPanel = !this.showNotificationsPanel;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const clickedInside = (event.target as HTMLElement).closest('app-notification');
+    const clickedButton = (event.target as HTMLElement).closest('.notification-button');
+    
+
+    if (!clickedInside && !clickedButton) {
+      this.showNotificationsPanel = false;
+    }
   }
 }

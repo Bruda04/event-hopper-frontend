@@ -8,8 +8,8 @@
     <button mat-icon-button class="profile-button small-button" [routerLink]="'/profile'" aria-label="Profile" *ngIf="loggedIn  && !isLoginRoute">
         <mat-icon>account_circle</mat-icon>
         </button>
-      <button mat-icon-button class="notification-button small-button" aria-label="Notifications" (click)="toggleNotificationsPanel()">
-      <!-- <button mat-icon-button class="notification-button small-button" aria-label="Notifications"  *ngIf="loggedIn  && !isLoginRoute"> -->
+      <!-- <button mat-icon-button class="notification-button small-button" aria-label="Notifications" (click)="toggleNotificationsPanel()"> -->
+      <button mat-icon-button class="notification-button small-button" aria-label="Notifications" (click)="toggleNotificationsPanel()" *ngIf="loggedIn  && !isLoginRoute">
         <mat-icon>notifications</mat-icon>
       </button>
       <button mat-raised-button class="nav-button" id="logout_nav_btn" [routerLink]="'/login'" *ngIf="loggedIn && !isLoginRoute" (click)="logout()">LOG OUT</button>

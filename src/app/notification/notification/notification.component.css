@@ -2,47 +2,46 @@
 .container {
     width: 25em;
     height: 30em;
-    background-color: #0D5B75;
+    background-color: var(--secondary-color);
     position: fixed;
     z-index: 1000;
     display: flex;
-    right: 20em;
+    right: 15em;
     border-radius: 20px;
     flex-direction: column;
-    
 }
 
 .notifications{
     margin-bottom: 1em;
-    padding-right: 1em; /* Dodaj malo razmaka za scrollbar */
-    overflow-y: auto; /* Omogućeno vertikalno skrolovanje */
-    scrollbar-width: thin; /* Tanak scrollbar za Firefox */
-    scrollbar-color: #FFFDF5 #0D5B75; /* Svetlo plavi scrollbar sa tamnom trakom pozadine */
+    padding-right: 1em; 
+    overflow-y: auto; 
+    scrollbar-width: thin; 
+    scrollbar-color: var(--light-beige) var(--secondary-color); 
 
 }
 
 .notifications::-webkit-scrollbar {
-    width: 1em; /* Širina scrollbara */
+    width: 1em; 
   }
   
-  .notifications::-webkit-scrollbar-thumb {
-    background-color: #FFFDF5; 
-    border-radius: 20px !important; /* Zaobljeni scrollbar */
-    border: 2px solid #0D5B75; /* Prostor oko scrollbara kako bi bio tanji */
-  }
+.notifications::-webkit-scrollbar-thumb {
+background-color: var(--light-beige); 
+border-radius: 20px !important; 
+border: 2px solid var(--secondary-color); 
+}
   
-  .notifications::-webkit-scrollbar-track {
-    background-color: #0D5B75; /* Tamno plava pozadina trake */
-  }
-
+.notifications::-webkit-scrollbar-track {
+    background-color: var(--secondary-color);
+}
 
 mat-slide-toggle{
     margin: 1em;
+    color: var(--light-beige) ;
 }
 
 .single-notification{
-    background-color: #FFFDF5;
-    color: #0D5B75;
+    background-color: var(--light-beige);
+    color: var(--font-dark-blue);
     border-radius: 20px;
     margin: 1em;
     padding: 1em;
@@ -50,30 +49,18 @@ mat-slide-toggle{
 }
 
 .single-notification .title {
-    font-weight: bold; /* Bold tekst za naslov */
-    margin-bottom: 5px; /* Razmak ispod naslova */
+    font-size: 1.2em;
+    margin-bottom: 0.5em; 
   }
   
-  /* Sadržaj notifikacije */
   .single-notification .content {
-    font-size: 0.9em; /* Manji font za sadržaj */
-    line-height: 1.4; /* Veća čitljivost teksta */
+    font-size: 0.8em; 
+    line-height: 1.4; 
   }
 
-/* .mat-slide-toggle-bar {
-    background-color: #d1d1d1 !important;
-    height: 10px !important;
+  .single-notification .timestamp {
+    position: relative;
+    font-size: 0.5em;
+    text-align: right;
+    right: 1em;
   }
-  
-  .mat-slide-toggle-thumb {
-    background-color: #ff5722 !important;
-  }
-  
-  .mat-checked .mat-slide-toggle-bar {
-    background-color: #4caf50 !important;
-  }
-  
-  .mat-checked .mat-slide-toggle-thumb {
-    background-color: #ffffff !important;
-  }
-   */
