@@ -22,6 +22,7 @@ export class CreateCategoryComponent {
       const category :Category = {
         name: this.createCategoryForm.value.name,
         description: this.createCategoryForm.value.description,
+        isDeletable: true
       };
       console.log(category);
       this.dialogRef.close(category);

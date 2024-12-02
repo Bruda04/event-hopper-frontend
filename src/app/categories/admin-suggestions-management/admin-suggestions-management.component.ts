@@ -5,6 +5,7 @@ import {MatDialog, MatSort} from '../../infrastructure/material/material.module'
 import {CategoriesService} from '../categories.service';
 import {ApproveSuggestionComponent} from '../approve-suggestion/approve-suggestion.component';
 import {EditSuggestionComponent} from '../edit-suggestion/edit-suggestion.component';
+import {CategorySuggestion} from '../model/categorySuggestion.model';
 
 @Component({
   selector: 'app-admin-suggestions-management',
@@ -12,13 +13,12 @@ import {EditSuggestionComponent} from '../edit-suggestion/edit-suggestion.compon
   styleUrl: './admin-suggestions-management.component.css'
 })
 export class AdminSuggestionsManagementComponent implements OnInit, AfterViewInit {
-  categories: Category[];
-  dataSource: MatTableDataSource<Category>
+  categories: CategorySuggestion[];
+  dataSource: MatTableDataSource<CategorySuggestion>
 
   displayedColumns: string[] = [
     'name',
     'forProduct',
-    'description',
     'actions',
   ];
 
@@ -36,7 +36,7 @@ export class AdminSuggestionsManagementComponent implements OnInit, AfterViewIni
     this.dataSource.sort = this.sort;
   }
 
-  edit(element: Category):void {
+  edit(element: CategorySuggestion):void {
     const dialogRef = this.dialog.open(EditSuggestionComponent, {
       minWidth: '30vw',
       data: element,
@@ -44,12 +44,13 @@ export class AdminSuggestionsManagementComponent implements OnInit, AfterViewIni
 
     dialogRef.afterClosed().subscribe((result: boolean | null) => {
       if (result) {
+        this.categoriesService.reject(element);
         this.dataSource.data = this.categoriesService.getSuggestions();
       }
     });
   }
 
-  approve(element: Category): void {
+  approve(element: CategorySuggestion): void {
     const dialogRef = this.dialog.open(ApproveSuggestionComponent, {
       minWidth: '30vw',
       data: element.name,

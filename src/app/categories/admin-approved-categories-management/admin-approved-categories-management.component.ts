@@ -4,8 +4,6 @@ import {Category} from '../model/category.model';
 import {MatDialog, MatSort} from '../../infrastructure/material/material.module';
 import {CategoriesService} from '../categories.service';
 import {MatDialogRef} from '@angular/material/dialog';
-import {EditServiceComponent} from '../../services/edit-service/edit-service.component';
-import {CreateServiceComponent} from '../../services/create-service/create-service.component';
 import {EditCategoryComponent} from '../edit-category/edit-category.component';
 import {CreateCategoryComponent} from '../create-category/create-category.component';
 

@@ -1,31 +1,37 @@
 import { Injectable } from '@angular/core';
 import {Category} from './model/category.model';
+import {CategorySuggestion} from './model/categorySuggestion.model';
 
 const dataSource = [
   {
     name: "Candles",
     description: "Various scented candles",
-    status: "APPROVED"
+    status: "APPROVED",
+    isDeletable: false,
   },
   {
     name: "Incense",
     description: "Aromatic incense sticks",
-    status: "APPROVED"
+    status: "APPROVED",
+    isDeletable: true,
   },
   {
     name: "Essential Oils",
     description: "Pure essential oils",
-    status: "APPROVED"
+    status: "APPROVED",
+    isDeletable: false,
   },
   {
     name: "Diffusers",
     description: "Aromatic diffusers",
-    status: "APPROVED"
+    status: "APPROVED",
+    isDeletable: false
   },
   {
     name: "Bath Salts",
     description: "Relaxing bath salts",
-    status: "APPROVED"
+    status: "APPROVED",
+    isDeletable: false
   },
   {
     name: "Face Masks",
@@ -58,7 +64,8 @@ export class CategoriesService {
         id: Math.random(),
         name: data.name,
         description: data.description,
-        status: data.status
+        status: data.status,
+        isDeletable: data.isDeletable || false
       }
       this.categoriesList.push(category);
     }
@@ -68,8 +75,16 @@ export class CategoriesService {
     return this.categoriesList.filter((c: Category) => c.status === "APPROVED");
   }
 
-  getSuggestions(): Category[] {
-    return this.categoriesList.filter((c: Category) => c.status === "PENDING");
+  getSuggestions(): CategorySuggestion[] {
+    return this.categoriesList
+      .filter((c: Category) => c.status === "PENDING")
+      .map((c: Category) => ({
+        categoryId: c.id,
+        name: c.name,
+        status: c.status,
+        productId: Math.random(),
+        })
+      );
   }
 
   add(category: Category): void {
@@ -87,8 +102,13 @@ export class CategoriesService {
     this.categoriesList[index] = category;
   }
 
-  approve(category: Category) {
-    category.status = "APPROVED"
-    this.update(category);
+  approve(suggestion: CategorySuggestion) {
+    const index: number = this.categoriesList.findIndex((c: Category) => c.id === suggestion.categoryId);
+    this.categoriesList[index].status = "APPROVED";
+  }
+
+  reject(suggestion: CategorySuggestion) {
+    const index: number = this.categoriesList.findIndex((c: Category) => c.id === suggestion.categoryId);
+    this.categoriesList.splice(index, 1);
   }
 }
