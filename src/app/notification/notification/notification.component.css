@@ -1,9 +1,79 @@
+
 .container {
+    width: 25em;
+    height: 30em;
     background-color: #0D5B75;
     position: fixed;
     z-index: 1000;
     display: flex;
-    right: 15em;
+    right: 20em;
     border-radius: 20px;
+    flex-direction: column;
     
 }
+
+.notifications{
+    margin-bottom: 1em;
+    padding-right: 1em; /* Dodaj malo razmaka za scrollbar */
+    overflow-y: auto; /* Omogućeno vertikalno skrolovanje */
+    scrollbar-width: thin; /* Tanak scrollbar za Firefox */
+    scrollbar-color: #FFFDF5 #0D5B75; /* Svetlo plavi scrollbar sa tamnom trakom pozadine */
+
+}
+
+.notifications::-webkit-scrollbar {
+    width: 1em; /* Širina scrollbara */
+  }
+  
+  .notifications::-webkit-scrollbar-thumb {
+    background-color: #FFFDF5; 
+    border-radius: 20px !important; /* Zaobljeni scrollbar */
+    border: 2px solid #0D5B75; /* Prostor oko scrollbara kako bi bio tanji */
+  }
+  
+  .notifications::-webkit-scrollbar-track {
+    background-color: #0D5B75; /* Tamno plava pozadina trake */
+  }
+
+
+mat-slide-toggle{
+    margin: 1em;
+}
+
+.single-notification{
+    background-color: #FFFDF5;
+    color: #0D5B75;
+    border-radius: 20px;
+    margin: 1em;
+    padding: 1em;
+    cursor: pointer;
+}
+
+.single-notification .title {
+    font-weight: bold; /* Bold tekst za naslov */
+    margin-bottom: 5px; /* Razmak ispod naslova */
+  }
+  
+  /* Sadržaj notifikacije */
+  .single-notification .content {
+    font-size: 0.9em; /* Manji font za sadržaj */
+    line-height: 1.4; /* Veća čitljivost teksta */
+  }
+
+/* .mat-slide-toggle-bar {
+    background-color: #d1d1d1 !important;
+    height: 10px !important;
+  }
+  
+  .mat-slide-toggle-thumb {
+    background-color: #ff5722 !important;
+  }
+  
+  .mat-checked .mat-slide-toggle-bar {
+    background-color: #4caf50 !important;
+  }
+  
+  .mat-checked .mat-slide-toggle-thumb {
+    background-color: #ffffff !important;
+  }
+   */

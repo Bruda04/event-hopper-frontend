@@ -1,6 +1,16 @@
 
 <div class="container">
-    <p>notification works!</p>
-    <mat-slide-toggle></mat-slide-toggle>
+    <mat-slide-toggle labelPosition="before" (change)="toggleMute()">MUTE</mat-slide-toggle>
+
+    <div class="notifications" >
+        <div class="single-notification" *ngFor="let notification of notifications">
+          <div class="title">
+            {{ notification.title }}
+          </div>
+          <div class="content">
+            {{ notification.content }}
+          </div>
+        </div>
+      </div>
 
 </div>
