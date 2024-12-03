@@ -11,6 +11,9 @@ import { EmailConfirmationSentComponent } from './authentication/email-confirmat
 import {
   PUPServiceProductManagementComponent
 } from './services/pupservice-product-management/pupservice-product-management.component';
+import {
+  AdminCategoriesSuggestionsManagementComponent
+} from './categories/admin-categories-suggestions-management/admin-categories-suggestions-management.component';
 
 
 const routes: Routes = [
@@ -20,9 +23,10 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent },
   {path: 'register-pup', component: PupRegisterComponent },
   {path: 'register-organizer', component:  OrganizerRegisterComponent},
-  {path: 'home', component: HomeComponent}, 
-  {path: 'email-confirmation-sent', component: EmailConfirmationSentComponent}, 
-  {path: 'my-solutions', component: PUPServiceProductManagementComponent}
+  {path: 'home', component: HomeComponent},
+  {path: 'email-confirmation-sent', component: EmailConfirmationSentComponent},
+  {path: 'my-solutions', component: PUPServiceProductManagementComponent},
+  {path: 'categories', component: AdminCategoriesSuggestionsManagementComponent},
 ];
 
 @NgModule({

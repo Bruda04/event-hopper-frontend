@@ -1,0 +1,114 @@
+import { Injectable } from '@angular/core';
+import {Category} from './model/category.model';
+import {CategorySuggestion} from './model/categorySuggestion.model';
+
+const dataSource = [
+  {
+    name: "Candles",
+    description: "Various scented candles",
+    status: "APPROVED",
+    isDeletable: false,
+  },
+  {
+    name: "Incense",
+    description: "Aromatic incense sticks",
+    status: "APPROVED",
+    isDeletable: true,
+  },
+  {
+    name: "Essential Oils",
+    description: "Pure essential oils",
+    status: "APPROVED",
+    isDeletable: false,
+  },
+  {
+    name: "Diffusers",
+    description: "Aromatic diffusers",
+    status: "APPROVED",
+    isDeletable: false
+  },
+  {
+    name: "Bath Salts",
+    description: "Relaxing bath salts",
+    status: "APPROVED",
+    isDeletable: false
+  },
+  {
+    name: "Face Masks",
+    description: "Hydrating and cleansing masks",
+    status: "PENDING"
+  },
+  {
+    name: "Room Sprays",
+    description: "Refreshing room sprays",
+    status: "PENDING"
+  },
+  {
+    name: "Massage Oils",
+    description: "Therapeutic massage oils",
+    status: "PENDING"
+  }
+];
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CategoriesService {
+
+  private categoriesList :Category[] = []
+
+  constructor() {
+    for (let data of dataSource) {
+      const category: Category = {
+        id: Math.random(),
+        name: data.name,
+        description: data.description,
+        status: data.status,
+        isDeletable: data.isDeletable || false
+      }
+      this.categoriesList.push(category);
+    }
+  }
+
+  getApproved(): Category[] {
+    return this.categoriesList.filter((c: Category) => c.status === "APPROVED");
+  }
+
+  getSuggestions(): CategorySuggestion[] {
+    return this.categoriesList
+      .filter((c: Category) => c.status === "PENDING")
+      .map((c: Category) => ({
+        categoryId: c.id,
+        name: c.name,
+        status: c.status,
+        productId: Math.random(),
+        })
+      );
+  }
+
+  add(category: Category): void {
+    category.id = Math.random();
+    category.status = "APPROVED";
+    this.categoriesList.push(category);
+  }
+
+  remove(category: Category): void {
+    this.categoriesList = this.categoriesList.filter((c: Category) => c.id !== category.id);
+  }
+
+  update(category: Category): void {
+    const index: number = this.categoriesList.findIndex((c: Category) => c.id === category.id);
+    this.categoriesList[index] = category;
+  }
+
+  approve(suggestion: CategorySuggestion) {
+    const index: number = this.categoriesList.findIndex((c: Category) => c.id === suggestion.categoryId);
+    this.categoriesList[index].status = "APPROVED";
+  }
+
+  reject(suggestion: CategorySuggestion) {
+    const index: number = this.categoriesList.findIndex((c: Category) => c.id === suggestion.categoryId);
+    this.categoriesList.splice(index, 1);
+  }
+}

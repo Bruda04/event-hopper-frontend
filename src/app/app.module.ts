@@ -11,6 +11,7 @@ import { MaterialModule } from './infrastructure/material/material.module';
 import { HomeComponent } from './layout/home/home.component';
 import { EventModule } from './event/event.module';
 import { ProfileComponent } from './profile/profile.component';
+import {CategoriesModule} from './categories/categories.module';
 
 @NgModule({
   declarations: [
@@ -22,11 +23,12 @@ import { ProfileComponent } from './profile/profile.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
-    AuthenticationModule, 
-    ReactiveFormsModule, 
+    AuthenticationModule,
+    ReactiveFormsModule,
     MaterialModule,
     EventModule,
-    ServicesModule
+    ServicesModule,
+    CategoriesModule
   ],
   providers: [],
   bootstrap: [AppComponent]
