@@ -1,0 +1,19 @@
+
+<div class="container">
+    <mat-slide-toggle labelPosition="before" (change)="toggleMute()">MUTE</mat-slide-toggle>
+
+    <div class="notifications" >
+        <div class="single-notification" *ngFor="let notification of notifications">
+          <div class="title">
+            {{ notification.title }}
+          </div>
+          <div class="content">
+            {{ notification.content }}
+          </div>
+          <div class="timestamp">
+            {{ notification.timestamp }}
+          </div>
+        </div>
+      </div>
+
+</div>

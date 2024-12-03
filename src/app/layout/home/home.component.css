@@ -144,10 +144,6 @@
     grid-gap: 1em
 }
 
-/* .single-card-item:hover{
-    background-color: #e0f7fa !important; 
-    transition: transform 0.3s ease background-color 0.3s ease !important; 
-}  */
 
 .row-services{
     display: grid;
@@ -200,35 +196,34 @@ mat-paginator{
     background-color: #07779c;
 }
 
-mat-datepicker{                         /*odraditi bolji styling datepickera*/
+mat-datepicker{                         
     background-color: #07779c;
 }
 
 
 .fixed-button {
-    position: fixed; /* Fiksira dugme u odnosu na viewport */
-    bottom: 5em;    /* Razmak od dna */
-    right: 5em;     /* Razmak od desne ivice */
-    background-color: var(--secondary-color); /* Primer boje pozadine */
-    color: var(--light-blue);    /* Boja teksta */
-    border: none;    /* Bez ivica */
-    padding: 1em 2em; /* Unutrašnji razmaci */
-    border-radius: 20px; /* Zaobljeni uglovi */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Blaga senka */
-    cursor: pointer; /* Ikonica pokazivača */
-    z-index: 1000; /* Osigurava da je iznad ostalih elemenata */
-    display: flex; /* Centriranje sadržaja */
+    position: fixed; 
+    bottom: 5em;    
+    right: 5em;     
+    background-color: var(--secondary-color); 
+    color: var(--light-blue);   
+    border: none;    
+    padding: 1em 2em;
+    border-radius: 20px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); 
+    cursor: pointer; 
+    z-index: 1000; 
+    display: flex; 
     align-items: center;
-    gap: 8px; /* Razmak između ikone i teksta */
-    transition: background-color 0.3s ease; /* Animacija promene boje */
+    gap: 8px; 
+    transition: background-color 0.3s ease; 
   }
   
   .fixed-button:hover {
-    background-color: var(--primary-color); /* Promena boje na hover */
+    background-color: var(--primary-color); 
     color: var(--font-dark-blue);
   }
   
-/* Stilizuj dugme za prethodni slajd */
 ::ng-deep .p-carousel-prev {
     background-color: var(--font-dark-blue);
     width: 2.5em;
@@ -244,7 +239,6 @@ mat-datepicker{                         /*odraditi bolji styling datepickera*/
     transition: background-color 0.3s ease;
   }
   
-  /* Stilizuj dugme za sledeći slajd */
   ::ng-deep .p-carousel-next {
     background-color: var(--font-dark-blue);
     width: 2.5em;
@@ -260,9 +254,8 @@ mat-datepicker{                         /*odraditi bolji styling datepickera*/
     transition: background-color 0.3s ease;
  }
   
-  /* Hover efekat na dugmadi */
   ::ng-deep .p-carousel-prev:hover, ::ng-deep .p-carousel-next:hover {
-    background-color: var(--primary-color); /* Promena boje na hover */
+    background-color: var(--primary-color); 
     color: var(--font-dark-blue);
   }
 
@@ -271,37 +264,3 @@ mat-datepicker{                         /*odraditi bolji styling datepickera*/
     margin-left: 1.5em;
   }
 
-
-  /* Kontrola razmaka između dugmića */
-  /* ::ng-deep .p-carousel-indicators {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 8px;  
-  } */
-  
-  /* Stilizovanje dugmadi (tačaka) */
-  /* ::ng-deep .p-carousel-indicator > button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 16px;  
-    height: 16px; 
-    border-radius: 50%; 
-    background-color: #ccc; 
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  } */
-  
-  /* Aktivna tačka */
-  /* ::ng-deep .p-carousel-indicator > button.p-highlight {
-    background-color: #007bff; 
-  } */
-  
-  /* Hover efekat za dugmadi */
-  /* ::ng-deep .p-carousel-indicator > button:hover {
-    background-color: #0056b3; 
-  } */
-  
