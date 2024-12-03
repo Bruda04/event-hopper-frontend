@@ -7,13 +7,12 @@ import { ProfileComponent } from './profile/profile.component';
 import { OrganizerRegisterComponent } from './authentication/register/organizer-register/organizer-register.component';
 import { PupRegisterComponent } from './authentication/register/pup-register/pup-register.component';
 import { EmailConfirmationSentComponent } from './authentication/email-confirmation-sent/email-confirmation-sent.component';
-
 import {
   PUPServiceProductManagementComponent
 } from './services/pupservice-product-management/pupservice-product-management.component';
 import {
   AdminCategoriesSuggestionsManagementComponent
-} from './categories/admin-categories-suggestions-management/admin-categories-suggestions-management.component';
+} from './admin-dashboard/categories/admin-categories-suggestions-management/admin-categories-suggestions-management.component';
 
 
 const routes: Routes = [

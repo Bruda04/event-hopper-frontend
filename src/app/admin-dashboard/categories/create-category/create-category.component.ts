@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {MatDialogRef} from '../../infrastructure/material/material.module';
+import {MatDialogRef} from "../../../infrastructure/material/material.module"
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Category} from '../model/category.model';
 
