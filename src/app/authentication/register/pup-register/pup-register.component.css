@@ -159,3 +159,36 @@
 .image-close-btn:hover {
   background-color: var(--error-color);
 }
+
+
+.company-image-preview {
+  display: inline-block;
+  margin-right: 10px;
+  position: relative;
+}
+
+.company-image-preview img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.image-close-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+.upload-button {
+  width: 100%;
+  font-size: 14px;
+}
+
+.image-preview {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  gap: 10px;
+}

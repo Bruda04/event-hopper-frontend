@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 
 @Component({
   selector: 'app-pup-register',
@@ -12,19 +13,18 @@ export class PupRegisterComponent {
   currentStep: number = 0;
   hidePassword: boolean = true;
   hideConfirmPassword: boolean = true;
-  imagePreview: string | null = null; // Single image preview for Step 1
-  companyImages: string[] = []; // Multiple images for Step 2
+
+  // Separate attributes for profile and company images
+  imagePreview: string | null = null; // Profile image
+  companyImages: { src: string, cropped: string }[] = []; // Multiple company images with cropped versions
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.registerForm = this.fb.group({
-      // Step 1
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{8,}$')]],
       city: ['', Validators.required],
       address: ['', Validators.required],
-
-      // Step 2
       companyEmail: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
@@ -101,43 +101,51 @@ export class PupRegisterComponent {
     return fields.every((field) => this.registerForm.get(field)?.valid);
   }
 
-  onFileSelected(event: Event) {
+  // Handle profile image upload (Step 1)
+  onProfileImageSelected(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const files = inputElement.files;
+
+    if (files && files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        this.imagePreview = e.target?.result as string;
+      };
+      reader.readAsDataURL(files[0]);
+    }
+  }
+
+  clearProfileImage() {
+    this.imagePreview = null;
+  }
+
+  // Handle company images upload (Step 2)
+  onCompanyImageSelected(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     const files = inputElement.files;
 
     if (files) {
-      if (this.currentStep === 0) {
+      for (let i = 0; i < files.length; i++) {
         const reader = new FileReader();
         reader.onload = (e: ProgressEvent<FileReader>) => {
-          this.imagePreview = e.target?.result as string;
+          this.companyImages.push({ src: e.target?.result as string, cropped: '' });
         };
-        reader.readAsDataURL(files[0]);
-      } else if (this.currentStep === 1) {
-        for (let i = 0; i < files.length; i++) {
-          const reader = new FileReader();
-          reader.onload = (e: ProgressEvent<FileReader>) => {
-            this.companyImages.push(e.target?.result as string);  // Add the image to the array
-          };
-          reader.readAsDataURL(files[i]);
-        }
+        reader.readAsDataURL(files[i]);
       }
     }
   }
 
-  clearImage() {
-    if (this.currentStep === 0) {
-      this.imagePreview = null;
-    } else if (this.currentStep === 1) {
-      this.companyImages = [];
-    }
+  // Cropping function for company images
+  onCompanyImageCropped(event: ImageCroppedEvent, index: number) {
+    this.companyImages[index].cropped = event.base64;
   }
 
   clearCompanyImage(index: number) {
-    this.companyImages.splice(index, 1);  // Remove the selected image
+    this.companyImages.splice(index, 1); // Remove the selected image
   }
 
-  triggerFileInput() {
-    const inputElement = document.getElementById(this.currentStep === 0 ? 'profilePic' : 'companyPictures') as HTMLInputElement;
+  triggerFileInput(step: number) {
+    const inputElement = document.getElementById(step === 0 ? 'profilePic' : 'companyPictures') as HTMLInputElement;
     inputElement?.click();
   }
 }
