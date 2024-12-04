@@ -102,9 +102,9 @@
 
     <div class="button-group">
       <button mat-raised-button class="back-button" routerLink="/register">BACK</button>
-      <button mat-raised-button class="register-button" [disabled]="registerForm.invalid" type="submit">
-        REGISTER
-      </button>
+      <button mat-raised-button
+              class="register-button"
+              (click)="onSubmit()">REGISTER</button>
     </div>
 
   </form>

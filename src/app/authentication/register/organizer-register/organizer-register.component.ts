@@ -3,6 +3,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 
+function phoneMinLengthValidator(control: AbstractControl): ValidationErrors | null {
+  const value = control.value?.toString() || ''; // Convert the number to a string
+  return value.length >= 8 ? null : { minlength: true };
+}
+
+
 @Component({
   selector: 'app-organizer-register',
   templateUrl: './organizer-register.component.html',
@@ -13,7 +19,6 @@ export class OrganizerRegisterComponent {
   hidePassword = true;
   hideConfirmPassword = true;
   imagePreview: string | null = null;
-  formSubmitted = false; // Track if form submission should proceed
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.registerForm = this.fb.group(
@@ -30,17 +35,16 @@ export class OrganizerRegisterComponent {
           ]
         ],
         confirmPassword: ['', Validators.required],
-        phoneNumber: ['', [Validators.required, this.phoneMinLengthValidator, Validators.pattern('[0-9]*')]],
+        phoneNumber: ['', [Validators.required, phoneMinLengthValidator, Validators.pattern('[0-9]*')]],
         address: ['', Validators.required],
         city: ['', Validators.required],
-        profileImage: [null], // Ensure this is optional
+        profileImage: [null],
       },
-      { validators: this.passwordMatchValidator }
+      { validators: this.passwordMatchValidator } // Add custom validator here
     );
-
   }
 
-  // Custom validator for password match
+  // Custom validator to check if passwords match
   passwordMatchValidator(group: FormGroup): ValidationErrors | null {
     const password = group.get('password')?.value;
     const confirmPasswordControl = group.get('confirmPassword');
@@ -54,24 +58,16 @@ export class OrganizerRegisterComponent {
     }
   }
 
-  phoneMinLengthValidator(control: AbstractControl): ValidationErrors | null {
-    const value = control.value?.toString() || '';
-    return value.length >= 8 ? null : { minlength: true };
-  }
 
   onSubmit() {
-    console.log('Form Validity:', this.registerForm.valid);
-    console.log('Form Values:', this.registerForm.value);
-
     if (this.registerForm.valid) {
-      console.log('Form Submitted Successfully');
+      console.log('Form Submitted:', this.registerForm.value);
       this.router.navigate(['/email-confirmation-sent']);
     } else {
       this.registerForm.markAllAsTouched();
-      console.error('Form is invalid:', this.registerForm.errors);
+      console.log('Form is invalid:', this.registerForm.value);
     }
   }
-
 
   togglePasswordVisibility() {
     this.hidePassword = !this.hidePassword;
@@ -107,5 +103,4 @@ export class OrganizerRegisterComponent {
     const fileInput = document.getElementById('profilePic') as HTMLInputElement;
     fileInput?.click();
   }
-
 }
