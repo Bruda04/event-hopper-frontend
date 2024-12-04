@@ -44,11 +44,19 @@ export class OrganizerRegisterComponent {
   }
 
   // Custom validator to check if passwords match
-  passwordMatchValidator(group: FormGroup) {
+  passwordMatchValidator(group: FormGroup): ValidationErrors | null {
     const password = group.get('password')?.value;
-    const confirmPassword = group.get('confirmPassword')?.value;
-    return password === confirmPassword ? null : { passwordMismatch: true };
+    const confirmPasswordControl = group.get('confirmPassword');
+
+    if (password !== confirmPasswordControl?.value) {
+      confirmPasswordControl?.setErrors({ passwordMismatch: true });
+      return { passwordMismatch: true };
+    } else {
+      confirmPasswordControl?.setErrors(null);
+      return null;
+    }
   }
+
 
   onSubmit() {
     if (this.registerForm.valid) {
@@ -59,7 +67,7 @@ export class OrganizerRegisterComponent {
       console.log('Form is invalid:', this.registerForm.value);
     }
   }
-  
+
   togglePasswordVisibility() {
     this.hidePassword = !this.hidePassword;
   }
