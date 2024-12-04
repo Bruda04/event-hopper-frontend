@@ -11,12 +11,12 @@ import { MaterialModule } from './infrastructure/material/material.module';
 import { HomeComponent } from './layout/home/home.component';
 import { EventModule } from './event/event.module';
 import { ProfileComponent } from './profile/profile.component';
-import {CategoriesModule} from './categories/categories.module';
+import {AdminDashboardModule} from './admin-dashboard/admin-dashboard.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProfileComponent
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,7 +28,7 @@ import {CategoriesModule} from './categories/categories.module';
     MaterialModule,
     EventModule,
     ServicesModule,
-    CategoriesModule
+    AdminDashboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

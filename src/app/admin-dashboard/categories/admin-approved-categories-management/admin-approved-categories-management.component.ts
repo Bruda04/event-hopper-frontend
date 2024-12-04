@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {Category} from '../model/category.model';
-import {MatDialog, MatSort} from '../../infrastructure/material/material.module';
+import {Category} from '../../model/category.model';
+import {MatDialog, MatSort} from  "../../../infrastructure/material/material.module";
 import {CategoriesService} from '../categories.service';
 import {MatDialogRef} from '@angular/material/dialog';
 import {EditCategoryComponent} from '../edit-category/edit-category.component';
