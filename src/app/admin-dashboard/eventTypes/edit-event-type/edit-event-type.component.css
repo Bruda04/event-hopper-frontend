@@ -34,3 +34,27 @@ h2 {
 .cancel-button {
   background-color: var(--primary-color);
 }
+
+.category-container {
+  margin-bottom: 20px;
+}
+
+.selected-categories .category-item,
+.available-categories .category-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.category-item span {
+  flex-grow: 1;
+}
+
+.remove-button {
+  margin-left: 10px;
+  color: red;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+

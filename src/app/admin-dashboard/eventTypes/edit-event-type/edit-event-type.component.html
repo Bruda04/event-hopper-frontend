@@ -3,10 +3,35 @@
 <mat-dialog-content>
   <form [formGroup]="editEventTypeForm">
     <div class="form-container">
-      <mat-form-field appearance="fill">
+      <!-- Description Field -->
+      <mat-form-field appearance="fill" class="full-width">
         <mat-label>Description</mat-label>
         <textarea matInput placeholder="Enter description" formControlName="description"></textarea>
       </mat-form-field>
+
+      <!-- Selected Categories -->
+      <div class="category-container">
+        <h6 style="text-align: center;">Selected Categories</h6>
+        <div class="selected-categories">
+          <div class="category-item" *ngFor="let category of selectedCategories">
+            <span>{{ category }}</span>
+            <button type="button" class="remove-button" (click)="removeCategory(category)">Remove</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dropdown for Adding Categories -->
+      <div class="available-categories" style="text-align: center;">
+        <h6>Available Categories</h6>
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Category</mat-label>
+          <mat-select (selectionChange)="addCategory($event.value)" placeholder="Select a category">
+            <mat-option *ngFor="let category of availableCategories" [value]="category.name">
+              {{ category.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
   </form>
 </mat-dialog-content>

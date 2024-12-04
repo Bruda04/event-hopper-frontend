@@ -14,6 +14,13 @@ import { EditEventTypeComponent } from './eventTypes/edit-event-type/edit-event-
 import {
   AdminEventTypesManagementComponent
 } from './eventTypes/admin-event-types-management/admin-event-types-management.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -32,6 +39,13 @@ import {
     MaterialModule,
     PaginatorModule,
     ReactiveFormsModule,
+    MatChipsModule,
+    MatIconModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatListModule,
   ]
 })
 export class AdminDashboardModule { }

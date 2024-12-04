@@ -3,6 +3,7 @@ import { MatDialogRef } from "../../../infrastructure/material/material.module";
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EventType } from '../../model/eventType.model';
+import { Category } from '../../model/category.model';
 
 @Component({
   selector: 'app-edit-event-type',
@@ -10,6 +11,9 @@ import { EventType } from '../../model/eventType.model';
   styleUrl: './edit-event-type.component.css'
 })
 export class EditEventTypeComponent implements OnInit {
+  categories: Category[] = []; // Available categories to choose from
+  selectedCategories: string[] = []; // Selected category names
+  availableCategories: Category[] = []; // Categories that can be selected (not selected yet)
 
   constructor(
     public dialogRef: MatDialogRef<EditEventTypeComponent>,
@@ -25,6 +29,7 @@ export class EditEventTypeComponent implements OnInit {
       const updatedEventType: EventType = {
         ...this.eventTypeToEdit,
         description: this.editEventTypeForm.value.description,
+        suggestedSolutionCategories: this.selectedCategories,
       };
       this.dialogRef.close(updatedEventType);
     } else {
@@ -36,5 +41,40 @@ export class EditEventTypeComponent implements OnInit {
     this.editEventTypeForm.patchValue({
       description: this.eventTypeToEdit.description,
     });
+
+    // Initialize selected categories and available categories
+    this.selectedCategories = [...(this.eventTypeToEdit.suggestedSolutionCategories || [])];
+    this.loadAvailableCategories();
+  }
+
+  loadAvailableCategories(): void {
+    // Simulate API call to fetch categories
+    this.categories = [
+      { id: 1, name: 'Category A', description: 'Description A', isDeletable: true },
+      { id: 2, name: 'Category B', description: 'Description B', isDeletable: true },
+      { id: 3, name: 'Category C', description: 'Description C', isDeletable: true },
+    ];
+
+    // Set available categories as the categories that are not already selected
+    this.availableCategories = this.categories.filter(
+      category => !this.selectedCategories.includes(category.name)
+    );
+  }
+
+  addCategory(categoryName: string): void {
+    if (!this.selectedCategories.includes(categoryName)) {
+      this.selectedCategories.push(categoryName);
+      // Remove the added category from available categories
+      this.availableCategories = this.availableCategories.filter(category => category.name !== categoryName);
+    }
+  }
+
+  removeCategory(categoryName: string): void {
+    this.selectedCategories = this.selectedCategories.filter(c => c !== categoryName);
+    // Add the removed category back to available categories
+    const removedCategory = this.categories.find(category => category.name === categoryName);
+    if (removedCategory) {
+      this.availableCategories.push(removedCategory);
+    }
   }
 }
