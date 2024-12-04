@@ -126,13 +126,6 @@ mat-form-field {
   align-items: center;
 }
 
-.upload-button {
-  width: 100%;
-  margin-top: 5px;
-  font-weight: normal;
-  background-color: var(--secondary-color) !important;
-  color: white;
-}
 
 .image-preview {
   position: relative;

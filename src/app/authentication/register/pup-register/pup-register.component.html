@@ -60,16 +60,20 @@
           </mat-form-field>
 
 
+          <div class="profile-pic" *ngIf="currentStep === 0">
+            <input type="file" id="profilePic" (change)="onFileSelected($event)" style="display: none;" accept="image/*" />
+            <button mat-raised-button class="upload-button" type="button" (click)="triggerFileInput()" *ngIf="!imagePreview">
+              UPLOAD PROFILE PICTURE (OPTIONAL)
+            </button>
 
-
-          <div class="profile-pic">
-            <input type="file" id="profilePic" (change)="onFileSelected($event)" style="display: none;" />
-            <button mat-raised-button class="upload-button" (click)="triggerFileInput()">UPLOAD PROFILE PICTURE (OPTIONAL)</button>
-            <div *ngIf="imagePreview" class="image-preview">
+            <!-- Image Preview Section -->
+            <div class="image-preview" *ngIf="imagePreview">
               <img [src]="imagePreview" alt="Profile Preview" />
+              <button mat-icon-button aria-label="Remove Image" class="image-close-btn" type="button" (click)="clearImage()">
+                <mat-icon>close</mat-icon>
+              </button>
             </div>
           </div>
-
 
 
         </div>
@@ -125,7 +129,7 @@
             </mat-error>
           </mat-form-field>
 
-          
+
 
           <mat-form-field appearance="fill">
             <mat-label>Phone Number</mat-label>
@@ -138,10 +142,19 @@
 
 
           <div class="profile-pic">
-            <input type="file" id="profilePic" (change)="onFileSelected($event)" style="display: none;" />
-            <button mat-raised-button class="upload-button" (click)="triggerFileInput()">UPLOAD PICTURES (OPTIONAL)</button>
-            <div *ngIf="imagePreview" class="image-preview">
-              <img [src]="imagePreview" alt="Profile Preview" />
+            <input type="file" id="companyPictures" (change)="onFileSelected($event)" style="display: none;" accept="image/*" multiple />
+            <button mat-raised-button class="upload-button" type="button" (click)="triggerFileInput()" *ngIf="companyImages.length === 0">
+              UPLOAD COMPANY PICTURES (OPTIONAL)
+            </button>
+
+            <!-- Multiple Image Preview Section -->
+            <div class="image-preview" *ngIf="companyImages.length > 0">
+              <div *ngFor="let image of companyImages; let i = index">
+                <img [src]="image" alt="Company Preview {{i + 1}}" />
+                <button mat-icon-button aria-label="Remove Image" class="image-close-btn" type="button" (click)="clearCompanyImage(i)">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
             </div>
           </div>
 

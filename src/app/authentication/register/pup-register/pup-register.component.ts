@@ -12,7 +12,8 @@ export class PupRegisterComponent {
   currentStep: number = 0;
   hidePassword: boolean = true;
   hideConfirmPassword: boolean = true;
-  imagePreview: string | null = null;
+  imagePreview: string | null = null; // Single image preview for Step 1
+  companyImages: string[] = []; // Multiple images for Step 2
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.registerForm = this.fb.group({
@@ -57,7 +58,7 @@ export class PupRegisterComponent {
 
   onSubmit() {
     if (this.isStepValid(1)) {
-        const formData = {
+      const formData = {
         personalInfo: {
           fullName: this.registerForm.get('fullName')?.value,
           email: this.registerForm.get('email')?.value,
@@ -77,7 +78,6 @@ export class PupRegisterComponent {
         },
       };
       console.log(formData);
-
       console.log('Form Submitted:', this.registerForm.value);
       this.router.navigate(['/email-confirmation-sent']);
     }
@@ -87,43 +87,57 @@ export class PupRegisterComponent {
     const fields = step === 0
       ? ['fullName', 'email', 'phoneNumber', 'city', 'address']
       : [
-          'companyEmail',
-          'password',
-          'confirmPassword',
-          'companyName',
-          'companyPhoneNumber',
-          'companyCity',
-          'companyAddress',
-          'description',
-        ];
+        'companyEmail',
+        'password',
+        'confirmPassword',
+        'companyName',
+        'companyPhoneNumber',
+        'companyCity',
+        'companyAddress',
+        'description',
+      ];
 
     fields.forEach((field) => this.registerForm.get(field)?.markAsTouched());
     return fields.every((field) => this.registerForm.get(field)?.valid);
   }
 
-  uploadImage() {
-    // Placeholder for upload logic
-    console.log('Upload Profile Picture button clicked');
-  }
-
-
-  
   onFileSelected(event: Event) {
     const inputElement = event.target as HTMLInputElement;
-    const file = inputElement.files?.[0]; // Use optional chaining to safely access the file
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e: ProgressEvent<FileReader>) => {
-        this.imagePreview = e.target?.result as string; // Cast result as string since it's a Data URL
-      };
-      reader.readAsDataURL(file);
+    const files = inputElement.files;
+
+    if (files) {
+      if (this.currentStep === 0) {
+        const reader = new FileReader();
+        reader.onload = (e: ProgressEvent<FileReader>) => {
+          this.imagePreview = e.target?.result as string;
+        };
+        reader.readAsDataURL(files[0]);
+      } else if (this.currentStep === 1) {
+        for (let i = 0; i < files.length; i++) {
+          const reader = new FileReader();
+          reader.onload = (e: ProgressEvent<FileReader>) => {
+            this.companyImages.push(e.target?.result as string);  // Add the image to the array
+          };
+          reader.readAsDataURL(files[i]);
+        }
+      }
     }
+  }
+
+  clearImage() {
+    if (this.currentStep === 0) {
+      this.imagePreview = null;
+    } else if (this.currentStep === 1) {
+      this.companyImages = [];
+    }
+  }
+
+  clearCompanyImage(index: number) {
+    this.companyImages.splice(index, 1);  // Remove the selected image
   }
 
   triggerFileInput() {
-    const fileInput = document.getElementById('profilePic') as HTMLInputElement;
-    if (fileInput) {
-      fileInput.click();
-    }
+    const inputElement = document.getElementById(this.currentStep === 0 ? 'profilePic' : 'companyPictures') as HTMLInputElement;
+    inputElement?.click();
   }
 }

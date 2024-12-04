@@ -7,52 +7,31 @@
 
   label{
     font-size: 12px;
-    color: var(--font-light);
+    color: white;
   }
 
   mat-error {
     color: var(--error-color-lighter) !important;
-    font-size: 12px;  
+    font-size: 12px;
     display: block;
   }
-  
+
   .register-container {
     text-align: center;
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
   }
-  
+
   .register-image {
     max-width: 100px;
     height: auto;
   }
-  
+
   .register-title {
     color: var(--beige);
     margin: 0px;
   }
-  
-
-
-  .profile-pic {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-  }
-
-  .image-preview {
-    margin-top: 10px;
-  }
-
-  .image-preview img {
-    /**max-width: 100px;
-    max-height: 100px;**/
-    max-width: 150px;
-    margin-top: 1em;
-  }
-
-
 
   .register-form {
     margin-top: 15px;
@@ -61,25 +40,25 @@
     align-items: center;
     width: 100%;
   }
-  
+
   .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.5em;
   }
-  
+
   .form-column {
     display: flex;
     flex-direction: column;
     gap: 1.5em;
   }
-  
+
   mat-form-field {
     width: 400px;
-   
+
   }
-  
-  
+
+
   .button-group {
     display: flex;
     justify-content: space-between; /* This will place the buttons at opposite ends */
@@ -91,7 +70,7 @@
     margin-top: 10px;
 
   }
-  
+
   .back-button  {
     width: 30%; /* Set width to less than 50% to allow space between the buttons */
     padding: 0.8em;
@@ -101,30 +80,21 @@
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
-  
+
   .back-button{
     background-color: var(--primary-color) !important;
   }
-  
+
   .back-button:hover {
     background-color: var(--font-dark-blue);
     color: white;
   }
-  
-  
+
+
   .password-hint {
     font-size: 12px;
-    color: var(--font-light);
-    margin-top: 5px;
-  }
-  
-  
-  .upload-button{
-    width: 100%;
-    margin-top: 5px;
-    font-weight: normal;
-    background-color: var(--secondary-color) !important;
     color: white;
+    margin-top: 5px;
   }
 
   .next-button, .register-button {
@@ -139,16 +109,53 @@
     background-color: var(--font-dark-blue);
     color: white;
   }
-  
-  
-  .profile-pic {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .image-preview img {
-    max-width: 150px;
-    margin-top: 1em;
-  }
-  
+
+
+
+.upload-button {
+  width: 100%;
+  margin-top: 5px;
+  font-weight: normal;
+  background-color: var(--secondary-color) !important;
+  color: white;
+}
+.profile-pic {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.image-preview {
+  position: relative;
+  display: inline-block;
+  margin-top: 1em;
+}
+
+.image-preview img {
+  max-width: 150px;
+  border-radius: 8px;
+  border: 1px solid var(--secondary-color);
+}
+
+.image-close-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: var(--error-color);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px; /* Adjust for better visual balance */
+  width: 24px; /* Circle width */
+  height: 24px; /* Circle height */
+  display: flex; /* Use flexbox for centering */
+  align-items: center; /* Vertical centering */
+  justify-content: center; /* Horizontal centering */
+  padding: 0; /* Remove default button padding */
+}
+
+.image-close-btn:hover {
+  background-color: var(--error-color);
+}

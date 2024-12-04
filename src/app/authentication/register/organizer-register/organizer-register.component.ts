@@ -104,7 +104,6 @@ export class OrganizerRegisterComponent {
 
 
   triggerFileInput() {
-    this.formSubmitted = true; // Prevent form auto-switching during image upload
     const fileInput = document.getElementById('profilePic') as HTMLInputElement;
     fileInput?.click();
   }
