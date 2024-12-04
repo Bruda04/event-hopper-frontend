@@ -79,33 +79,15 @@
 
 
         <div class="profile-pic">
-          <input
-            type="file"
-            id="profilePic"
-            (change)="onFileSelected($event)"
-            style="display: none;"
-            accept="image/*"
-          />
-          <button
-            mat-raised-button
-            class="upload-button"
-            type="button"
-            (click)="triggerFileInput()"
-            *ngIf="!imagePreview"
-          >
+          <input type="file" id="profilePic" (change)="onFileSelected($event)" style="display: none;"  accept="image/*"/>
+          <button mat-raised-button class="upload-button" type="button" (click)="triggerFileInput()" *ngIf="!imagePreview">
             UPLOAD PROFILE PICTURE (OPTIONAL)
           </button>
 
           <!-- Image Preview Section -->
           <div class="image-preview" *ngIf="imagePreview">
             <img [src]="imagePreview" alt="Profile Preview" />
-            <button
-              mat-icon-button
-              aria-label="Remove Image"
-              class="image-close-btn"
-              type="button"
-              (click)="clearImage()"
-            >
+            <button mat-icon-button aria-label="Remove Image" class="image-close-btn" type="button"(click)="clearImage()">
               <mat-icon>close</mat-icon>
             </button>
           </div>
@@ -120,14 +102,9 @@
 
     <div class="button-group">
       <button mat-raised-button class="back-button" routerLink="/register">BACK</button>
-      <button
-        mat-raised-button
-        class="register-button"
-        [disabled]="registerForm.invalid"
-        type="submit">
+      <button mat-raised-button class="register-button" [disabled]="registerForm.invalid" type="submit">
         REGISTER
       </button>
-
     </div>
 
   </form>
