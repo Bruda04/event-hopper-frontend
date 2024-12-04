@@ -38,17 +38,26 @@ export class OrganizerRegisterComponent {
         phoneNumber: ['', [Validators.required, phoneMinLengthValidator, Validators.pattern('[0-9]*')]],
         address: ['', Validators.required],
         city: ['', Validators.required],
+        profileImage: [null],
       },
       { validators: this.passwordMatchValidator } // Add custom validator here
     );
   }
 
   // Custom validator to check if passwords match
-  passwordMatchValidator(group: FormGroup) {
+  passwordMatchValidator(group: FormGroup): ValidationErrors | null {
     const password = group.get('password')?.value;
-    const confirmPassword = group.get('confirmPassword')?.value;
-    return password === confirmPassword ? null : { passwordMismatch: true };
+    const confirmPasswordControl = group.get('confirmPassword');
+
+    if (password !== confirmPasswordControl?.value) {
+      confirmPasswordControl?.setErrors({ passwordMismatch: true });
+      return { passwordMismatch: true };
+    } else {
+      confirmPasswordControl?.setErrors(null);
+      return null;
+    }
   }
+
 
   onSubmit() {
     if (this.registerForm.valid) {
@@ -59,7 +68,7 @@ export class OrganizerRegisterComponent {
       console.log('Form is invalid:', this.registerForm.value);
     }
   }
-  
+
   togglePasswordVisibility() {
     this.hidePassword = !this.hidePassword;
   }
@@ -70,20 +79,28 @@ export class OrganizerRegisterComponent {
 
   onFileSelected(event: Event) {
     const inputElement = event.target as HTMLInputElement;
-    const file = inputElement.files?.[0]; // Use optional chaining to safely access the file
+    const file = inputElement.files?.[0];
+
     if (file) {
       const reader = new FileReader();
       reader.onload = (e: ProgressEvent<FileReader>) => {
-        this.imagePreview = e.target?.result as string; // Cast result as string since it's a Data URL
+        this.imagePreview = e.target?.result as string; // Update preview
+        this.registerForm.patchValue({ profileImage: file }); // Update form control
+        this.registerForm.get('profileImage')?.updateValueAndValidity(); // Sync validity
       };
       reader.readAsDataURL(file);
     }
   }
 
+  clearImage() {
+    this.imagePreview = null; // Clear preview
+    this.registerForm.patchValue({ profileImage: null }); // Clear form control value
+    this.registerForm.get('profileImage')?.updateValueAndValidity(); // Sync validity
+  }
+
+
   triggerFileInput() {
     const fileInput = document.getElementById('profilePic') as HTMLInputElement;
-    if (fileInput) {
-      fileInput.click();
-    }
+    fileInput?.click();
   }
 }

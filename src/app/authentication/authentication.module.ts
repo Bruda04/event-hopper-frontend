@@ -11,6 +11,7 @@ import { MaterialModule } from '../infrastructure/material/material.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { RouterModule } from '@angular/router';
 import { EmailConfirmationSentComponent } from './email-confirmation-sent/email-confirmation-sent.component'; // Import RouterModule
+import { ImageCropperComponent } from 'ngx-image-cropper';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { EmailConfirmationSentComponent } from './email-confirmation-sent/email-
     ReactiveFormsModule,
     MaterialModule,
     AppRoutingModule,
-    RouterModule
+    RouterModule,
+    ImageCropperComponent
   ],
   exports: [
     LoginComponent,

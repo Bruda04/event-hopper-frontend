@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 
 @Component({
   selector: 'app-pup-register',
@@ -12,18 +13,18 @@ export class PupRegisterComponent {
   currentStep: number = 0;
   hidePassword: boolean = true;
   hideConfirmPassword: boolean = true;
-  imagePreview: string | null = null;
+
+  // Separate attributes for profile and company images
+  imagePreview: string | null = null; // Profile image
+  companyImages: { src: string, cropped: string }[] = []; // Multiple company images with cropped versions
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.registerForm = this.fb.group({
-      // Step 1
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{8,}$')]],
       city: ['', Validators.required],
       address: ['', Validators.required],
-
-      // Step 2
       companyEmail: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
@@ -57,7 +58,7 @@ export class PupRegisterComponent {
 
   onSubmit() {
     if (this.isStepValid(1)) {
-        const formData = {
+      const formData = {
         personalInfo: {
           fullName: this.registerForm.get('fullName')?.value,
           email: this.registerForm.get('email')?.value,
@@ -77,7 +78,6 @@ export class PupRegisterComponent {
         },
       };
       console.log(formData);
-
       console.log('Form Submitted:', this.registerForm.value);
       this.router.navigate(['/email-confirmation-sent']);
     }
@@ -87,43 +87,65 @@ export class PupRegisterComponent {
     const fields = step === 0
       ? ['fullName', 'email', 'phoneNumber', 'city', 'address']
       : [
-          'companyEmail',
-          'password',
-          'confirmPassword',
-          'companyName',
-          'companyPhoneNumber',
-          'companyCity',
-          'companyAddress',
-          'description',
-        ];
+        'companyEmail',
+        'password',
+        'confirmPassword',
+        'companyName',
+        'companyPhoneNumber',
+        'companyCity',
+        'companyAddress',
+        'description',
+      ];
 
     fields.forEach((field) => this.registerForm.get(field)?.markAsTouched());
     return fields.every((field) => this.registerForm.get(field)?.valid);
   }
 
-  uploadImage() {
-    // Placeholder for upload logic
-    console.log('Upload Profile Picture button clicked');
-  }
-
-
-  
-  onFileSelected(event: Event) {
+  // Handle profile image upload (Step 1)
+  onProfileImageSelected(event: Event) {
     const inputElement = event.target as HTMLInputElement;
-    const file = inputElement.files?.[0]; // Use optional chaining to safely access the file
-    if (file) {
+    const files = inputElement.files;
+
+    if (files && files[0]) {
       const reader = new FileReader();
       reader.onload = (e: ProgressEvent<FileReader>) => {
-        this.imagePreview = e.target?.result as string; // Cast result as string since it's a Data URL
+        this.imagePreview = e.target?.result as string;
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(files[0]);
     }
   }
 
-  triggerFileInput() {
-    const fileInput = document.getElementById('profilePic') as HTMLInputElement;
-    if (fileInput) {
-      fileInput.click();
+  clearProfileImage() {
+    this.imagePreview = null;
+  }
+
+  // Handle company images upload (Step 2)
+  onCompanyImageSelected(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const files = inputElement.files;
+
+    if (files) {
+      for (let i = 0; i < files.length; i++) {
+        const reader = new FileReader();
+        reader.onload = (e: ProgressEvent<FileReader>) => {
+          this.companyImages.push({ src: e.target?.result as string, cropped: '' });
+        };
+        reader.readAsDataURL(files[i]);
+      }
     }
+  }
+
+  // Cropping function for company images
+  onCompanyImageCropped(event: ImageCroppedEvent, index: number) {
+    this.companyImages[index].cropped = event.base64;
+  }
+
+  clearCompanyImage(index: number) {
+    this.companyImages.splice(index, 1); // Remove the selected image
+  }
+
+  triggerFileInput(step: number) {
+    const inputElement = document.getElementById(step === 0 ? 'profilePic' : 'companyPictures') as HTMLInputElement;
+    inputElement?.click();
   }
 }
