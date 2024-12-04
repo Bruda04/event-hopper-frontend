@@ -14,7 +14,7 @@ export class AdminEventTypesManagementComponent implements OnInit, AfterViewInit
   eventTypes: EventType[];
   dataSource: MatTableDataSource<EventType>;
 
-  displayedColumns: string[] = ['eventName', 'description', 'actions'];
+  displayedColumns: string[] = ['name', 'description','active','suggestedSolutionCategories', 'events','actions'];
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -31,6 +31,7 @@ export class AdminEventTypesManagementComponent implements OnInit, AfterViewInit
   private loadEventTypes(): void {
     this.eventTypes = this.eventTypesService.getEventTypes();
     this.dataSource = new MatTableDataSource(this.eventTypes);
+    console.log(this.eventTypes);
   }
 
   edit(eventType: EventType): void {

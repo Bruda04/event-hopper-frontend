@@ -13,7 +13,7 @@ const dataSource = [
   {
     name: "Corporate Meeting",
     description: "A formal gathering for business purposes.",
-    isDeactivated: false,
+    isDeactivated: true,
     events: ["Annual Sales Meeting", "Q4 Strategic Planning"],
     suggestedSolutionCategories: ["AV Equipment", "Catering", "Notepads", "Event Host"]
   },
@@ -27,7 +27,7 @@ const dataSource = [
   {
     name: "Charity Gala",
     description: "A formal event to raise funds for a cause.",
-    isDeactivated: false,
+    isDeactivated: true,
     events: ["Red Cross Annual Gala", "Wildlife Fundraising Dinner"],
     suggestedSolutionCategories: ["Catering", "Photography", "Auctioneer", "Entertainment"]
   },
@@ -140,7 +140,10 @@ export class EventTypesService {
   }
 
   remove(eventType: EventType): void {
-    this.eventTypesList = this.eventTypesList.filter((c: EventType) => c.id !== eventType.id);
+    const event = this.eventTypesList.find((c: EventType) => c.id === eventType.id);
+    if (event) {
+      event.isDeactivated = true;
+    }
   }
 
   update(eventType: EventType): void {
