@@ -7,12 +7,12 @@
 
 label{
   font-size: 12px;
-  color: var(--font-light);
+  color: white;
 }
 
 mat-error {
   color: var(--error-color-lighter) !important;
-  font-size: 12px;  
+  font-size: 12px;
   display: block;
 }
 
@@ -56,7 +56,7 @@ mat-error {
 
 mat-form-field {
   width: 100%;
- 
+
 }
 
 .register-container {
@@ -108,7 +108,7 @@ mat-form-field {
 
 .password-hint {
   font-size: 12px;
-  color: var(--font-light);
+  color: white;
   margin-top: 5px;
 }
 
@@ -120,14 +120,54 @@ mat-form-field {
   background-color: var(--secondary-color) !important;
   color: white;
 }
-
 .profile-pic {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+.upload-button {
+  width: 100%;
+  margin-top: 5px;
+  font-weight: normal;
+  background-color: var(--secondary-color) !important;
+  color: white;
+}
+
+.image-preview {
+  position: relative;
+  display: inline-block;
+  margin-top: 1em;
+}
+
 .image-preview img {
   max-width: 150px;
-  margin-top: 1em;
+  border-radius: 8px;
+  border: 1px solid var(--secondary-color);
+}
+
+
+
+
+
+.image-close-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: var(--error-color);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px; /* Adjust for better visual balance */
+  width: 24px; /* Circle width */
+  height: 24px; /* Circle height */
+  display: flex; /* Use flexbox for centering */
+  align-items: center; /* Vertical centering */
+  justify-content: center; /* Horizontal centering */
+  padding: 0; /* Remove default button padding */
+}
+
+.image-close-btn:hover {
+  background-color: var(--error-color);
 }

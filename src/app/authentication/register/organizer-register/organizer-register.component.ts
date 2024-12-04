@@ -3,12 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 
-function phoneMinLengthValidator(control: AbstractControl): ValidationErrors | null {
-  const value = control.value?.toString() || ''; // Convert the number to a string
-  return value.length >= 8 ? null : { minlength: true };
-}
-
-
 @Component({
   selector: 'app-organizer-register',
   templateUrl: './organizer-register.component.html',
@@ -19,6 +13,7 @@ export class OrganizerRegisterComponent {
   hidePassword = true;
   hideConfirmPassword = true;
   imagePreview: string | null = null;
+  formSubmitted = false; // Track if form submission should proceed
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.registerForm = this.fb.group(
@@ -35,15 +30,17 @@ export class OrganizerRegisterComponent {
           ]
         ],
         confirmPassword: ['', Validators.required],
-        phoneNumber: ['', [Validators.required, phoneMinLengthValidator, Validators.pattern('[0-9]*')]],
+        phoneNumber: ['', [Validators.required, this.phoneMinLengthValidator, Validators.pattern('[0-9]*')]],
         address: ['', Validators.required],
         city: ['', Validators.required],
+        profileImage: [null], // Ensure this is optional
       },
-      { validators: this.passwordMatchValidator } // Add custom validator here
+      { validators: this.passwordMatchValidator }
     );
+
   }
 
-  // Custom validator to check if passwords match
+  // Custom validator for password match
   passwordMatchValidator(group: FormGroup): ValidationErrors | null {
     const password = group.get('password')?.value;
     const confirmPasswordControl = group.get('confirmPassword');
@@ -57,16 +54,24 @@ export class OrganizerRegisterComponent {
     }
   }
 
+  phoneMinLengthValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value?.toString() || '';
+    return value.length >= 8 ? null : { minlength: true };
+  }
 
   onSubmit() {
+    console.log('Form Validity:', this.registerForm.valid);
+    console.log('Form Values:', this.registerForm.value);
+
     if (this.registerForm.valid) {
-      console.log('Form Submitted:', this.registerForm.value);
+      console.log('Form Submitted Successfully');
       this.router.navigate(['/email-confirmation-sent']);
     } else {
       this.registerForm.markAllAsTouched();
-      console.log('Form is invalid:', this.registerForm.value);
+      console.error('Form is invalid:', this.registerForm.errors);
     }
   }
+
 
   togglePasswordVisibility() {
     this.hidePassword = !this.hidePassword;
@@ -78,20 +83,30 @@ export class OrganizerRegisterComponent {
 
   onFileSelected(event: Event) {
     const inputElement = event.target as HTMLInputElement;
-    const file = inputElement.files?.[0]; // Use optional chaining to safely access the file
+    const file = inputElement.files?.[0];
+
     if (file) {
       const reader = new FileReader();
       reader.onload = (e: ProgressEvent<FileReader>) => {
-        this.imagePreview = e.target?.result as string; // Cast result as string since it's a Data URL
+        this.imagePreview = e.target?.result as string; // Update preview
+        this.registerForm.patchValue({ profileImage: file }); // Update form control
+        this.registerForm.get('profileImage')?.updateValueAndValidity(); // Sync validity
       };
       reader.readAsDataURL(file);
     }
   }
 
-  triggerFileInput() {
-    const fileInput = document.getElementById('profilePic') as HTMLInputElement;
-    if (fileInput) {
-      fileInput.click();
-    }
+  clearImage() {
+    this.imagePreview = null; // Clear preview
+    this.registerForm.patchValue({ profileImage: null }); // Clear form control value
+    this.registerForm.get('profileImage')?.updateValueAndValidity(); // Sync validity
   }
+
+
+  triggerFileInput() {
+    this.formSubmitted = true; // Prevent form auto-switching during image upload
+    const fileInput = document.getElementById('profilePic') as HTMLInputElement;
+    fileInput?.click();
+  }
+
 }
