@@ -13,7 +13,7 @@
         <button mat-raised-button class="btn">CHANGE PASSWORD</button>
 
       </div>
-  
+
       <!-- Card 2: Regular Text -->
       <div class="owner-section">
         <h4>User Information</h4>
@@ -22,7 +22,7 @@
         <p><strong>Phone:</strong> +381654567899</p>
         <p><strong>Address:</strong> My Adress At FN</p>
       </div>
-  
+
       <!-- Card 3: Text and Buttons -->
       <div class="photo-section">
         <h4>Additional Information</h4>
@@ -33,15 +33,15 @@
         <p>
           Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa.
         </p>
-        <button mat-raised-button class="btn" [routerLink]="'/my-solutions'">VIEW MY SOLUTIONS</button>
+        <button *ngIf="this.user.role === 'pup'" mat-raised-button class="btn" [routerLink]="'/my-solutions'">VIEW MY SOLUTIONS</button>
+        <button *ngIf="this.user.role === 'admin'" mat-raised-button class="btn" [routerLink]="'/admin-dashboard'">ADMIN DASHBOARD</button>
 
         <button mat-raised-button class="btn deactivate-account">DEACTIVATE ACCOUNT</button>
       </div>
     </div>
-  
+
     <!-- Card 4: Manage Photos -->
     <div class="info-section">
       <button mat-raised-button color="primary" class="btn">MANAGE PHOTOS</button>
     </div>
   </div>
-  

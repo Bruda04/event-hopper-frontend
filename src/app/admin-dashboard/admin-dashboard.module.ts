@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AdminCategoriesSuggestionsManagementComponent} from './categories/admin-categories-suggestions-management/admin-categories-suggestions-management.component';
+import { DashboardComponent} from './dashboard/dashboard.component';
 import { MaterialModule } from '../infrastructure/material/material.module';
 import { AdminApprovedCategoriesManagementComponent } from './categories/admin-approved-categories-management/admin-approved-categories-management.component';
 import { AdminSuggestionsManagementComponent } from './categories/admin-suggestions-management/admin-suggestions-management.component';
@@ -17,7 +17,7 @@ import {
 
 @NgModule({
   declarations: [
-    AdminCategoriesSuggestionsManagementComponent,
+    DashboardComponent,
     AdminApprovedCategoriesManagementComponent,
     AdminSuggestionsManagementComponent,
     CreateCategoryComponent,
@@ -34,4 +34,4 @@ import {
     ReactiveFormsModule,
   ]
 })
-export class CategoriesModule { }
+export class AdminDashboardModule { }

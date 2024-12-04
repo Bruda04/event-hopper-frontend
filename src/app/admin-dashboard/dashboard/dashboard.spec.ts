@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminCategoriesSuggestionsManagementComponent } from './admin-categories-suggestions-management.component';
+import { AdminCategoriesSuggestionsManagementComponent } from './dashboard.component';
 
 describe('AdminCategoriesSuggestionsManagementComponent', () => {
   let component: AdminCategoriesSuggestionsManagementComponent;
