@@ -14,7 +14,6 @@ import {
   AdminCategoriesSuggestionsManagementComponent
 } from './admin-dashboard/categories/admin-categories-suggestions-management/admin-categories-suggestions-management.component';
 
-
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full' },  //default route (always open to home)
   {path: 'login', component: LoginComponent },

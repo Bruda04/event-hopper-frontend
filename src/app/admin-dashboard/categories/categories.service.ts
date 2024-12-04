@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {Category} from './model/category.model';
-import {CategorySuggestion} from './model/categorySuggestion.model';
+import {Category} from '../model/category.model';
+import {CategorySuggestion} from '../model/categorySuggestion.model';
 
 const dataSource = [
   {

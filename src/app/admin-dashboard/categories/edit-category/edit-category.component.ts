@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MatDialogRef} from "../../../infrastructure/material/material.module"
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Category} from '../model/category.model';
+import {Category} from '../../model/category.model';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
