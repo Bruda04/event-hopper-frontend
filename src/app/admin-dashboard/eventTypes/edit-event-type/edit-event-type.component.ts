@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EventType } from '../../model/eventType.model';
 import { Category } from '../../model/category.model';
+import {CategoriesService} from '../../categories/categories.service';
 
 @Component({
   selector: 'app-edit-event-type',
@@ -17,8 +18,11 @@ export class EditEventTypeComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<EditEventTypeComponent>,
-    @Inject(MAT_DIALOG_DATA) public eventTypeToEdit: EventType
-  ) {}
+    @Inject(MAT_DIALOG_DATA) public eventTypeToEdit: EventType,
+    private categoriesService: CategoriesService
+  ) {
+    this.categories = categoriesService.getApproved();
+  }
 
   editEventTypeForm = new FormGroup({
     description: new FormControl<string>('', [Validators.required]),
@@ -48,13 +52,6 @@ export class EditEventTypeComponent implements OnInit {
   }
 
   loadAvailableCategories(): void {
-    // Simulate API call to fetch categories
-    this.categories = [
-      { id: 1, name: 'Category A', description: 'Description A', isDeletable: true },
-      { id: 2, name: 'Category B', description: 'Description B', isDeletable: true },
-      { id: 3, name: 'Category C', description: 'Description C', isDeletable: true },
-    ];
-
     // Set available categories as the categories that are not already selected
     this.availableCategories = this.categories.filter(
       category => !this.selectedCategories.includes(category.name)

@@ -4,10 +4,8 @@ import { MatDialog, MatSort } from "../../../infrastructure/material/material.mo
 import { EventType } from '../../model/eventType.model';
 import { EventTypesService } from '../event-types.service';
 import { EditEventTypeComponent } from '../edit-event-type/edit-event-type.component';
-import {MatDialogRef} from '@angular/material/dialog';
-import {CreateCategoryComponent} from '../../categories/create-category/create-category.component';
-import {Category} from '../../model/category.model';
-import {CreateEventTypeComponent} from '../create-event-type/create-event-type.component';
+import { MatDialogRef } from '@angular/material/dialog';
+import { CreateEventTypeComponent } from '../create-event-type/create-event-type.component';
 
 @Component({
   selector: 'app-admin-event-types-management',
@@ -18,7 +16,7 @@ export class AdminEventTypesManagementComponent implements OnInit, AfterViewInit
   eventTypes: EventType[];
   dataSource: MatTableDataSource<EventType>;
 
-  displayedColumns: string[] = ['name', 'description','active','suggestedSolutionCategories', 'events','actions'];
+  displayedColumns: string[] = ['name', 'description', 'active', 'suggestedSolutionCategories', 'events', 'actions'];
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -29,13 +27,12 @@ export class AdminEventTypesManagementComponent implements OnInit, AfterViewInit
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
+    this.dataSource.sort = this.sort;  // Apply sorting to the table after the view is initialized
   }
 
   private loadEventTypes(): void {
     this.eventTypes = this.eventTypesService.getEventTypes();
     this.dataSource = new MatTableDataSource(this.eventTypes);
-    console.log(this.eventTypes);
   }
 
   create(): void {
@@ -47,12 +44,10 @@ export class AdminEventTypesManagementComponent implements OnInit, AfterViewInit
     dialogRef.afterClosed().subscribe((newEventType: EventType | null) => {
       if (newEventType) {
         this.eventTypesService.add(newEventType);
-        this.eventTypes = this.eventTypesService.getEventTypes();
-        this.dataSource.data = this.eventTypes
+        this.loadEventTypes();
       }
     });
   }
-
 
   edit(eventType: EventType): void {
     const dialogRef = this.dialog.open(EditEventTypeComponent, {
