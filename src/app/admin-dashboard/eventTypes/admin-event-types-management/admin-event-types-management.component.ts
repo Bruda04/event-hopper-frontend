@@ -4,6 +4,10 @@ import { MatDialog, MatSort } from "../../../infrastructure/material/material.mo
 import { EventType } from '../../model/eventType.model';
 import { EventTypesService } from '../event-types.service';
 import { EditEventTypeComponent } from '../edit-event-type/edit-event-type.component';
+import {MatDialogRef} from '@angular/material/dialog';
+import {CreateCategoryComponent} from '../../categories/create-category/create-category.component';
+import {Category} from '../../model/category.model';
+import {CreateEventTypeComponent} from '../create-event-type/create-event-type.component';
 
 @Component({
   selector: 'app-admin-event-types-management',
@@ -33,6 +37,22 @@ export class AdminEventTypesManagementComponent implements OnInit, AfterViewInit
     this.dataSource = new MatTableDataSource(this.eventTypes);
     console.log(this.eventTypes);
   }
+
+  create(): void {
+    const dialogRef: MatDialogRef<CreateEventTypeComponent> = this.dialog.open(CreateEventTypeComponent, {
+      minWidth: '30vw',
+      minHeight: '40vh'
+    });
+
+    dialogRef.afterClosed().subscribe((newEventType: EventType | null) => {
+      if (newEventType) {
+        this.eventTypesService.add(newEventType);
+        this.eventTypes = this.eventTypesService.getEventTypes();
+        this.dataSource.data = this.eventTypes
+      }
+    });
+  }
+
 
   edit(eventType: EventType): void {
     const dialogRef = this.dialog.open(EditEventTypeComponent, {
