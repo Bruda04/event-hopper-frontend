@@ -1,11 +1,11 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {Category} from '../../model/category.model';
+import {CategoryDTO} from '../../model/categoryDTO.model';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog, MatSort} from  "../../../infrastructure/material/material.module";
 import {CategoriesService} from '../categories.service';
 import {ApproveSuggestionComponent} from '../approve-suggestion/approve-suggestion.component';
 import {EditSuggestionComponent} from '../edit-suggestion/edit-suggestion.component';
-import {CategorySuggestion} from '../../model/categorySuggestion.model';
+import {CategorySuggestionDTO} from '../../model/categorySuggestionDTO.model';
 
 @Component({
   selector: 'app-admin-suggestions-management',
@@ -13,8 +13,8 @@ import {CategorySuggestion} from '../../model/categorySuggestion.model';
   styleUrl: './admin-suggestions-management.component.css'
 })
 export class AdminSuggestionsManagementComponent implements OnInit, AfterViewInit {
-  categories: CategorySuggestion[];
-  dataSource: MatTableDataSource<CategorySuggestion>
+  categories: CategorySuggestionDTO[];
+  dataSource: MatTableDataSource<CategorySuggestionDTO>
 
   displayedColumns: string[] = [
     'name',
@@ -28,7 +28,7 @@ export class AdminSuggestionsManagementComponent implements OnInit, AfterViewIni
   }
 
   ngOnInit(): void {
-    this.categories = this.categoriesService.getSuggestions();
+    // this.categories = this.categoriesService.getSuggestions();
     this.dataSource = new MatTableDataSource(this.categories);
   }
 
@@ -36,7 +36,7 @@ export class AdminSuggestionsManagementComponent implements OnInit, AfterViewIni
     this.dataSource.sort = this.sort;
   }
 
-  edit(element: CategorySuggestion):void {
+  edit(element: CategorySuggestionDTO):void {
     const dialogRef = this.dialog.open(EditSuggestionComponent, {
       minWidth: '30vw',
       data: element,
@@ -45,12 +45,12 @@ export class AdminSuggestionsManagementComponent implements OnInit, AfterViewIni
     dialogRef.afterClosed().subscribe((result: boolean | null) => {
       if (result) {
         this.categoriesService.reject(element);
-        this.dataSource.data = this.categoriesService.getSuggestions();
+        // this.dataSource.data = this.categoriesService.getSuggestions();
       }
     });
   }
 
-  approve(element: CategorySuggestion): void {
+  approve(element: CategorySuggestionDTO): void {
     const dialogRef = this.dialog.open(ApproveSuggestionComponent, {
       minWidth: '30vw',
       data: element.name,
@@ -59,7 +59,7 @@ export class AdminSuggestionsManagementComponent implements OnInit, AfterViewIni
     dialogRef.afterClosed().subscribe((result: boolean | null) => {
       if (result) {
         this.categoriesService.approve(element);
-        this.dataSource.data = this.categoriesService.getSuggestions();
+        // this.dataSource.data = this.categoriesService.getSuggestions();
       }
     });
   }

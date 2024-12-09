@@ -1,8 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MatDialogRef} from "../../../infrastructure/material/material.module"
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Category} from '../../model/category.model';
+import {CategoryDTO} from '../../model/categoryDTO.model';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {UpdateCategoryDTO} from '../../model/UpdateCategoryDTO.model';
 
 @Component({
   selector: 'app-edit-category',
@@ -11,7 +12,7 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 })
 export class EditCategoryComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<EditCategoryComponent>, @Inject(MAT_DIALOG_DATA) private categoryToEdit: Category) {}
+  constructor(public dialogRef: MatDialogRef<EditCategoryComponent>, @Inject(MAT_DIALOG_DATA) private categoryToEdit: CategoryDTO) {}
 
   editCategoryForm = new FormGroup({
     name: new FormControl<string>('', [Validators.required]),
@@ -20,10 +21,13 @@ export class EditCategoryComponent implements OnInit {
 
   update(): void {
     if(this.editCategoryForm.valid) {
-      const category :Category = {
-        ...this.categoryToEdit,
+      console.log(this.categoryToEdit)
+      const category :UpdateCategoryDTO = {
         name: this.editCategoryForm.value.name,
         description: this.editCategoryForm.value.description,
+        status: this.categoryToEdit.status,
+        eventTypesIds: this.categoryToEdit.eventTypes.map(et => et.id)
+
       };
       console.log(category);
       this.dialogRef.close(category);

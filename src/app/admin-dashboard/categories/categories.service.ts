@@ -1,114 +1,48 @@
 import { Injectable } from '@angular/core';
-import {Category} from '../model/category.model';
-import {CategorySuggestion} from '../model/categorySuggestion.model';
-
-const dataSource = [
-  {
-    name: "Candles",
-    description: "Various scented candles",
-    status: "APPROVED",
-    isDeletable: false,
-  },
-  {
-    name: "Incense",
-    description: "Aromatic incense sticks",
-    status: "APPROVED",
-    isDeletable: true,
-  },
-  {
-    name: "Essential Oils",
-    description: "Pure essential oils",
-    status: "APPROVED",
-    isDeletable: false,
-  },
-  {
-    name: "Diffusers",
-    description: "Aromatic diffusers",
-    status: "APPROVED",
-    isDeletable: false
-  },
-  {
-    name: "Bath Salts",
-    description: "Relaxing bath salts",
-    status: "APPROVED",
-    isDeletable: false
-  },
-  {
-    name: "Face Masks",
-    description: "Hydrating and cleansing masks",
-    status: "PENDING"
-  },
-  {
-    name: "Room Sprays",
-    description: "Refreshing room sprays",
-    status: "PENDING"
-  },
-  {
-    name: "Massage Oils",
-    description: "Therapeutic massage oils",
-    status: "PENDING"
-  }
-];
-
+import {CategoryDTO} from '../model/categoryDTO.model';
+import {CategorySuggestionDTO} from '../model/categorySuggestionDTO.model';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {environment} from '../../../env/envirements';
+import {CreateCategoryDTO} from '../model/createCategoryDTO.model';
+import {UpdateCategoryDTO} from '../model/UpdateCategoryDTO.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriesService {
 
-  private categoriesList :Category[] = []
+  private categoriesList :CategoryDTO[] = []
 
-  constructor() {
-    for (let data of dataSource) {
-      const category: Category = {
-        id: Math.random(),
-        name: data.name,
-        description: data.description,
-        status: data.status,
-        isDeletable: data.isDeletable || false
-      }
-      this.categoriesList.push(category);
-    }
+  constructor(private httpClient: HttpClient) {  }
+
+  getApproved(): Observable<CategoryDTO[]> {
+    return this.httpClient.get<CategoryDTO[]>(environment.apiHost + '/categories');
   }
 
-  getApproved(): Category[] {
-    return this.categoriesList.filter((c: Category) => c.status === "APPROVED");
+  getSuggestions(): Observable<CategorySuggestionDTO[]> {
+    return this.httpClient.get<CategorySuggestionDTO[]>(environment.apiHost + '/categories/suggestions');
   }
 
-  getSuggestions(): CategorySuggestion[] {
-    return this.categoriesList
-      .filter((c: Category) => c.status === "PENDING")
-      .map((c: Category) => ({
-        categoryId: c.id,
-        name: c.name,
-        status: c.status,
-        productId: Math.random(),
-        })
-      );
+  add(category: CreateCategoryDTO): Observable<any> {
+    return this.httpClient.post(environment.apiHost + '/categories', category);
   }
 
-  add(category: Category): void {
-    category.id = Math.random();
-    category.status = "APPROVED";
-    this.categoriesList.push(category);
+  remove(id: string): Observable<any> {
+    return this.httpClient.delete(environment.apiHost + '/categories/' + id);
   }
 
-  remove(category: Category): void {
-    this.categoriesList = this.categoriesList.filter((c: Category) => c.id !== category.id);
+  update(id: string,category: UpdateCategoryDTO): Observable<any> {
+    return this.httpClient.put(environment.apiHost + '/categories/' + id, category);
   }
 
-  update(category: Category): void {
-    const index: number = this.categoriesList.findIndex((c: Category) => c.id === category.id);
-    this.categoriesList[index] = category;
-  }
-
-  approve(suggestion: CategorySuggestion) {
-    const index: number = this.categoriesList.findIndex((c: Category) => c.id === suggestion.categoryId);
+  approve(suggestion: CategorySuggestionDTO) {
+    const index: number = this.categoriesList.findIndex((c: CategoryDTO) => c.id === suggestion.id);
     this.categoriesList[index].status = "APPROVED";
   }
 
-  reject(suggestion: CategorySuggestion) {
-    const index: number = this.categoriesList.findIndex((c: Category) => c.id === suggestion.categoryId);
+  reject(suggestion: CategorySuggestionDTO) {
+    const index: number = this.categoriesList.findIndex((c: CategoryDTO) => c.id === suggestion.id);
     this.categoriesList.splice(index, 1);
   }
 }
