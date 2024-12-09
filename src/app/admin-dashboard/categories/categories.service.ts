@@ -13,8 +13,6 @@ import {UpdateCategorySuggestionDTO} from '../model/updateCategorySuggestionDTO.
 })
 export class CategoriesService {
 
-  private categoriesList :CategoryDTO[] = []
-
   constructor(private httpClient: HttpClient) {  }
 
   getApproved(): Observable<CategoryDTO[]> {
