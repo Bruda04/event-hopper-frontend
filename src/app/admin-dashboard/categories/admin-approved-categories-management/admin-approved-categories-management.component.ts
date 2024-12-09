@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {CategoryDTO} from '../../model/categoryDTO.model';
 import {MatDialog, MatSort} from  "../../../infrastructure/material/material.module";
@@ -14,10 +14,9 @@ import {UpdateCategoryDTO} from '../../model/UpdateCategoryDTO.model';
   templateUrl: './admin-approved-categories-management.component.html',
   styleUrl: './admin-approved-categories-management.component.css'
 })
-export class AdminApprovedCategoriesManagementComponent implements OnInit, AfterViewInit {
+export class AdminApprovedCategoriesManagementComponent implements OnInit {
   categories: CategoryDTO[];
   dataSource: MatTableDataSource<CategoryDTO>
-
   displayedColumns: string[] = [
     'name',
     'description',
@@ -26,17 +25,11 @@ export class AdminApprovedCategoriesManagementComponent implements OnInit, After
 
   @ViewChild(MatSort) sort: MatSort;
 
-  ngAfterViewInit(): void {
-    if (this.dataSource) {
-      this.dataSource.sort = this.sort;
-    }
-  }
-
   constructor(private categoriesService: CategoriesService, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    this.load()
+    this.load();
   }
 
   remove(category: CategoryDTO): void {

@@ -14,9 +14,15 @@ import {EventTypesService} from '../event-types.service';
 export class CreateEventTypeComponent {
   categories : CategoryDTO[];
 
-  //TODO FIX
   constructor(public dialogRef: MatDialogRef<CreateEventTypeComponent>, private categoriesService: CategoriesService) {
-    // this.categories = categoriesService.getApproved();
+    categoriesService.getApproved().subscribe({
+      next: (categories: CategoryDTO[]) => {
+        this.categories = categories;
+      },
+      error: (_) => {
+        console.error("Error loading categories");
+      }
+    });
   }
 
   onCategorySelect(selectedCategories: string[]): void {

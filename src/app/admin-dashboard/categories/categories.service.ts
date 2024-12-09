@@ -6,6 +6,7 @@ import {Observable} from 'rxjs';
 import {environment} from '../../../env/envirements';
 import {CreateCategoryDTO} from '../model/createCategoryDTO.model';
 import {UpdateCategoryDTO} from '../model/UpdateCategoryDTO.model';
+import {UpdateCategorySuggestionDTO} from '../model/updateCategorySuggestionDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,13 +37,11 @@ export class CategoriesService {
     return this.httpClient.put(environment.apiHost + '/categories/' + id, category);
   }
 
-  approve(suggestion: CategorySuggestionDTO) {
-    const index: number = this.categoriesList.findIndex((c: CategoryDTO) => c.id === suggestion.id);
-    this.categoriesList[index].status = "APPROVED";
+  approve(id: string, suggestion: UpdateCategorySuggestionDTO): Observable<any> {
+    return this.httpClient.put(environment.apiHost + '/categories/suggestions/' + id, suggestion);
   }
 
-  reject(suggestion: CategorySuggestionDTO) {
-    const index: number = this.categoriesList.findIndex((c: CategoryDTO) => c.id === suggestion.id);
-    this.categoriesList.splice(index, 1);
+  reject(categoryId: string, suggestion: UpdateCategorySuggestionDTO): Observable<any> {
+    return this.httpClient.put(environment.apiHost + '/categories/suggestions/' + categoryId, suggestion);
   }
 }

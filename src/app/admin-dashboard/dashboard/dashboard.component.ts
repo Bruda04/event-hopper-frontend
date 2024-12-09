@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
+import {
+  AdminApprovedCategoriesManagementComponent
+} from '../categories/admin-approved-categories-management/admin-approved-categories-management.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,5 +9,9 @@ import { Component } from '@angular/core';
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
+  @ViewChild('approvedCategories') approvedCategories: AdminApprovedCategoriesManagementComponent;
 
+  refreshApprovedCategories() {
+    this.approvedCategories.load();
+  }
 }

@@ -15,13 +15,13 @@ export class EditEventTypeComponent implements OnInit {
   categories: CategoryDTO[] = []; // Available categories to choose from
   selectedCategories: string[] = []; // Selected category names
   availableCategories: CategoryDTO[] = []; // Categories that can be selected (not selected yet)
-  //TODO FIX
+
   constructor(
     public dialogRef: MatDialogRef<EditEventTypeComponent>,
     @Inject(MAT_DIALOG_DATA) public eventTypeToEdit: EventType,
     private categoriesService: CategoriesService
   ) {
-    // this.categories = categoriesService.getApproved();
+
   }
 
   editEventTypeForm = new FormGroup({
@@ -46,9 +46,17 @@ export class EditEventTypeComponent implements OnInit {
       description: this.eventTypeToEdit.description,
     });
 
-    // Initialize selected categories and available categories
-    this.selectedCategories = [...(this.eventTypeToEdit.suggestedSolutionCategories || [])];
-    this.loadAvailableCategories();
+    this.categoriesService.getApproved().subscribe({
+      next: (categories: CategoryDTO[]) => {
+        this.categories = categories;
+        // Initialize selected categories and available categories
+        this.selectedCategories = [...(this.eventTypeToEdit.suggestedSolutionCategories || [])];
+        this.loadAvailableCategories();
+      },
+      error: (_) => {
+        console.error("Error loading categories");
+      }
+    });
   }
 
   loadAvailableCategories(): void {
