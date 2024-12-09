@@ -1,0 +1,71 @@
+.event-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
+  .top-section {
+    display: flex;
+    width: 100%;
+    background-color: #f9f9f9;
+
+    .event-image {
+      width: 50%; /* Take up half the container width */
+      height: auto; /* Adjust height proportionally */
+      min-height: 70vh; /* Ensure a minimum height equal to 50% of the viewport height */
+      max-height: 70vh; /* Prevent excessive height for large screens */
+      object-fit: contain; /* Prevent cropping or zooming */
+      display: block;
+    }
+
+    .event-details {
+      width: 50%; /* Take up the other half of the container */
+      padding: 5%; /* Add some spacing inside */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      h1 {
+        font-size: 2vw; /* Scale text size dynamically based on viewport width */
+        margin-bottom: 1vh;
+      }
+
+      p {
+        font-size: 1.2vw; /* Dynamically scale paragraph text */
+        color: #666;
+        margin-bottom: 2vh;
+        line-height: 1.5;
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 2%; /* Space between buttons */
+
+        button {
+          font-size: 1.2vw; /* Dynamic button font size */
+        }
+      }
+    }
+  }
+
+  .info-banner {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* Divide into three equal parts */
+    width: 100%;
+    background-color: #eef2f3;
+    padding: 2vh 0; /* Vertical padding using viewport height */
+    text-align: center;
+
+    h3 {
+      font-size: 1.5vw; /* Dynamically scale text size */
+      margin: 0;
+    }
+  }
+
+  .map-container {
+    width: 100%;
+    max-width: 90vw; /* Restrict map width to 90% of the viewport width */
+    margin: 5vh auto; /* Vertical margin using viewport height */
+  }
+}

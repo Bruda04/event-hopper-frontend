@@ -11,6 +11,7 @@ import { DashboardComponent} from './admin-dashboard/dashboard/dashboard.compone
 import {
   PUPServiceProductManagementComponent
 } from './services/pupservice-product-management/pupservice-product-management.component';
+import {EventSinglePageComponent} from './event/event-single-page/event-single-page.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full' },  //default route (always open to home)
@@ -23,6 +24,7 @@ const routes: Routes = [
   {path: 'email-confirmation-sent', component: EmailConfirmationSentComponent},
   {path: 'my-solutions', component: PUPServiceProductManagementComponent},
   {path: 'admin-dashboard', component: DashboardComponent},
+  {path: 'event', component: EventSinglePageComponent},
 ];
 
 @NgModule({
