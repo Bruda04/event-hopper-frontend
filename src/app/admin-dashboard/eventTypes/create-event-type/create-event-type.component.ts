@@ -3,7 +3,7 @@ import { MatDialogRef } from "../../../infrastructure/material/material.module";
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EventType } from '../../model/eventType.model';
 import {CategoriesService} from '../../categories/categories.service';
-import {Category} from '../../model/category.model';
+import {CategoryDTO} from '../../model/categoryDTO.model';
 import {EventTypesService} from '../event-types.service';
 
 @Component({
@@ -12,10 +12,17 @@ import {EventTypesService} from '../event-types.service';
   styleUrls: ['./create-event-type.component.css']
 })
 export class CreateEventTypeComponent {
-  categories : Category[];
+  categories : CategoryDTO[];
 
   constructor(public dialogRef: MatDialogRef<CreateEventTypeComponent>, private categoriesService: CategoriesService) {
-    this.categories = categoriesService.getApproved();
+    categoriesService.getApproved().subscribe({
+      next: (categories: CategoryDTO[]) => {
+        this.categories = categories;
+      },
+      error: (_) => {
+        console.error("Error loading categories");
+      }
+    });
   }
 
   onCategorySelect(selectedCategories: string[]): void {

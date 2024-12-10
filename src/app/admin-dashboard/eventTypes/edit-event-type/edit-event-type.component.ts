@@ -3,7 +3,7 @@ import { MatDialogRef } from "../../../infrastructure/material/material.module";
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EventType } from '../../model/eventType.model';
-import { Category } from '../../model/category.model';
+import { CategoryDTO } from '../../model/categoryDTO.model';
 import {CategoriesService} from '../../categories/categories.service';
 
 @Component({
@@ -12,16 +12,16 @@ import {CategoriesService} from '../../categories/categories.service';
   styleUrl: './edit-event-type.component.css'
 })
 export class EditEventTypeComponent implements OnInit {
-  categories: Category[] = []; // Available categories to choose from
+  categories: CategoryDTO[] = []; // Available categories to choose from
   selectedCategories: string[] = []; // Selected category names
-  availableCategories: Category[] = []; // Categories that can be selected (not selected yet)
+  availableCategories: CategoryDTO[] = []; // Categories that can be selected (not selected yet)
 
   constructor(
     public dialogRef: MatDialogRef<EditEventTypeComponent>,
     @Inject(MAT_DIALOG_DATA) public eventTypeToEdit: EventType,
     private categoriesService: CategoriesService
   ) {
-    this.categories = categoriesService.getApproved();
+
   }
 
   editEventTypeForm = new FormGroup({
@@ -46,9 +46,17 @@ export class EditEventTypeComponent implements OnInit {
       description: this.eventTypeToEdit.description,
     });
 
-    // Initialize selected categories and available categories
-    this.selectedCategories = [...(this.eventTypeToEdit.suggestedSolutionCategories || [])];
-    this.loadAvailableCategories();
+    this.categoriesService.getApproved().subscribe({
+      next: (categories: CategoryDTO[]) => {
+        this.categories = categories;
+        // Initialize selected categories and available categories
+        this.selectedCategories = [...(this.eventTypeToEdit.suggestedSolutionCategories || [])];
+        this.loadAvailableCategories();
+      },
+      error: (_) => {
+        console.error("Error loading categories");
+      }
+    });
   }
 
   loadAvailableCategories(): void {

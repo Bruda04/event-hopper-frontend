@@ -1,9 +1,9 @@
 <mat-tab-group>
   <mat-tab label="Categories">
-    <app-admin-approved-categories-management></app-admin-approved-categories-management>
+    <app-admin-approved-categories-management #approvedCategories></app-admin-approved-categories-management>
   </mat-tab>
   <mat-tab label="Category suggestions">
-    <app-admin-suggestions-management></app-admin-suggestions-management>
+    <app-admin-suggestions-management (categoryApproved)="refreshApprovedCategories()"></app-admin-suggestions-management>
   </mat-tab>
   <mat-tab label="Event types">
     <app-admin-event-types-management></app-admin-event-types-management>

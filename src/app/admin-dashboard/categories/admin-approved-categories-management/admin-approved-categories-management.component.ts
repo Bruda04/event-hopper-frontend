@@ -1,21 +1,22 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {Category} from '../../model/category.model';
+import {CategoryDTO} from '../../model/categoryDTO.model';
 import {MatDialog, MatSort} from  "../../../infrastructure/material/material.module";
 import {CategoriesService} from '../categories.service';
 import {MatDialogRef} from '@angular/material/dialog';
 import {EditCategoryComponent} from '../edit-category/edit-category.component';
 import {CreateCategoryComponent} from '../create-category/create-category.component';
+import {CreateCategoryDTO} from '../../model/createCategoryDTO.model';
+import {UpdateCategoryDTO} from '../../model/UpdateCategoryDTO.model';
 
 @Component({
   selector: 'app-admin-approved-categories-management',
   templateUrl: './admin-approved-categories-management.component.html',
   styleUrl: './admin-approved-categories-management.component.css'
 })
-export class AdminApprovedCategoriesManagementComponent implements OnInit, AfterViewInit {
-  categories: Category[];
-  dataSource: MatTableDataSource<Category>
-
+export class AdminApprovedCategoriesManagementComponent implements OnInit {
+  categories: CategoryDTO[];
+  dataSource: MatTableDataSource<CategoryDTO>
   displayedColumns: string[] = [
     'name',
     'description',
@@ -28,32 +29,39 @@ export class AdminApprovedCategoriesManagementComponent implements OnInit, After
   }
 
   ngOnInit(): void {
-    this.categories = this.categoriesService.getApproved();
-    this.dataSource = new MatTableDataSource(this.categories);
+    this.load();
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
+  remove(category: CategoryDTO): void {
+    this.categoriesService.remove(category.id).subscribe({
+      next: (_) => {
+        this.load();
+      },
+      error: (_) => {
+        console.error("Error removing category")
+      }
+    });
+
   }
 
-  remove(category: Category): void {
-    this.categoriesService.remove(category);
-    this.categories = this.categoriesService.getApproved();
-    this.dataSource.data = this.categories;
-  }
-
-  edit(element: Category):void {
+  edit(element: CategoryDTO):void {
     const dialogRef: MatDialogRef<EditCategoryComponent> = this.dialog.open(EditCategoryComponent, {
       minWidth: '30vw',
       minHeight: '40vh',
       data: element
     });
 
-    dialogRef.afterClosed().subscribe((updatedCategory: Category | null) => {
-      if (updatedCategory) {
-        this.categoriesService.update(updatedCategory);
-        this.categories = this.categoriesService.getApproved();
-        this.dataSource.data = this.categories;
+    dialogRef.afterClosed().subscribe((category: UpdateCategoryDTO | null) => {
+      if (category) {
+        this.categoriesService.update(element.id, category).subscribe({
+          next: (_) => {
+            this.load();
+          },
+          error: (any) => {
+            console.log(any);
+            console.error("Error updating category");
+          }
+        });
       }
     });
   }
@@ -64,11 +72,28 @@ export class AdminApprovedCategoriesManagementComponent implements OnInit, After
       minHeight: '40vh'
     });
 
-    dialogRef.afterClosed().subscribe((newCategory: Category | null) => {
+    dialogRef.afterClosed().subscribe((newCategory: CreateCategoryDTO | null) => {
       if (newCategory) {
-        this.categoriesService.add(newCategory);
-        this.categories = this.categoriesService.getApproved();
-        this.dataSource.data = this.categories
+        this.categoriesService.add(newCategory).subscribe({
+          next: (_) => {
+            this.load();
+          },
+          error: (_) => {
+            console.error("Error creating category");
+          }
+        });
+      }
+    });
+  }
+
+  load(): void {
+    this.categoriesService.getApproved().subscribe({
+      next: (categories: CategoryDTO[]) => {
+        this.dataSource = new MatTableDataSource<CategoryDTO>(categories);
+        this.dataSource.sort = this.sort;
+      },
+      error: (_) => {
+        console.error("Error loading categories");
       }
     });
   }
