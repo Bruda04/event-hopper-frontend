@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoginService } from '../services/login.service';
 import { NavigationStateService } from '../services/navigation-state.service';
+import {LoginService} from '../services/login/login.service';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +11,7 @@ import { NavigationStateService } from '../services/navigation-state.service';
 })
 export class LoginComponent {
   hidePassword = true; // Variable to toggle password visibility
-  loginErrorMessage: string | null = null; 
+  loginErrorMessage: string | null = null;
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required]),
@@ -39,7 +39,7 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const email = this.loginForm.value.email;
       const password = this.loginForm.value.password;
-  
+
       this.loginService.loginUser(email, password).subscribe(
         (user) => {
           if (user) {

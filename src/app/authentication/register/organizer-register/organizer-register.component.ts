@@ -2,6 +2,12 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
+import {RegistrationService} from '../../services/registration/registration.service';
+import {PersonType} from '../../model/person/PersonType.model';
+import {CreateEventOrganizerDTO} from '../../model/eventOrganizer/CreateEventOrganizerDTO.model';
+import {CreateLocationDTO} from '../../model/location/CreateLocationDTO.model';
+import {CreateAccountDTO} from '../../model/account/CreateAccountDTO.model';
+import {CreateRegistrationRequestDTO} from '../../model/registrationRequest/CreateRegistrationRequestDTO.model';
 
 function phoneMinLengthValidator(control: AbstractControl): ValidationErrors | null {
   const value = control.value?.toString() || ''; // Convert the number to a string
@@ -20,7 +26,7 @@ export class OrganizerRegisterComponent {
   hideConfirmPassword = true;
   imagePreview: string | null = null;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private registrationService: RegistrationService,) {
     this.registerForm = this.fb.group(
       {
         fullName: ['', Validators.required],
@@ -61,8 +67,43 @@ export class OrganizerRegisterComponent {
 
   onSubmit() {
     if (this.registerForm.valid) {
-      console.log('Form Submitted:', this.registerForm.value);
-      this.router.navigate(['/email-confirmation-sent']);
+
+      const createEventOrganizerDTO: CreateEventOrganizerDTO = {
+        name: this.registerForm.value.fullName.split(' ')[0], //first name
+        surname: this.registerForm.value.fullName.split(' ').slice(1).join(' ') || '',
+        profilePicture: "",//this.registerForm.value.profileImage, // Image file
+        phoneNumber: this.registerForm.value.phoneNumber,
+        type: PersonType.EVENT_ORGANIZER,
+        location: {
+          address: this.registerForm.value.address,
+          city: this.registerForm.value.city,
+        } as CreateLocationDTO,
+      };
+
+      const createAccount: CreateAccountDTO = {
+        email: this.registerForm.value.email,
+        password: this.registerForm.value.password,
+        isVerified: false,
+        isActive: true,
+        suspensionTimeStamp: null,
+        type: PersonType.EVENT_ORGANIZER,
+        person: createEventOrganizerDTO,
+        registrationRequest:{} as CreateRegistrationRequestDTO,
+
+      }
+
+      console.log("----------------------*****************************************")
+      console.log(createAccount);
+
+      this.registrationService.registerEventOrganizer(createAccount).subscribe({
+        next: (response) => {
+          console.log('Event organizer registered successfully:', response);
+          this.router.navigate(['/email-confirmation-sent']);
+        },
+        error: (err) => {
+          console.error('Error registering event organizer:', err);
+        },
+      });
     } else {
       this.registerForm.markAllAsTouched();
       console.log('Form is invalid:', this.registerForm.value);
@@ -97,7 +138,6 @@ export class OrganizerRegisterComponent {
     this.registerForm.patchValue({ profileImage: null }); // Clear form control value
     this.registerForm.get('profileImage')?.updateValueAndValidity(); // Sync validity
   }
-
 
   triggerFileInput() {
     const fileInput = document.getElementById('profilePic') as HTMLInputElement;
