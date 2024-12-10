@@ -21,5 +21,6 @@ export interface ServiceManagementDTO {
     reservationWindowDays: number;
     autoAccept: boolean;
     category: SimpleCategoryDTO;
-    eventType: SimpleEventTypeDTO[];
+    eventTypes: SimpleEventTypeDTO[];
+    pictures: string[];
 }

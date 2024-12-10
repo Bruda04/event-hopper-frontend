@@ -21,7 +21,6 @@ export class EditCategoryComponent implements OnInit {
 
   update(): void {
     if(this.editCategoryForm.valid) {
-      console.log(this.categoryToEdit)
       const category :UpdateCategoryDTO = {
         name: this.editCategoryForm.value.name,
         description: this.editCategoryForm.value.description,
@@ -29,7 +28,6 @@ export class EditCategoryComponent implements OnInit {
         eventTypesIds: this.categoryToEdit.eventTypes.map(et => et.id)
 
       };
-      console.log(category);
       this.dialogRef.close(category);
     } else {
       this.editCategoryForm.markAllAsTouched();

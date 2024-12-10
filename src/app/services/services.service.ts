@@ -6,6 +6,8 @@ import {environment} from '../../env/envirements';
 import {Observable} from 'rxjs';
 import {PagedResponse} from '../shared/model/paged-response.model';
 import {CreateServiceDTO} from './model/createServiceDTO.model';
+import {UpdateServiceDTO} from './model/updateServiceDTO.model';
+import {FormControl} from '@angular/forms';
 
 
 @Injectable({
@@ -28,6 +30,8 @@ export class ServicesService {
         .set('page', pageProperties.page)
         .set('size', pageProperties.pageSize)
     }
+
+
     return this.httpClient.get<PagedResponse<ServiceManagementDTO>>(environment.apiHost + `/services/management`, {params: params});
   }
 
@@ -41,8 +45,7 @@ export class ServicesService {
     return this.httpClient.delete(environment.apiHost + '/services/' + id);
   }
 
-  update(service: Service): void {
-    const index: number = this.servicesList.findIndex((s: Service) => s.id === service.id);
-    this.servicesList[index] = service;
+  update(id: string, service: UpdateServiceDTO): Observable<any> {
+   return this.httpClient.put(environment.apiHost + '/services/' + id, service);
   }
 }

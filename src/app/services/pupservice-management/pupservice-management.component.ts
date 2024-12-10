@@ -17,6 +17,7 @@ import {SimpleEventTypeDTO} from '../../admin-dashboard/model/simpleEventTypeDTO
 import {CategoriesService} from '../../admin-dashboard/categories/categories.service';
 import {EventTypesService} from '../../admin-dashboard/eventTypes/event-types.service';
 import {CategoryDTO} from '../../admin-dashboard/model/categoryDTO.model';
+import {UpdateServiceDTO} from '../model/updateServiceDTO.model';
 
 
 @Component({
@@ -126,24 +127,34 @@ export class PUPServiceManagementComponent implements OnInit {
     );
   }
 
-  edit(element: Service):void {
+  edit(element: ServiceManagementDTO):void {
+    console.log("cat",this.categories)
     const dialogRef: MatDialogRef<EditServiceComponent> = this.dialog.open(EditServiceComponent, {
       minWidth: '70vw',
       minHeight: '70vh',
-      data: element
+      data: {serviceToEdit: element,
+        eventTypes: this.categories.filter(c => element.category.id === c.id)[0]?.eventTypes || null}
     });
 
-    dialogRef.afterClosed().subscribe((updatedService: Service | null) => {
+    dialogRef.afterClosed().subscribe((updatedService: UpdateServiceDTO | null) => {
       if(updatedService) {
-        // this.serviceService.update(updatedService);
-        // this.loadPagedEntities();
+        this.serviceService.update(element.id, updatedService).subscribe(
+          {
+            next: () => {
+              this.loadPagedEntities();
+            },
+            error: () => {
+              console.error('Error updating service');
+            }
+          }
+        );
       }
     });
   }
 
   applySearch(event: Event): void {
-    // const inputValue: string = (event.target as HTMLInputElement).value;
-    // this.dataSource.filter = inputValue.trim().toLowerCase();
+    const inputValue: string = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = inputValue.trim().toLowerCase();
   }
 
   showFilters():void {
@@ -152,7 +163,7 @@ export class PUPServiceManagementComponent implements OnInit {
 
   applyFilters(): void {
     if (this.filterForm.valid) {
-      return;
+      this.loadPagedEntities();
     } else {
       this.filterForm.markAsTouched();
     }
@@ -166,6 +177,7 @@ export class PUPServiceManagementComponent implements OnInit {
       maxPrice: null,
       availability: ''
     });
+    this.applyFilters();
   }
 
   loadCategories() {
