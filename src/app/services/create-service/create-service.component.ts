@@ -1,7 +1,11 @@
-import { Component } from '@angular/core';
+import {Component, Inject, Injectable} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Service} from '../model/service.model';
 import {MatDialogRef} from '../../infrastructure/material/material.module';
+import {CreateServiceDTO} from '../model/createServiceDTO.model';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {CategoryDTO} from '../../admin-dashboard/model/categoryDTO.model';
+import {SimpleEventTypeDTO} from '../../admin-dashboard/model/simpleEventTypeDTO.model';
 
 @Component({
   selector: 'app-create-service',
@@ -25,24 +29,32 @@ export class CreateServiceComponent {
     cancellationWindow: new FormControl<number | null>(null, [Validators.required, Validators.min(0)]),
   });
 
-  constructor(public dialogRef: MatDialogRef<CreateServiceComponent>) {}
+  filteredEventTypes: SimpleEventTypeDTO[];
+
+  constructor(public dialogRef: MatDialogRef<CreateServiceComponent>, @Inject(MAT_DIALOG_DATA) protected categories: CategoryDTO[] ) {
+    this.createServiceForm.get('category')?.valueChanges.subscribe((categoryId: any) => {
+      const category: CategoryDTO = this.categories.find(cat => cat.id === categoryId);
+      this.filteredEventTypes = category?.eventTypes || [];
+    });
+  }
 
   create(): void {
     if(this.createServiceForm.valid) {
-      const service :Service = {
+      const service :CreateServiceDTO = {
           name: this.createServiceForm.value.name,
           description: this.createServiceForm.value.description,
+          pictures: [],
           basePrice: this.createServiceForm.value.basePrice,
           discount: this.createServiceForm.value.discount,
           finalPrice: this.createServiceForm.value.basePrice*(this.createServiceForm.value.discount/100),
-          category: this.createServiceForm.value.category,
-          eventType: this.createServiceForm.value.eventType,
+          categoryId: this.createServiceForm.value.category,
+          eventTypesIds: this.createServiceForm.value.eventType,
           autoAccept: this.createServiceForm.value.acceptance === 'auto',
           available: this.createServiceForm.value.available,
           visible: this.createServiceForm.value.visible,
-          duration: this.createServiceForm.value.duration,
-          reservationWindow: this.createServiceForm.value.reservationWindow,
-          cancellationWindow: this.createServiceForm.value.cancellationWindow,
+          durationMinutes: this.createServiceForm.value.duration,
+          reservationWindowDays: this.createServiceForm.value.reservationWindow,
+          cancellationWindowDays: this.createServiceForm.value.cancellationWindow,
         };
         this.dialogRef.close(service);
     } else {

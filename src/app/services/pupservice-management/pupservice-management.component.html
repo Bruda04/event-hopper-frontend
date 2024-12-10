@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <button mat-raised-button class="create-button" (click)="openModal()">
+    <button mat-raised-button class="create-button" (click)="add()">
       <mat-icon>add</mat-icon>
       CREATE
     </button>
@@ -31,8 +31,8 @@
       <mat-form-field appearance="fill" class="filter-field">
         <mat-label>Category</mat-label>
         <mat-select formControlName="category">
-          <mat-option *ngFor="let category of categories" [value]="category">
-            {{ category }}
+          <mat-option *ngFor="let category of categories" [value]="category.id">
+            {{ category.name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -40,8 +40,8 @@
       <mat-form-field appearance="fill" class="filter-field">
         <mat-label>Event Type</mat-label>
         <mat-select formControlName="eventType" multiple>
-          <mat-option *ngFor="let event of eventTypes" [value]="event">
-            {{ event }}
+          <mat-option *ngFor="let eventType of filteredEventTypes" [value]="eventType.id">
+            {{ eventType.name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -101,14 +101,14 @@
       <!-- Base Price Column -->
       <ng-container matColumnDef="basePrice">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Base Price </th>
-        <td mat-cell *matCellDef="let element"> {{element.basePrice}} € </td>
+        <td mat-cell *matCellDef="let element"> {{element.price.basePrice}} € </td>
       </ng-container>
 
       <!-- Discount Column -->
       <ng-container matColumnDef="discount">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Discount </th>
         <td mat-cell *matCellDef="let element">
-          {{element.discount}}%
+          {{element.price.discount}}%
           <mat-icon *ngIf="element.discount > 0" [ngStyle]="{'color':'var(--green-color)'}">trending_up</mat-icon>
           <mat-icon *ngIf="element.discount == 0" [ngStyle]="{'color':'var(--error-color)'}">trending_down</mat-icon>
         </td>
@@ -117,7 +117,7 @@
       <!-- Final Price Column -->
       <ng-container matColumnDef="finalPrice">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Final Price </th>
-        <td mat-cell *matCellDef="let element"> {{element.finalPrice}} € </td>
+        <td mat-cell *matCellDef="let element"> {{element.price.finalPrice}} € </td>
       </ng-container>
 
       <!-- Visible Column -->
@@ -134,27 +134,27 @@
       <ng-container matColumnDef="available">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Available </th>
         <td mat-cell *matCellDef="let element">
-          <mat-icon *ngIf="element.visible" [ngStyle]="{'color':'var(--green-color)'}">check</mat-icon>
-          <mat-icon *ngIf="!element.visible" [ngStyle]="{'color':'var(--error-color)'}">close</mat-icon>
+          <mat-icon *ngIf="element.available" [ngStyle]="{'color':'var(--green-color)'}">check</mat-icon>
+          <mat-icon *ngIf="!element.available" [ngStyle]="{'color':'var(--error-color)'}">close</mat-icon>
         </td>
       </ng-container>
 
       <!-- Duration Column -->
       <ng-container matColumnDef="duration">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Duration </th>
-        <td mat-cell *matCellDef="let element"> {{element.duration}} min </td>
+        <td mat-cell *matCellDef="let element"> {{element.durationMinutes}} min </td>
       </ng-container>
 
       <!-- Cancellation Window Column -->
       <ng-container matColumnDef="cancellationWindow">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Cancellation Window </th>
-        <td mat-cell *matCellDef="let element"> {{element.cancellationWindow}} day(s) </td>
+        <td mat-cell *matCellDef="let element"> {{element.cancellationWindowDays}} day(s) </td>
       </ng-container>
 
       <!-- Reservation Window Column -->
       <ng-container matColumnDef="reservationWindow">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Reservation Window </th>
-        <td mat-cell *matCellDef="let element"> {{element.reservationWindow}} day(s) </td>
+        <td mat-cell *matCellDef="let element"> {{element.reservationWindowDays}} day(s) </td>
       </ng-container>
 
       <!-- Actions Column -->
@@ -164,7 +164,7 @@
           <button mat-icon-button (click)="edit(element)" [ngStyle]="{color: 'var(--primary-color)'}">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button (click)="remove(element)" [ngStyle]="{color: 'var(--error-color)'}">
+          <button mat-icon-button (click)="remove(element.id)" [ngStyle]="{color: 'var(--error-color)'}">
             <mat-icon>delete</mat-icon>
           </button>
         </td>
@@ -173,7 +173,10 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns" class="table-header"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    <mat-paginator *ngIf="pageProperties" (page)="pageChanged($event)" [length]="pageProperties.totalCount" [pageIndex]="pageProperties.page"
+                   [pageSizeOptions]="pageProperties.pageSizeOptions" [pageSize]="pageProperties.pageSize"
+                   showFirstLastButtons>
+    </mat-paginator>
   </div>
 
 </div>

@@ -8,6 +8,15 @@ import {MatDialogRef} from '@angular/material/dialog';
 import {EditServiceComponent} from '../edit-service/edit-service.component';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {PageEvent} from '@angular/material/paginator';
+import {PagedResponse} from '../../shared/model/paged-response.model';
+import {ServiceManagementDTO} from '../model/serviceManagementDTO.model';
+import {CreateServiceDTO} from '../model/createServiceDTO.model';
+import {SimpleCategoryDTO} from '../../admin-dashboard/model/simpleCategoryDTO.model';
+import {SimpleEventTypeDTO} from '../../admin-dashboard/model/simpleEventTypeDTO.model';
+import {CategoriesService} from '../../admin-dashboard/categories/categories.service';
+import {EventTypesService} from '../../admin-dashboard/eventTypes/event-types.service';
+import {CategoryDTO} from '../../admin-dashboard/model/categoryDTO.model';
 
 
 @Component({
@@ -24,10 +33,19 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
     ])
   ]
 })
-export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
-  services: Service[];
-  dataSource: MatTableDataSource<Service>;
+export class PUPServiceManagementComponent implements OnInit {
+  services: ServiceManagementDTO[];
+  dataSource: MatTableDataSource<ServiceManagementDTO>;
 
+  categories: CategoryDTO[];
+  filteredEventTypes: SimpleEventTypeDTO[] = [];
+
+  pageProperties = {
+    page: 0,
+    pageSize: 4,
+    totalCount: 0,
+    pageSizeOptions: [4, 8, 12]
+  };
   displayedColumns: string[] = [
     'product',
     'description',
@@ -46,8 +64,7 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
 
   showFilterPanel: boolean = false;
-  categories: string[] = ['Category 1', 'Category 2', 'Category 3'];
-  eventTypes: string[] = ['Event Type 1', 'Event Type 2', 'Event Type 3', 'Event Type 4'];
+
   filterForm: FormGroup= new FormGroup({
     category: new FormControl<string>(''),
     eventType: new FormControl<string>(''),
@@ -58,46 +75,55 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
 
 
 
-  constructor(private serviceService: ServicesService, public dialog: MatDialog) {
+  constructor(private serviceService: ServicesService,
+              private categorisService: CategoriesService,
+              private eventTypesService: EventTypesService,
+              public dialog: MatDialog) {
   }
-
-  openModal(): void {
-    const dialogRef: MatDialogRef<CreateServiceComponent> = this.dialog.open(CreateServiceComponent, {
-      minWidth: '70vw',
-      minHeight: '70vh'
-    });
-
-    dialogRef.afterClosed().subscribe((newService: Service | null) => {
-    if (newService) {
-      this.serviceService.add(newService);
-      this.services = this.serviceService.getAll();
-      this.dataSource.data = this.services;
-    }
-  });
-  }
-
 
   ngOnInit(): void {
-    this.services = this.serviceService.getAll();
-    this.dataSource = new MatTableDataSource(this.services);
+    this.loadPagedEntities();
 
-    this.dataSource.filterPredicate = (data: Service, filter: string): boolean => {
-      const filterText: string = filter.trim().toLowerCase();
-      return data.name.toLowerCase().includes(filterText) ||
-        data.description.toLowerCase().includes(filterText) ||
-        data.category.toLowerCase().includes(filterText);
-    };
+    this.loadCategories();
+
+    this.loadEventTypes();
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+
+  add(): void {
+    const dialogRef: MatDialogRef<CreateServiceComponent> = this.dialog.open(CreateServiceComponent, {
+      minWidth: '70vw',
+      minHeight: '70vh',
+      data: this.categories || []
+    });
+
+    dialogRef.afterClosed().subscribe((newService: CreateServiceDTO | null) => {
+      if (newService) {
+        this.serviceService.add(newService).subscribe(
+          {
+            next: () => {
+              this.loadPagedEntities();
+            },
+            error: () => {
+              console.error('Error adding service');
+            }
+          }
+        )
+      }
+    });
   }
 
-  remove(service: Service): void {
-    this.serviceService.remove(service);
-    this.services = this.serviceService.getAll();
-    this.dataSource.data = this.services;
+  remove(id: string): void {
+    this.serviceService.remove(id).subscribe(
+      {
+        next: () => {
+          this.loadPagedEntities()
+        },
+        error: () => {
+          console.error('Error removing service');
+        }
+      }
+    );
   }
 
   edit(element: Service):void {
@@ -109,17 +135,15 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe((updatedService: Service | null) => {
       if(updatedService) {
-        this.serviceService.update(updatedService);
-        console.log(updatedService);
-        this.services = this.serviceService.getAll();
-        this.dataSource.data = this.services;
+        // this.serviceService.update(updatedService);
+        // this.loadPagedEntities();
       }
     });
   }
 
   applySearch(event: Event): void {
-    const inputValue: string = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = inputValue.trim().toLowerCase();
+    // const inputValue: string = (event.target as HTMLInputElement).value;
+    // this.dataSource.filter = inputValue.trim().toLowerCase();
   }
 
   showFilters():void {
@@ -141,6 +165,45 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
       minPrice: null,
       maxPrice: null,
       availability: ''
+    });
+  }
+
+  loadCategories() {
+    this.categorisService.getApproved().subscribe(
+      {
+        next: (categories: CategoryDTO[]) => {
+          this.categories = categories;
+        },
+        error: () => {
+          console.error('Error loading categories');
+        }
+      });
+  }
+
+  pageChanged(pageEvent: PageEvent) {
+    this.pageProperties.page = pageEvent.pageIndex;
+    this.pageProperties.pageSize = pageEvent.pageSize;
+    this.loadPagedEntities();
+  }
+
+  loadPagedEntities() {
+    this.serviceService.getAllForManagement(this.pageProperties)
+      .subscribe( {
+        next: (response: PagedResponse<ServiceManagementDTO>) => {
+          this.dataSource = new MatTableDataSource(response.content);
+          this.pageProperties.totalCount = response.totalElements;
+          console.log(response);
+        },
+        error: () => {
+          console.error('Error loading services');
+        }
+      });
+  }
+
+  loadEventTypes() {
+    this.filterForm.get('category')?.valueChanges.subscribe((categoryId: any) => {
+      const category: CategoryDTO = this.categories.find(cat => cat.id === categoryId);
+      this.filteredEventTypes = category?.eventTypes || [];
     });
   }
 }
