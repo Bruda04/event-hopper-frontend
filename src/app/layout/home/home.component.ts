@@ -1,17 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../authentication/services/user.service';
-import { User } from '../../authentication/services/user.modul';
-import { Event } from '../../event/model/event.model';
-import { Service } from '../../services/model/service.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {EventService} from '../../event/event.service';
 import {ProductService} from '../../services/product.service';
 import {ProductDTO} from '../../services/model/productDTO.model';
 import {EventDTO} from '../../event/model/eventDTO.model';
-import {LoginService} from '../../authentication/services/login/login.service';
-//import { getAll } from '../../services/services.service';
+import {MatPaginator, MatSort} from '../../infrastructure/material/material.module';
+import {PageEvent} from '@angular/material/paginator';
+import {PagedResponse} from '../../shared/model/paged-response.model';
 
 
 @Component({
@@ -43,18 +41,30 @@ export class HomeComponent implements OnInit {
       console.log("Logged in is : ", this.user.role);
     }
 
-
+    this.loadPagedEvents();
+    this.loadPagedSolutions();
     this.loadTop5Events();
     this.loadTop5Solutions();
-    this.loadEvents();
-    this.loadSolutions();
+    //this.loadEvents();
+    //this.loadSolutions();
   }
+
 
   top5events: EventDTO[] ;
   top5solutions: ProductDTO[];
   events: EventDTO[];
   solutions: ProductDTO[];
 
+  pageProperties = {
+    page: 0,
+    pageSize: 10,
+    totalCount: 0
+  };
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
+  searchContent: string = '';
 
   currentIndex = 0;
   showEventFilterPanel: boolean = false; // Inicijalno stanje filter panela
@@ -72,6 +82,8 @@ export class HomeComponent implements OnInit {
   });
 
   filterSolutionForm: FormGroup= new FormGroup({
+    isProduct: new FormControl<string>(''),
+    isService: new FormControl<string>(''),
     category: new FormControl<string>(''),
     eventType: new FormControl<string>(''),
     minPrice: new FormControl<number>(null, [Validators.min(0)]),
@@ -100,10 +112,16 @@ export class HomeComponent implements OnInit {
     this.showEventFilterPanel = !this.showEventFilterPanel; // Menja stanje panela
   }
 
-
   toggleSolutionFilterPanel(): void {
     this.showSolutionFilterPanel = !this.showSolutionFilterPanel; // Menja stanje panela
   }
+
+  // setSearchContent(event: Event): void {
+  //   this.searchContent = (event.target as HTMLInputElement).value;
+  //   if (!this.searchContent) {
+  //     this.loadPagedEvents();
+  //   }
+  // }
 
 
   //proveriti da li radi
@@ -133,6 +151,8 @@ export class HomeComponent implements OnInit {
       eventType: '',
       date: null
     });
+
+    this.applyFilters();
   }
 
 
@@ -190,5 +210,102 @@ export class HomeComponent implements OnInit {
         }
       }
     );
+  }
+
+  eventPageChanged(pageEvent: PageEvent): void {
+    this.pageProperties.page = pageEvent.pageIndex;
+    this.pageProperties.pageSize = pageEvent.pageSize;
+    this.loadPagedEvents();
+  }
+
+  loadPagedEvents() :void {
+    const sortField = this.sort?.active || ''; // Column to sort by
+    const sortDirection = this.sort?.direction || ''; // 'asc' or 'desc'
+
+
+    this.eventService.getEventsPage(
+      this.pageProperties,
+      sortField,
+      sortDirection,
+      this.filterEventForm.value.location,
+      this.filterEventForm.value.eventType,
+      this.filterEventForm.value.date,
+      this.searchContent
+    )
+
+    this.eventService.getEvents().subscribe(
+      {
+        next: events => {
+          this.events = events;
+        },
+        error: solutions => {
+          console.error("Error loading events");
+        }
+      }
+    );
+
+  }
+
+  solutionPageChanged(pageEvent: PageEvent): void {
+    this.pageProperties.page = pageEvent.pageIndex;
+    this.pageProperties.pageSize = pageEvent.pageSize;
+    this.loadPagedSolutions();
+  }
+
+  loadPagedSolutions() :void {
+    const sortField = this.sort?.active || ''; // Column to sort by
+    const sortDirection = this.sort?.direction || ''; // 'asc' or 'desc'
+
+    this.productService.getSolutionsPage(
+      this.pageProperties,
+      sortField,
+      sortDirection,
+      this.filterSolutionForm.value.isProduct || null,
+      this.filterSolutionForm.value.isService || null,
+      this.filterSolutionForm.value.category || null,
+      this.filterSolutionForm.value.eventType || null,
+      this.filterSolutionForm.value.minPrice || null,
+      this.filterSolutionForm.value.maxPrice || null,
+      this.filterSolutionForm.value.availability === 'available'
+        ? true
+        : this.filterSolutionForm.value.availability === 'unavailable'
+          ? false
+          : null,
+      this.searchContent || ''
+    ).subscribe({
+      next: (response:PagedResponse<ProductDTO>) => {
+        this.solutions = response.content; // Pretpostavljamo da API vraća `items`
+        this.pageProperties.totalCount = response.totalElements; // Ažuriramo ukupan broj stavki
+      },
+      error: (err) => {
+        console.error('Error loading solutions', err);
+      }
+    });
+
+    // this.productService.getSolutionsPage(
+    //   this.pageProperties,
+    //   sortField,
+    //   sortDirection,
+    //   this.filterSolutionForm.value.isProduct,
+    //   this.filterSolutionForm.value.isService,
+    //   this.filterSolutionForm.value.category,
+    //   this.filterSolutionForm.value.eventType,
+    //   this.filterSolutionForm.value.minPrice,
+    //   this.filterSolutionForm.value.maxPrice,
+    //   this.filterSolutionForm.value.availability === 'available' ? true : this.filterSolutionForm.value.availability === 'unavailable' ? false : null,
+    //   this.searchContent
+    // )
+    //
+    // this.productService.getSolutions().subscribe(
+    //   {
+    //     next: solutions => {
+    //       this.solutions = solutions;
+    //     },
+    //     error: solutions => {
+    //       console.error("Error loading solutions");
+    //     }
+    //   }
+    // );
+
   }
 }

@@ -7,10 +7,10 @@
   </div>
 
   <div class="grid-item">
-      <p-carousel 
-        [value]="top5events" 
-        [numVisible]="1.5" 
-        [numScroll]="1" 
+      <p-carousel
+        [value]="top5events"
+        [numVisible]="1.5"
+        [numScroll]="1"
         [showIndicators]="false"
         [circular]="false">
         <ng-template pTemplate="item" let-event>
@@ -24,12 +24,12 @@
 
 <div class="grid-container-top5solutions">
   <div class="grid-item">
-    
-    <p-carousel 
-        [value]="top5solutions" 
-        [numVisible]="1.5" 
+
+    <p-carousel
+        [value]="top5solutions"
+        [numVisible]="1.5"
         [numScroll]="1"
-        [showIndicators]="false" 
+        [showIndicators]="false"
         [circular]="false">
         <ng-template pTemplate="item" let-service>
           <div class="carousel-item">
@@ -37,7 +37,7 @@
           </div>
         </ng-template>
       </p-carousel>
-    
+
   </div>
 
   <div class="grid-item">
@@ -62,7 +62,7 @@
       <div class="search-bar">
         <input class="search" type="search" placeholder="Search all events" >
         <button class="search-button">
-          <mat-icon class="search-icon">search</mat-icon>
+          <mat-icon class="search-icon" (click)="loadPagedEvents()">search</mat-icon>
         </button>
       </div>
     </div>
@@ -72,7 +72,7 @@
 
     <form [formGroup]="filterEventForm" class="filter-form">
 
-    
+
       <mat-form-field appearance="fill" class="filter-field">
         <mat-label>Location</mat-label>
         <mat-select formControlName="location">
@@ -101,13 +101,13 @@
 
 
       <!-- mozda dodati asc i desc opcije -->
-      <mat-radio-group aria-label="Sort by"> 
-        <mat-label>Sort by</mat-label>                    
+      <mat-radio-group aria-label="Sort by">
+        <mat-label>Sort by</mat-label>
         <mat-radio-button value="1">Date</mat-radio-button>
         <mat-radio-button value="2">Name</mat-radio-button>
       </mat-radio-group>
-      
-      
+
+
 
       <div class="filter-actions">
         <button mat-mini-fab [ngStyle]="{'background-color':'#073b4c'}" (click)="applyFilters()">
@@ -129,15 +129,20 @@
       <div *ngFor="let event of events; let i = index" class="single-card-item">
         <app-event-card [event]="event"></app-event-card>
       </div>
-      
+
     </div>
 
-    
+
     <div class="paginator">
-      <mat-paginator [length]="100"
-              [pageSize]="10"
-              aria-label="Select page">        
-    </mat-paginator>
+      <mat-paginator
+        *ngIf = "pageProperties"
+        (page) = "eventPageChanged($event)"
+        [length]="pageProperties.totalCount"
+        [pageIndex]="pageProperties.page"
+        [pageSize] = "pageProperties.pageSize"
+      >
+
+      </mat-paginator>
     </div>
   </div>
 
@@ -161,17 +166,17 @@
         <input class="search" type="search" placeholder="Search all services" >
 
         <button class="search-button">
-          <mat-icon class="search-icon">search</mat-icon>
+          <mat-icon class="search-icon" (click) = "loadPagedSolutions()">search</mat-icon>
         </button>
-        
+
       </div>
-      
+
     </div>
   </div>
 
 
   <div *ngIf="showSolutionFilterPanel"   @slideInOut  class="filter-panel">
-    
+
     <form [formGroup]="filterSolutionForm" class="filter-form">
       <mat-form-field appearance="fill" class="filter-field">
         <mat-label>Category</mat-label>
@@ -215,8 +220,8 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-radio-group aria-label="Sort by"> 
-        <mat-label>Sort by</mat-label>                    
+      <mat-radio-group aria-label="Sort by">
+        <mat-label>Sort by</mat-label>
         <mat-radio-button value="1">Price</mat-radio-button>
         <mat-radio-button value="2">Name</mat-radio-button>
       </mat-radio-group>
@@ -241,15 +246,19 @@
       <div *ngFor="let solution of solutions; let i = index" class="single-card-item">
         <app-service-card [service]="solution"></app-service-card>
       </div>
-      
+
     </div>
 
-    
+
     <div class="paginator">
-      <mat-paginator [length]="100"
-              [pageSize]="10"
-              aria-label="Select page">
-             
+      <mat-paginator
+        *ngIf = "pageProperties"
+        (page) = "eventPageChanged($event)"
+        [length]="pageProperties.totalCount"
+        [pageIndex]="pageProperties.page"
+        [pageSize] = "pageProperties.pageSize"
+              >
+
       </mat-paginator>
     </div>
   </div>

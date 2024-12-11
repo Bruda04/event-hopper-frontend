@@ -24,17 +24,28 @@ export class EventService {
     return this.HttpClient.get<EventDTO[]>(environment.apiHost + '/events/persons-top-5/' + usersId );
   }
 
-  getEventsPage(page: number, size: number, city?: string, eventTypeId?: string, time?: string, searchContent?: string):Observable<PagedResponse<EventDTO>>{
+  getEventsPage(
+    pageProperties: any,
+    sortField: string,
+    sortDirection: string,
+    size: number,
+    city?: string,
+    eventTypeId?: string,
+    time?: string,
+    searchContent?: string):Observable<PagedResponse<EventDTO>>{
     let params = new HttpParams()
-      .set('page', page.toString())
-      .set('size', size.toString());
+    if(pageProperties) {
+      params = params
+        .set('page', pageProperties.page)
+        .set('size', pageProperties.pageSize)
+    }
 
     if (city) params = params.set('city', city);
     if (eventTypeId) params = params.set('eventTypeId', eventTypeId);
     if (time) params = params.set('time', time);
     if (searchContent) params = params.set('searchContent', searchContent);
 
-    return this.HttpClient.get<PagedResponse<EventDTO>>(environment.apiHost +  '/search', { params });
+    return this.HttpClient.get<PagedResponse<EventDTO>>(environment.apiHost +  '/events/search', { params });
 
   }
 

@@ -25,28 +25,58 @@ export class ProductService {
   }
 
   getSolutionsPage(
-    page: number,
-    size: number,
+    pageProperties: any,
+    sortField: string,
+    sortDirection: string,
     isProduct?: boolean,
     isService?: boolean,
     categoryId?: string,
     eventTypeIds?: string[],
     minPrice?: number,
     maxPrice?: number,
-    searchContent?: string
+    available?: boolean,
+    searchContent?: string,
+
   ): Observable<PagedResponse<ProductDTO>> {
     let params = new HttpParams()
-      .set('page', page.toString())
-      .set('size', size.toString());
+    if(pageProperties) {
+      params = params
+        .set('page', pageProperties.page)
+        .set('size', pageProperties.pageSize)
+    }
 
-    if (isProduct !== undefined) params = params.set('isProduct', isProduct.toString());
-    if (isService !== undefined) params = params.set('isService', isService.toString());
-    if (categoryId) params = params.set('categoryId', categoryId);
-    if (eventTypeIds && eventTypeIds.length > 0) params = params.set('eventTypeIds', eventTypeIds.join(','));
-    if (minPrice !== undefined) params = params.set('minPrice', minPrice.toString());
-    if (maxPrice !== undefined) params = params.set('maxPrice', maxPrice.toString());
-    if (searchContent) params = params.set('searchContent', searchContent);
+    if (isProduct) {
+      params = params.set('isProduct', isProduct);
+    }
 
-    return this.HttpClient.get<PagedResponse<ProductDTO>>(environment.apiHost + '/search/', { params });
+    if (isService) {
+      params = params.set('isProduct', isProduct);
+    }
+
+    if(categoryId) {
+      params = params.set('categoryId', categoryId);
+    }
+    if(eventTypeIds) {
+      params = params.set('eventTypeIds', eventTypeIds.join(','));
+    }
+    if(minPrice) {
+      params = params.set('minPrice', minPrice);
+    }
+    if(maxPrice) {
+      params = params.set('maxPrice', maxPrice);
+    }
+    if(available !== null) {
+      params = params.set('isAvailable', available);
+    }
+    if (searchContent) {
+      params = params.set('searchContent', searchContent);
+    }
+    if (sortField) {
+      params = params.set('sortField', sortField);
+    }
+    if (sortDirection) {
+      params = params.set('sortDirection', sortDirection);
+    }
+    return this.HttpClient.get<PagedResponse<ProductDTO>>(environment.apiHost + '/solutions/search', { params });
   }
 }
