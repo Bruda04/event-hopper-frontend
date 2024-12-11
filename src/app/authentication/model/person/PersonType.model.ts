@@ -1,0 +1,6 @@
+export enum PersonType {
+  ADMIN,
+  SERVICE_PROVIDER,
+  EVENT_ORGANIZER,
+  AUTHENTICATED_USER
+}
