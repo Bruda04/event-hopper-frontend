@@ -2,6 +2,12 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import {RegistrationService} from '../../services/registration/registration.service';
+import {CreateServiceProviderDTO} from '../../model/serviceProvider/CreateServiceProviderDTO.model';
+import {PersonType} from '../../model/person/PersonType.model';
+import {CreateLocationDTO} from '../../model/location/CreateLocationDTO.model';
+import {CreateRegistrationRequestDTO} from '../../model/registrationRequest/CreateRegistrationRequestDTO.model';
+import {CreateServiceProviderAccountDTO} from '../../model/account/CreateServiceProviderAccountDTO.model';
 
 @Component({
   selector: 'app-pup-register',
@@ -18,7 +24,7 @@ export class PupRegisterComponent {
   imagePreview: string | null = null; // Profile image
   companyImages: { src: string, cropped: string }[] = []; // Multiple company images with cropped versions
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private registrationService: RegistrationService) {
     this.registerForm = this.fb.group({
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -58,28 +64,49 @@ export class PupRegisterComponent {
 
   onSubmit() {
     if (this.isStepValid(1)) {
-      const formData = {
-        personalInfo: {
-          fullName: this.registerForm.get('fullName')?.value,
-          email: this.registerForm.get('email')?.value,
-          phoneNumber: this.registerForm.get('phoneNumber')?.value,
-          city: this.registerForm.get('city')?.value,
-          address: this.registerForm.get('address')?.value,
-        },
-        companyInfo: {
-          companyEmail: this.registerForm.get('companyEmail')?.value,
-          password: this.registerForm.get('password')?.value,
-          confirmPassword: this.registerForm.get('confirmPassword')?.value,
-          companyName: this.registerForm.get('companyName')?.value,
-          companyPhoneNumber: this.registerForm.get('companyPhoneNumber')?.value,
-          companyCity: this.registerForm.get('companyCity')?.value,
-          companyAddress: this.registerForm.get('companyAddress')?.value,
-          description: this.registerForm.get('description')?.value,
-        },
+      const createServiceProviderDTO: CreateServiceProviderDTO = {
+        name: this.registerForm.value.fullName.split(' ')[0], //first name
+        surname: this.registerForm.value.fullName.split(' ').slice(1).join(' ') || '',
+        profilePicture: "",//this.registerForm.value.profileImage, // Image file
+        phoneNumber: this.registerForm.value.phoneNumber,
+        type: PersonType.SERVICE_PROVIDER,
+        location: {
+          address: this.registerForm.value.address,
+          city: this.registerForm.value.city,
+        } as CreateLocationDTO,
+
+        companyEmail: this.registerForm.value.companyEmail,
+        companyName: this.registerForm.value.companyName,
+        companyPhoneNumber: this.registerForm.value.companyPhoneNumber,
+        companyLocation: {
+          address: this.registerForm.value.companyAddress,
+          city: this.registerForm.value.companyCity,
+        } as CreateLocationDTO,
+        companyDescription: this.registerForm.value.description,
+        companyPhotos: [""]
       };
-      console.log(formData);
-      console.log('Form Submitted:', this.registerForm.value);
-      this.router.navigate(['/email-confirmation-sent']);
+
+      const createAccount: CreateServiceProviderAccountDTO = {
+        email: this.registerForm.value.email,
+        password: this.registerForm.value.password,
+        isVerified: false,
+        suspensionTimeStamp: null,
+        type: PersonType.SERVICE_PROVIDER,
+        person: createServiceProviderDTO,
+        registrationRequest:{} as CreateRegistrationRequestDTO,
+      }
+
+      console.log('Account Submitted:', createAccount);
+
+      this.registrationService.registerServiceProvider(createAccount).subscribe({
+        next: (response) => {
+          console.log('Service provider registered successfully:', response);
+          this.router.navigate(['/email-confirmation-sent']);
+        },
+        error: (err) => {
+          console.error('Error registering service provider:', err);
+        },
+      });
     }
   }
 

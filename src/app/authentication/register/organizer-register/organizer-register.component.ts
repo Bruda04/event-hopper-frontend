@@ -6,8 +6,8 @@ import {RegistrationService} from '../../services/registration/registration.serv
 import {PersonType} from '../../model/person/PersonType.model';
 import {CreateEventOrganizerDTO} from '../../model/eventOrganizer/CreateEventOrganizerDTO.model';
 import {CreateLocationDTO} from '../../model/location/CreateLocationDTO.model';
-import {CreateAccountDTO} from '../../model/account/CreateAccountDTO.model';
 import {CreateRegistrationRequestDTO} from '../../model/registrationRequest/CreateRegistrationRequestDTO.model';
+import {CreateEventOrganizerAccountDTO} from '../../model/account/CreateEventOrganizerAccountDTO.model';
 
 function phoneMinLengthValidator(control: AbstractControl): ValidationErrors | null {
   const value = control.value?.toString() || ''; // Convert the number to a string
@@ -26,7 +26,7 @@ export class OrganizerRegisterComponent {
   hideConfirmPassword = true;
   imagePreview: string | null = null;
 
-  constructor(private fb: FormBuilder, private router: Router, private registrationService: RegistrationService,) {
+  constructor(private fb: FormBuilder, private router: Router, private registrationService: RegistrationService) {
     this.registerForm = this.fb.group(
       {
         fullName: ['', Validators.required],
@@ -80,20 +80,17 @@ export class OrganizerRegisterComponent {
         } as CreateLocationDTO,
       };
 
-      const createAccount: CreateAccountDTO = {
+      const createAccount: CreateEventOrganizerAccountDTO = {
         email: this.registerForm.value.email,
         password: this.registerForm.value.password,
         isVerified: false,
-        isActive: true,
         suspensionTimeStamp: null,
         type: PersonType.EVENT_ORGANIZER,
         person: createEventOrganizerDTO,
         registrationRequest:{} as CreateRegistrationRequestDTO,
-
       }
 
-      console.log("----------------------*****************************************")
-      console.log(createAccount);
+      console.log('Account Submitted:',createAccount);
 
       this.registrationService.registerEventOrganizer(createAccount).subscribe({
         next: (response) => {
@@ -104,6 +101,7 @@ export class OrganizerRegisterComponent {
           console.error('Error registering event organizer:', err);
         },
       });
+
     } else {
       this.registerForm.markAllAsTouched();
       console.log('Form is invalid:', this.registerForm.value);

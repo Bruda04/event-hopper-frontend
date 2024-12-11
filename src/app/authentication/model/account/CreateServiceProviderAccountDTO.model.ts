@@ -1,14 +1,13 @@
 import {PersonType} from '../person/PersonType.model';
-import {CreatePersonDTO} from '../person/CreatePersonDTO.model';
 import {CreateRegistrationRequestDTO} from '../registrationRequest/CreateRegistrationRequestDTO.model';
+import {CreateServiceProviderDTO} from '../serviceProvider/CreateServiceProviderDTO.model';
 
-export interface CreateAccountDTO{
+export interface CreateServiceProviderAccountDTO{
   email: string;
   password: string;
   isVerified: boolean;
-  isActive: boolean;
   suspensionTimeStamp: string;
   type: PersonType;
-  person: CreatePersonDTO;
+  person: CreateServiceProviderDTO;
   registrationRequest: CreateRegistrationRequestDTO;
 }
