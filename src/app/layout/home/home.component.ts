@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavigationStateService } from '../../authentication/services/navigation-state.service';
+import { UserService } from '../../authentication/services/user.service';
 import { User } from '../../authentication/services/user.modul';
 import { Event } from '../../event/model/event.model';
 import { Service } from '../../services/model/service.model';
@@ -10,6 +10,7 @@ import {EventService} from '../../event/event.service';
 import {ProductService} from '../../services/product.service';
 import {ProductDTO} from '../../services/model/productDTO.model';
 import {EventDTO} from '../../event/model/eventDTO.model';
+import {LoginService} from '../../authentication/services/login/login.service';
 //import { getAll } from '../../services/services.service';
 
 
@@ -29,18 +30,17 @@ import {EventDTO} from '../../event/model/eventDTO.model';
   ]
 })
 export class HomeComponent implements OnInit {
-  user: User;
+  user: any;
 
-  constructor(private router: Router, private navigationStateService: NavigationStateService, private eventService: EventService, private productService : ProductService) { }
+  constructor(private router: Router, private userService: UserService, private eventService: EventService, private productService : ProductService) { }
 
   ngOnInit(): void {
-    this.user = this.navigationStateService.getUserData();
+    this.user = this.userService.getUserData();
 
     if (!this.user) {
-      console.log('No user data found!');
+      console.log('No one is logged in.');
     } else {
-      console.log(this.user);
-
+      console.log("Logged in is : ", this.user.role);
     }
 
 
@@ -49,11 +49,10 @@ export class HomeComponent implements OnInit {
     this.loadEvents();
     this.loadSolutions();
   }
-  top5events: EventDTO[] ;
 
+  top5events: EventDTO[] ;
   top5solutions: ProductDTO[];
   events: EventDTO[];
-
   solutions: ProductDTO[];
 
 

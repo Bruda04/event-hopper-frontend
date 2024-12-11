@@ -16,17 +16,26 @@
 
         <mat-form-field appearance="fill">
           <mat-label>Duration (min)</mat-label>
-          <input matInput placeholder="Enter duration" name="duration" type="number" formControlName="duration" min="0" max="1440"/>
+          <input matInput placeholder="Enter duration" name="duration" type="number" formControlName="durationMinutes" min="0" max="1440"/>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
           <mat-label>Reservation window (days)</mat-label>
-          <input matInput placeholder="Enter reservation window" name="reservationWindow" type="number" formControlName="reservationWindow" min="0" />
+          <input matInput placeholder="Enter reservation window" name="reservationWindow" type="number" formControlName="reservationWindowDays" min="0" />
         </mat-form-field>
 
         <mat-form-field appearance="fill">
           <mat-label>Cancellation window (days)</mat-label>
-          <input matInput placeholder="Enter cancellation window" name="cancellationWindow" type="number" formControlName="cancellationWindow" min="0" />
+          <input matInput placeholder="Enter cancellation window" name="cancellationWindow" type="number" formControlName="cancellationWindowDays" min="0" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Event Type</mat-label>
+          <mat-select formControlName="eventTypes" multiple>
+            <mat-option *ngFor="let eventType of eventTypes" [value]="eventType.id">
+              {{ eventType.name }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
 
