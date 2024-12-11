@@ -30,16 +30,24 @@
             <mat-option *ngFor="let category of categories" [value]="category.id">
               {{ category.name }}
             </mat-option>
+            <mat-option  [value]="'suggestion'">
+              Suggest Category
+            </mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="fill" *ngIf="this.createServiceForm.value.category !== 'suggestion'">
           <mat-label>Event Type</mat-label>
           <mat-select formControlName="eventType" multiple>
             <mat-option *ngFor="let eventType of filteredEventTypes" [value]="eventType.id">
               {{ eventType.name }}
             </mat-option>
           </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" *ngIf="this.createServiceForm.value.category === 'suggestion'">
+          <mat-label>Category name</mat-label>
+          <input matInput placeholder="Enter category name" name="categoryName" type="text" formControlName="categoryName" />
         </mat-form-field>
       </div>
 

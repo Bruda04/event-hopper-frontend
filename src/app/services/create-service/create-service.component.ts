@@ -20,13 +20,14 @@ export class CreateServiceComponent {
     basePrice: new FormControl<number | null>(null, [Validators.required, Validators.min(0)]),
     discount: new FormControl<number | null>(null, [Validators.required, Validators.max(100), Validators.min(0)]),
     category: new FormControl<string>('', [Validators.required]),
-    eventType: new FormControl<string[]>([], [Validators.required]),
+    eventType: new FormControl<string[]>([]),
     acceptance: new FormControl<string>('auto', [Validators.required]),
     available: new FormControl<boolean>(true, [Validators.required]),
     visible: new FormControl<boolean>(true, [Validators.required]),
     duration: new FormControl<number | null>(null, [Validators.required, Validators.max(1440), Validators.min(0)]),
     reservationWindow: new FormControl<number | null>(null, [Validators.required, Validators.min(0)]),
     cancellationWindow: new FormControl<number | null>(null, [Validators.required, Validators.min(0)]),
+    categoryName: new FormControl<string>(''),
   });
 
   filteredEventTypes: SimpleEventTypeDTO[];
@@ -39,8 +40,19 @@ export class CreateServiceComponent {
   }
 
   create(): void {
+    const categoryControl = this.createServiceForm.get('category');
+    const categoryNameControl = this.createServiceForm.get('categoryName');
+
+    // Custom validation: Ensure either category or categoryName is filled
+    if (!categoryControl?.value && !categoryNameControl?.value) {
+      categoryControl?.setErrors({ required: true });
+      categoryNameControl?.setErrors({ required: true });
+      this.createServiceForm.markAllAsTouched();
+      return;
+    }
+
     if(this.createServiceForm.valid) {
-      const service :CreateServiceDTO = {
+      let service :CreateServiceDTO = {
           name: this.createServiceForm.value.name,
           description: this.createServiceForm.value.description,
           pictures: [],
@@ -56,6 +68,10 @@ export class CreateServiceComponent {
           reservationWindowDays: this.createServiceForm.value.reservationWindow,
           cancellationWindowDays: this.createServiceForm.value.cancellationWindow,
         };
+        if (this.createServiceForm.value.categoryName) {
+          service.categoryId = this.createServiceForm.value.categoryName;
+        }
+
         this.dialogRef.close(service);
     } else {
       this.createServiceForm.markAllAsTouched();

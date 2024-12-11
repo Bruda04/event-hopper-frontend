@@ -15,6 +15,8 @@ import {SimpleEventTypeDTO} from '../../admin-dashboard/model/simpleEventTypeDTO
 import {CategoriesService} from '../../admin-dashboard/categories/categories.service';
 import {CategoryDTO} from '../../admin-dashboard/model/categoryDTO.model';
 import {UpdateServiceDTO} from '../model/updateServiceDTO.model';
+import {SimpleCategoryDTO} from '../../admin-dashboard/model/simpleCategoryDTO.model';
+import {CreatedCategorySuggestionDTO} from '../../admin-dashboard/model/createdCategorySuggestionDTO.model';
 
 
 @Component({
@@ -104,16 +106,33 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe((newService: CreateServiceDTO | null) => {
       if (newService) {
-        this.serviceService.add(newService).subscribe(
-          {
-            next: () => {
-              this.loadPagedEntities();
-            },
-            error: () => {
-              console.error('Error adding service');
+        if (this.categories.find(c => c.id === newService.categoryId)) {
+          this.serviceService.add(newService).subscribe(
+            {
+              next: () => {
+                this.loadPagedEntities();
+              },
+              error: () => {
+                console.error('Error adding service');
+              }
+            });
+        } else {
+          this.categoriesService.makeSuggestion(newService.categoryId).subscribe({
+            next: (categorySuggestion: CreatedCategorySuggestionDTO) => {
+              newService.categoryId = categorySuggestion.id;
+              this.serviceService.add(newService).subscribe(
+                {
+                  next: () => {
+                    this.loadPagedEntities();
+                  },
+                  error: () => {
+                    console.error('Error adding service with suggested category');
+                  }
+                }
+              )
             }
-          }
-        )
+          });
+        }
       }
     });
   }
