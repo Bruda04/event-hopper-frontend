@@ -11,19 +11,27 @@ import { DashboardComponent} from './admin-dashboard/dashboard/dashboard.compone
 import {
   PUPServiceProductManagementComponent
 } from './services/pupservice-product-management/pupservice-product-management.component';
+import {roleGuard} from './authentication/guards/role.guard';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/home', pathMatch: 'full' },  //default route (always open to home)
-  {path: 'login', component: LoginComponent },
-  {path: 'profile', component: ProfileComponent },
-  {path: 'register', component: RegisterComponent },
-  {path: 'register-pup', component: PupRegisterComponent },
-  {path: 'register-organizer', component:  OrganizerRegisterComponent},
-  {path: 'home', component: HomeComponent},
-  {path: 'email-confirmation-sent', component: EmailConfirmationSentComponent},
-  {path: 'my-solutions', component: PUPServiceProductManagementComponent},
-  {path: 'admin-dashboard', component: DashboardComponent},
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'register-pup', component: PupRegisterComponent },
+  { path: 'register-organizer', component: OrganizerRegisterComponent },
+  { path: 'home', component: HomeComponent },
+  { path: 'email-confirmation-sent', component: EmailConfirmationSentComponent },
+  { path: 'my-solutions', component: PUPServiceProductManagementComponent,
+    canActivate: [roleGuard],
+    data: { role: 'SERVICE_PROVIDER' }  },
+  {
+    path: 'admin-dashboard', component: DashboardComponent,
+    canActivate: [roleGuard],
+    data: { role: 'ADMIN' }
+  },
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -118,7 +118,6 @@ export class EventTypesService {
   constructor() {
     for (let data of dataSource) {
       const eventType: EventType = {
-        id: Math.random(),
         name: data.name,
         description: data.description,
         events: data.events,
@@ -134,7 +133,6 @@ export class EventTypesService {
   }
 
   add(eventType: EventType): void {
-    eventType.id = Math.random();
     eventType.isDeactivated = false;
     this.eventTypesList.push(eventType);
   }
