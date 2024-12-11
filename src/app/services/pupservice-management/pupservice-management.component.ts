@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {ServicesService} from '../services.service';
 import {CreateServiceComponent} from '../create-service/create-service.component';
@@ -13,7 +13,6 @@ import {ServiceManagementDTO} from '../model/serviceManagementDTO.model';
 import {CreateServiceDTO} from '../model/createServiceDTO.model';
 import {SimpleEventTypeDTO} from '../../admin-dashboard/model/simpleEventTypeDTO.model';
 import {CategoriesService} from '../../admin-dashboard/categories/categories.service';
-import {EventTypesService} from '../../admin-dashboard/eventTypes/event-types.service';
 import {CategoryDTO} from '../../admin-dashboard/model/categoryDTO.model';
 import {UpdateServiceDTO} from '../model/updateServiceDTO.model';
 
@@ -32,7 +31,7 @@ import {UpdateServiceDTO} from '../model/updateServiceDTO.model';
     ])
   ]
 })
-export class PUPServiceManagementComponent implements OnInit {
+export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
   services: ServiceManagementDTO[];
   dataSource: MatTableDataSource<ServiceManagementDTO>;
 
@@ -77,8 +76,7 @@ export class PUPServiceManagementComponent implements OnInit {
 
 
   constructor(private serviceService: ServicesService,
-              private categorisService: CategoriesService,
-              private eventTypesService: EventTypesService,
+              private categoriesService: CategoriesService,
               public dialog: MatDialog) {
   }
 
@@ -88,6 +86,12 @@ export class PUPServiceManagementComponent implements OnInit {
     this.loadCategories();
 
     this.loadEventTypes();
+  }
+
+  ngAfterViewInit() {
+    this.sort.sortChange.subscribe(() => {
+      this.loadPagedEntities();
+    });
   }
 
 
@@ -128,7 +132,6 @@ export class PUPServiceManagementComponent implements OnInit {
   }
 
   edit(element: ServiceManagementDTO):void {
-    console.log("cat",this.categories)
     const dialogRef: MatDialogRef<EditServiceComponent> = this.dialog.open(EditServiceComponent, {
       minWidth: '70vw',
       minHeight: '70vh',
@@ -152,6 +155,7 @@ export class PUPServiceManagementComponent implements OnInit {
     });
   }
 
+  // when typed in search bar set the search content
   setSearchContent(event: Event): void {
     this.searchContent = (event.target as HTMLInputElement).value;
     if (!this.searchContent) {
@@ -182,8 +186,8 @@ export class PUPServiceManagementComponent implements OnInit {
     this.applyFilters();
   }
 
-  loadCategories() {
-    this.categorisService.getApproved().subscribe(
+  loadCategories(): void {
+    this.categoriesService.getApproved().subscribe(
       {
         next: (categories: CategoryDTO[]) => {
           this.categories = categories;
@@ -194,20 +198,16 @@ export class PUPServiceManagementComponent implements OnInit {
       });
   }
 
-  pageChanged(pageEvent: PageEvent) {
+  pageChanged(pageEvent: PageEvent): void {
     this.pageProperties.page = pageEvent.pageIndex;
     this.pageProperties.pageSize = pageEvent.pageSize;
     this.loadPagedEntities();
   }
 
-  loadPagedEntities() {
-    const filters = {
-      categoryId: this.filterForm.value.category,
-      eventTypesIds: this.filterForm.value.eventType,
-      minPrice: this.filterForm.value.minPrice,
-      maxPrice: this.filterForm.value.maxPrice,
-      availability: this.filterForm.value.availability
-    }
+  loadPagedEntities(): void {
+    const sortField = this.sort?.active || ''; // Column to sort by
+    const sortDirection = this.sort?.direction || ''; // 'asc' or 'desc'
+
 
     this.serviceService.getAllForManagement(
       this.pageProperties,
@@ -216,13 +216,14 @@ export class PUPServiceManagementComponent implements OnInit {
       this.filterForm.value.minPrice,
       this.filterForm.value.maxPrice,
       this.filterForm.value.availability === 'available' ? true : this.filterForm.value.availability === 'unavailable' ? false : null,
-      this.searchContent
+      this.searchContent,
+      sortField,
+      sortDirection
     )
       .subscribe( {
         next: (response: PagedResponse<ServiceManagementDTO>) => {
           this.dataSource = new MatTableDataSource(response.content);
           this.pageProperties.totalCount = response.totalElements;
-          console.log(response);
         },
         error: () => {
           console.error('Error loading services');
@@ -230,7 +231,7 @@ export class PUPServiceManagementComponent implements OnInit {
       });
   }
 
-  loadEventTypes() {
+  loadEventTypes(): void {
     this.filterForm.get('category')?.valueChanges.subscribe((categoryId: any) => {
       const category: CategoryDTO = this.categories.find(cat => cat.id === categoryId);
       this.filteredEventTypes = category?.eventTypes || [];

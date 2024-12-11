@@ -29,7 +29,9 @@ export class ServicesService {
                       minPrice: number,
                       maxPrice: number,
                       available: boolean,
-                      textSearch: string
+                      textSearch: string,
+                      sortField: string,
+                      sortDirection: string
                       ): Observable<PagedResponse<ServiceManagementDTO>> {
     let params :HttpParams = new HttpParams();
     if(pageProperties) {
@@ -56,15 +58,19 @@ export class ServicesService {
     if (textSearch) {
       params = params.set('searchContent', textSearch);
     }
+    if (sortField) {
+      params = params.set('sortField', sortField);
+    }
+    if (sortDirection) {
+      params = params.set('sortDirection', sortDirection);
+    }
 
-    console.log(params);
 
     return this.httpClient.get<PagedResponse<ServiceManagementDTO>>(environment.apiHost + `/services/management`, {params: params});
   }
 
 
   add(service: CreateServiceDTO): Observable<any> {
-    console.log(service);
     return this.httpClient.post(environment.apiHost + '/services', service);
   }
 
