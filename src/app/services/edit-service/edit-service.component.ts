@@ -3,6 +3,10 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatDialogRef} from '../../infrastructure/material/material.module';
 import {Service} from '../model/service.model';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {UpdateServiceDTO} from '../model/updateServiceDTO.model';
+import {ServiceManagementDTO} from '../model/serviceManagementDTO.model';
+import {SimpleEventTypeDTO} from '../../admin-dashboard/model/simpleEventTypeDTO.model';
+import {CategoryDTO} from '../../admin-dashboard/model/categoryDTO.model';
 
 @Component({
   selector: 'app-edit-service',
@@ -17,26 +21,39 @@ export class EditServiceComponent implements OnInit {
     acceptance: new FormControl<string>('auto', [Validators.required]),
     available: new FormControl<boolean>(true, [Validators.required]),
     visible: new FormControl<boolean>(true, [Validators.required]),
-    duration: new FormControl<number | null>(null, [Validators.required, Validators.max(1440), Validators.min(0)]),
-    reservationWindow: new FormControl<number | null>(null, [Validators.required, Validators.min(0)]),
-    cancellationWindow: new FormControl<number | null>(null, [Validators.required, Validators.min(0)]),
+    durationMinutes: new FormControl<number | null>(null, [Validators.required, Validators.max(1440), Validators.min(0)]),
+    reservationWindowDays: new FormControl<number | null>(null, [Validators.required, Validators.min(0)]),
+    cancellationWindowDays: new FormControl<number | null>(null, [Validators.required, Validators.min(0)]),
+    eventTypes: new FormControl<string[]>([], [Validators.required]),
   });
 
-  constructor(public dialogRef: MatDialogRef<EditServiceComponent>,@Inject(MAT_DIALOG_DATA) private serviceToEdit: Service) {}
+  eventTypes: SimpleEventTypeDTO[];
+  serviceToEdit: ServiceManagementDTO;
+
+  constructor(public dialogRef: MatDialogRef<EditServiceComponent>,
+              @Inject(MAT_DIALOG_DATA) data: { serviceToEdit: ServiceManagementDTO, eventTypes: SimpleEventTypeDTO[] }
+  ) {
+    this.serviceToEdit = data.serviceToEdit;
+    this.eventTypes = data.eventTypes;
+    if (!this.eventTypes) {
+      this.eventTypes = this.serviceToEdit.eventTypes;
+
+    }
+  }
 
   update(): void {
-    console.log(this.serviceToEdit);
     if(this.editServiceForm.valid) {
-      const service :Service = {
-        ...this.serviceToEdit,
+      const service :UpdateServiceDTO = {
         name: this.editServiceForm.value.name,
         description: this.editServiceForm.value.description,
         autoAccept: this.editServiceForm.value.acceptance === 'auto',
         available: this.editServiceForm.value.available,
         visible: this.editServiceForm.value.visible,
-        duration: this.editServiceForm.value.duration,
-        reservationWindow: this.editServiceForm.value.reservationWindow,
-        cancellationWindow: this.editServiceForm.value.cancellationWindow,
+        durationMinutes: this.editServiceForm.value.durationMinutes,
+        reservationWindowDays: this.editServiceForm.value.reservationWindowDays,
+        cancellationWindowDays: this.editServiceForm.value.cancellationWindowDays,
+        pictures: this.serviceToEdit.pictures,
+        eventTypesIds: this.editServiceForm.value.eventTypes,
       };
       this.dialogRef.close(service);
     } else {
@@ -45,7 +62,14 @@ export class EditServiceComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.editServiceForm.patchValue(this.serviceToEdit);
+    const serviceToEdit = {
+      ...this.serviceToEdit,
+      eventTypes: this.serviceToEdit.eventTypes.map(eventType => eventType.id)
+    };
+    this.editServiceForm.patchValue(serviceToEdit);
+    if (!this.eventTypes) {
+      this.editServiceForm.get('eventTypes').disable();
+    }
   }
 
 

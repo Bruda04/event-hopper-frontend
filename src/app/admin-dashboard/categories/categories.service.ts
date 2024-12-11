@@ -7,6 +7,8 @@ import {environment} from '../../../env/envirements';
 import {CreateCategoryDTO} from '../model/createCategoryDTO.model';
 import {UpdateCategoryDTO} from '../model/UpdateCategoryDTO.model';
 import {UpdateCategorySuggestionDTO} from '../model/updateCategorySuggestionDTO.model';
+import {SimpleCategoryDTO} from '../model/simpleCategoryDTO.model';
+import {CreatedCategorySuggestionDTO} from '../model/createdCategorySuggestionDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -41,5 +43,9 @@ export class CategoriesService {
 
   reject(categoryId: string, suggestion: UpdateCategorySuggestionDTO): Observable<any> {
     return this.httpClient.put(environment.apiHost + '/categories/suggestions/' + categoryId, suggestion);
+  }
+
+  makeSuggestion(categoryName: string): Observable<CreatedCategorySuggestionDTO> {
+    return this.httpClient.post<CreatedCategorySuggestionDTO>(environment.apiHost + '/categories/suggestions', {name: categoryName});
   }
 }
