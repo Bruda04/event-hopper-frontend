@@ -6,6 +6,10 @@ import { Event } from '../../event/model/event.model';
 import { Service } from '../../services/model/service.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import {EventService} from '../../event/event.service';
+import {ProductService} from '../../services/product.service';
+import {ProductDTO} from '../../services/model/productDTO.model';
+import {EventDTO} from '../../event/model/eventDTO.model';
 //import { getAll } from '../../services/services.service';
 
 
@@ -25,9 +29,9 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   ]
 })
 export class HomeComponent implements OnInit {
-  user: User; 
+  user: User;
 
-  constructor(private router: Router, private navigationStateService: NavigationStateService) { }
+  constructor(private router: Router, private navigationStateService: NavigationStateService, private eventService: EventService, private productService : ProductService) { }
 
   ngOnInit(): void {
     this.user = this.navigationStateService.getUserData();
@@ -36,390 +40,21 @@ export class HomeComponent implements OnInit {
       console.log('No user data found!');
     } else {
       console.log(this.user);
-      
+
     }
+
+
+    this.loadTop5Events();
+    this.loadTop5Solutions();
+    this.loadEvents();
+    this.loadSolutions();
   }
-  top5events: Event[] = [
-    {
-      id: 1,
-      name: "Tech Conference 2024",
-      maxAttendence: 500,
-      description: "A conference for tech enthusiasts to explore the latest in technology.",
-      privacy: false,
-      time: new Date('2024-12-15T10:00:00'),
-      location: "123 Tech Street, Silicon Valley, CA",
-      picture: "https://www.spiceworks.com/tech/tech-general/articles/top-10-tech-events-september/"
-    },
-    {
-      id: 2,
-      name: "Music Festival",
-      maxAttendence: 2000,
-      description: "An outdoor music festival featuring local and international artists.",
-      privacy: false,
-      time: new Date('2024-12-20T18:00:00'),
-      location: "Central Park, New York, NY",
-      picture: "https://via.placeholder.com/300x200"
-    },
-    {
-      id: 3,
-      name: "Private Networking Dinner",
-      maxAttendence: 50,
-      description: "Exclusive dinner for top professionals in the tech industry.",
-      privacy: true,
-      time: new Date('2024-12-18T20:00:00'),
-      location: "The Grand Hotel, Room 305, San Francisco, CA",
-      picture: "https://via.placeholder.com/300x200"
-    }
-  ];
+  top5events: EventDTO[] ;
 
-  top5solutions: Service[] = [
-    {
-      id: 1,
-      name: "Web Development",
-      description: "Complete web development including front-end and back-end solutions.",
-      category: "Technology",
-      eventType: ["Conference", "Workshop"],
-      basePrice: 500,
-      discount: 10,
-      finalPrice: 450,
-      visible: true,
-      available: true,
-      duration: 8,
-      cancellationWindow: 24,
-      reservationWindow: 48,
-      autoAccept: true
-    },
-    {
-      id: 2,
-      name: "Graphic Design",
-      description: "Custom logo and branding design for businesses.",
-      category: "Design",
-      eventType: ["Meeting", "Workshop"],
-      basePrice: 300,
-      discount: 15,
-      finalPrice: 255,
-      visible: true,
-      available: true,
-      duration: 5,
-      cancellationWindow: 12,
-      reservationWindow: 24,
-      autoAccept: false
-    },
-    {
-      id: 3,
-      name: "SEO Optimization",
-      description: "Improving website visibility and search rankings.",
-      category: "Marketing",
-      eventType: ["Consultation", "Webinar"],
-      basePrice: 200,
-      discount: 5,
-      finalPrice: 190,
-      visible: true,
-      available: false,
-      duration: 6,
-      cancellationWindow: 48,
-      reservationWindow: 72,
-      autoAccept: true
-    },
-    {
-      id: 4,
-      name: "Mobile App Development",
-      description: "Design and development of mobile applications for Android and iOS.",
-      category: "Technology",
-      eventType: ["Workshop", "Conference"],
-      basePrice: 800,
-      discount: 20,
-      finalPrice: 640,
-      visible: true,
-      available: true,
-      duration: 10,
-      cancellationWindow: 24,
-      reservationWindow: 48,
-      autoAccept: false
-    },
-    {
-      id: 5,
-      name: "Digital Marketing Strategy",
-      description: "Developing strategies for online marketing, social media, and advertising.",
-      category: "Marketing",
-      eventType: ["Consultation", "Seminar"],
-      basePrice: 400,
-      discount: 10,
-      finalPrice: 360,
-      visible: true,
-      available: true,
-      duration: 7,
-      cancellationWindow: 12,
-      reservationWindow: 24,
-      autoAccept: true
-    },
-  ]
+  top5solutions: ProductDTO[];
+  events: EventDTO[];
 
-  events: Event[] = [
-    {
-      id: 1,
-      name: "Tech Conference 2024",
-      maxAttendence: 500,
-      description: "A conference for tech enthusiasts to explore the latest in technology.",
-      privacy: false,
-      time: new Date('2024-12-15T10:00:00'),
-      location: "123 Tech Street, Silicon Valley, CA",
-      picture: "https://www.spiceworks.com/tech/tech-general/articles/top-10-tech-events-september/"
-    },
-    {
-      id: 2,
-      name: "Music Festival",
-      maxAttendence: 2000,
-      description: "An outdoor music festival featuring local and international artists.",
-      privacy: false,
-      time: new Date('2024-12-20T18:00:00'),
-      location: "Central Park, New York, NY",
-      picture: "https://via.placeholder.com/300x200"
-    },
-    {
-      id: 3,
-      name: "Private Networking Dinner",
-      maxAttendence: 50,
-      description: "Exclusive dinner for top professionals in the tech industry.",
-      privacy: true,
-      time: new Date('2024-12-18T20:00:00'),
-      location: "The Grand Hotel, Room 305, San Francisco, CA",
-      picture: "https://via.placeholder.com/300x200"
-    },
-    {
-      id: 4,
-      name: "Art Exhibition",
-      maxAttendence: 300,
-      description: "A display of modern art from emerging artists around the world.",
-      privacy: false,
-      time: new Date('2024-12-22T14:00:00'),
-      location: "Art Gallery, Downtown Chicago, IL",
-      picture: "https://via.placeholder.com/300x200"
-    },
-    {
-      id: 5,
-      name: "Startup Pitch Night",
-      maxAttendence: 150,
-      description: "A night where startups showcase their ideas to potential investors.",
-      privacy: false,
-      time: new Date('2024-12-16T19:00:00'),
-      location: "Tech Hub, Boston, MA",
-      picture: "https://via.placeholder.com/300x200"
-    },
-    {
-      id: 6,
-      name: "Yoga Retreat",
-      maxAttendence: 25,
-      description: "A relaxing yoga retreat for mindfulness and rejuvenation.",
-      privacy: true,
-      time: new Date('2024-12-19T08:00:00'),
-      location: "Mountain Resort, Aspen, CO",
-      picture: "https://via.placeholder.com/300x200"
-    },
-    {
-      id: 7,
-      name: "Gaming Tournament",
-      maxAttendence: 1000,
-      description: "A competitive gaming event with prizes for top players.",
-      privacy: false,
-      time: new Date('2024-12-21T12:00:00'),
-      location: "Esports Arena, Los Angeles, CA",
-      picture: "https://via.placeholder.com/300x200"
-    },
-    {
-      id: 8,
-      name: "Charity Gala",
-      maxAttendence: 400,
-      description: "A formal event to raise funds for local charities.",
-      privacy: true,
-      time: new Date('2024-12-17T18:30:00'),
-      location: "The Grand Ballroom, Miami, FL",
-      picture: "https://via.placeholder.com/300x200"
-    },
-    {
-      id: 9,
-      name: "Book Launch",
-      maxAttendence: 100,
-      description: "Launch event for the latest novel by a renowned author.",
-      privacy: false,
-      time: new Date('2024-12-23T15:00:00'),
-      location: "City Library, Seattle, WA",
-      picture: "https://via.placeholder.com/300x200"
-    },
-    {
-      id: 10,
-      name: "Film Screening",
-      maxAttendence: 200,
-      description: "Exclusive screening of an upcoming indie film.",
-      privacy: true,
-      time: new Date('2024-12-14T20:00:00'),
-      location: "Cinema Hall, Austin, TX",
-      picture: "https://via.placeholder.com/300x200"
-    }
-];
-
-  solutions: Service[]=[
-    {
-      id: 1,
-      name: "Web Development",
-      description: "Complete web development including front-end and back-end solutions.",
-      category: "Technology",
-      eventType: ["Conference", "Workshop"],
-      basePrice: 500,
-      discount: 10,
-      finalPrice: 450,
-      visible: true,
-      available: true,
-      duration: 8,
-      cancellationWindow: 24,
-      reservationWindow: 48,
-      autoAccept: true
-    },
-    {
-      id: 2,
-      name: "Graphic Design",
-      description: "Custom logo and branding design for businesses.",
-      category: "Design",
-      eventType: ["Meeting", "Workshop"],
-      basePrice: 300,
-      discount: 15,
-      finalPrice: 255,
-      visible: true,
-      available: true,
-      duration: 5,
-      cancellationWindow: 12,
-      reservationWindow: 24,
-      autoAccept: false
-    },
-    {
-      id: 3,
-      name: "SEO Optimization",
-      description: "Improving website visibility and search rankings.",
-      category: "Marketing",
-      eventType: ["Consultation", "Webinar"],
-      basePrice: 200,
-      discount: 5,
-      finalPrice: 190,
-      visible: true,
-      available: false,
-      duration: 6,
-      cancellationWindow: 48,
-      reservationWindow: 72,
-      autoAccept: true
-    },
-    {
-      id: 4,
-      name: "Mobile App Development",
-      description: "Design and development of mobile applications for Android and iOS.",
-      category: "Technology",
-      eventType: ["Workshop", "Conference"],
-      basePrice: 800,
-      discount: 20,
-      finalPrice: 640,
-      visible: true,
-      available: true,
-      duration: 10,
-      cancellationWindow: 24,
-      reservationWindow: 48,
-      autoAccept: false
-    },
-    {
-      id: 5,
-      name: "Digital Marketing Strategy",
-      description: "Developing strategies for online marketing, social media, and advertising.",
-      category: "Marketing",
-      eventType: ["Consultation", "Seminar"],
-      basePrice: 400,
-      discount: 10,
-      finalPrice: 360,
-      visible: true,
-      available: true,
-      duration: 7,
-      cancellationWindow: 12,
-      reservationWindow: 24,
-      autoAccept: true
-    },
-    {
-      id: 6,
-      name: "Photography Services",
-      description: "Professional photography for events, products, and portraits.",
-      category: "Photography",
-      eventType: ["Event", "Wedding"],
-      basePrice: 600,
-      discount: 25,
-      finalPrice: 450,
-      visible: true,
-      available: true,
-      duration: 5,
-      cancellationWindow: 48,
-      reservationWindow: 72,
-      autoAccept: false
-    },
-    {
-      id: 7,
-      name: "Content Writing",
-      description: "High-quality blog posts, articles, and web content writing services.",
-      category: "Writing",
-      eventType: ["Consultation", "Workshop"],
-      basePrice: 150,
-      discount: 10,
-      finalPrice: 135,
-      visible: true,
-      available: true,
-      duration: 4,
-      cancellationWindow: 24,
-      reservationWindow: 48,
-      autoAccept: true
-    },
-    {
-      id: 8,
-      name: "Video Production",
-      description: "Creating promotional, training, and event videos.",
-      category: "Media",
-      eventType: ["Workshop", "Event"],
-      basePrice: 1000,
-      discount: 30,
-      finalPrice: 700,
-      visible: true,
-      available: true,
-      duration: 12,
-      cancellationWindow: 72,
-      reservationWindow: 96,
-      autoAccept: true
-    },
-    {
-      id: 9,
-      name: "IT Support",
-      description: "Providing technical support for hardware and software issues.",
-      category: "Technology",
-      eventType: ["Consultation", "Service"],
-      basePrice: 100,
-      discount: 5,
-      finalPrice: 95,
-      visible: true,
-      available: true,
-      duration: 3,
-      cancellationWindow: 24,
-      reservationWindow: 48,
-      autoAccept: false
-    },
-    {
-      id: 10,
-      name: "Virtual Assistant",
-      description: "Providing remote administrative and personal assistance.",
-      category: "Services",
-      eventType: ["Consultation", "Meeting"],
-      basePrice: 250,
-      discount: 10,
-      finalPrice: 225,
-      visible: true,
-      available: true,
-      duration: 8,
-      cancellationWindow: 24,
-      reservationWindow: 48,
-      autoAccept: true
-    }
-  ];
+  solutions: ProductDTO[];
 
 
   currentIndex = 0;
@@ -473,13 +108,13 @@ export class HomeComponent implements OnInit {
 
 
   //proveriti da li radi
-  
+
   applyFilters(): void {
     if (this.filterSolutionForm.valid || this.filterEventForm.valid) {
       return;
     } else if (!this.filterSolutionForm.valid) {
       this.filterSolutionForm.markAsTouched();
-      
+
     }else if (!this.filterEventForm.valid){
       this.filterEventForm.markAsTouched();
     }
@@ -502,4 +137,59 @@ export class HomeComponent implements OnInit {
   }
 
 
+  private loadEvents() {
+    this.eventService.getEvents().subscribe(
+      {
+        next: event => {
+          this.events = event;
+
+        },
+        error: event => {
+          console.error("Error loading events");
+        }
+      }
+    );
+  }
+
+  private loadTop5Events() {
+    this.eventService.getTop5Events("d7b9e5c3-a6f4-49a2-b8c1-7e3f9a2d6b4f").subscribe(
+      {
+        next: event => {
+          this.top5events = event;
+
+        },
+        error: event => {
+          console.error("Error loading top 5 events");
+        }
+      }
+    );
+  }
+
+  private loadTop5Solutions() {
+
+    this.productService.getTop5Solutions("d7b9e5c3-a6f4-49a2-b8c1-7e3f9a2d6b4f").subscribe(
+      {
+        next: product => {
+          this.top5solutions = product;
+
+        },
+        error: product => {
+          console.error("Error loading top 5 solutions");
+        }
+      }
+    );
+  }
+
+  private loadSolutions() {
+    this.productService.getSolutions().subscribe(
+      {
+        next: solutions => {
+          this.solutions = solutions;
+        },
+        error: solutions => {
+          console.error("Error loading solutions");
+        }
+      }
+    );
+  }
 }

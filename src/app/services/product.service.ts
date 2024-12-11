@@ -21,7 +21,7 @@ export class ProductService {
   }
 
   getTop5Solutions(userId: string): Observable<ProductDTO[]> {
-    return this.HttpClient.get<ProductDTO[]>(environment.apiHost + '/solutions/' + userId);
+    return this.HttpClient.get<ProductDTO[]>(environment.apiHost + '/solutions/persons-top-5/' + userId);
   }
 
   getSolutionsPage(

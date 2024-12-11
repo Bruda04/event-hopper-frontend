@@ -21,7 +21,7 @@ export class EventService {
   }
 
   getTop5Events(usersId : string): Observable<EventDTO[]> {
-    return this.HttpClient.get<EventDTO[]>(environment.apiHost + '/persons-top-5/' + usersId );
+    return this.HttpClient.get<EventDTO[]>(environment.apiHost + '/events/persons-top-5/' + usersId );
   }
 
   getEventsPage(page: number, size: number, city?: string, eventTypeId?: string, time?: string, searchContent?: string):Observable<PagedResponse<EventDTO>>{

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Service } from '../model/service.model';
+import {ProductDTO} from '../model/productDTO.model';
 
 @Component({
   selector: 'app-service-card',
@@ -8,10 +9,10 @@ import { Service } from '../model/service.model';
 })
 export class ServiceCardComponent {
 
-  @Input() service: Service;
+  @Input() service: ProductDTO;
 
   @Output()
-  clicked: EventEmitter<Service> = new EventEmitter<Service>();
+  clicked: EventEmitter<ProductDTO> = new EventEmitter<ProductDTO>();
 
   onCardClicked(): void {
     this.clicked.emit(this.service)
