@@ -1,9 +1,8 @@
-import {AfterViewInit, Component, createComponent, OnInit, ViewChild} from '@angular/core';
-import {Service} from '../model/service.model';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {ServicesService} from '../services.service';
 import {CreateServiceComponent} from '../create-service/create-service.component';
-import {MatPaginator, MatSort, MatDialog} from '../../infrastructure/material/material.module';
+import {MatDialog, MatPaginator, MatSort} from '../../infrastructure/material/material.module';
 import {MatDialogRef} from '@angular/material/dialog';
 import {EditServiceComponent} from '../edit-service/edit-service.component';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
@@ -12,7 +11,6 @@ import {PageEvent} from '@angular/material/paginator';
 import {PagedResponse} from '../../shared/model/paged-response.model';
 import {ServiceManagementDTO} from '../model/serviceManagementDTO.model';
 import {CreateServiceDTO} from '../model/createServiceDTO.model';
-import {SimpleCategoryDTO} from '../../admin-dashboard/model/simpleCategoryDTO.model';
 import {SimpleEventTypeDTO} from '../../admin-dashboard/model/simpleEventTypeDTO.model';
 import {CategoriesService} from '../../admin-dashboard/categories/categories.service';
 import {EventTypesService} from '../../admin-dashboard/eventTypes/event-types.service';
@@ -73,6 +71,8 @@ export class PUPServiceManagementComponent implements OnInit {
     maxPrice: new FormControl<number>(null, [Validators.min(0)]),
     availability: new FormControl<string>(''),
   });
+
+  searchContent: string = '';
 
 
 
@@ -152,9 +152,11 @@ export class PUPServiceManagementComponent implements OnInit {
     });
   }
 
-  applySearch(event: Event): void {
-    const inputValue: string = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = inputValue.trim().toLowerCase();
+  setSearchContent(event: Event): void {
+    this.searchContent = (event.target as HTMLInputElement).value;
+    if (!this.searchContent) {
+      this.loadPagedEntities();
+    }
   }
 
   showFilters():void {
@@ -199,7 +201,23 @@ export class PUPServiceManagementComponent implements OnInit {
   }
 
   loadPagedEntities() {
-    this.serviceService.getAllForManagement(this.pageProperties)
+    const filters = {
+      categoryId: this.filterForm.value.category,
+      eventTypesIds: this.filterForm.value.eventType,
+      minPrice: this.filterForm.value.minPrice,
+      maxPrice: this.filterForm.value.maxPrice,
+      availability: this.filterForm.value.availability
+    }
+
+    this.serviceService.getAllForManagement(
+      this.pageProperties,
+      this.filterForm.value.category,
+      this.filterForm.value.eventType,
+      this.filterForm.value.minPrice,
+      this.filterForm.value.maxPrice,
+      this.filterForm.value.availability === 'available' ? true : this.filterForm.value.availability === 'unavailable' ? false : null,
+      this.searchContent
+    )
       .subscribe( {
         next: (response: PagedResponse<ServiceManagementDTO>) => {
           this.dataSource = new MatTableDataSource(response.content);

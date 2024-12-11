@@ -23,7 +23,14 @@ export class ServicesService {
     return null;
   }
 
-  getAllForManagement(pageProperties: any): Observable<PagedResponse<ServiceManagementDTO>> {
+  getAllForManagement(pageProperties: any,
+                      categoryId: string,
+                      eventTypeIds: string[],
+                      minPrice: number,
+                      maxPrice: number,
+                      available: boolean,
+                      textSearch: string
+                      ): Observable<PagedResponse<ServiceManagementDTO>> {
     let params :HttpParams = new HttpParams();
     if(pageProperties) {
       params = params
@@ -31,6 +38,26 @@ export class ServicesService {
         .set('size', pageProperties.pageSize)
     }
 
+    if(categoryId) {
+      params = params.set('categoryId', categoryId);
+    }
+    if(eventTypeIds) {
+      params = params.set('eventTypeIds', eventTypeIds.join(','));
+    }
+    if(minPrice) {
+      params = params.set('minPrice', minPrice);
+    }
+    if(maxPrice) {
+      params = params.set('maxPrice', maxPrice);
+    }
+    if(available !== null) {
+      params = params.set('isAvailable', available);
+    }
+    if (textSearch) {
+      params = params.set('searchContent', textSearch);
+    }
+
+    console.log(params);
 
     return this.httpClient.get<PagedResponse<ServiceManagementDTO>>(environment.apiHost + `/services/management`, {params: params});
   }

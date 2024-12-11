@@ -12,9 +12,9 @@
           class="search"
           type="search"
           placeholder="Search"
-          (input)="applySearch($event)"
+          (input)="setSearchContent($event)"
         />
-        <button class="search-button">
+        <button class="search-button" (click)="loadPagedEntities()" >
           <mat-icon class="search-icon">search</mat-icon>
         </button>
       </div>
@@ -80,6 +80,7 @@
           <mat-icon [ngStyle]="{'color':'var(--font-dark-blue)'}">filter_alt_off</mat-icon>
         </button>
       </div>
+
     </form>
   </div>
 
@@ -167,6 +168,7 @@
           <button mat-icon-button (click)="remove(element.id)" [ngStyle]="{color: 'var(--error-color)'}">
             <mat-icon>delete</mat-icon>
           </button>
+            <mat-icon *ngIf="element.status === 'PENDING'" [ngStyle]="{color: 'var(--primary-color)'}">sync</mat-icon>
         </td>
       </ng-container>
 
