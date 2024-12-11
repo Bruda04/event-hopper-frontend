@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavigationStateService } from '../../authentication/services/navigation-state.service';
+import { UserService } from '../../authentication/services/user.service';
 import { User } from '../../authentication/services/user.modul';
 import { Event } from '../../event/model/event.model';
 import { Service } from '../../services/model/service.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import {LoginService} from '../../authentication/services/login/login.service';
 //import { getAll } from '../../services/services.service';
 
 
@@ -25,18 +26,17 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   ]
 })
 export class HomeComponent implements OnInit {
-  user: User; 
+  user: any;
 
-  constructor(private router: Router, private navigationStateService: NavigationStateService) { }
+  constructor(private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
-    this.user = this.navigationStateService.getUserData();
+    this.user = this.userService.getUserData();
 
     if (!this.user) {
-      console.log('No user data found!');
+      console.log('No one is logged in.');
     } else {
-      console.log(this.user);
-      
+      console.log("Logged in is : ", this.user.role);
     }
   }
   top5events: Event[] = [
@@ -473,13 +473,13 @@ export class HomeComponent implements OnInit {
 
 
   //proveriti da li radi
-  
+
   applyFilters(): void {
     if (this.filterSolutionForm.valid || this.filterEventForm.valid) {
       return;
     } else if (!this.filterSolutionForm.valid) {
       this.filterSolutionForm.markAsTouched();
-      
+
     }else if (!this.filterEventForm.valid){
       this.filterEventForm.markAsTouched();
     }

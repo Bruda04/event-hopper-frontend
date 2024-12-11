@@ -1,7 +1,7 @@
-<h3 *ngIf="this.user.role === 'organizer'">Organizer</h3>
-<h3 *ngIf="this.user.role === 'admin'">Admin</h3>
-<h3 *ngIf="this.user.role === 'pup'">Product/service provider</h3>
-<h3 *ngIf="this.user.role === 'user'">User</h3>
+<h3 *ngIf="this.user.role === 'EVENT_ORGANIZER'">Organizer</h3>
+<h3 *ngIf="this.user.role === 'ADMIN'">Admin</h3>
+<h3 *ngIf="this.user.role === 'SERVICE_PROVIDER'">Product/service provider</h3>
+<h3 *ngIf="this.user.role === 'AUTHENTICATED_USER'">User</h3>
 
 <div class="container">
     <div class="content">
@@ -33,8 +33,8 @@
         <p>
           Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa.
         </p>
-        <button *ngIf="this.user.role === 'pup'" mat-raised-button class="btn" [routerLink]="'/my-solutions'">VIEW MY SOLUTIONS</button>
-        <button *ngIf="this.user.role === 'admin'" mat-raised-button class="btn" [routerLink]="'/admin-dashboard'">ADMIN DASHBOARD</button>
+        <button *ngIf="this.user.role === 'SERVICE_PROVIDER'" mat-raised-button class="btn" [routerLink]="'/my-solutions'">VIEW MY SOLUTIONS</button>
+        <button *ngIf="this.user.role === 'ADMIN'" mat-raised-button class="btn" [routerLink]="'/admin-dashboard'">ADMIN DASHBOARD</button>
 
         <button mat-raised-button class="btn deactivate-account">DEACTIVATE ACCOUNT</button>
       </div>
