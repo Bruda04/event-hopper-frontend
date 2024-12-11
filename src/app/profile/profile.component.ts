@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavigationStateService } from '../authentication/services/navigation-state.service';
+import { UserService } from '../authentication/services/user.service';
 import { MaterialModule } from '../infrastructure/material/material.module';
 import { Router } from '@angular/router';
 import { User } from '../authentication/services/user.modul';
+import {PersonType} from '../authentication/model/person/PersonType.model';
 
 @Component({
   selector: 'app-profile',
@@ -12,10 +13,10 @@ import { User } from '../authentication/services/user.modul';
 export class ProfileComponent {
   user: User;
 
-  constructor(private navigationStateService: NavigationStateService, private router: Router) {
-    this.user = this.navigationStateService.getUserData();
+  constructor(private userService: UserService, private router: Router) {
+    this.user = this.userService.getUserData();
   }
 
 
-
+  protected readonly PersonType = PersonType;
 }

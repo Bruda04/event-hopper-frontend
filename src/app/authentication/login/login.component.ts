@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NavigationStateService } from '../services/navigation-state.service';
+import { UserService } from '../services/user.service';
 import {LoginService} from '../services/login/login.service';
+import {LoginDTO} from '../model/account/LoginDTO.model';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent {
     ])
   });
 
-  constructor(private loginService: LoginService, private navigationStateService: NavigationStateService, private router: Router) {}
+  constructor(private loginService: LoginService, private userService: UserService, private router: Router) {}
 
   // Getters for easier access in the template
   get email() {
@@ -37,24 +38,24 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      const email = this.loginForm.value.email;
-      const password = this.loginForm.value.password;
+      const loginDTO: LoginDTO = {
+        email:this.loginForm.value.email,
+        password: this.loginForm.value.password
+      }
 
-      this.loginService.loginUser(email, password).subscribe(
-        (user) => {
-          if (user) {
-            this.navigationStateService.setUserData(user); // Store user data securely
-            this.router.navigate(['/home']);
-          } else {
-            console.log('Invalid credentials!');
-            this.loginErrorMessage = 'Provided credentials dont match any users.';
-          }
+
+      this.loginService.loginUser(loginDTO).subscribe({
+        next: (response) => {
+          console.log('User logged successfully:', response);
+          this.userService.storeUserData(response);
+          this.router.navigate(['/home']);
         },
-        (error) => {
-          this.loginErrorMessage = 'An error occurred. Please try again later.';
-          console.error('Login error:', error);
-        }
-      );
+        error: (err) => {
+          this.loginErrorMessage = 'Account not found, please try again.';
+          console.error('Login error:', err);
+        },
+      });
+
     }
   }
 }
