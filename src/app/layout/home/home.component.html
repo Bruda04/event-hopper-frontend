@@ -60,13 +60,15 @@
       </button>
 
       <div class="search-bar">
-        <input class="search" type="search" placeholder="Search all events" >
+        <input class="search" type="search" (input)="setSearchEventContent($event)" placeholder="Search all events" >
         <button class="search-button">
           <mat-icon class="search-icon" (click)="loadPagedEvents()">search</mat-icon>
         </button>
       </div>
     </div>
   </div>
+
+
 
   <div *ngIf="showEventFilterPanel"  @slideInOut class="filter-panel">
 
@@ -82,18 +84,19 @@
         </mat-select>
       </mat-form-field>
 
+
       <mat-form-field appearance="fill" class="filter-field">
         <mat-label>Event Type</mat-label>
         <mat-select formControlName="eventType" multiple>
           <mat-option *ngFor="let event of eventTypes" [value]="event">
-            {{ event }}
+            {{ event.name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Choose a date</mat-label>
-        <input matInput [matDatepicker]="picker">
+        <input (dateChange)="OnDateChange($event)" matInput [matDatepicker]="picker" >
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
@@ -103,8 +106,8 @@
       <!-- mozda dodati asc i desc opcije -->
       <mat-radio-group aria-label="Sort by">
         <mat-label>Sort by</mat-label>
-        <mat-radio-button value="1">Date</mat-radio-button>
-        <mat-radio-button value="2">Name</mat-radio-button>
+        <mat-radio-button value="date" (change)="eventRadioChange($event,eventSort)" >Date</mat-radio-button>
+        <mat-radio-button value="name" (change)="eventRadioChange($event,eventSort)">Name</mat-radio-button>
       </mat-radio-group>
 
       <div class="filter-actions">

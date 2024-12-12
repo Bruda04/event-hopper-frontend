@@ -18,6 +18,7 @@ import {LocationService} from '../../location/location.service';
 import {EventTypesService} from '../../admin-dashboard/eventTypes/event-types.service';
 import {MatRadioChange} from '@angular/material/radio';
 import {CheckboxChangeEvent} from 'primeng/checkbox';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 
 
 @Component({
@@ -97,6 +98,8 @@ export class HomeComponent implements OnInit {
 
   showProducts: boolean = true;
   showServices: boolean = true;
+
+  date: Date = null;
 
   locations: LocationDTO[];
   eventTypes: SimpleEventTypeDTO[];
@@ -190,20 +193,31 @@ export class HomeComponent implements OnInit {
   }
 
   loadPagedEvents() :void {
-    // const sortField = this.sort?.active || ''; // Column to sort by
+
+    const locationId = this.filterEventForm.value.location?.city || null;
+    const eventTypeId = this.filterEventForm.value.eventType?.id || null;
+
+    let pickedDate = "";
+    console.log(this.date);
+    if (this.date !== null && this.date !== undefined) {
+      let date = this.date.getDate().toString();
+      let month = this.date.getMonth().toString();
+      let year = this.date.getFullYear();
+      pickedDate = year+"-"+month+"-"+date+"T00:00:00";
+
+    }
+
     this.eventService.getEventsPage(
       this.eventPageProperties,
       this.eventSort,
-      this.filterEventForm.value.location,
-      this.filterEventForm.value.eventType,
-      this.filterEventForm.value.date,
-      this.searchEventContent
+      locationId,
+      eventTypeId,
+      pickedDate,
+      this.searchEventContent || ''
     ).subscribe(
       {
         next: (response:PagedResponse<EventDTO>) => {
-          console.log(this.filterSolutionForm.value.location)
-          console.log(this.filterSolutionForm.value.eventType)
-          console.log(this.filterSolutionForm.value.date)
+
           this.events = response.content;
           this.eventPageProperties.totalCount = response.totalElements;
         },
@@ -254,14 +268,13 @@ export class HomeComponent implements OnInit {
   private loadLocations() {
     this.locationService.getLocations().subscribe(
       {
-        next:(locations: LocationDTO[]) => {
-          this.locations = locations;
+        next: (locations: LocationDTO[]) => {
+          this.locations = locations
         },
-        error:()=>{
+        error: () => {
           console.error('Error loading locations');
         }
-      }
-    );
+      });
   }
 
   loadEventTypes(){
@@ -300,6 +313,10 @@ export class HomeComponent implements OnInit {
     this.solutionSort = event.value;
   }
 
+  eventRadioChange(event: MatRadioChange, data:any) {
+    this.eventSort = event.value;
+  }
+
   showOrHideProducts(event: CheckboxChangeEvent, data:any) {
     this.showProducts = !this.showProducts;
   }
@@ -310,6 +327,14 @@ export class HomeComponent implements OnInit {
 
   setSearchSolutionContent(event: Event){
     this.searchSolutionContent = (event.target as HTMLInputElement).value;
+  }
+
+  setSearchEventContent(event: Event){
+    this.searchEventContent = (event.target as HTMLInputElement).value;
+  }
+
+  OnDateChange(event: MatDatepickerInputEvent<any, any>){
+    this.date = event.value;
   }
 
 }

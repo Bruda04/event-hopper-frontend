@@ -27,7 +27,6 @@ export class EventService {
   getEventsPage(
     pageProperties: any,
     sortField: string,
-    size: number,
     city?: string,
     eventTypeId?: string,
     time?: string,
@@ -42,6 +41,7 @@ export class EventService {
     }
 
     if (time) console.log("time")
+    params = params.set('sortField', sortField);
 
     if (city) {
       params = params.set('city', city);
@@ -52,6 +52,7 @@ export class EventService {
     if (time) {
       params = params.set('time', time);
     }
+
     if (searchContent) {
       params = params.set('searchContent', searchContent);
     }
