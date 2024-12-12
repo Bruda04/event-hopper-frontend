@@ -200,10 +200,10 @@ export class HomeComponent implements OnInit {
     let pickedDate = "";
     console.log(this.date);
     if (this.date !== null && this.date !== undefined) {
-      let date = this.date.getDate().toString();
-      let month = this.date.getMonth().toString();
+      let date = this.date.getDate().toString().padStart(2, '0'); // Dodaje vodeću nulu ako je potrebno
+      let month = (this.date.getMonth() + 1).toString().padStart(2, '0'); // +1 da bi mesec bio ispravan i formatiran
       let year = this.date.getFullYear();
-      pickedDate = year+"-"+month+"-"+date+"T00:00:00";
+      pickedDate = `${year}-${month}-${date}T00:00:00`;
 
     }
 

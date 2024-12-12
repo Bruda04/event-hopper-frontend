@@ -40,7 +40,7 @@ export class EventService {
         .set('size', pageProperties.pageSize)
     }
 
-    if (time) console.log("time")
+    if (time) console.log(time)
     params = params.set('sortField', sortField);
 
     if (city) {
