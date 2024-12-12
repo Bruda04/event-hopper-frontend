@@ -27,12 +27,13 @@ export class EventService {
   getEventsPage(
     pageProperties: any,
     sortField: string,
-    sortDirection: string,
     size: number,
     city?: string,
     eventTypeId?: string,
     time?: string,
-    searchContent?: string):Observable<PagedResponse<EventDTO>>{
+    searchContent?: string
+
+  ):Observable<PagedResponse<EventDTO>>{
     let params = new HttpParams()
     if(pageProperties) {
       params = params
@@ -40,14 +41,20 @@ export class EventService {
         .set('size', pageProperties.pageSize)
     }
 
-    if (city) params = params.set('city', city);
-    if (eventTypeId) params = params.set('eventTypeId', eventTypeId);
-    if (time) params = params.set('time', time);
-    if (searchContent) params = params.set('searchContent', searchContent);
+    if (time) console.log("time")
 
+    if (city) {
+      params = params.set('city', city);
+    }
+    if (eventTypeId) {
+      params = params.set('eventTypeId', eventTypeId);
+    }
+    if (time) {
+      params = params.set('time', time);
+    }
+    if (searchContent) {
+      params = params.set('searchContent', searchContent);
+    }
     return this.HttpClient.get<PagedResponse<EventDTO>>(environment.apiHost +  '/events/search', { params });
-
   }
-
-
 }

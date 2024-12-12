@@ -7,9 +7,17 @@ import {EventService} from '../../event/event.service';
 import {ProductService} from '../../services/product.service';
 import {ProductDTO} from '../../services/model/productDTO.model';
 import {EventDTO} from '../../event/model/eventDTO.model';
-import {MatPaginator, MatSort} from '../../infrastructure/material/material.module';
+import {MatPaginator, MatRadioButton, MatSort} from '../../infrastructure/material/material.module';
 import {PageEvent} from '@angular/material/paginator';
 import {PagedResponse} from '../../shared/model/paged-response.model';
+import {CategoryDTO} from '../../admin-dashboard/model/categoryDTO.model';
+import {CategoriesService} from '../../admin-dashboard/categories/categories.service';
+import {SimpleEventTypeDTO} from '../../admin-dashboard/model/simpleEventTypeDTO.model';
+import {LocationDTO} from '../../authentication/model/location/LocationDTO.model';
+import {LocationService} from '../../location/location.service';
+import {EventTypesService} from '../../admin-dashboard/eventTypes/event-types.service';
+import {MatRadioChange} from '@angular/material/radio';
+import {CheckboxChangeEvent} from 'primeng/checkbox';
 
 
 @Component({
@@ -30,7 +38,14 @@ import {PagedResponse} from '../../shared/model/paged-response.model';
 export class HomeComponent implements OnInit {
   user: any;
 
-  constructor(private router: Router, private userService: UserService, private eventService: EventService, private productService : ProductService) { }
+  constructor(private router: Router,
+              private userService: UserService,
+              private eventService: EventService,
+              private productService : ProductService,
+              private categoriesService: CategoriesService,
+              private locationService: LocationService,
+              private eventTypeService: EventTypesService,
+              ) { }
 
   ngOnInit(): void {
     this.user = this.userService.getUserData();
@@ -45,40 +60,53 @@ export class HomeComponent implements OnInit {
     this.loadPagedSolutions();
     this.loadTop5Events();
     this.loadTop5Solutions();
-    //this.loadEvents();
-    //this.loadSolutions();
+    this.loadLocations();
+    this.loadCategories();
+    this.loadEventTypes();
+    this.loadFilteredEventTypes()
   }
-
 
   top5events: EventDTO[] ;
   top5solutions: ProductDTO[];
   events: EventDTO[];
   solutions: ProductDTO[];
 
-  pageProperties = {
+  eventPageProperties = {
+    page: 0,
+    pageSize: 10,
+    totalCount: 0
+  };
+
+  solutionPageProperties = {
     page: 0,
     pageSize: 10,
     totalCount: 0
   };
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
 
-  searchContent: string = '';
+  eventSort: string = '';
+  solutionSort: string = '';
+
+  searchEventContent: string = '';
+  searchSolutionContent: string = '';
 
   currentIndex = 0;
   showEventFilterPanel: boolean = false; // Inicijalno stanje filter panela
   showSolutionFilterPanel: boolean = false; // Inicijalno stanje filter panela
 
-  locations: string[] = ['Novi Sad', 'Belgrade', 'Budapest', 'New York'];
-  eventTypes: string[] = ['Wedding', 'Birthday', 'Concert'];
-  categories: string[] = ['Catering','Decoration', 'Music'];
+  showProducts: boolean = true;
+  showServices: boolean = true;
+
+  locations: LocationDTO[];
+  eventTypes: SimpleEventTypeDTO[];
+  filteredEventTypes: SimpleEventTypeDTO[];
+  categories: CategoryDTO[];
 
   filterEventForm: FormGroup= new FormGroup({
     location: new FormControl<string>(''),
     eventType: new FormControl<string>(''),
     date: new FormControl<Date | null>(null),
-
   });
 
   filterSolutionForm: FormGroup= new FormGroup({
@@ -91,23 +119,6 @@ export class HomeComponent implements OnInit {
     availability: new FormControl<string>(''),
   });
 
-
-  get transformStyle(): string {
-    return `translateX(-${this.currentIndex * 100}%)`;
-  }
-
-  moveSlide(direction: number): void {
-    const totalSlides = this.events.length;
-    this.currentIndex += direction;
-
-    if (this.currentIndex < 0) {
-      this.currentIndex = totalSlides - 1;
-    } else if (this.currentIndex >= totalSlides) {
-      this.currentIndex = 0;
-    }
-  }
-
-
   toggleEventFilterPanel(): void {
     this.showEventFilterPanel = !this.showEventFilterPanel; // Menja stanje panela
   }
@@ -115,16 +126,6 @@ export class HomeComponent implements OnInit {
   toggleSolutionFilterPanel(): void {
     this.showSolutionFilterPanel = !this.showSolutionFilterPanel; // Menja stanje panela
   }
-
-  // setSearchContent(event: Event): void {
-  //   this.searchContent = (event.target as HTMLInputElement).value;
-  //   if (!this.searchContent) {
-  //     this.loadPagedEvents();
-  //   }
-  // }
-
-
-  //proveriti da li radi
 
   applyFilters(): void {
     if (this.filterSolutionForm.valid || this.filterEventForm.valid) {
@@ -155,21 +156,6 @@ export class HomeComponent implements OnInit {
     this.applyFilters();
   }
 
-
-  private loadEvents() {
-    this.eventService.getEvents().subscribe(
-      {
-        next: event => {
-          this.events = event;
-
-        },
-        error: event => {
-          console.error("Error loading events");
-        }
-      }
-    );
-  }
-
   private loadTop5Events() {
     this.eventService.getTop5Events("d7b9e5c3-a6f4-49a2-b8c1-7e3f9a2d6b4f").subscribe(
       {
@@ -186,7 +172,7 @@ export class HomeComponent implements OnInit {
 
   private loadTop5Solutions() {
 
-    this.productService.getTop5Solutions("d7b9e5c3-a6f4-49a2-b8c1-7e3f9a2d6b4f").subscribe(
+    this.productService.getTop5Solutions("4b9c7f5a-d3e2-42a1-b6c8-3f7e9d5a2c6f").subscribe(
       {
         next: product => {
           this.top5solutions = product;
@@ -199,71 +185,58 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  private loadSolutions() {
-    this.productService.getSolutions().subscribe(
-      {
-        next: solutions => {
-          this.solutions = solutions;
-        },
-        error: solutions => {
-          console.error("Error loading solutions");
-        }
-      }
-    );
-  }
-
   eventPageChanged(pageEvent: PageEvent): void {
-    this.pageProperties.page = pageEvent.pageIndex;
-    this.pageProperties.pageSize = pageEvent.pageSize;
+    this.eventPageProperties.page = pageEvent.pageIndex;
+    this.eventPageProperties.pageSize = pageEvent.pageSize;
     this.loadPagedEvents();
   }
 
   loadPagedEvents() :void {
-    const sortField = this.sort?.active || ''; // Column to sort by
-    const sortDirection = this.sort?.direction || ''; // 'asc' or 'desc'
-
-
+    // const sortField = this.sort?.active || ''; // Column to sort by
     this.eventService.getEventsPage(
-      this.pageProperties,
-      sortField,
-      sortDirection,
+      this.eventPageProperties,
+      this.eventSort,
       this.filterEventForm.value.location,
       this.filterEventForm.value.eventType,
       this.filterEventForm.value.date,
-      this.searchContent
-    )
-
-    this.eventService.getEvents().subscribe(
+      this.searchEventContent
+    ).subscribe(
       {
-        next: events => {
-          this.events = events;
+        next: (response:PagedResponse<EventDTO>) => {
+          console.log(this.filterSolutionForm.value.location)
+          console.log(this.filterSolutionForm.value.eventType)
+          console.log(this.filterSolutionForm.value.date)
+          this.events = response.content;
+          this.eventPageProperties.totalCount = response.totalElements;
         },
         error: solutions => {
           console.error("Error loading events");
         }
       }
     );
-
   }
 
   solutionPageChanged(pageEvent: PageEvent): void {
-    this.pageProperties.page = pageEvent.pageIndex;
-    this.pageProperties.pageSize = pageEvent.pageSize;
+    this.solutionPageProperties.page = pageEvent.pageIndex;
+    this.solutionPageProperties.pageSize = pageEvent.pageSize;
     this.loadPagedSolutions();
   }
 
   loadPagedSolutions() :void {
-    const sortField = this.sort?.active || ''; // Column to sort by
-    const sortDirection = this.sort?.direction || ''; // 'asc' or 'desc'
+    // const sortField = this.sort?.active || ''; // Column to sort by
+
+    const categoryId = this.filterSolutionForm.value.category?.id || null;
+    const eventTypeId = this.filterSolutionForm.value.eventType?.id || null;
 
     this.productService.getSolutionsPage(
-      this.pageProperties,
-      sortField,
-      sortDirection,
-      this.filterSolutionForm.value.isProduct || null,
-      this.filterSolutionForm.value.isService || null,
-      this.filterSolutionForm.value.category || null,
-      this.filterSolutionForm.value.eventType || null,
+      this.solutionPageProperties,
+      this.solutionSort,
+      this.showProducts,
+      this.showServices,
+      // this.filterSolutionForm.value.isProduct || null,
+      // this.filterSolutionForm.value.isService || null,
+      categoryId,
+      eventTypeId,
       this.filterSolutionForm.value.minPrice || null,
       this.filterSolutionForm.value.maxPrice || null,
       this.filterSolutionForm.value.availability === 'available'
@@ -271,41 +244,74 @@ export class HomeComponent implements OnInit {
         : this.filterSolutionForm.value.availability === 'unavailable'
           ? false
           : null,
-      this.searchContent || ''
+      this.searchSolutionContent || ''
     ).subscribe({
       next: (response:PagedResponse<ProductDTO>) => {
+        console.log(this.filterSolutionForm.value.availability);
         this.solutions = response.content; // Pretpostavljamo da API vraća `items`
-        this.pageProperties.totalCount = response.totalElements; // Ažuriramo ukupan broj stavki
+        this.solutionPageProperties.totalCount = response.totalElements; // Ažuriramo ukupan broj stavki
       },
       error: (err) => {
         console.error('Error loading solutions', err);
       }
     });
+  }
 
-    // this.productService.getSolutionsPage(
-    //   this.pageProperties,
-    //   sortField,
-    //   sortDirection,
-    //   this.filterSolutionForm.value.isProduct,
-    //   this.filterSolutionForm.value.isService,
-    //   this.filterSolutionForm.value.category,
-    //   this.filterSolutionForm.value.eventType,
-    //   this.filterSolutionForm.value.minPrice,
-    //   this.filterSolutionForm.value.maxPrice,
-    //   this.filterSolutionForm.value.availability === 'available' ? true : this.filterSolutionForm.value.availability === 'unavailable' ? false : null,
-    //   this.searchContent
-    // )
-    //
-    // this.productService.getSolutions().subscribe(
+  private loadLocations() {
+    this.locationService.getLocations().subscribe(
+      {
+        next:(locations: LocationDTO[]) => {
+          this.locations = locations;
+        },
+        error:()=>{
+          console.error('Error loading locations');
+        }
+      }
+    );
+  }
+
+  loadEventTypes(){
+    // this.eventTypeService.getEventTypes().subscribe(
     //   {
-    //     next: solutions => {
-    //       this.solutions = solutions;
+    //     next:(eventTypes: EventTypeDTO[]) => {
+    //       this.eventTypes = eventTypes;
     //     },
-    //     error: solutions => {
-    //       console.error("Error loading solutions");
+    //     error:()=>{
+    //       console.error('Error loading eventTypes');
     //     }
     //   }
     // );
-
   }
+
+  loadCategories(): void {
+    this.categoriesService.getApproved().subscribe(
+      {
+        next: (categories: CategoryDTO[]) => {
+          this.categories = categories;
+        },
+        error: () => {
+          console.error('Error loading categories');
+        }
+      });
+  }
+
+  loadFilteredEventTypes(): void {
+    this.filterSolutionForm.get('category')?.valueChanges.subscribe((categoryId: any) => {
+      const category: CategoryDTO = this.categories.find(cat => cat.id === categoryId);
+      this.filteredEventTypes = category?.eventTypes || [];
+    });
+  }
+
+  solutionRadioChange(event: MatRadioChange, data:any) {
+    this.solutionSort = event.value;
+  }
+
+  showOrHideProducts(event: CheckboxChangeEvent, data:any) {
+    this.showProducts = !this.showProducts;
+  }
+
+  showOrHideServices(event: CheckboxChangeEvent, data:any) {
+    this.showServices = !this.showServices;
+  }
+
 }

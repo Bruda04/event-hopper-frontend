@@ -27,9 +27,8 @@ export class ProductService {
   getSolutionsPage(
     pageProperties: any,
     sortField: string,
-    sortDirection: string,
-    isProduct?: boolean,
-    isService?: boolean,
+    isProduct: boolean,
+    isService: boolean,
     categoryId?: string,
     eventTypeIds?: string[],
     minPrice?: number,
@@ -38,6 +37,7 @@ export class ProductService {
     searchContent?: string,
 
   ): Observable<PagedResponse<ProductDTO>> {
+    console.log(isService)
     let params = new HttpParams()
     if(pageProperties) {
       params = params
@@ -45,13 +45,12 @@ export class ProductService {
         .set('size', pageProperties.pageSize)
     }
 
-    if (isProduct) {
-      params = params.set('isProduct', isProduct);
-    }
 
-    if (isService) {
-      params = params.set('isProduct', isProduct);
-    }
+    params = params.set('isProduct', isProduct);
+
+
+    params = params.set('isService', isService);
+
 
     if(categoryId) {
       params = params.set('categoryId', categoryId);
@@ -74,9 +73,7 @@ export class ProductService {
     if (sortField) {
       params = params.set('sortField', sortField);
     }
-    if (sortDirection) {
-      params = params.set('sortDirection', sortDirection);
-    }
+
     return this.HttpClient.get<PagedResponse<ProductDTO>>(environment.apiHost + '/solutions/search', { params });
   }
 }
