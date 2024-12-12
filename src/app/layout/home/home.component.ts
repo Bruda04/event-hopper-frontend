@@ -110,8 +110,6 @@ export class HomeComponent implements OnInit {
   });
 
   filterSolutionForm: FormGroup= new FormGroup({
-    isProduct: new FormControl<string>(''),
-    isService: new FormControl<string>(''),
     category: new FormControl<string>(''),
     eventType: new FormControl<string>(''),
     minPrice: new FormControl<number>(null, [Validators.min(0)]),
@@ -223,8 +221,6 @@ export class HomeComponent implements OnInit {
   }
 
   loadPagedSolutions() :void {
-    // const sortField = this.sort?.active || ''; // Column to sort by
-
     const categoryId = this.filterSolutionForm.value.category?.id || null;
     const eventTypeId = this.filterSolutionForm.value.eventType?.id || null;
 
@@ -233,8 +229,6 @@ export class HomeComponent implements OnInit {
       this.solutionSort,
       this.showProducts,
       this.showServices,
-      // this.filterSolutionForm.value.isProduct || null,
-      // this.filterSolutionForm.value.isService || null,
       categoryId,
       eventTypeId,
       this.filterSolutionForm.value.minPrice || null,
@@ -247,7 +241,7 @@ export class HomeComponent implements OnInit {
       this.searchSolutionContent || ''
     ).subscribe({
       next: (response:PagedResponse<ProductDTO>) => {
-        console.log(this.filterSolutionForm.value.availability);
+        console.log(this.searchSolutionContent);
         this.solutions = response.content; // Pretpostavljamo da API vraća `items`
         this.solutionPageProperties.totalCount = response.totalElements; // Ažuriramo ukupan broj stavki
       },
@@ -312,6 +306,10 @@ export class HomeComponent implements OnInit {
 
   showOrHideServices(event: CheckboxChangeEvent, data:any) {
     this.showServices = !this.showServices;
+  }
+
+  setSearchSolutionContent(event: Event){
+    this.searchSolutionContent = (event.target as HTMLInputElement).value;
   }
 
 }

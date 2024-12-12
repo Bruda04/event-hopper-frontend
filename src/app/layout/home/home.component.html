@@ -159,7 +159,7 @@
 
 
       <div class="search-bar">
-        <input class="search" type="search" placeholder="Search all services" >
+        <input class="search" type="search" (input)="setSearchSolutionContent($event)" placeholder="Search all services" >
 
         <button class="search-button">
           <mat-icon class="search-icon" (click) = "loadPagedSolutions()">search</mat-icon>

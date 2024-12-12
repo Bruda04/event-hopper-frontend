@@ -37,7 +37,6 @@ export class ProductService {
     searchContent?: string,
 
   ): Observable<PagedResponse<ProductDTO>> {
-    console.log(isService)
     let params = new HttpParams()
     if(pageProperties) {
       params = params
