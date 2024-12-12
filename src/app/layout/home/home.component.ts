@@ -313,7 +313,7 @@ export class HomeComponent implements OnInit {
     this.solutionSort = event.value;
   }
 
-  eventRadioChange(event: MatRadioChange, data:any) {
+  eventRadioChange(event: MatRadioChange) {
     this.eventSort = event.value;
   }
 
