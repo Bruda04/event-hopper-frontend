@@ -4,6 +4,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../env/envirements';
 import {PagedResponse} from '../shared/model/paged-response.model';
 import {ProductDTO} from '../shared/dto/solutions/productDTO.model';
+import {SolutionDetailsDTO} from '../shared/dto/solutions/solutionDetailsDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,10 @@ export class ProductService {
 
   getSolution(id: string): Observable<ProductDTO> {
     return this.HttpClient.get<ProductDTO>(environment.apiHost + '/solutions/' + id);
+  }
+
+  getSolutionDetails(id: string): Observable<SolutionDetailsDTO> {
+    return this.HttpClient.get<SolutionDetailsDTO>(environment.apiHost + '/solutions/' + id + '/details');
   }
 
   getTop5Solutions(userId: string): Observable<ProductDTO[]> {

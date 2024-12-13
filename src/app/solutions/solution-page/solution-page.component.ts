@@ -22,13 +22,13 @@ export class SolutionPageComponent implements OnInit {
   }
 
   loadSolution(): void {
-    this.productService.getSolution(this.solutionId).subscribe({
+    this.productService.getSolutionDetails(this.solutionId).subscribe(
+      {
         next: (solution: SolutionDetailsDTO): void => {
           this.solution = solution;
-          this.eventTypes = solution.eventTypes.map(eventType => eventType.name).join(', ')
+          this.eventTypes = solution.eventTypes.map(eventType => eventType.name).join(', ');
         },
-        error: (error): void => {
-          console.error(error);
+        error: () : void=> {
           this.notFound = true;
         }
       }

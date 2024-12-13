@@ -1,4 +1,4 @@
-import {SimpleLocationDTO} from '../location/SimpleLocationDTO.model';
+import {SimpleLocationDTO} from '../../locations/SimpleLocationDTO.model';
 
 export interface UpdatedPersonDTO {
   id: string;
