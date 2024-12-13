@@ -1,5 +1,6 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { Event } from '../model/event.model';
+import {EventDTO} from '../model/eventDTO.model';
 
 @Component({
   selector: 'app-event-card',
@@ -11,10 +12,10 @@ export class EventCardComponent {
   // @Input()
   // event: Event;
 
-  @Input() event: Event;
+  @Input() event: EventDTO;
 
   @Output()
-  clicked: EventEmitter<Event> = new EventEmitter<Event>();
+  clicked: EventEmitter<EventDTO> = new EventEmitter<EventDTO>();
 
   onCardClicked(): void {
     this.clicked.emit(this.event)

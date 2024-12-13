@@ -14,11 +14,13 @@ import { ProfileComponent } from './profile/profile.component';
 import {AdminDashboardModule} from './admin-dashboard/admin-dashboard.module';
 import {provideHttpClient} from '@angular/common/http';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
+import { LocationComponent } from './location/location.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProfileComponent,
+    LocationComponent,
   ],
   imports: [
     BrowserModule,
