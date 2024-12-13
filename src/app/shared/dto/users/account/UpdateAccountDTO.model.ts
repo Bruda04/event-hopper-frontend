@@ -1,4 +1,4 @@
-import {PersonType} from '../person/PersonType.model';
+import {PersonType} from '../../../model/PersonType.model';
 
 export interface UpdateAccountDTO{
   password: string;

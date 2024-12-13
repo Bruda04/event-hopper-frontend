@@ -1,4 +1,4 @@
-import {PersonType} from '../person/PersonType.model';
+import {PersonType} from '../../../model/PersonType.model';
 import {SimplePersonDTO} from '../person/SimplePersonDTO.model';
 
 export interface SimpleAccountDTO{
