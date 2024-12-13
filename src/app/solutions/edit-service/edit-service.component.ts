@@ -1,12 +1,11 @@
 import {AfterViewInit, Component, Inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatDialogRef} from '../../infrastructure/material/material.module';
-import {Service} from '../model/service.model';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {UpdateServiceDTO} from '../model/updateServiceDTO.model';
-import {ServiceManagementDTO} from '../model/serviceManagementDTO.model';
-import {SimpleEventTypeDTO} from '../../admin-dashboard/model/simpleEventTypeDTO.model';
-import {CategoryDTO} from '../../admin-dashboard/model/categoryDTO.model';
+import {ServiceManagementDTO} from '../../shared/dto/solutions/serviceManagementDTO.model';
+import {SimpleEventTypeDTO} from '../../shared/dto/eventTypes/simpleEventTypeDTO.model';
+import {UpdateServiceDTO} from '../../shared/dto/solutions/updateServiceDTO.model';
+
 
 @Component({
   selector: 'app-edit-service',

@@ -1,6 +1,6 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
-import { Event } from '../model/event.model';
-import {EventDTO} from '../model/eventDTO.model';
+import {EventDTO} from '../../shared/dto/events/eventDTO.model';
+
 
 @Component({
   selector: 'app-event-card',
@@ -8,9 +8,6 @@ import {EventDTO} from '../model/eventDTO.model';
   styleUrl: './event-card.component.css'
 })
 export class EventCardComponent {
-
-  // @Input()
-  // event: Event;
 
   @Input() event: EventDTO;
 

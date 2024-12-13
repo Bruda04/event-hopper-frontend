@@ -1,5 +1,5 @@
-import {SimpleEventTypeDTO} from '../../admin-dashboard/model/simpleEventTypeDTO.model';
-import {SimpleLocationDTO} from './simpleLocationDTO.model';
+import {SimpleEventTypeDTO} from '../eventTypes/simpleEventTypeDTO.model';
+import {SimpleLocationDTO} from '../locations/SimpleLocationDTO.model';
 
 export interface EventDTO{
   id: string

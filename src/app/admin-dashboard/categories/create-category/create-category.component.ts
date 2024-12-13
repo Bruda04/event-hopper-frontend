@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {MatDialogRef} from "../../../infrastructure/material/material.module"
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {CreateCategoryDTO} from '../../model/createCategoryDTO.model';
+import {CreateCategoryDTO} from '../../../shared/dto/categories/createCategoryDTO.model';
 
 @Component({
   selector: 'app-create-category',

@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import {CategoryDTO} from '../model/categoryDTO.model';
-import {CategorySuggestionDTO} from '../model/categorySuggestionDTO.model';
+
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../../env/envirements';
-import {CreateCategoryDTO} from '../model/createCategoryDTO.model';
-import {UpdateCategoryDTO} from '../model/UpdateCategoryDTO.model';
-import {UpdateCategorySuggestionDTO} from '../model/updateCategorySuggestionDTO.model';
-import {SimpleCategoryDTO} from '../model/simpleCategoryDTO.model';
-import {CreatedCategorySuggestionDTO} from '../model/createdCategorySuggestionDTO.model';
+import {CreateCategoryDTO} from '../../shared/dto/categories/createCategoryDTO.model';
+import {UpdateCategoryDTO} from '../../shared/dto/categories/UpdateCategoryDTO.model';
+import {UpdateCategorySuggestionDTO} from '../../shared/dto/categories/updateCategorySuggestionDTO.model';
+import {CreatedCategorySuggestionDTO} from '../../shared/dto/categories/createdCategorySuggestionDTO.model';
+import {CategoryDTO} from '../../shared/dto/categories/categoryDTO.model';
+import {CategorySuggestionDTO} from '../../shared/dto/categories/categorySuggestionDTO.model';
 
 @Injectable({
   providedIn: 'root'

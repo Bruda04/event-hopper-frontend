@@ -1,27 +1,18 @@
 import { Injectable } from '@angular/core';
-import {Service} from './model/service.model';
-import {ServiceManagementDTO} from './model/serviceManagementDTO.model';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../env/envirements';
 import {Observable} from 'rxjs';
 import {PagedResponse} from '../shared/model/paged-response.model';
-import {CreateServiceDTO} from './model/createServiceDTO.model';
-import {UpdateServiceDTO} from './model/updateServiceDTO.model';
-import {FormControl} from '@angular/forms';
-
+import {ServiceManagementDTO} from '../shared/dto/solutions/serviceManagementDTO.model';
+import {CreateServiceDTO} from '../shared/dto/solutions/createServiceDTO.model';
+import {UpdateServiceDTO} from '../shared/dto/solutions/updateServiceDTO.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServicesService {
 
-  private servicesList :Service[] = []
-
   constructor(private httpClient: HttpClient) {  }
-
-  getAll(): Service[] {
-    return null;
-  }
 
   getAllForManagement(pageProperties: any,
                       categoryId: string,

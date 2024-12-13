@@ -2,9 +2,9 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef } from "../../../infrastructure/material/material.module";
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { EventType } from '../../model/eventType.model';
-import { CategoryDTO } from '../../model/categoryDTO.model';
 import {CategoriesService} from '../../categories/categories.service';
+import {CategoryDTO} from '../../../shared/dto/categories/categoryDTO.model';
+import {EventType} from '../../../shared/model/eventType.model';
 
 @Component({
   selector: 'app-edit-event-type',

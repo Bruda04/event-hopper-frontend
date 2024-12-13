@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Service } from '../model/service.model';
-import {ProductDTO} from '../model/productDTO.model';
+import {ProductDTO} from '../../shared/dto/solutions/productDTO.model';
+
 
 @Component({
   selector: 'app-service-card',

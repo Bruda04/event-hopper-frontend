@@ -1,11 +1,10 @@
 import {Component, Inject, Injectable} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Service} from '../model/service.model';
 import {MatDialogRef} from '../../infrastructure/material/material.module';
-import {CreateServiceDTO} from '../model/createServiceDTO.model';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {CategoryDTO} from '../../admin-dashboard/model/categoryDTO.model';
-import {SimpleEventTypeDTO} from '../../admin-dashboard/model/simpleEventTypeDTO.model';
+import {SimpleEventTypeDTO} from '../../shared/dto/eventTypes/simpleEventTypeDTO.model';
+import {CategoryDTO} from '../../shared/dto/categories/categoryDTO.model';
+import {CreateServiceDTO} from '../../shared/dto/solutions/createServiceDTO.model';
 
 @Component({
   selector: 'app-create-service',

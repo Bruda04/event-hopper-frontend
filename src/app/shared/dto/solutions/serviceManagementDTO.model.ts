@@ -1,13 +1,6 @@
-import {SimpleCategoryDTO} from '../../admin-dashboard/model/simpleCategoryDTO.model';
-import {SimpleEventTypeDTO} from '../../admin-dashboard/model/simpleEventTypeDTO.model';
-
-interface SimplePriceDTO {
-  id: string;
-  price: number;
-  discount: number;
-  finalPrice: number;
-  timestamp: string;
-}
+import {SimplePriceDTO} from '../prices/simplePriceDTO.model';
+import {SimpleCategoryDTO} from '../categories/simpleCategoryDTO.model';
+import {SimpleEventTypeDTO} from '../eventTypes/simpleEventTypeDTO.model';
 
 export interface ServiceManagementDTO {
     id?: string

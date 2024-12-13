@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatSort } from "../../../infrastructure/material/material.module";
-import { EventType } from '../../model/eventType.model';
 import { EventTypesService } from '../event-types.service';
 import { EditEventTypeComponent } from '../edit-event-type/edit-event-type.component';
 import { MatDialogRef } from '@angular/material/dialog';
 import { CreateEventTypeComponent } from '../create-event-type/create-event-type.component';
+import {EventType} from '../../../shared/model/eventType.model';
 
 @Component({
   selector: 'app-admin-event-types-management',

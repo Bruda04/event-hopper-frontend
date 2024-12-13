@@ -1,13 +1,15 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {CategoryDTO} from '../../model/categoryDTO.model';
+
 import {MatDialog, MatSort} from  "../../../infrastructure/material/material.module";
 import {CategoriesService} from '../categories.service';
 import {MatDialogRef} from '@angular/material/dialog';
 import {EditCategoryComponent} from '../edit-category/edit-category.component';
 import {CreateCategoryComponent} from '../create-category/create-category.component';
-import {CreateCategoryDTO} from '../../model/createCategoryDTO.model';
-import {UpdateCategoryDTO} from '../../model/UpdateCategoryDTO.model';
+
+import {CategoryDTO} from '../../../shared/dto/categories/categoryDTO.model';
+import {UpdateCategoryDTO} from '../../../shared/dto/categories/UpdateCategoryDTO.model';
+import {CreateCategoryDTO} from '../../../shared/dto/categories/createCategoryDTO.model';
 
 @Component({
   selector: 'app-admin-approved-categories-management',

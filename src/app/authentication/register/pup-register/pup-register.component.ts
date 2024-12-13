@@ -3,11 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import {RegistrationService} from '../../services/registration/registration.service';
-import {CreateServiceProviderDTO} from '../../model/serviceProvider/CreateServiceProviderDTO.model';
-import {PersonType} from '../../model/person/PersonType.model';
-import {CreateLocationDTO} from '../../model/location/CreateLocationDTO.model';
-import {CreateRegistrationRequestDTO} from '../../model/registrationRequest/CreateRegistrationRequestDTO.model';
-import {CreateServiceProviderAccountDTO} from '../../model/account/CreateServiceProviderAccountDTO.model';
+import {CreateServiceProviderDTO} from '../../../shared/dto/users/serviceProvider/CreateServiceProviderDTO.model';
+import {PersonType} from '../../../shared/model/PersonType.model';
+import {CreateLocationDTO} from '../../../shared/dto/locations/CreateLocationDTO.model';
+import {CreateServiceProviderAccountDTO} from '../../../shared/dto/users/account/CreateServiceProviderAccountDTO.model';
+import {CreateRegistrationRequestDTO} from '../../../shared/dto/registrationRequest/CreateRegistrationRequestDTO.model';
 
 @Component({
   selector: 'app-pup-register',

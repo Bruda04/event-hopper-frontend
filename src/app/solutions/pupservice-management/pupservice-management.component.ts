@@ -9,15 +9,13 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {PageEvent} from '@angular/material/paginator';
 import {PagedResponse} from '../../shared/model/paged-response.model';
-import {ServiceManagementDTO} from '../model/serviceManagementDTO.model';
-import {CreateServiceDTO} from '../model/createServiceDTO.model';
-import {SimpleEventTypeDTO} from '../../admin-dashboard/model/simpleEventTypeDTO.model';
+import {ServiceManagementDTO} from '../../shared/dto/solutions/serviceManagementDTO.model';
+import {CategoryDTO} from '../../shared/dto/categories/categoryDTO.model';
+import {SimpleEventTypeDTO} from '../../shared/dto/eventTypes/simpleEventTypeDTO.model';
 import {CategoriesService} from '../../admin-dashboard/categories/categories.service';
-import {CategoryDTO} from '../../admin-dashboard/model/categoryDTO.model';
-import {UpdateServiceDTO} from '../model/updateServiceDTO.model';
-import {SimpleCategoryDTO} from '../../admin-dashboard/model/simpleCategoryDTO.model';
-import {CreatedCategorySuggestionDTO} from '../../admin-dashboard/model/createdCategorySuggestionDTO.model';
-
+import {CreateServiceDTO} from '../../shared/dto/solutions/createServiceDTO.model';
+import {CreatedCategorySuggestionDTO} from '../../shared/dto/categories/createdCategorySuggestionDTO.model';
+import {UpdateServiceDTO} from '../../shared/dto/solutions/updateServiceDTO.model';
 
 @Component({
   selector: 'app-pupservice-management',

@@ -3,11 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 import {RegistrationService} from '../../services/registration/registration.service';
-import {PersonType} from '../../model/person/PersonType.model';
-import {CreateEventOrganizerDTO} from '../../model/eventOrganizer/CreateEventOrganizerDTO.model';
-import {CreateLocationDTO} from '../../model/location/CreateLocationDTO.model';
-import {CreateRegistrationRequestDTO} from '../../model/registrationRequest/CreateRegistrationRequestDTO.model';
-import {CreateEventOrganizerAccountDTO} from '../../model/account/CreateEventOrganizerAccountDTO.model';
+import {CreateEventOrganizerDTO} from '../../../shared/dto/users/eventOrganizer/CreateEventOrganizerDTO.model';
+import {PersonType} from '../../../shared/model/PersonType.model';
+import {CreateLocationDTO} from '../../../shared/dto/locations/CreateLocationDTO.model';
+import {CreateEventOrganizerAccountDTO} from '../../../shared/dto/users/account/CreateEventOrganizerAccountDTO.model';
+import {CreateRegistrationRequestDTO} from '../../../shared/dto/registrationRequest/CreateRegistrationRequestDTO.model';
 
 function phoneMinLengthValidator(control: AbstractControl): ValidationErrors | null {
   const value = control.value?.toString() || ''; // Convert the number to a string

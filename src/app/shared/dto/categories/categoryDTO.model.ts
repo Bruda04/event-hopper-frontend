@@ -1,4 +1,4 @@
-import {SimpleEventTypeDTO} from './simpleEventTypeDTO.model';
+import {SimpleEventTypeDTO} from '../eventTypes/simpleEventTypeDTO.model';
 
 export interface CategoryDTO {
   id: string;

@@ -1,4 +1,4 @@
-import {SimpleCategoryDTO} from '../../admin-dashboard/model/simpleCategoryDTO.model';
+import {SimpleCategoryDTO} from '../categories/simpleCategoryDTO.model';
 
 export  interface ProductDTO {
   id: string,

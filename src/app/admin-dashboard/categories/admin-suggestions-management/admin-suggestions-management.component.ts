@@ -4,8 +4,9 @@ import {MatDialog, MatSort} from  "../../../infrastructure/material/material.mod
 import {CategoriesService} from '../categories.service';
 import {ApproveSuggestionComponent} from '../approve-suggestion/approve-suggestion.component';
 import {EditSuggestionComponent} from '../edit-suggestion/edit-suggestion.component';
-import {CategorySuggestionDTO} from '../../model/categorySuggestionDTO.model';
-import {SimpleCategoryDTO} from '../../model/simpleCategoryDTO.model';
+import {CategorySuggestionDTO} from '../../../shared/dto/categories/categorySuggestionDTO.model';
+import {SimpleCategoryDTO} from '../../../shared/dto/categories/simpleCategoryDTO.model';
+
 
 @Component({
   selector: 'app-admin-suggestions-management',
