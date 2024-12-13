@@ -5,7 +5,7 @@ import { RegisterComponent } from './register/register.component';
 import { OrganizerRegisterComponent } from './register/organizer-register/organizer-register.component';
 import { PupRegisterComponent } from './register/pup-register/pup-register.component';
 import { LayoutModule } from '../layout/layout.module';
-import { ServicesModule } from '../services/services.module';
+import { SolutionsModule } from '../solutions/solutions.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../infrastructure/material/material.module';
 import { AppRoutingModule } from '../app-routing.module';
@@ -24,7 +24,7 @@ import { ImageCropperComponent } from 'ngx-image-cropper';
   imports: [
     CommonModule,
     LayoutModule,
-    ServicesModule,
+    SolutionsModule,
     ReactiveFormsModule,
     MaterialModule,
     AppRoutingModule,

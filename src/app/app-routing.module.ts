@@ -10,7 +10,7 @@ import { EmailConfirmationSentComponent } from './authentication/email-confirmat
 import { DashboardComponent} from './admin-dashboard/dashboard/dashboard.component';
 import {
   PUPServiceProductManagementComponent
-} from './services/pupservice-product-management/pupservice-product-management.component';
+} from './solutions/pupservice-product-management/pupservice-product-management.component';
 import {roleGuard} from './authentication/guards/role.guard';
 
 const routes: Routes = [

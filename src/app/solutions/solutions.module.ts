@@ -26,4 +26,4 @@ import { ServiceCardComponent } from './service-card/service-card.component';
     ServiceCardComponent
   ]
 })
-export class ServicesModule { }
+export class SolutionsModule { }

@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from './layout/layout.module';
-import { ServicesModule } from './services/services.module';
+import { SolutionsModule } from './solutions/solutions.module';
 import { AuthenticationModule } from './authentication/authentication.module'; // Import AuthenticationModule here
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './infrastructure/material/material.module';
@@ -31,7 +31,7 @@ import { LocationComponent } from './location/location.component';
     ReactiveFormsModule,
     MaterialModule,
     EventModule,
-    ServicesModule,
+    SolutionsModule,
     AdminDashboardModule
   ],
   providers: [
