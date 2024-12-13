@@ -1,9 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MatDialogRef} from "../../../infrastructure/material/material.module"
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {CategoryDTO} from '../../model/categoryDTO.model';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {UpdateCategoryDTO} from '../../model/UpdateCategoryDTO.model';
+import {UpdateCategoryDTO} from '../../../shared/dto/categories/UpdateCategoryDTO.model';
+import {CategoryDTO} from '../../../shared/dto/categories/categoryDTO.model';
 
 @Component({
   selector: 'app-edit-category',

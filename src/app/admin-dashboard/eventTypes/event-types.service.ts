@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {EventType} from '../model/eventType.model';
+import {EventType} from '../../shared/model/eventType.model';
 
 
 const dataSource = [

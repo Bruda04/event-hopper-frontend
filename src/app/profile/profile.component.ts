@@ -3,7 +3,7 @@ import { UserService } from '../authentication/services/user.service';
 import { MaterialModule } from '../infrastructure/material/material.module';
 import { Router } from '@angular/router';
 import { User } from '../authentication/services/user.modul';
-import {PersonType} from '../authentication/model/person/PersonType.model';
+import {PersonType} from "../shared/model/PersonType.model";
 
 @Component({
   selector: 'app-profile',

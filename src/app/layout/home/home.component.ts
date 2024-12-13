@@ -4,21 +4,21 @@ import { UserService } from '../../authentication/services/user.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {EventService} from '../../event/event.service';
-import {ProductService} from '../../services/product.service';
-import {ProductDTO} from '../../services/model/productDTO.model';
-import {EventDTO} from '../../event/model/eventDTO.model';
+import {ProductService} from '../../solutions/product.service';
 import {MatPaginator, MatRadioButton, MatSort} from '../../infrastructure/material/material.module';
 import {PageEvent} from '@angular/material/paginator';
 import {PagedResponse} from '../../shared/model/paged-response.model';
-import {CategoryDTO} from '../../admin-dashboard/model/categoryDTO.model';
 import {CategoriesService} from '../../admin-dashboard/categories/categories.service';
-import {SimpleEventTypeDTO} from '../../admin-dashboard/model/simpleEventTypeDTO.model';
-import {LocationDTO} from '../../authentication/model/location/LocationDTO.model';
 import {LocationService} from '../../location/location.service';
 import {EventTypesService} from '../../admin-dashboard/eventTypes/event-types.service';
 import {MatRadioChange} from '@angular/material/radio';
 import {CheckboxChangeEvent} from 'primeng/checkbox';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
+import {EventDTO} from '../../shared/dto/events/eventDTO.model';
+import {ProductDTO} from '../../shared/dto/solutions/productDTO.model';
+import {LocationDTO} from '../../shared/dto/locations/LocationDTO.model';
+import {SimpleEventTypeDTO} from '../../shared/dto/eventTypes/simpleEventTypeDTO.model';
+import {CategoryDTO} from '../../shared/dto/categories/categoryDTO.model';
 
 
 @Component({

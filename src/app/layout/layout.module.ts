@@ -9,7 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
-import { ServicesModule } from '../services/services.module';
+import { SolutionsModule } from '../solutions/solutions.module';
 import { NotificationModule } from '../notification/notification.module';
 
 
@@ -22,7 +22,7 @@ import { NotificationModule } from '../notification/notification.module';
     MaterialModule,
     RouterModule,
     EventModule,
-    ServicesModule,
+    SolutionsModule,
     ReactiveFormsModule,
     CarouselModule,
     ButtonModule,

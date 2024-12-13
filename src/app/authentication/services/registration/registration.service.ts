@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import {environment} from '../../../../env/envirements';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {CreateServiceProviderAccountDTO} from '../../model/account/CreateServiceProviderAccountDTO.model';
-import {CreateEventOrganizerAccountDTO} from '../../model/account/CreateEventOrganizerAccountDTO.model';
+import {CreateServiceProviderAccountDTO} from '../../../shared/dto/users/account/CreateServiceProviderAccountDTO.model';
+import {CreateEventOrganizerAccountDTO} from '../../../shared/dto/users/account/CreateEventOrganizerAccountDTO.model';
 
 @Injectable({
   providedIn: 'root'

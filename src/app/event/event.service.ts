@@ -3,7 +3,8 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../env/envirements';
 import {Observable} from 'rxjs';
 import {PagedResponse} from '../shared/model/paged-response.model';
-import {EventDTO} from './model/eventDTO.model';
+import {EventDTO} from '../shared/dto/events/eventDTO.model';
+
 
 @Injectable({
   providedIn: 'root'

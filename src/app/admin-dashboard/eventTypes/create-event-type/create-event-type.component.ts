@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from "../../../infrastructure/material/material.module";
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { EventType } from '../../model/eventType.model';
 import {CategoriesService} from '../../categories/categories.service';
-import {CategoryDTO} from '../../model/categoryDTO.model';
-import {EventTypesService} from '../event-types.service';
+import {CategoryDTO} from '../../../shared/dto/categories/categoryDTO.model';
+import {EventType} from '../../../shared/model/eventType.model';
 
 @Component({
   selector: 'app-create-event-type',

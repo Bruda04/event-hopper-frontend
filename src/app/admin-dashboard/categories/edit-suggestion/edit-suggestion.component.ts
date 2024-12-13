@@ -1,8 +1,9 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {SimpleProductDTO} from '../../model/categorySuggestionDTO.model';
-import {SimpleCategoryDTO} from '../../model/simpleCategoryDTO.model';
+import {SimpleProductDTO} from '../../../shared/dto/solutions/simpleProductDTO';
+import {SimpleCategoryDTO} from '../../../shared/dto/categories/simpleCategoryDTO.model';
+
 
 @Component({
   selector: 'app-edit-suggestion',

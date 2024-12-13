@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Location} from '@angular/common';
 import {Observable} from 'rxjs';
-import {LocationDTO} from '../authentication/model/location/LocationDTO.model';
 import {environment} from '../../env/envirements';
+import {LocationDTO} from '../shared/dto/locations/LocationDTO.model';
 
 @Injectable({
   providedIn: 'root'
