@@ -1,5 +1,5 @@
-import {PersonType} from '../person/PersonType.model';
 import {SimplePersonDTO} from '../person/SimplePersonDTO.model';
+import {PersonType} from '../../../model/PersonType.model';
 
 export interface AccountDTO{
   id:string;

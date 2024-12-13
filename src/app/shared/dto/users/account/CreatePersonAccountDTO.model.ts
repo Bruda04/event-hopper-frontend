@@ -1,6 +1,6 @@
-import {PersonType} from '../person/PersonType.model';
+import {PersonType} from '../../../model/PersonType.model';
 import {CreatePersonDTO} from '../person/CreatePersonDTO.model';
-import {CreateRegistrationRequestDTO} from '../registrationRequest/CreateRegistrationRequestDTO.model';
+import {CreateRegistrationRequestDTO} from '../../registrationRequest/CreateRegistrationRequestDTO.model';
 
 export interface CreatePersonAccountDTO{
   email: string;
