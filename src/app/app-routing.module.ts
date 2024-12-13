@@ -12,6 +12,7 @@ import {
   PUPServiceProductManagementComponent
 } from './solutions/pupservice-product-management/pupservice-product-management.component';
 import {roleGuard} from './authentication/guards/role.guard';
+import {SolutionPageComponent} from './solutions/solution-page/solution-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -30,6 +31,8 @@ const routes: Routes = [
     canActivate: [roleGuard],
     data: { role: 'ADMIN' }
   },
+  { path: 'solutions/:id', component: SolutionPageComponent },
+  { path: 'providers/:id', component: SolutionPageComponent },
 ];
 
 
