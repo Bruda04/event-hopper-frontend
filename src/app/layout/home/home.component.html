@@ -111,7 +111,7 @@
       </mat-radio-group>
 
       <div class="filter-actions">
-        <button mat-mini-fab [ngStyle]="{'background-color':'#073b4c'}" (click)="applyFilters()">
+        <button mat-mini-fab [ngStyle]="{'background-color':'#073b4c'}" (click) = "loadPagedEvents()">
           <mat-icon [ngStyle]="{'color':'white'}">filter_alt</mat-icon>
         </button>
       </div>
@@ -233,7 +233,7 @@
 
 
       <div class="filter-actions">
-        <button mat-mini-fab [ngStyle]="{'background-color':'#073b4c'}" (click)="applyFilters()">
+        <button mat-mini-fab [ngStyle]="{'background-color':'#073b4c'}" (click) = "loadPagedSolutions()">
           <mat-icon [ngStyle]="{'color':'white'}">filter_alt</mat-icon>
         </button>
       </div>
