@@ -49,7 +49,7 @@ export class HomeComponent implements OnInit {
               private categoriesService: CategoriesService,
               private locationService: LocationService,
               private eventTypeService: EventTypesService,
-              public dialog: MatDialog,
+
               ) { }
 
   ngOnInit(): void {
@@ -341,10 +341,4 @@ export class HomeComponent implements OnInit {
     this.date = event.value;
   }
 
-  invitePeople() {
-    const dialogRef: MatDialogRef<InvitePeopleComponent> = this.dialog.open(InvitePeopleComponent, {
-      minWidth: '70vw',
-      minHeight: '70vh',
-    });
-  }
 }

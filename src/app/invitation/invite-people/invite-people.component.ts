@@ -23,12 +23,11 @@ export class InvitePeopleComponent {
     const email = this.inviteForm.get('email')?.value;
     if (email && email.trim() !== '') {
       this.invitedEmails.push(email.trim());
-      this.inviteForm.reset(); // Očisti input polje
+      this.inviteForm.reset();
 
     }
   }
 
-  // Brisanje emaila iz liste
   removeEmail(email: string): void {
     let index = this.invitedEmails.indexOf(email);
     this.invitedEmails.splice(index, 1);
