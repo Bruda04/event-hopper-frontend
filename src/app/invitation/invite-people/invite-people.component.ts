@@ -10,10 +10,27 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
   styleUrl: './invite-people.component.css'
 })
 export class InvitePeopleComponent {
-  invitePeople: FormGroup;
-    invitedEmails: string[] ;
+  inviteForm: FormGroup = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+  });
+  invitedEmails: string[] =[];
 
   invite() {
 
+  }
+
+  addEmail(): void {
+    const email = this.inviteForm.get('email')?.value;
+    if (email && email.trim() !== '') {
+      this.invitedEmails.push(email.trim());
+      this.inviteForm.reset(); // Očisti input polje
+
+    }
+  }
+
+  // Brisanje emaila iz liste
+  removeEmail(email: string): void {
+    let index = this.invitedEmails.indexOf(email);
+    this.invitedEmails.splice(index, 1);
   }
 }

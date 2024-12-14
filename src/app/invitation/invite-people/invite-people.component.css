@@ -40,27 +40,36 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-right: 10em;
-  padding-left: 10em;
+  padding-right: 13em;
+  padding-left: 13em;
   gap: 1em;
   margin-bottom: 1rem;
 }
 
 .email-input {
   flex: 1; /* Input polje rasteže se dok dugme Invite ostaje desno */
-
 }
 
 ::ng-deep .invite-button {
   flex-shrink: 0 !important; /* Dugme ne rasteže se */
-  color: var(--primary-color) !important;
+  background-color: var(--font-dark-blue) !important;
+  color: var(--light-beige) !important;
+  transition: background-color 0.3s ease !important;
 }
 
-/* Stil za listu pozvanih emailova */
+.invite-button:hover {
+  background-color: var(--primary-color)!important;
+  color: var(--font-dark-blue)!important;
+}
+
 .email-list {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 13em;
+  padding-left: 13em;
+  gap: 1em;
+  margin-bottom: 1rem;
 }
 
 .email-item {
@@ -68,15 +77,21 @@ h2 {
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem 1rem;
-  background-color: #f5faff; /* Svetlo plava pozadina */
-  border-radius: 5px;
+  background-color: var(--light-blue);
+  border-radius: 10em;
+  width: 35em;
+  height: 2.5em;
+  color: var(--font-dark-blue);
 }
 
 .delete-button {
-  flex-shrink: 0; /* Dugme Delete ostaje male širine */
+  flex-shrink: 0 !important; /* Dugme ne rasteže se */
+  background-color: var(--error-color) !important;
+  color: var(--light-beige) !important;
+  transition: background-color 0.3s ease !important;
 }
 
-/* Dugmad u donjem delu */
+
 .actions-container {
   display: flex;
   justify-content: center;

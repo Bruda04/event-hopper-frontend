@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>Invite people</h2>
 <mat-dialog-content>
-  <form [formGroup]="invitePeople">
+  <form [formGroup]="inviteForm">
     <!-- Input polje sa Invite dugmetom -->
     <div class="input-pair">
       <mat-form-field appearance="fill" class="email-input">
@@ -11,26 +11,21 @@
           formControlName="email"
         />
       </mat-form-field>
-<!--      <button mat-mini-fab color="primary" class="invite-button">-->
-<!--        <mat-icon>add</mat-icon>-->
-<!--        Invite-->
-<!--      </button>-->
 
-      <button mat-fab extended class="invite-button">
+      <button mat-fab extended class="invite-button" (click)="addEmail()">
         <mat-icon>add</mat-icon>
         Invite
       </button>
     </div>
 
-    <!-- Lista pozvanih emailova sa Delete dugmetom -->
     <div *ngFor="let email of invitedEmails" class="email-list">
       <div class="email-item">
         <span>{{ email }}</span>
-        <button mat-mini-fab color="warn" class="delete-button">
-          <mat-icon>close</mat-icon>
-          Delete
-        </button>
       </div>
+        <button mat-fab extended class="delete-button" (click)="removeEmail(email)">
+            <mat-icon>close</mat-icon>
+            Delete
+        </button>
     </div>
   </form>
 </mat-dialog-content>
