@@ -38,4 +38,13 @@ export class SolutionPageComponent implements OnInit {
   goToProvider() {
     this.router.navigate(['/providers/', this.solution.provider.id]);
   }
+
+  // TODO: Implement this method
+  toggleFavorites(): void {
+  }
+
+  // TODO: Implement this method
+  chatWithUs(): void {
+
+  }
 }

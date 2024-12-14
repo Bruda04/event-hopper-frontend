@@ -19,7 +19,10 @@
       </div>
 
       <div class="product-details">
-        <h1>{{solution.name}}</h1>
+        <div class="header">
+          <h1>{{solution.name}}</h1>
+          <mat-icon [ngClass]="{'filled': false}" (click)="toggleFavorites()">star</mat-icon>
+        </div>
         <p>
          {{solution.description}}
         </p>
@@ -39,13 +42,20 @@
             <span *ngIf="!solution.service">Product provider:&nbsp; </span>
             <strong (click)="goToProvider()">{{solution.provider.companyName}}</strong>
         </p>
-        <p>
-          <span class="sale-price">{{solution.price.basePrice}}€</span>
-          <span class="old-price" *ngIf="solution.price.discount">{{solution.price.discount}}%</span>
+
+        <div class="prices">
+          <span class="sale-price">{{solution.price.finalPrice}}€</span>
           <span class="on-sale" *ngIf="solution.price.discount">ON SALE</span>
-        </p>
+          <span class="old-price" *ngIf="solution.price.discount">{{solution.price.basePrice}}€</span>
+        </div>
+
+        <div class="rating">
+          <mat-icon *ngFor="let star of [1, 2, 3, 4, 5]" [ngClass]="{'filled': star <= solution.rating}">star</mat-icon>
+        </div>
+
         <p class="available"><strong>{{ !solution.available ? "UNAVAILABLE" : null }}</strong></p>
-        <button mat-raised-button class="chat-btn">
+
+        <button mat-raised-button class="chat-btn" (click)="chatWithUs()">
           <mat-icon>chat</mat-icon>
           You need more info? Chat with us!
         </button>

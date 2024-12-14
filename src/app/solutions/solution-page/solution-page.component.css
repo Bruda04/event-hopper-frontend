@@ -38,6 +38,13 @@
   flex-direction: column;
 }
 
+.prices {
+  display: flex;
+  gap: 1em;
+  margin: 1em 0;
+  vertical-align: center;
+}
+
 .sale-price {
   color: var(--primary-color);
   font-weight: bolder;
@@ -47,13 +54,13 @@
 .old-price {
   text-decoration: line-through;
   color: var(--disabled-color);
+  font-size: 1.5em;
 }
 
 .on-sale {
-  background: var(--error-color);
-  color: white;
-  padding: 2px 5px;
+  color: var(--error-color);
   border-radius: 3px;
+  font-size: 2em;
 }
 
 
@@ -63,7 +70,6 @@
   color: white !important;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
-  margin-top: 1em;
   display: flex;
   width: fit-content;
 }
@@ -115,7 +121,7 @@
 
 
 .provider {
-  color: var(--primary-color);
+  color: var(--font-dark-blue);
   text-decoration: none;
 }
 
@@ -126,12 +132,13 @@
 
 .provider strong:hover {
   text-decoration: underline;
+  cursor: pointer;
 }
 
 .available {
   color: var(--error-color);
   font-size: 1.5em;
-
+  margin-top: 1.2em;
 }
 
 
@@ -168,4 +175,41 @@
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.rating {
+  display: flex;
+  gap: 0.2em;
+  margin-top: 1em;
+}
+
+.rating .mat-icon {
+  color: var(--disabled-color);
+  font-size: 1.5em;
+  width: fit-content;
+  height: fit-content;
+}
+
+.rating .mat-icon.filled {
+  color: var(--primary-color);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.header .mat-icon {
+  color: var(--disabled-color);
+  cursor: pointer;
+  font-size: 2.7em;
+  width: fit-content;
+  height: fit-content;
+}
+
+.header .mat-icon.filled {
+  color: var(--primary-color);
 }
