@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { User } from '../../authentication/services/user.modul';
 import {ProfileService} from '../profile.service';
 import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';
+import {ConfirmDeactivationComponent} from '../confirm-deactivation/confirm-deactivation.component';
 
 
 @Component({
@@ -40,11 +41,35 @@ export class ProfileComponent {
   }
 
 
+  openConfirmationDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmDeactivationComponent, {
+      width: '400px',
+    });
 
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('User confirmed deactivation');
+
+
+        this.profileService.deactivateAccount(this.user.id).subscribe({
+          next: (response) => {
+            console.log('Account deactivated');
+            this.userService.clearUserData();
+            this.router.navigate(['/login']);
+          },
+          error: (err) => {
+            console.error('No user found error:', err);
+          },
+        });
+
+      } else {
+        console.log('User cancelled deactivation');
+      }
+    });
+  }
 
   openChangePasswordDialog(): void {
     this.dialog.open(ChangePasswordDialogComponent, {
-      width: '500px', // Adjust width of the popup
     });
   }
 }

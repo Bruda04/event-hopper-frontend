@@ -17,6 +17,7 @@ import {provideAnimationsAsync} from '@angular/platform-browser/animations/async
 import { LocationComponent } from './location/location.component';
 import { ServiceProviderProfileComponent } from './profile/service-provider-profile/service-provider-profile.component';
 import { ChangePasswordDialogComponent } from './profile/change-password-dialog/change-password-dialog.component';
+import { ConfirmDeactivationComponent } from './profile/confirm-deactivation/confirm-deactivation.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ChangePasswordDialogComponent } from './profile/change-password-dialog/
     LocationComponent,
     ServiceProviderProfileComponent,
     ChangePasswordDialogComponent,
+    ConfirmDeactivationComponent,
   ],
   imports: [
     BrowserModule,
