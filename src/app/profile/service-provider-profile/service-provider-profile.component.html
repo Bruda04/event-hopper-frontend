@@ -1,0 +1,47 @@
+<h3 *ngIf="this.user.role === 'EVENT_ORGANIZER'">Organizer</h3>
+<h3 *ngIf="this.user.role === 'ADMIN'">Admin</h3>
+<h3 *ngIf="this.user.role === 'SERVICE_PROVIDER'">Product/service provider</h3>
+<h3 *ngIf="this.user.role === 'AUTHENTICATED_USER'">User</h3>
+
+<div class="container">
+  <div class="content">
+    <!-- Card 1: Profile Picture and Buttons -->
+    <div class="info-section">
+      <img src="profile.png" alt="Profile Picture" class="profile-picture" />
+      <button mat-raised-button class="btn">CHANGE PROFILE PICTURE</button>
+      <button mat-raised-button class="btn">EDIT INFORMATION</button>
+      <button mat-raised-button class="btn">CHANGE PASSWORD</button>
+
+    </div>
+
+    <!-- Card 2: Regular Text -->
+    <div class="owner-section">
+      <h4>User Information</h4>
+      <p><strong>Name:</strong> Name Surname</p>
+      <p><strong>Email:</strong>myemailgmail.com</p>
+      <p><strong>Phone:</strong> +381654567899</p>
+      <p><strong>Address:</strong> My Adress At FN</p>
+    </div>
+
+    <!-- Card 3: Text and Buttons -->
+    <div class="photo-section">
+      <h4>Additional Information</h4>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio.
+        Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+      </p>
+      <p>
+        Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa.
+      </p>
+      <button *ngIf="this.user.role === 'SERVICE_PROVIDER'" mat-raised-button class="btn" [routerLink]="'/my-solutions'">VIEW MY SOLUTIONS</button>
+      <button *ngIf="this.user.role === 'ADMIN'" mat-raised-button class="btn" [routerLink]="'/admin-dashboard'">ADMIN DASHBOARD</button>
+
+      <button mat-raised-button class="btn deactivate-account">DEACTIVATE ACCOUNT</button>
+    </div>
+  </div>
+
+  <!-- Card 4: Manage Photos -->
+  <div class="info-section">
+    <button mat-raised-button color="primary" class="btn">MANAGE PHOTOS</button>
+  </div>
+</div>
