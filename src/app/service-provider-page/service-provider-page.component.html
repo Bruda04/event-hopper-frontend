@@ -1,4 +1,4 @@
-<div class="page">
+<div class="page" *ngIf="provider">
   <h2 class="header">
     Product/Service Provider
   </h2>
@@ -67,4 +67,14 @@
       </div>
     </div>
   </div>
+</div>
+
+
+<div *ngIf="!provider && !notFound" class="loading">
+  <p>Loading product/service provider information...</p>
+</div>
+
+
+<div class="error-message" *ngIf="notFound">
+  <p>We were unable to find that product/service provider.</p>
 </div>
