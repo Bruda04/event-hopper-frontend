@@ -15,6 +15,7 @@ import {AdminDashboardModule} from './admin-dashboard/admin-dashboard.module';
 import {provideHttpClient} from '@angular/common/http';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import { LocationComponent } from './location/location.component';
+import {InvitationModule} from './invitation/invitation.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { LocationComponent } from './location/location.component';
     MaterialModule,
     EventModule,
     SolutionsModule,
-    AdminDashboardModule
+    AdminDashboardModule,
+    InvitationModule,
   ],
   providers: [
     provideAnimationsAsync(),
