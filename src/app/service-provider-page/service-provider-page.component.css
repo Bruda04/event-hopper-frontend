@@ -1,51 +1,107 @@
-.provider-page {
-  padding: 2em;
-  font-size: 1.1em;
+.page {
+  margin: 2em 3em;
+  font-size: 1.2em;
   color: var(--font-dark-blue);
+}
+
+.header {
+  margin-bottom: 1em;
 }
 
 .provider-container {
   display: flex;
-  gap: 2em;
-  margin-bottom: 2em;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  gap: 1.8em;
 }
-.provider-details {
-  width: 50%;
+
+.provider-first-column {
+  text-align: center;
+  flex: 1.2;
 }
 
 .provider-logo img {
-  width: 100px;
-  height: 100px;
+  width: 10em;
+  height: 10em;
   border-radius: 50%;
   margin-bottom: 1em;
 }
 
-.rating mat-icon {
-  color: var(--primary-color);
+.rating {
+  display: flex;
+  justify-content: center;
+  gap: 0.2em;
+  margin-top: 1em;
+}
+
+.rating .mat-icon {
+  color: var(--disabled-color);
   font-size: 1.5em;
+  width: fit-content;
+  height: fit-content;
+}
+
+.rating .mat-icon.filled {
+  color: var(--primary-color);
+}
+
+/* Adjust Provider Details and Description Flex */
+.provider-details {
+  flex: 1.5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .provider-description {
-  width: 50%;
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.action-buttons {
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  width: 80%;
 }
 
 .action-buttons button {
-  margin-right: 1em;
+  font-weight: normal;
+  background-color: var(--error-color) !important;
+  color: white !important;
+  cursor: pointer;
 }
 
 .image-gallery {
-  margin-top: 2em;
+  flex: 3;
+  margin: 0;
 }
 
 .carousel-item img {
   width: 100%;
-  height: 400px;
+  max-height: 20em;
   object-fit: cover;
-  border-radius: 10px;
+}
+
+::ng-deep .p-carousel-next, ::ng-deep .p-carousel-prev {
+  background-color: var(--font-dark-blue);
+  width: 2.5em;
+  height: 2.5em;
+  color: white;
+  border-radius: 50%;
+  font-size: 1rem;
+  border: none;
+  margin: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .reviews {
-  margin-top: 20px;
+  margin-top: 2em;
   padding: 20px;
   border-radius: 10px;
 }
@@ -88,22 +144,3 @@
   font-size: 1em;
   line-height: 1.5;
 }
-
-
-.rating {
-  display: flex;
-  gap: 0.2em;
-  margin-top: 1em;
-}
-
-.rating .mat-icon {
-  color: var(--disabled-color);
-  font-size: 1.5em;
-  width: fit-content;
-  height: fit-content;
-}
-
-.rating .mat-icon.filled {
-  color: var(--primary-color);
-}
-

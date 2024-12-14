@@ -73,6 +73,11 @@
   </div>
 </div>
 
+<div *ngIf="!solution && !notFound" class="loading">
+  <p>Loading product/service information...</p>
+</div>
+
+
 <div class="error-message" *ngIf="notFound">
   <p>We were unable to find that product/service.</p>
 </div>

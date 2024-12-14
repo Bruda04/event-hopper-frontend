@@ -71,7 +71,7 @@
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
   display: flex;
-  width: fit-content;
+  width: 100%;
 }
 
 .reviews {
@@ -165,7 +165,7 @@
   object-fit: fill;
 }
 
-.error-message {
+.error-message, .loading {
   font-size: 3em;
   color: var(--font-dark-blue);
   font-variant: all-petite-caps;
