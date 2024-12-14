@@ -46,9 +46,16 @@ export class LoginComponent {
 
       this.loginService.loginUser(loginDTO).subscribe({
         next: (response) => {
-          console.log('User logged successfully:', response);
-          this.userService.storeUserData(response);
-          this.router.navigate(['/home']);
+          console.log(response);
+          if(response.success){
+            console.log('User logged in successfully:', response);
+            this.userService.storeUserData(response.account);
+            this.router.navigate(['/home']);
+          }else{
+            this.loginErrorMessage = response.message;
+            console.error('Login error:', response.message);
+          }
+
         },
         error: (err) => {
           this.loginErrorMessage = err.error;

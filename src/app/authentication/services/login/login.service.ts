@@ -13,7 +13,7 @@ export class LoginService {
   constructor(private httpClient: HttpClient) { }
 
   loginUser(loginDTO : LoginDTO): Observable<any> {
-      return this.httpClient.post(environment.apiHost + '/login', loginDTO, { responseType: 'text' });
+      return this.httpClient.post(environment.apiHost + '/login', loginDTO);
   }
 
 
