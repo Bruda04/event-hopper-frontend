@@ -1,0 +1,59 @@
+<div class="provider-page" *ngIf="provider">
+  <div class="provider-container">
+    <!-- Left Section -->
+    <div class="provider-details">
+      <div class="provider-logo">
+        <img [src]="provider.profilePicture" alt="Provider Logo" />
+      </div>
+      <div class="provider-info">
+        <h1>{{ provider.companyName }}</h1>
+        <p>Email: {{ provider.companyEmail }}</p>
+        <p>Address: {{ provider.companyLocation.address }}</p>
+        <p>City: {{ provider.companyLocation.city }}</p>
+        <p>Phone: {{ provider.companyPhoneNumber }}</p>
+        <p>
+          <strong>Owner:</strong> {{ provider.name }} {{ provider.surname }}
+          <br />
+        </p>
+      </div>
+      <div class="rating">
+        <mat-icon *ngFor="let star of [1, 2, 3, 4, 5]" [ngClass]="{'filled': star <= provider.rating}">star</mat-icon>
+      </div>
+    </div>
+
+    <!-- Right Section -->
+    <div class="provider-description">
+      <p><strong>Description:</strong> {{ provider.companyDescription }}</p>
+      <div class="action-buttons">
+        <button mat-raised-button color="warn">Block User</button>
+        <button mat-raised-button color="warn">Report Account</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image Carousel -->
+  <div class="image-gallery">
+    <p-carousel [value]="provider.companyPhotos" [numVisible]="1" [showIndicators]="true" [circular]="true">
+      <ng-template pTemplate="item" let-image>
+        <div class="carousel-item">
+          <img [src]="image" alt="Gallery Image" />
+        </div>
+      </ng-template>
+    </p-carousel>
+  </div>
+
+  <!-- Reviews Section -->
+  <div class="reviews">
+    <div class="review" *ngFor="let comment of provider.comments" [id]="comment.id">
+      <img [src]="comment.author.profilePicture" alt="User profile" />
+      <div class="review-content">
+        <strong>{{ comment.author.name }} {{ comment.author.surname }}</strong>
+        <p>{{ comment.content }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!provider" class="loading">
+  <p>Loading provider information...</p>
+</div>

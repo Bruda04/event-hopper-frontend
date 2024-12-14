@@ -5,6 +5,7 @@ import {environment} from '../../env/envirements';
 import {PagedResponse} from '../shared/model/paged-response.model';
 import {ProductDTO} from '../shared/dto/solutions/productDTO.model';
 import {SolutionDetailsDTO} from '../shared/dto/solutions/solutionDetailsDTO.model';
+import {ServiceProviderDetailsDTO} from '../shared/dto/users/serviceProvider/serviceProviderDetailsDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,10 @@ export class ProductService {
 
   getSolutionDetails(id: string): Observable<SolutionDetailsDTO> {
     return this.HttpClient.get<SolutionDetailsDTO>(environment.apiHost + '/solutions/' + id + '/details');
+  }
+
+  getServiceProviderDetails(id: string): Observable<ServiceProviderDetailsDTO> {
+    return this.HttpClient.get<ServiceProviderDetailsDTO>(environment.apiHost + '/service-providers/' + id + '/details');
   }
 
   getTop5Solutions(userId: string): Observable<ProductDTO[]> {
