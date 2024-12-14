@@ -51,7 +51,7 @@ export class LoginComponent {
           this.router.navigate(['/home']);
         },
         error: (err) => {
-          this.loginErrorMessage = 'Account not found, please try again.';
+          this.loginErrorMessage = err.error;
           console.error('Login error:', err);
         },
       });

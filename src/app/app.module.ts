@@ -10,17 +10,21 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './infrastructure/material/material.module';
 import { HomeComponent } from './layout/home/home.component';
 import { EventModule } from './event/event.module';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent} from './profile/profile-page/profile.component';
 import {AdminDashboardModule} from './admin-dashboard/admin-dashboard.module';
 import {provideHttpClient} from '@angular/common/http';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import { LocationComponent } from './location/location.component';
+import { ServiceProviderProfileComponent } from './profile/service-provider-profile/service-provider-profile.component';
+import { ChangePasswordDialogComponent } from './profile/change-password-dialog/change-password-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProfileComponent,
     LocationComponent,
+    ServiceProviderProfileComponent,
+    ChangePasswordDialogComponent,
   ],
   imports: [
     BrowserModule,

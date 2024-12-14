@@ -6,42 +6,44 @@
 <div class="container">
     <div class="content">
       <!-- Card 1: Profile Picture and Buttons -->
-      <div class="info-section">
+      <div class="profile-picture-section">
         <img src="profile.png" alt="Profile Picture" class="profile-picture" />
         <button mat-raised-button class="btn">CHANGE PROFILE PICTURE</button>
-        <button mat-raised-button class="btn">EDIT INFORMATION</button>
-        <button mat-raised-button class="btn">CHANGE PASSWORD</button>
+
 
       </div>
 
       <!-- Card 2: Regular Text -->
-      <div class="owner-section">
-        <h4>User Information</h4>
-        <p><strong>Name:</strong> Name Surname</p>
-        <p><strong>Email:</strong>myemailgmail.com</p>
-        <p><strong>Phone:</strong> +381654567899</p>
-        <p><strong>Address:</strong> My Adress At FN</p>
+      <div class="user-information-card">
+        <div class = "information">
+          <p><strong>Name:</strong> {{user.name}} {{user.surname}}</p>
+          <p><strong>Email:</strong> {{user.email}}</p>
+          <p><strong>Phone:</strong> {{user.phoneNumber}}</p>
+          <p><strong>Address:</strong> {{user.address}}</p>
+        </div>
+        <button mat-raised-button class="btn">EDIT INFORMATION</button>
       </div>
 
       <!-- Card 3: Text and Buttons -->
-      <div class="photo-section">
-        <h4>Additional Information</h4>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio.
-          Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.
-        </p>
-        <p>
-          Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa.
-        </p>
-        <button *ngIf="this.user.role === 'SERVICE_PROVIDER'" mat-raised-button class="btn" [routerLink]="'/my-solutions'">VIEW MY SOLUTIONS</button>
-        <button *ngIf="this.user.role === 'ADMIN'" mat-raised-button class="btn" [routerLink]="'/admin-dashboard'">ADMIN DASHBOARD</button>
-
+      <div class="buttons-section">
+        <button mat-raised-button class="btn" (click)="openChangePasswordDialog()">CHANGE PASSWORD</button>
+        <button mat-raised-button class="btn" *ngIf="this.user.role === 'AUTHENTICATED_USER'">UPGRADE PROFILE</button>
+        <button mat-raised-button class="btn"  *ngIf="this.user.role === 'ADMIN'"  [routerLink]="'/admin-dashboard'">ADMIN DASHBOARD</button>
+        <button mat-raised-button class="btn" *ngIf="this.user.role === 'EVENT_ORGANIZER'">VIEW MY EVENTS</button>
         <button mat-raised-button class="btn deactivate-account">DEACTIVATE ACCOUNT</button>
       </div>
     </div>
 
-    <!-- Card 4: Manage Photos -->
-    <div class="info-section">
-      <button mat-raised-button color="primary" class="btn">MANAGE PHOTOS</button>
-    </div>
-  </div>
+
+</div>
+<mat-tab-group>
+  <mat-tab label="My Calendar">
+
+  </mat-tab>
+  <mat-tab label="Favorite Events">
+
+  </mat-tab>
+    <mat-tab label="Favorite Products and Services">
+
+  </mat-tab>
+</mat-tab-group>
