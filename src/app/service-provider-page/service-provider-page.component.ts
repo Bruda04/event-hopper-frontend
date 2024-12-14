@@ -3,6 +3,7 @@ import {SolutionDetailsDTO} from '../shared/dto/solutions/solutionDetailsDTO.mod
 import {ServiceProviderDetailsDTO} from '../shared/dto/users/serviceProvider/serviceProviderDetailsDTO.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ProductService} from '../solutions/product.service';
+import {UserService} from "../authentication/services/user.service";
 
 @Component({
   selector: 'app-service-provider-page',
@@ -13,12 +14,17 @@ export class ServiceProviderPageComponent implements OnInit{
   providerId: string;
   provider: ServiceProviderDetailsDTO;
   notFound: boolean = false;
+  user: any;
 
-  constructor(private route: ActivatedRoute, private router: Router, private profileService: ProductService) { }
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private userService: UserService,
+              private profileService: ProductService) { }
 
   ngOnInit(): void {
     this.providerId = this.route.snapshot.paramMap.get('id');
     this.loadProvider();
+    this.user = this.userService.getUserData()
   }
 
   loadProvider(): void {
@@ -34,4 +40,13 @@ export class ServiceProviderPageComponent implements OnInit{
     );
   }
 
+  // TODO: Implement this method
+  block():void {
+
+  }
+
+  // TODO Implement this method
+  report() {
+
+  }
 }

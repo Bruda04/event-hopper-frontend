@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ProductService} from '../product.service';
 import {SolutionDetailsDTO} from '../../shared/dto/solutions/solutionDetailsDTO.model';
+import {UserService} from "../../authentication/services/user.service";
 
 @Component({
   selector: 'app-solution-page',
@@ -13,12 +14,18 @@ export class SolutionPageComponent implements OnInit {
   solution: SolutionDetailsDTO;
   notFound: boolean = false;
   eventTypes: string;
+  user: any;
 
-  constructor(private route: ActivatedRoute, private router: Router, private productService: ProductService) { }
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private productService: ProductService,
+              private userService: UserService
+  ) { }
 
   ngOnInit(): void {
     this.solutionId = this.route.snapshot.paramMap.get('id');
     this.loadSolution();
+    this.user = this.userService.getUserData();
   }
 
   loadSolution(): void {
