@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ProductService} from '../product.service';
 import {SolutionDetailsDTO} from '../../shared/dto/solutions/solutionDetailsDTO.model';
 import {UserService} from "../../authentication/services/user.service";
+import {ProfileService} from '../../profile/profile.service';
 
 @Component({
   selector: 'app-solution-page',
@@ -19,6 +20,7 @@ export class SolutionPageComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private productService: ProductService,
+              private profileService: ProfileService,
               private userService: UserService
   ) { }
 
@@ -33,6 +35,7 @@ export class SolutionPageComponent implements OnInit {
       {
         next: (solution: SolutionDetailsDTO): void => {
           this.solution = solution;
+          this.solution.isFavorite = false;
           this.eventTypes = solution.eventTypes.map(eventType => eventType.name).join(', ');
         },
         error: () : void=> {
@@ -46,8 +49,26 @@ export class SolutionPageComponent implements OnInit {
     this.router.navigate(['/providers/', this.solution.provider.id]);
   }
 
-  // TODO: Implement this method
   toggleFavorites(): void {
+    if (!this.solution.isFavorite) {
+      this.profileService.addSolutionToFavorites(this.user.id, this.solutionId).subscribe({
+        next: () => {
+          this.solution.isFavorite = !this.solution.isFavorite;
+        },
+        error: (err) => {
+          console.log('Error adding solution to favorites');
+        }
+      });
+    } else {
+      this.profileService.removeSolutionFromFavorites(this.user.id, this.solutionId).subscribe({
+        next: () => {
+          this.solution.isFavorite = !this.solution.isFavorite;
+        },
+        error: (err) => {
+          console.log('Error removing solution from favorites');
+        }
+      });
+  }
   }
 
   // TODO: Implement this method

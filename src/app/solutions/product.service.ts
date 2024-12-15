@@ -26,10 +26,6 @@ export class ProductService {
     return this.HttpClient.get<SolutionDetailsDTO>(environment.apiHost + '/solutions/' + id + '/details');
   }
 
-  getServiceProviderDetails(id: string): Observable<ServiceProviderDetailsDTO> {
-    return this.HttpClient.get<ServiceProviderDetailsDTO>(environment.apiHost + '/service-providers/' + id + '/details');
-  }
-
   getTop5Solutions(userId: string): Observable<ProductDTO[]> {
     return this.HttpClient.get<ProductDTO[]>(environment.apiHost + '/solutions/persons-top-5/' + userId);
   }

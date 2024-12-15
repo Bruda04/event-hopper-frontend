@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {SolutionDetailsDTO} from '../shared/dto/solutions/solutionDetailsDTO.model';
 import {ServiceProviderDetailsDTO} from '../shared/dto/users/serviceProvider/serviceProviderDetailsDTO.model';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ProductService} from '../solutions/product.service';
 import {UserService} from "../authentication/services/user.service";
+import {ProfileService} from '../profile/profile.service';
 
 @Component({
   selector: 'app-service-provider-page',
@@ -19,7 +18,7 @@ export class ServiceProviderPageComponent implements OnInit{
   constructor(private route: ActivatedRoute,
               private router: Router,
               private userService: UserService,
-              private profileService: ProductService) { }
+              private profileService: ProfileService) { }
 
   ngOnInit(): void {
     this.providerId = this.route.snapshot.paramMap.get('id');

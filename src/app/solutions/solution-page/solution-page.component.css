@@ -169,13 +169,8 @@
   font-size: 3em;
   color: var(--font-dark-blue);
   font-variant: all-petite-caps;
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
   text-align: center;
+  margin: 15% 0;
   line-height: 1.2;
 }
 

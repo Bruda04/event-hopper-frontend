@@ -21,4 +21,5 @@ export interface SolutionDetailsDTO {
   durationMinutes: number;
   reservationWindowDays: number;
   cancellationWindowDays: number;
+  isFavorite: boolean;
 }
