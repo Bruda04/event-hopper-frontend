@@ -1,4 +1,4 @@
-<div class = 'calendar'>
+<div class = 'myCalendar'>
 
 <div class="row text-center">
   <!-- Navigation Buttons -->
@@ -64,7 +64,7 @@
 <br />
 
 <!-- Calendar Display -->
-<div [ngSwitch]="view">
+<div [ngSwitch]="view" class="calendar">
   <mwl-calendar-month-view
     *ngSwitchCase="CalendarView.Month"
     [viewDate]="viewDate"
@@ -91,5 +91,5 @@
     (eventClicked)="handleEvent('Clicked', $event.event)"
   >
   </mwl-calendar-day-view>
-</div>
+  </div>
 </div>
