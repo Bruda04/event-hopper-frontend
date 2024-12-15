@@ -8,6 +8,7 @@ import { User } from '../../authentication/services/user.modul';
 import {ProfileService} from '../profile.service';
 import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';
 import {ConfirmDeactivationComponent} from '../confirm-deactivation/confirm-deactivation.component';
+import {EditAccountInformationComponent} from '../edit-account-information/edit-account-information.component';
 
 
 @Component({
@@ -30,7 +31,8 @@ export class ProfileComponent {
         this.user.email = response.email;
         this.user.name = response.name;
         this.user.surname = response.surname;
-        this.user.address = response.location.city + " " + response.location.address;
+        this.user.address = response.location.address;
+        this.user.city = response.location.city;
         this.user.phoneNumber = response.phoneNumber;
       },
       error: (err) => {
@@ -68,8 +70,26 @@ export class ProfileComponent {
     });
   }
 
+  openEditAccountInformation(): void {
+    const dialogRef = this.dialog.open(EditAccountInformationComponent, {
+      width: '500px',
+      data: this.user,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
+      this.user.name = result.person.name;
+      this.user.surname = result.person.surname;
+      this.user.address = result.person.location.address;
+      this.user.city = result.person.location.city;
+      this.user.phoneNumber = result.person.phoneNumber;
+    });
+  }
+
+
   openChangePasswordDialog(): void {
     this.dialog.open(ChangePasswordDialogComponent, {
+      width: '500px'
     });
   }
 }

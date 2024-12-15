@@ -18,10 +18,10 @@
         <div class = "information">
           <p><strong>Name:</strong> {{user.name}} {{user.surname}}</p>
           <p><strong>Email:</strong> {{user.email}}</p>
-          <p><strong>Phone:</strong> {{user.phoneNumber}}</p>
-          <p><strong>Address:</strong> {{user.address}}</p>
+          <p><strong>Phone:</strong> +{{user.phoneNumber}}</p>
+          <p><strong>Address:</strong> {{user.address}}, {{user.city}}</p>
         </div>
-        <button mat-raised-button class="btn">EDIT INFORMATION</button>
+        <button mat-raised-button class="btn" (click)="openEditAccountInformation()">EDIT INFORMATION</button>
       </div>
 
       <!-- Card 3: Text and Buttons -->

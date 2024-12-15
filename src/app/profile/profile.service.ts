@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../env/envirements';
 import {ChangePasswordDTO} from '../shared/dto/users/account/ChangePasswordDTO.model';
+import {UpdatePersonDTO} from '../shared/dto/users/person/UpdatePersonDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,10 @@ export class ProfileService {
 
   deactivateAccount(id: string): Observable<any> {
     return this.httpClient.post(environment.apiHost + "/accounts/" + id + '/deactivate', {});
+  }
+
+  editProfileInformation(id: string, updatePersonDTO: UpdatePersonDTO): Observable<any> {
+    return this.httpClient.put(environment.apiHost + "/accounts/" + id, updatePersonDTO);
   }
 
 }

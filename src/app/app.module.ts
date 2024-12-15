@@ -18,6 +18,7 @@ import { LocationComponent } from './location/location.component';
 import { ServiceProviderProfileComponent } from './profile/service-provider-profile/service-provider-profile.component';
 import { ChangePasswordDialogComponent } from './profile/change-password-dialog/change-password-dialog.component';
 import { ConfirmDeactivationComponent } from './profile/confirm-deactivation/confirm-deactivation.component';
+import { EditAccountInformationComponent } from './profile/edit-account-information/edit-account-information.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { ConfirmDeactivationComponent } from './profile/confirm-deactivation/con
     ServiceProviderProfileComponent,
     ChangePasswordDialogComponent,
     ConfirmDeactivationComponent,
+    EditAccountInformationComponent,
   ],
   imports: [
     BrowserModule,

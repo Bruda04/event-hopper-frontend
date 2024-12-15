@@ -2,22 +2,17 @@
 h2 {
   align-self: center;
   color: var(--font-dark-blue) !important;
-  margin-top: 0.8em;
-  margin-bottom: -10px;
+
 }
 
-/* Form Field Styling */
-.dialog-content {
+.form-container {
   display: flex;
   flex-direction: column;
-  max-width: 400px; /* Limit width */
-  margin: auto; /* Center the form horizontally */
+  gap: 1.5rem; /* Adds spacing between fields */
 }
 
-/* Form Field */
-.form-field {
-  width: 100%;
-  margin-top: 30px;
+.mat-form-field {
+  width: 100%; /* Ensures fields take up full width */
 }
 
 /* Mat-dialog Actions (Buttons) */
@@ -32,14 +27,19 @@ h2 {
 }
 
 
-
 .actions-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  align-self: center;
-  width: 70%;
+  width: 100%;
+  padding: 0.5em 1em;
 }
+
+.actions-container button {
+  min-width: 100px;
+  color: white;
+}
+
 
 /* Hint Text */
 .password-hint {
