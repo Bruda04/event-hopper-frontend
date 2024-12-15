@@ -16,7 +16,9 @@ import {roleGuard} from './authentication/guards/role.guard';
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'profile', component: ProfileComponent ,
+    canActivate: [roleGuard],
+    data: { roles:  ['SERVICE_PROVIDER', 'ADMIN', 'AUTHENTICATED_USER', 'EVENT_ORGANIZER']  } },
   { path: 'register', component: RegisterComponent },
   { path: 'register-pup', component: PupRegisterComponent },
   { path: 'register-organizer', component: OrganizerRegisterComponent },
@@ -24,11 +26,11 @@ const routes: Routes = [
   { path: 'email-confirmation-sent', component: EmailConfirmationSentComponent },
   { path: 'my-solutions', component: PUPServiceProductManagementComponent,
     canActivate: [roleGuard],
-    data: { role: 'SERVICE_PROVIDER' }  },
+    data: { roles: ['SERVICE_PROVIDER'] }  },
   {
     path: 'admin-dashboard', component: DashboardComponent,
     canActivate: [roleGuard],
-    data: { role: 'ADMIN' }
+    data: { roles: ['ADMIN'] }
   },
 ];
 
