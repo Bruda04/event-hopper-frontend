@@ -27,5 +27,7 @@ export class EventSinglePageComponent {
       minHeight: '70vh',
       maxHeight: '70vh',
     });
+
+
   }
 }

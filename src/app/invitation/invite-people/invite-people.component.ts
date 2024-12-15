@@ -22,6 +22,7 @@ export class InvitePeopleComponent {
 
   constructor(private invitationService: InvitationService,
               private eventService: EventService,
+              private dialogRef: MatDialogRef<InvitePeopleComponent>,
               ) {
   }
 
@@ -46,6 +47,8 @@ export class InvitePeopleComponent {
         console.error('Error creating invitation:', error);
       }
     }
+
+    //this.dialogRef.close();
   }
 
   addEmail(): void {
