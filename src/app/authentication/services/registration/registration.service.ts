@@ -4,6 +4,9 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {CreateServiceProviderAccountDTO} from '../../../shared/dto/users/account/CreateServiceProviderAccountDTO.model';
 import {CreateEventOrganizerAccountDTO} from '../../../shared/dto/users/account/CreateEventOrganizerAccountDTO.model';
+import {
+  CreateAuthenticatedUserAccountDTO
+} from '../../../shared/dto/users/account/CreateAuthenticatedUserAccountDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,4 +24,8 @@ export class RegistrationService {
   }
 
 
+  registerAuthenticatedUser(createAccount: CreateAuthenticatedUserAccountDTO):Observable<any> {
+    return this.httpClient.post(environment.apiHost + '/accounts/authenticated', createAccount);
+
+  }
 }

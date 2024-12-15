@@ -32,6 +32,7 @@ export class NavBarComponent {
       this.isLoginRoute = this.router.url === '/login';
       this.isRegisterRoute =
         this.router.url === '/register' ||
+        this.router.url === '/register-user' ||
         this.router.url === '/register-organizer' ||
         this.router.url === '/register-pup';
       this.isHomeRoute =
