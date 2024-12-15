@@ -19,10 +19,7 @@ h3 {
 }
 
 .profile-picture-section, .user-information-card, .buttons-section{
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-right: 10px;
-  padding-left: 10px;
+  padding: 20px 10px;
   border-radius: 5px;
   width: 32%;
   display: flex; /* Enable flexbox for layout */
@@ -69,7 +66,7 @@ h3 {
 }
 
 .btn:hover {
-  background-color: var(--font-dark-blue);
+  background-color: var(--font-dark-blue) !important;
   color: white;
 }
 
@@ -77,10 +74,3 @@ h3 {
   background-color: var(--error-color) !important;
 }
 
-
-
-
-
-mat-tab-group {
-  background-color: white;
-}

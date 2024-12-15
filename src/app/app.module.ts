@@ -19,6 +19,12 @@ import { ServiceProviderProfileComponent } from './profile/service-provider-prof
 import { ChangePasswordDialogComponent } from './profile/change-password-dialog/change-password-dialog.component';
 import { ConfirmDeactivationComponent } from './profile/confirm-deactivation/confirm-deactivation.component';
 import { EditAccountInformationComponent } from './profile/edit-account-information/edit-account-information.component';
+import { ProfileCalendarComponent } from './profile/profile-calendar/profile-calendar.component';
+import { FavoriteEventsComponent } from './profile/favorite-events/favorite-events.component';
+import { FavoriteSolutionsComponent } from './profile/favorite-solutions/favorite-solutions.component';
+import {CalendarModule, DateAdapter} from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+
 
 @NgModule({
   declarations: [
@@ -29,6 +35,9 @@ import { EditAccountInformationComponent } from './profile/edit-account-informat
     ChangePasswordDialogComponent,
     ConfirmDeactivationComponent,
     EditAccountInformationComponent,
+    ProfileCalendarComponent,
+    FavoriteEventsComponent,
+    FavoriteSolutionsComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,7 +49,11 @@ import { EditAccountInformationComponent } from './profile/edit-account-informat
     MaterialModule,
     EventModule,
     SolutionsModule,
-    AdminDashboardModule
+    AdminDashboardModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
   ],
   providers: [
     provideAnimationsAsync(),

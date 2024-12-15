@@ -1,0 +1,113 @@
+body {
+  margin: 0;
+  padding: 20px;
+}
+
+
+
+h3 {
+  color: var(--font-dark-blue);
+  margin-top: 20px;
+}
+
+.firsBtnSet {
+  align-self: end;
+}
+
+.secondBtnSet {
+}
+
+/* Navigation Buttons */
+.btn-group {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  text-transform: uppercase;
+
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: var(--secondary-color);
+  color:white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:hover {
+  background-color: var(--font-dark-blue);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-outline-secondary {
+  background: var(--primary-color);
+  color: white;
+}
+
+.btn-outline-secondary:hover {
+  background: var(--secondary-color);
+}
+
+
+
+.btn.active {
+  background: var(--primary-color);
+  color: white;
+}
+
+/* Calendar View Styles */
+.mwl-calendar-month-view,
+.mwl-calendar-week-view,
+.mwl-calendar-day-view {
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-top: 20px;
+}
+
+/* Calendar Event Styles */
+.mwl-calendar-event {
+  background-color: #e3bc08 !important;  /* Example color */
+  color: #ffffff !important;
+  padding: 10px 15px !important;
+  font-weight: bold !important;
+  border-radius: 10px !important;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.mwl-calendar-event:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Ensure the calendar grid has proper borders and spacing */
+.mwl-calendar-month-view .mwl-calendar-day {
+  border: 1px solid #ddd;
+  padding: 5px;
+}
+
+.mwl-calendar-month-view .mwl-calendar-day:hover {
+  background-color: #f0f0f0;
+}
+
+/* Responsive Grid Layout for Navigation */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.col-md-4 {
+  flex: 0 0 32%;
+  text-align: center;
+}
