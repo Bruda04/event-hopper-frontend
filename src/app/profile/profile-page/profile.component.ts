@@ -28,12 +28,16 @@ export class ProfileComponent {
     this.profileService.getProfileDetailsForPerson(this.user.id).subscribe({
       next: (response) => {
         console.log('User data loaded');
+
         this.user.email = response.email;
         this.user.name = response.name;
         this.user.surname = response.surname;
         this.user.address = response.location.address;
         this.user.city = response.location.city;
         this.user.phoneNumber = response.phoneNumber;
+        this.user.favoriteEvents = response.favoriteEvents;
+        this.user.attendingEvents = response.attendingEvents;
+        console.log(this.user);
       },
       error: (err) => {
         console.error('No user found error:', err);

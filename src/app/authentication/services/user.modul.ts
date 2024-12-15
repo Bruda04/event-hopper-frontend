@@ -1,3 +1,5 @@
+import {SimpleEventDTO} from '../../shared/dto/events/simpleEventDTO';
+
 export interface User {
     id: string;
     email: string;
@@ -8,4 +10,6 @@ export interface User {
     address: string;
     city: string;
     role: string;
+    favoriteEvents: SimpleEventDTO[];
+    attendingEvents: SimpleEventDTO[];
   }

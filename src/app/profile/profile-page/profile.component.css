@@ -74,3 +74,6 @@ h3 {
   background-color: var(--error-color) !important;
 }
 
+mat-tab-group{
+  background-color: white !important;
+}

@@ -1,0 +1,11 @@
+.events-cards{
+  padding-top: 2em;
+  margin-right: 2em;
+}
+
+.row-events{
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20% ;
+  margin-top: 1em;
+  grid-gap: 1em
+}

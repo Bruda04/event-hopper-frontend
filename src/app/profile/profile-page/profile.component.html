@@ -42,10 +42,10 @@
   </mat-tab>
 
   <mat-tab label="Favorite Events">
-    <app-favorite-events></app-favorite-events>
+    <app-favorite-events [favoriteEvents]="user.favoriteEvents"></app-favorite-events>
   </mat-tab>
 
-  <mat-tab label="Favorite Products and Services">
+  <mat-tab label="Favorite Products/Services">
     <app-favorite-solutions></app-favorite-solutions>
   </mat-tab>
 </mat-tab-group>

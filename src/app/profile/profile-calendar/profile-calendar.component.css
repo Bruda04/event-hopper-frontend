@@ -14,10 +14,11 @@ h3 {
 }
 
 .firsBtnSet {
-  align-self: end;
+  margin-left: 100px;
 }
 
 .secondBtnSet {
+  margin-left: 100px;
 }
 
 /* Navigation Buttons */
