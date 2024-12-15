@@ -1,0 +1,11 @@
+<div class="events-cards">
+  <div class="row-events">
+
+    <div *ngFor="let event of favoriteEvents; let i = index" class="single-card-item">
+      <app-event-card [event]="event"></app-event-card>
+    </div>
+
+  </div>
+
+
+</div>

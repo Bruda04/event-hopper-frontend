@@ -11,12 +11,14 @@ import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { SolutionsModule } from '../solutions/solutions.module';
 import { NotificationModule } from '../notification/notification.module';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
   declarations: [
     NavBarComponent,
-    HomeComponent],
+    HomeComponent,
+    FooterComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -29,12 +31,13 @@ import { NotificationModule } from '../notification/notification.module';
     TagModule,
     NotificationModule,
   ],
-  exports: [
-    NavBarComponent,
-    HomeComponent ,
-    CarouselModule,
-    ButtonModule,
-    TagModule,
-  ]
+    exports: [
+        NavBarComponent,
+        HomeComponent,
+        CarouselModule,
+        ButtonModule,
+        TagModule,
+        FooterComponent,
+    ]
 })
 export class LayoutModule { }

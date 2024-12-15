@@ -2,43 +2,43 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--primary-color); 
+    background-color: var(--primary-color);
     padding: 10px 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     position: sticky;
-    top: 0; 
-    z-index: 1000; 
+    top: 0;
+    z-index: 1000;
   }
-  
+
   .navbar-logo {
     display: flex;
     align-items: center;
   }
-  
+
   .logo {
     height: 40px;
     width: auto;
   }
-  
+
   .navbar-right {
     display: flex;
     gap: 15px;
   }
-  
+
   .nav-button {
     height: 3em;
     font-weight: normal;
 
-    background-color: var(--secondary-color) !important; 
+    background-color: var(--secondary-color) !important;
     color: white !important;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
-  
+
   .nav-button:hover {
-    background-color: var(--font-dark-blue);
+    background-color: var(--font-dark-blue) !important;
     color: white ;
   }
 
@@ -51,17 +51,16 @@
     border-radius: 50%; /* Makes it circular */
     /*background-color: var(--primary-color) !important;*/
     color: white !important;
-    padding: 0; 
+    padding: 0;
   }
-  
+
   .small-button mat-icon {
     font-size: 24px; /* Default Material icon size */
     line-height: 1; /* Ensures the icon is vertically centered */
     transition: background-color 0.3s ease, color 0.3s ease;
   }
-  
+
   .small-button.mat-icon-button:hover {
-    background-color: var(--font-dark-blue) !important; 
-    color: white !important; 
+    background-color: var(--font-dark-blue) !important;
+    color: white !important;
   }
-  

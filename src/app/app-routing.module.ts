@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './layout/home/home.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { RegisterComponent } from './authentication/register/register.component';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent} from './profile/profile-page/profile.component';
 import { OrganizerRegisterComponent } from './authentication/register/organizer-register/organizer-register.component';
 import { PupRegisterComponent } from './authentication/register/pup-register/pup-register.component';
 import { EmailConfirmationSentComponent } from './authentication/email-confirmation-sent/email-confirmation-sent.component';
@@ -18,7 +18,9 @@ import {ServiceProviderPageComponent} from './service-provider-page/service-prov
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'profile', component: ProfileComponent ,
+    canActivate: [roleGuard],
+    data: { roles:  ['SERVICE_PROVIDER', 'ADMIN', 'AUTHENTICATED_USER', 'EVENT_ORGANIZER']  } },
   { path: 'register', component: RegisterComponent },
   { path: 'register-pup', component: PupRegisterComponent },
   { path: 'register-organizer', component: OrganizerRegisterComponent },
@@ -26,11 +28,11 @@ const routes: Routes = [
   { path: 'email-confirmation-sent', component: EmailConfirmationSentComponent },
   { path: 'my-solutions', component: PUPServiceProductManagementComponent,
     canActivate: [roleGuard],
-    data: { role: 'SERVICE_PROVIDER' }  },
+    data: { roles: ['SERVICE_PROVIDER'] }  },
   {
     path: 'admin-dashboard', component: DashboardComponent,
     canActivate: [roleGuard],
-    data: { role: 'ADMIN' }
+    data: { roles: ['ADMIN'] }
   },
   { path: 'solutions/:id', component: SolutionPageComponent },
   { path: 'providers/:id', component: ServiceProviderPageComponent },
