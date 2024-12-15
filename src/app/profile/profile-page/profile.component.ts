@@ -37,6 +37,7 @@ export class ProfileComponent {
         this.user.phoneNumber = response.phoneNumber;
         this.user.favoriteEvents = response.favoriteEvents;
         this.user.attendingEvents = response.attendingEvents;
+        this.user.favoriteSolutions = response.favoriteProducts;
         console.log(this.user);
       },
       error: (err) => {

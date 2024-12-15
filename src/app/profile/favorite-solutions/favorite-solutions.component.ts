@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-favorite-solutions',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrl: './favorite-solutions.component.css'
 })
 export class FavoriteSolutionsComponent {
-
+  @Input() favoriteSolutions: any[] = [];
 }
