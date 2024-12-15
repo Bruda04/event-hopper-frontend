@@ -13,6 +13,7 @@ import {
 } from './solutions/pupservice-product-management/pupservice-product-management.component';
 import {roleGuard} from './authentication/guards/role.guard';
 import {EventSinglePageComponent} from './event/event-single-page/event-single-page.component';
+import {UserRegisterComponent} from './authentication/register/user-register/user-register.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'register-pup', component: PupRegisterComponent },
   { path: 'register-organizer', component: OrganizerRegisterComponent },
+  { path: 'register-user', component: UserRegisterComponent },
   { path: 'home', component: HomeComponent },
   { path: 'email-confirmation-sent', component: EmailConfirmationSentComponent },
   { path: 'event', component: EventSinglePageComponent },

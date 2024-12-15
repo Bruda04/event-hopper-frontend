@@ -12,6 +12,7 @@ import { AppRoutingModule } from '../app-routing.module';
 import { RouterModule } from '@angular/router';
 import { EmailConfirmationSentComponent } from './email-confirmation-sent/email-confirmation-sent.component'; // Import RouterModule
 import { ImageCropperComponent } from 'ngx-image-cropper';
+import { UserRegisterComponent } from './register/user-register/user-register.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ImageCropperComponent } from 'ngx-image-cropper';
     OrganizerRegisterComponent,
     PupRegisterComponent,
     EmailConfirmationSentComponent,
+    UserRegisterComponent,
   ],
   imports: [
     CommonModule,
