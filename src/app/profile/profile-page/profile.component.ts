@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { UserService} from '../../authentication/services/user.service';
-import { MaterialModule } from '../../infrastructure/material/material.module';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-
 import {ProfileService} from '../profile.service';
 import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';
 import {ConfirmDeactivationComponent} from '../confirm-deactivation/confirm-deactivation.component';
@@ -93,12 +91,14 @@ export class ProfileComponent {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
-      this.user.name = result.person.name;
-      this.user.surname = result.person.surname;
-      this.user.address = result.person.location.address;
-      this.user.city = result.person.location.city;
-      this.user.phoneNumber = result.person.phoneNumber;
+      if (result) {
+        this.user.name = result.person.name;
+        this.user.surname = result.person.surname;
+        this.user.address = result.person.location.address;
+        this.user.city = result.person.location.city;
+        this.user.phoneNumber = result.person.phoneNumber;
+      }
+
     });
   }
 
@@ -109,9 +109,12 @@ export class ProfileComponent {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      this.user.companyPhoneNumber = result.companyPhoneNumber;
-      this.user.companyDescription = result.companyDescription;
-      this.user.companyLocation = result.companyLocation;
+      if(result){
+        this.user.companyPhoneNumber = result.companyPhoneNumber;
+        this.user.companyDescription = result.companyDescription;
+        this.user.companyLocation = result.companyLocation;
+      }
+
     });
   }
 

@@ -44,20 +44,6 @@ export class EditCompanyInformationComponent {
     });
   }
 
-  cancel(): void {
-    const response: UpdatedCompanyAccountDTO = {
-      companyPhoneNumber: this.user.companyPhoneNumber,
-      companyDescription:this.user.companyDescription,
-      companyLocation: {
-        address: this.user.companyLocation.address,
-        city: this.user.companyLocation.city,
-      } as LocationDTO,
-    };
-    this.dialogRef.close(response);
-  }
-
-
-
   onSubmit(){
     if (this.editCompanyInformationForm.valid) {
       console.log("Form is valid")
