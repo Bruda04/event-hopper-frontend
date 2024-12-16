@@ -24,6 +24,7 @@ import { FavoriteEventsComponent } from './profile/favorite-events/favorite-even
 import { FavoriteSolutionsComponent } from './profile/favorite-solutions/favorite-solutions.component';
 import {CalendarModule, DateAdapter} from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { EditCompanyInformationComponent } from './profile/edit-company-information/edit-company-information.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     ProfileCalendarComponent,
     FavoriteEventsComponent,
     FavoriteSolutionsComponent,
+    EditCompanyInformationComponent,
   ],
   imports: [
     BrowserModule,

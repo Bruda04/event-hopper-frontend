@@ -1,0 +1,46 @@
+<h2 mat-dialog-title class="dialog-title">Edit Company information</h2>
+
+<mat-dialog-content class="dialog-content">
+  <form [formGroup]="editCompanyInformationForm">
+    <div class="form-container">
+
+      <mat-form-field appearance="fill">
+        <mat-label>Phone Number</mat-label>
+        <input matInput placeholder="Phone Number" formControlName="phoneNumber" type="number" />
+        <mat-error *ngIf="editCompanyInformationForm.get('phoneNumber')?.hasError('minlength')">
+          Phone number must be at least 8 characters
+        </mat-error>
+        <mat-error *ngIf="editCompanyInformationForm.get('phoneNumber')?.hasError('pattern')">
+          Phone number must contain only numbers
+        </mat-error>
+        <mat-error *ngIf="editCompanyInformationForm.get('phoneNumber')?.hasError('required')">
+          Phone number is required
+        </mat-error>
+
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Address</mat-label>
+        <input matInput placeholder="Address" formControlName="address" />
+        <mat-error *ngIf="editCompanyInformationForm.get('address')?.hasError('required')">Address is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>City</mat-label>
+        <input matInput placeholder="City" formControlName="city" />
+        <mat-error *ngIf="editCompanyInformationForm.get('city')?.hasError('required')">City is required</mat-error>
+      </mat-form-field>
+
+
+      <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <input matInput placeholder="Company description" formControlName="description" />
+        <mat-error *ngIf="editCompanyInformationForm.get('description')?.hasError('required')">Description is required</mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions class="actions-container">
+  <button mat-raised-button mat-dialog-close class="cancel-button">CANCEL</button>
+  <button mat-raised-button class="primary-button" (click)="onSubmit()" >SAVE CHANGES</button>
+</mat-dialog-actions>

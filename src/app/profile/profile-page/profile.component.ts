@@ -9,6 +9,7 @@ import {ProfileService} from '../profile.service';
 import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';
 import {ConfirmDeactivationComponent} from '../confirm-deactivation/confirm-deactivation.component';
 import {EditAccountInformationComponent} from '../edit-account-information/edit-account-information.component';
+import {EditCompanyInformationComponent} from '../edit-company-information/edit-company-information.component';
 
 
 @Component({
@@ -38,7 +39,19 @@ export class ProfileComponent {
         this.user.favoriteEvents = response.favoriteEvents;
         this.user.attendingEvents = response.attendingEvents;
         this.user.favoriteSolutions = response.favoriteProducts;
+        if(this.user.role === 'EVENT_ORGANIZER'){
+          this.user.myEvents = response.myEvents;
+        }
+        if(this.user.role === 'SERVICE_PROVIDER'){
+          this.user.companyName = response.companyName;
+          this.user.companyEmail = response.companyEmail;
+          this.user.companyPhoneNumber = response.companyPhoneNumber;
+          this.user.companyDescription = response.companyDescription;
+          this.user.companyLocation = response.companyLocation;
+        }
+
         console.log(this.user);
+        console.log("what i got: ", response);
       },
       error: (err) => {
         console.error('No user found error:', err);
@@ -77,6 +90,22 @@ export class ProfileComponent {
 
   openEditAccountInformation(): void {
     const dialogRef = this.dialog.open(EditAccountInformationComponent, {
+      width: '500px',
+      data: this.user,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
+      this.user.name = result.person.name;
+      this.user.surname = result.person.surname;
+      this.user.address = result.person.location.address;
+      this.user.city = result.person.location.city;
+      this.user.phoneNumber = result.person.phoneNumber;
+    });
+  }
+
+  openEditCompanyInformation(): void {
+    const dialogRef = this.dialog.open(EditCompanyInformationComponent, {
       width: '500px',
       data: this.user,
     });

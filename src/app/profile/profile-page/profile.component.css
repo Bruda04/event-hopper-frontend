@@ -18,7 +18,7 @@ h3 {
   gap: 20px;
 }
 
-.profile-picture-section, .user-information-card, .buttons-section{
+.profile-picture-section, .user-information-card, .buttons-section, .company-information-card{
   padding: 20px 10px;
   border-radius: 5px;
   width: 32%;
@@ -63,6 +63,10 @@ h3 {
   display: flex;
   justify-content: center; /* Center content within the button */
   align-items: center;
+}
+
+.btn-pup {
+  width: 100%;
 }
 
 .btn:hover {

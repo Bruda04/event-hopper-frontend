@@ -2,12 +2,9 @@ import {Component, Inject} from '@angular/core';
 import {User} from '../../authentication/services/user.modul';
 import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {ProfileService} from '../profile.service';
-import {UserService} from '../../authentication/services/user.service';
 import {Router} from '@angular/router';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {CreateEventOrganizerDTO} from '../../shared/dto/users/eventOrganizer/CreateEventOrganizerDTO.model';
 import {PersonType} from '../../shared/model/PersonType.model';
-import {CreateLocationDTO} from '../../shared/dto/locations/CreateLocationDTO.model';
 import {UpdatePersonDTO} from '../../shared/dto/users/person/UpdatePersonDTO.model';
 import {SimpleLocationDTO} from '../../shared/dto/locations/SimpleLocationDTO.model';
 

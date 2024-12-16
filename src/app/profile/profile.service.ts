@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {environment} from '../../env/envirements';
 import {ChangePasswordDTO} from '../shared/dto/users/account/ChangePasswordDTO.model';
 import {UpdatePersonDTO} from '../shared/dto/users/person/UpdatePersonDTO.model';
+import {UpdateServiceProviderDTO} from '../shared/dto/users/serviceProvider/UpdateServiceProviderDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +12,6 @@ import {UpdatePersonDTO} from '../shared/dto/users/person/UpdatePersonDTO.model'
 export class ProfileService {
 
   constructor(private httpClient: HttpClient) {}
-
-  //not implemented
-  /**getProfileDetailsForServiceProvider(): Observable<any> {
-    return this.httpClient.get(environment.apiHost + '/login');
-  }**/
 
   getProfileDetailsForPerson( id: string): Observable<any> {
     return this.httpClient.get(environment.apiHost + "/accounts/" + id + '/profile');
@@ -30,6 +26,11 @@ export class ProfileService {
   }
 
   editProfileInformation(id: string, updatePersonDTO: UpdatePersonDTO): Observable<any> {
+    return this.httpClient.put(environment.apiHost + "/accounts/" + id, updatePersonDTO);
+  }
+
+  //fix endpoint
+  editCompanyInformation(id: string, updatePersonDTO: UpdateServiceProviderDTO): Observable<any> {
     return this.httpClient.put(environment.apiHost + "/accounts/" + id, updatePersonDTO);
   }
 

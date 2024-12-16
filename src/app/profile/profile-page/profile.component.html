@@ -8,7 +8,8 @@
       <!-- Card 1: Profile Picture and Buttons -->
       <div class="profile-picture-section">
         <img src="profile.png" alt="Profile Picture" class="profile-picture" />
-        <button mat-raised-button class="btn">CHANGE PROFILE PICTURE</button>
+        <button mat-raised-button class="btn"
+                [ngClass]="{ 'btn-pup': user.role === 'SERVICE_PROVIDER' }">CHANGE PROFILE PICTURE</button>
 
 
       </div>
@@ -16,21 +17,72 @@
       <!-- Card 2: Regular Text -->
       <div class="user-information-card">
         <div class = "information">
+          <h5>Personal information</h5>
+
           <p><strong>Name:</strong> {{user.name}} {{user.surname}}</p>
           <p><strong>Email:</strong> {{user.email}}</p>
           <p><strong>Phone:</strong> +{{user.phoneNumber}}</p>
           <p><strong>Address:</strong> {{user.address}}, {{user.city}}</p>
         </div>
-        <button mat-raised-button class="btn" (click)="openEditAccountInformation()">EDIT INFORMATION</button>
+        <button mat-raised-button class="btn"
+                [ngClass]="{ 'btn-pup': user.role === 'SERVICE_PROVIDER' }"
+                (click)="openEditAccountInformation()">EDIT INFORMATION</button>
       </div>
+
+
+      <!-- Card Extra PUP text -->
+      <div class="company-information-card" *ngIf="user.role === 'SERVICE_PROVIDER'">
+        <div class = "information">
+          <h5>Company</h5>
+          <p><strong>Name:</strong> {{user.companyName}}</p>
+          <p><strong>Email:</strong> {{user.companyEmail}}</p>
+          <p><strong>Phone:</strong> +{{user.companyPhoneNumber}}</p>
+          <p><strong>Address:</strong> {{user.companyLocation.address}}, {{user.companyLocation.city}}</p>
+        </div>
+        <button mat-raised-button class="btn"
+                [ngClass]="{ 'btn-pup': user.role === 'SERVICE_PROVIDER' }"
+                (click)="openEditCompanyInformation()">EDIT INFORMATION</button>
+      </div>
+
+
+      <!-- Card Extra PUP description -->
+      <div class="company-information-card" *ngIf="user.role === 'SERVICE_PROVIDER'">
+        <div class = "information">
+          <p><strong>Description:</strong> {{user.companyDescription}}</p>
+        </div>
+        <button mat-raised-button class="btn deactivate-account"
+                [ngClass]="{ 'btn-pup': user.role === 'SERVICE_PROVIDER' }"
+                *ngIf="this.user.role === 'SERVICE_PROVIDER'" (click)="openConfirmationDialog()">DEACTIVATE ACCOUNT</button>
+
+        <button mat-raised-button class="btn"
+                [ngClass]="{ 'btn-pup': user.role === 'SERVICE_PROVIDER' }"
+                (click)="openChangePasswordDialog()"
+                *ngIf="this.user.role === 'SERVICE_PROVIDER'">CHANGE PASSWORD</button>
+
+      </div>
+
+
 
       <!-- Card 3: Text and Buttons -->
       <div class="buttons-section">
-        <button mat-raised-button class="btn" (click)="openChangePasswordDialog()">CHANGE PASSWORD</button>
-        <button mat-raised-button class="btn" *ngIf="this.user.role === 'AUTHENTICATED_USER'">UPGRADE PROFILE</button>
-        <button mat-raised-button class="btn"  *ngIf="this.user.role === 'ADMIN'"  [routerLink]="'/admin-dashboard'">ADMIN DASHBOARD</button>
-        <button mat-raised-button class="btn" *ngIf="this.user.role === 'EVENT_ORGANIZER'">VIEW MY EVENTS</button>
-        <button mat-raised-button class="btn deactivate-account" (click)="openConfirmationDialog()">DEACTIVATE ACCOUNT</button>
+        <button mat-raised-button class="btn"
+                [ngClass]="{ 'btn-pup': user.role === 'SERVICE_PROVIDER' }"
+                (click)="openChangePasswordDialog()"
+                *ngIf="this.user.role != 'SERVICE_PROVIDER'">CHANGE PASSWORD</button>
+
+        <button mat-raised-button class="btn"
+                *ngIf="this.user.role === 'AUTHENTICATED_USER'">UPGRADE PROFILE</button>
+
+        <button mat-raised-button class="btn"
+                *ngIf="this.user.role === 'ADMIN'"
+                [routerLink]="'/admin-dashboard'">ADMIN DASHBOARD</button>
+
+        <button mat-raised-button class="btn"
+                *ngIf="this.user.role === 'EVENT_ORGANIZER'">VIEW MY EVENTS</button>
+
+        <button mat-raised-button class="btn deactivate-account"
+                *ngIf="this.user.role != 'SERVICE_PROVIDER'"
+                (click)="openConfirmationDialog()">DEACTIVATE ACCOUNT</button>
       </div>
     </div>
 

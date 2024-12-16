@@ -1,5 +1,5 @@
-import {PersonType} from './PersonType.model';
-import {SimpleLocationDTO} from '../location/SimpleLocationDTO.model';
+import {PersonType} from '../../../model/PersonType.model';
+import {SimpleLocationDTO} from '../../locations/SimpleLocationDTO.model';
 
 export interface CreatedPersonDTO {
   id: string;
