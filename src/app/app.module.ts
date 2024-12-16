@@ -10,34 +10,19 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './infrastructure/material/material.module';
 import { HomeComponent } from './layout/home/home.component';
 import { EventModule } from './event/event.module';
-import { ProfileComponent} from './profile/profile-page/profile.component';
 import {AdminDashboardModule} from './admin-dashboard/admin-dashboard.module';
 import {provideHttpClient} from '@angular/common/http';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import { LocationComponent } from './location/location.component';
-import { ChangePasswordDialogComponent } from './profile/change-password-dialog/change-password-dialog.component';
-import { ConfirmDeactivationComponent } from './profile/confirm-deactivation/confirm-deactivation.component';
-import { EditAccountInformationComponent } from './profile/edit-account-information/edit-account-information.component';
-import { ProfileCalendarComponent } from './profile/profile-calendar/profile-calendar.component';
-import { FavoriteEventsComponent } from './profile/favorite-events/favorite-events.component';
-import { FavoriteSolutionsComponent } from './profile/favorite-solutions/favorite-solutions.component';
+import {ProfileModule} from './profile/profile.module';
 import {CalendarModule, DateAdapter} from 'angular-calendar';
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { EditCompanyInformationComponent } from './profile/edit-company-information/edit-company-information.component';
+import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProfileComponent,
-    LocationComponent,
-    ChangePasswordDialogComponent,
-    ConfirmDeactivationComponent,
-    EditAccountInformationComponent,
-    ProfileCalendarComponent,
-    FavoriteEventsComponent,
-    FavoriteSolutionsComponent,
-    EditCompanyInformationComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -50,6 +35,7 @@ import { EditCompanyInformationComponent } from './profile/edit-company-informat
     EventModule,
     SolutionsModule,
     AdminDashboardModule,
+    ProfileModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,
