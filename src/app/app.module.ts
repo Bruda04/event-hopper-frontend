@@ -15,7 +15,6 @@ import {AdminDashboardModule} from './admin-dashboard/admin-dashboard.module';
 import {provideHttpClient} from '@angular/common/http';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import { LocationComponent } from './location/location.component';
-import { ServiceProviderProfileComponent } from './profile/service-provider-profile/service-provider-profile.component';
 import { ChangePasswordDialogComponent } from './profile/change-password-dialog/change-password-dialog.component';
 import { ConfirmDeactivationComponent } from './profile/confirm-deactivation/confirm-deactivation.component';
 import { EditAccountInformationComponent } from './profile/edit-account-information/edit-account-information.component';
@@ -32,7 +31,6 @@ import { EditCompanyInformationComponent } from './profile/edit-company-informat
     AppComponent,
     ProfileComponent,
     LocationComponent,
-    ServiceProviderProfileComponent,
     ChangePasswordDialogComponent,
     ConfirmDeactivationComponent,
     EditAccountInformationComponent,

@@ -71,7 +71,7 @@
 
 
 
-      <!-- Card 3: Text and Buttons -->
+      <!-- Card 3: Text and Buttons  and pup image carousel-->
       <div class="buttons-section">
         <button mat-raised-button class="btn"
                 [ngClass]="{ 'btn-pup': user.role === 'SERVICE_PROVIDER' }"
@@ -91,6 +91,13 @@
         <button mat-raised-button class="btn deactivate-account"
                 *ngIf="this.user.role != 'SERVICE_PROVIDER'"
                 (click)="openConfirmationDialog()">DEACTIVATE ACCOUNT</button>
+
+
+
+        <button mat-raised-button class="btn"
+                [ngClass]="{ 'btn-pup': user.role === 'SERVICE_PROVIDER' }"
+                *ngIf="this.user.role === 'SERVICE_PROVIDER'">MANAGE PHOTOS</button>
+
       </div>
     </div>
 

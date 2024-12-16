@@ -1,6 +1,6 @@
-import {SimpleEventDTO} from '../../shared/dto/events/simpleEventDTO';
-import {SimpleProductDTO} from '../../shared/dto/solutions/simpleProductDTO';
-import {SimpleLocationDTO} from '../../shared/dto/locations/SimpleLocationDTO.model';
+import {SimpleEventDTO} from '../dto/events/simpleEventDTO';
+import {SimpleProductDTO} from '../dto/solutions/simpleProductDTO';
+import {SimpleLocationDTO} from '../dto/locations/SimpleLocationDTO.model';
 
 export interface User {
     id: string;

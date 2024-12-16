@@ -4,12 +4,12 @@ import { MaterialModule } from '../../infrastructure/material/material.module';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
-import { User } from '../../authentication/services/user.modul';
 import {ProfileService} from '../profile.service';
 import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';
 import {ConfirmDeactivationComponent} from '../confirm-deactivation/confirm-deactivation.component';
 import {EditAccountInformationComponent} from '../edit-account-information/edit-account-information.component';
 import {EditCompanyInformationComponent} from '../edit-company-information/edit-company-information.component';
+import {User} from '../../shared/model/user.model';
 
 
 @Component({

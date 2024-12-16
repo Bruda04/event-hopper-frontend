@@ -3,11 +3,10 @@ import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators} f
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {ProfileService} from '../profile.service';
-import {User} from '../../authentication/services/user.modul';
-import {UpdateServiceProviderDTO} from '../../shared/dto/users/serviceProvider/UpdateServiceProviderDTO.model';
 import {LocationDTO} from '../../shared/dto/locations/LocationDTO.model';
 import {UpdateCompanyAccountDTO} from '../../shared/dto/users/account/UpdateCompanyAccountDTO.model';
 import {UpdatedCompanyAccountDTO} from '../../shared/dto/users/account/UpdatedCompanyAccountDTO.model';
+import {User} from '../../shared/model/user.model';
 
 function phoneMinLengthValidator(control: AbstractControl): ValidationErrors | null {
   const value = control.value?.toString() || ''; // Convert the number to a string
