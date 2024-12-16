@@ -12,6 +12,7 @@ import {CarouselModule} from 'primeng/carousel';
 import {EventModule} from '../event/event.module';
 import {PrimeTemplate} from 'primeng/api';
 import { PriceListManagementComponent } from './price-list-management/price-list-management.component';
+import { EditPriceComponent } from './edit-price/edit-price.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { PriceListManagementComponent } from './price-list-management/price-list
     EditServiceComponent,
     ServiceCardComponent,
     SolutionPageComponent,
-    PriceListManagementComponent
+    PriceListManagementComponent,
+    EditPriceComponent
   ],
   imports: [
     CommonModule,

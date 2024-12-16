@@ -7,6 +7,7 @@ import {ProductDTO} from '../shared/dto/solutions/productDTO.model';
 import {SolutionDetailsDTO} from '../shared/dto/solutions/solutionDetailsDTO.model';
 import {ServiceProviderDetailsDTO} from '../shared/dto/users/serviceProvider/serviceProviderDetailsDTO.model';
 import {PriceManagementDTO} from '../shared/dto/prices/PriceManagementDTO.model';
+import {UpdatePriceDTO} from '../shared/dto/prices/updatePriceDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -85,5 +86,9 @@ export class ProductService {
 
   getPricesForManagement(): Observable<PriceManagementDTO[]> {
     return this.HttpClient.get<PriceManagementDTO[]>(environment.apiHost + '/prices/management');
+  }
+
+  updatePrice(productId: string, price: UpdatePriceDTO): Observable<any> {
+    return this.HttpClient.put(environment.apiHost + '/prices/'+ productId, price);
   }
 }

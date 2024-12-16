@@ -8,6 +8,8 @@ import {MatDialogRef} from '@angular/material/dialog';
 import {EditServiceComponent} from '../edit-service/edit-service.component';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import {EditPriceComponent} from '../edit-price/edit-price.component';
+import {UpdatePriceDTO} from '../../shared/dto/prices/updatePriceDTO.model';
 
 
 @Component({
@@ -55,22 +57,33 @@ export class PriceListManagementComponent implements OnInit {
     );
   }
 
-  edit(element: ServiceManagementDTO):void {
-    const dialogRef: MatDialogRef<EditServiceComponent> = this.dialog.open(EditServiceComponent, {
-      minWidth: '70vw',
-      minHeight: '70vh',
+  edit(element: PriceManagementDTO):void {
+    const dialogRef: MatDialogRef<EditPriceComponent> = this.dialog.open(EditPriceComponent, {
+      minWidth: '20vw',
+      minHeight: '40vh',
       data: element
     });
 
-    dialogRef.afterClosed().subscribe(() => {
-
+    dialogRef.afterClosed().subscribe((price: UpdatePriceDTO | null) => {
+      if (price && (price.basePrice != element.basePrice || price.discount != element.discount)) {
+        this.productService.updatePrice(element.productId, price).subscribe(
+          {
+            next: () => {
+              this.loadPrices();
+            },
+            error: () => {
+              console.error('Error updating price');
+            }
+          }
+        );
+      }
     });
   }
 
   exportToPDF(): void {
     let pdf: jsPDF = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
 
-    const title = "Price List"; // Title of the PDF
+    const title = "Price List";
 
     pdf.setFontSize(24);
     pdf.setTextColor(7, 59, 76)
