@@ -23,9 +23,7 @@ export class RegistrationService {
     return this.httpClient.post(environment.apiHost + '/accounts/event-organizer', createDTO);
   }
 
-
-  registerAuthenticatedUser(createAccount: CreateAuthenticatedUserAccountDTO):Observable<any> {
-    return this.httpClient.post(environment.apiHost + '/accounts/authenticated', createAccount);
-
+  registerAuthenticatedUser(createDTO: CreateAuthenticatedUserAccountDTO):Observable<any> {
+    return this.httpClient.post(environment.apiHost + '/accounts/person', createDTO);
   }
 }

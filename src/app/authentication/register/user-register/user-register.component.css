@@ -80,7 +80,7 @@ mat-form-field {
 
 .button-group {
   display: flex;
-  justify-content: space-between; /* This will place the buttons at opposite ends */
+  justify-content: center; /* This will place the buttons at opposite ends */
   margin-top: 1em;
   width: 100%; /* Make sure the button container spans the full width */
 }
