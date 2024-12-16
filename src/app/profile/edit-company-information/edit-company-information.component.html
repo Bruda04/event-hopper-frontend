@@ -34,7 +34,7 @@
 
       <mat-form-field appearance="fill">
         <mat-label>Description</mat-label>
-        <input matInput placeholder="Company description" formControlName="description" />
+        <textarea matInput placeholder="Description" formControlName="description"></textarea>
         <mat-error *ngIf="editCompanyInformationForm.get('description')?.hasError('required')">Description is required</mat-error>
       </mat-form-field>
     </div>
