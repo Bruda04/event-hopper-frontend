@@ -1,22 +1,21 @@
 <div class="component">
-  <h2 class="title">Manage services</h2>
+  <h2 class="title">Manage prices</h2>
 
   <div class="toolbar">
-    <button mat-raised-button class="export-button" (click)="export()">
+    <button mat-raised-button class="export-button" (click)="exportToPDF()">
       <mat-icon>download</mat-icon>
       EXPORT TO PDF
     </button>
   </div>
 
   <div class="table-container mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" class="mat-table" matSort>
+    <table mat-table [dataSource]="dataSource" class="mat-table actions-right" matSort>
 
       <!-- Service Name Column -->
       <ng-container matColumnDef="product">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="name"> Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="productName"> Name </th>
         <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
       </ng-container>
-
 
       <!-- Base Price Column -->
       <ng-container matColumnDef="basePrice">
@@ -40,6 +39,7 @@
         <td mat-cell *matCellDef="let element"> {{element.finalPrice}} € </td>
       </ng-container>
 
+      <!-- Actions Column -->
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef class="actions-header"> Actions </th>
         <td mat-cell *matCellDef="let element" class="actions-cell">
@@ -52,9 +52,8 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns" class="table-header"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                   showFirstLastButtons>
-    </mat-paginator>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
   </div>
+
 
 </div>

@@ -1,15 +1,14 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ServiceManagementDTO} from '../../shared/dto/solutions/serviceManagementDTO.model';
 import {MatTableDataSource} from '@angular/material/table';
 import {PriceManagementDTO} from '../../shared/dto/prices/PriceManagementDTO.model';
 import {MatDialog, MatPaginator, MatSort} from '../../infrastructure/material/material.module';
-import {ServicesService} from '../services.service';
-import {CategoriesService} from '../../admin-dashboard/categories/categories.service';
 import {ProductService} from '../product.service';
-import {CategoryDTO} from '../../shared/dto/categories/categoryDTO.model';
 import {MatDialogRef} from '@angular/material/dialog';
 import {EditServiceComponent} from '../edit-service/edit-service.component';
-import {UpdateServiceDTO} from '../../shared/dto/solutions/updateServiceDTO.model';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+
 
 @Component({
   selector: 'app-price-list-management',
@@ -68,7 +67,51 @@ export class PriceListManagementComponent implements OnInit {
     });
   }
 
-  export(): void {
+  exportToPDF(): void {
+    let pdf: jsPDF = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
 
+    const title = "Price List"; // Title of the PDF
+
+    pdf.setFontSize(24);
+    pdf.setTextColor(7, 59, 76)
+    pdf.setFont("helvetica", "bold");
+    pdf.text(title, 105, 15, { align: "center" });
+
+
+    const columns: string[] = ['No.', 'Product Name', 'Base Price', 'Discount', 'Final Price'];
+
+    const sortedPrices:PriceManagementDTO[] = this.prices.sort((a: PriceManagementDTO, b: PriceManagementDTO): number =>
+      a.productName.localeCompare(b.productName)
+    );
+
+    const rows:string[][] = sortedPrices.map((price: PriceManagementDTO, index: number):string[] => [
+      `${index + 1}.`,
+      price.productName,
+      `${price.basePrice} €`,
+      `${price.discount}%`,
+      `${price.finalPrice} €`
+    ]);
+
+    autoTable(
+      pdf,
+      {
+      head: [columns],
+      body: rows,
+      startY: 30,
+      headStyles: {
+        fillColor: [229, 249, 255],
+        textColor: [7, 59, 76],
+        fontSize: 12,
+        halign: 'left'
+      },
+      styles: {
+        fontSize: 10,
+        halign: 'left',
+        textColor: [7, 59, 76],
+      }
+      }
+    );
+
+    pdf.save('price-list.pdf');
   }
 }
