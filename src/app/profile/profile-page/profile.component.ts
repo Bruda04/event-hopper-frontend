@@ -50,8 +50,6 @@ export class ProfileComponent {
           this.user.companyLocation = response.companyLocation;
         }
 
-        console.log(this.user);
-        console.log("what i got: ", response);
       },
       error: (err) => {
         console.error('No user found error:', err);
@@ -111,12 +109,9 @@ export class ProfileComponent {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
-      this.user.name = result.person.name;
-      this.user.surname = result.person.surname;
-      this.user.address = result.person.location.address;
-      this.user.city = result.person.location.city;
-      this.user.phoneNumber = result.person.phoneNumber;
+      this.user.companyPhoneNumber = result.companyPhoneNumber;
+      this.user.companyDescription = result.companyDescription;
+      this.user.companyLocation = result.companyLocation;
     });
   }
 

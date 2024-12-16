@@ -5,6 +5,7 @@ import {environment} from '../../env/envirements';
 import {ChangePasswordDTO} from '../shared/dto/users/account/ChangePasswordDTO.model';
 import {UpdatePersonDTO} from '../shared/dto/users/person/UpdatePersonDTO.model';
 import {UpdateServiceProviderDTO} from '../shared/dto/users/serviceProvider/UpdateServiceProviderDTO.model';
+import {UpdateCompanyAccountDTO} from '../shared/dto/users/account/UpdateCompanyAccountDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,9 +30,8 @@ export class ProfileService {
     return this.httpClient.put(environment.apiHost + "/accounts/" + id, updatePersonDTO);
   }
 
-  //fix endpoint
-  editCompanyInformation(id: string, updatePersonDTO: UpdateServiceProviderDTO): Observable<any> {
-    return this.httpClient.put(environment.apiHost + "/accounts/" + id, updatePersonDTO);
+  editCompanyInformation(id: string, updateCompanyAccount: UpdateCompanyAccountDTO): Observable<any> {
+    return this.httpClient.put(environment.apiHost + "/accounts/" + id + "/company", updateCompanyAccount);
   }
 
 }

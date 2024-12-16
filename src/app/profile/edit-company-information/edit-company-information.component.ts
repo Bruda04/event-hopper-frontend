@@ -6,6 +6,8 @@ import {ProfileService} from '../profile.service';
 import {User} from '../../authentication/services/user.modul';
 import {UpdateServiceProviderDTO} from '../../shared/dto/users/serviceProvider/UpdateServiceProviderDTO.model';
 import {LocationDTO} from '../../shared/dto/locations/LocationDTO.model';
+import {UpdateCompanyAccountDTO} from '../../shared/dto/users/account/UpdateCompanyAccountDTO.model';
+import {UpdatedCompanyAccountDTO} from '../../shared/dto/users/account/UpdatedCompanyAccountDTO.model';
 
 function phoneMinLengthValidator(control: AbstractControl): ValidationErrors | null {
   const value = control.value?.toString() || ''; // Convert the number to a string
@@ -43,11 +45,25 @@ export class EditCompanyInformationComponent {
     });
   }
 
+  cancel(): void {
+    const response: UpdatedCompanyAccountDTO = {
+      companyPhoneNumber: this.user.companyPhoneNumber,
+      companyDescription:this.user.companyDescription,
+      companyLocation: {
+        address: this.user.companyLocation.address,
+        city: this.user.companyLocation.city,
+      } as LocationDTO,
+    };
+    this.dialogRef.close(response);
+  }
+
 
 
   onSubmit(){
     if (this.editCompanyInformationForm.valid) {
-      const updateServiceProviderDTO: UpdateServiceProviderDTO = {
+      console.log("Form is valid")
+      const updateCompanyAccountDTO: UpdateCompanyAccountDTO = {
+        id: this.user.id,
         companyPhoneNumber: this.editCompanyInformationForm.value.phoneNumber,
         companyDescription:this.editCompanyInformationForm.value.description,
         companyLocation: {
@@ -57,7 +73,7 @@ export class EditCompanyInformationComponent {
       };
 
 
-      this.profileService.editCompanyInformation(this.user.id, updateServiceProviderDTO).subscribe({
+      this.profileService.editCompanyInformation(this.user.id, updateCompanyAccountDTO).subscribe({
         next: (response) => {
           console.log('Company information changed successfully:', response);
           this.dialogRef.close(response);
@@ -69,7 +85,6 @@ export class EditCompanyInformationComponent {
 
 
     }else{
-      this.editCompanyInformationForm.markAllAsTouched();
       console.log("Form is not valid");
     }
   }
