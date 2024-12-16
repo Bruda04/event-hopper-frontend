@@ -1,0 +1,60 @@
+<div class="component">
+  <h2 class="title">Manage services</h2>
+
+  <div class="toolbar">
+    <button mat-raised-button class="export-button" (click)="export()">
+      <mat-icon>download</mat-icon>
+      EXPORT TO PDF
+    </button>
+  </div>
+
+  <div class="table-container mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" class="mat-table" matSort>
+
+      <!-- Service Name Column -->
+      <ng-container matColumnDef="product">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="name"> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
+      </ng-container>
+
+
+      <!-- Base Price Column -->
+      <ng-container matColumnDef="basePrice">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="basePrice"> Base Price </th>
+        <td mat-cell *matCellDef="let element"> {{element.basePrice}} € </td>
+      </ng-container>
+
+      <!-- Discount Column -->
+      <ng-container matColumnDef="discount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="discount"> Discount </th>
+        <td mat-cell *matCellDef="let element">
+          {{element.discount}}%
+          <mat-icon *ngIf="element.discount > 0" [ngStyle]="{'color':'var(--green-color)'}">trending_up</mat-icon>
+          <mat-icon *ngIf="element.discount == 0" [ngStyle]="{'color':'var(--error-color)'}">trending_down</mat-icon>
+        </td>
+      </ng-container>
+
+      <!-- Final Price Column -->
+      <ng-container matColumnDef="finalPrice">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="finalPrice"> Final Price </th>
+        <td mat-cell *matCellDef="let element"> {{element.finalPrice}} € </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="actions-header"> Actions </th>
+        <td mat-cell *matCellDef="let element" class="actions-cell">
+          <button mat-icon-button (click)="edit(element)" [ngStyle]="{color: 'var(--primary-color)'}">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="table-header"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                   showFirstLastButtons>
+    </mat-paginator>
+  </div>
+
+</div>

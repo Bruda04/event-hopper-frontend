@@ -11,6 +11,7 @@ import { SolutionPageComponent } from './solution-page/solution-page.component';
 import {CarouselModule} from 'primeng/carousel';
 import {EventModule} from '../event/event.module';
 import {PrimeTemplate} from 'primeng/api';
+import { PriceListManagementComponent } from './price-list-management/price-list-management.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import {PrimeTemplate} from 'primeng/api';
     CreateServiceComponent,
     EditServiceComponent,
     ServiceCardComponent,
-    SolutionPageComponent
+    SolutionPageComponent,
+    PriceListManagementComponent
   ],
   imports: [
     CommonModule,

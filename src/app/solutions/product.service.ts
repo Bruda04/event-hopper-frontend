@@ -6,6 +6,7 @@ import {PagedResponse} from '../shared/model/paged-response.model';
 import {ProductDTO} from '../shared/dto/solutions/productDTO.model';
 import {SolutionDetailsDTO} from '../shared/dto/solutions/solutionDetailsDTO.model';
 import {ServiceProviderDetailsDTO} from '../shared/dto/users/serviceProvider/serviceProviderDetailsDTO.model';
+import {PriceManagementDTO} from '../shared/dto/prices/PriceManagementDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -80,5 +81,9 @@ export class ProductService {
     }
 
     return this.HttpClient.get<PagedResponse<ProductDTO>>(environment.apiHost + '/solutions/search', { params });
+  }
+
+  getPricesForManagement(): Observable<PriceManagementDTO[]> {
+    return this.HttpClient.get<PriceManagementDTO[]>(environment.apiHost + '/prices/management');
   }
 }
