@@ -20,7 +20,6 @@ export class ProfileComponent {
 
   constructor(private userService: UserService, private router: Router, private profileService: ProfileService, private dialog: MatDialog) {
     this.user = this.userService.getUserData();
-    console.log(this.user);
   }
 
   ngOnInit() {
@@ -47,7 +46,7 @@ export class ProfileComponent {
           this.user.companyDescription = response.companyDescription;
           this.user.companyLocation = response.companyLocation;
         }
-
+        console.log("Profile of user loaded: ", this.user);
       },
       error: (err) => {
         console.error('No user found error:', err);

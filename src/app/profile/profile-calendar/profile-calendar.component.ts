@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {CalendarEvent, CalendarView} from 'angular-calendar';
 import {Subject} from 'rxjs';
+import {UserService} from '../../authentication/services/user.service';
+import {User} from '../../shared/model/user.model';
 
 
 @Component({
@@ -9,32 +11,57 @@ import {Subject} from 'rxjs';
   styleUrl: './profile-calendar.component.css'
 })
 export class ProfileCalendarComponent {
+  user: User;
+  @Input() attendingEvents: any[] = [];
+  @Input() myEvents: any[] = [];
+  events: CalendarEvent[] = [];
   view: CalendarView = CalendarView.Month; // Default calendar view
   CalendarView = CalendarView; // Enum for calendar views
   viewDate: Date = new Date(); // Current date
+  yellowColor = { primary: '#e3bc08', secondary: '#FDF1BA' };
+  redColor = { primary: '#ad2121', secondary: '#FAE3E3' };
+  blueColor = {primary: '#1e90ff', secondary: '#D1E8FF'};
 
-  // Mocked events - ove eventove bi vukli sa bekenda.
-  events: CalendarEvent[] = [
-    {
-      title: 'Team Meeting',
-      start: new Date(),
-      end: new Date(new Date().setHours(new Date().getHours() + 1)), // 1-hour event
-      color: { primary: '#e3bc08', secondary: '#FDF1BA' },
-      draggable: false,
-    },
-    {
-      title: 'Project Deadline',
-      start: new Date(new Date().setDate(new Date().getDate() + 1)), // Tomorrow
-      color: { primary: '#ad2121', secondary: '#FAE3E3' },
-      draggable: false,
-    },
-    {
-      title: 'Code Review',
-      start: new Date(new Date().setDate(new Date().getDate() - 2)), // 2 days ago
-      color: { primary: '#1e90ff', secondary: '#D1E8FF' },
-      draggable: false,
-    },
-  ];
+  constructor(private userService: UserService) {
+    this.user = userService.getUserData();
+  }
+
+  ngOnInit(){
+    this.loadCalendarEvents();
+  }
+
+  loadCalendarEvents(): void {
+    console.log("My events", this.myEvents);
+    console.log("My events are YELLOW");
+    console.log("Attending events", this.attendingEvents);
+    console.log("My events are BLUE");
+
+
+    if(this.user.role === 'EVENT_ORGANIZER'){
+      for (const event of this.myEvents) {
+        const calendarEvent: CalendarEvent = {
+          title: event.name,
+          start: new Date(event.time),
+          color: this.yellowColor,
+          draggable: false,
+        }
+        this.events.push(calendarEvent);
+
+      }
+    }
+
+    for (const event of this.attendingEvents) {
+      const calendarEvent: CalendarEvent = {
+        title: event.name,
+        start: new Date(event.time),
+        color: this.blueColor,
+        draggable: false,
+      }
+      this.events.push(calendarEvent);
+    }
+
+
+  }
 
   refresh = new Subject<void>(); // For refreshing the calendar view
 

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule} from '../infrastructure/material/material.module';
 import { EditCompanyInformationComponent} from './edit-company-information/edit-company-information.component';
-import { UpgradeProfileComponent} from './upgrade-profile/upgrade-profile.component';
 import { ChangePasswordDialogComponent} from './change-password-dialog/change-password-dialog.component';
 import { ConfirmDeactivationComponent} from './confirm-deactivation/confirm-deactivation.component';
 import { EditAccountInformationComponent} from './edit-account-information/edit-account-information.component';
@@ -36,7 +35,6 @@ import {EventModule} from '../event/event.module';
     FavoriteEventsComponent,
     FavoriteSolutionsComponent,
     EditCompanyInformationComponent,
-    UpgradeProfileComponent,
   ],
   imports: [
     CommonModule,
