@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { InvitePeopleComponent } from './invite-people/invite-people.component';
 import {MaterialModule} from '../infrastructure/material/material.module';
 import {ReactiveFormsModule} from '@angular/forms';
+import { InvitationRedirectionComponent } from './invitation-redirection/invitation-redirection.component';
 
 
 
 @NgModule({
   declarations: [
-    InvitePeopleComponent
+    InvitePeopleComponent,
+    InvitationRedirectionComponent
   ],
   imports: [
     CommonModule,

@@ -1,6 +1,6 @@
-import {SimpleEventDTO} from '../dto/events/simpleEventDTO';
 import {SimpleProductDTO} from '../dto/solutions/simpleProductDTO';
 import {SimpleLocationDTO} from '../dto/locations/SimpleLocationDTO.model';
+import {SimpleEventDTO} from '../dto/events/simpleEventDTO.model';
 
 export interface User {
     id: string;

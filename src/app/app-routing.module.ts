@@ -14,6 +14,7 @@ import {
 import {roleGuard} from './authentication/guards/role.guard';
 import {EventSinglePageComponent} from './event/event-single-page/event-single-page.component';
 import {UserRegisterComponent} from './authentication/register/user-register/user-register.component';
+import {InvitationRedirectionComponent} from './invitation/invitation-redirection/invitation-redirection.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'register-user', component: UserRegisterComponent },
   { path: 'home', component: HomeComponent },
   { path: 'email-confirmation-sent', component: EmailConfirmationSentComponent },
+  { path: 'invitations/:id', component: InvitationRedirectionComponent },
   { path: 'event', component: EventSinglePageComponent },
   { path: 'my-solutions', component: PUPServiceProductManagementComponent,
     canActivate: [roleGuard],
