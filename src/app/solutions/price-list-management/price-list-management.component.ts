@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {ServiceManagementDTO} from '../../shared/dto/solutions/serviceManagementDTO.model';
 import {MatTableDataSource} from '@angular/material/table';
 import {PriceManagementDTO} from '../../shared/dto/prices/PriceManagementDTO.model';
@@ -31,6 +31,7 @@ export class PriceListManagementComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @Output() priceChanged: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(private productService: ProductService,
               public dialog: MatDialog) {
@@ -44,7 +45,7 @@ export class PriceListManagementComponent implements OnInit {
   loadPrices(): void {
     this.productService.getPricesForManagement().subscribe(
       {
-        next: (response: PriceManagementDTO[]) => {
+        next: (response: PriceManagementDTO[]): void => {
           this.prices = response;
           this.dataSource = new MatTableDataSource(this.prices);
           this.dataSource.paginator = this.paginator;
@@ -70,6 +71,7 @@ export class PriceListManagementComponent implements OnInit {
           {
             next: () => {
               this.loadPrices();
+              this.priceChanged.emit();
             },
             error: () => {
               console.error('Error updating price');
