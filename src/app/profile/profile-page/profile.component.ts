@@ -60,27 +60,6 @@ export class ProfileComponent {
     const dialogRef = this.dialog.open(ConfirmDeactivationComponent, {
       width: '400px',
     });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        console.log('User confirmed deactivation');
-
-
-        this.profileService.deactivateAccount(this.user.id).subscribe({
-          next: (response) => {
-            console.log('Account deactivated');
-            this.userService.clearUserData();
-            this.router.navigate(['/login']);
-          },
-          error: (err) => {
-            console.error('No user found error:', err);
-          },
-        });
-
-      } else {
-        console.log('User cancelled deactivation');
-      }
-    });
   }
 
   openEditAccountInformation(): void {

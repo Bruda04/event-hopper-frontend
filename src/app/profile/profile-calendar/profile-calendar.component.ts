@@ -34,7 +34,7 @@ export class ProfileCalendarComponent {
     console.log("My events", this.myEvents);
     console.log("My events are YELLOW");
     console.log("Attending events", this.attendingEvents);
-    console.log("My events are BLUE");
+    console.log("Attending events are BLUE");
 
 
     if(this.user.role === 'EVENT_ORGANIZER'){

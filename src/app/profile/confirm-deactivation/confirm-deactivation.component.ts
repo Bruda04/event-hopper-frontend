@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
+import {ProfileService} from '../profile.service';
+import {UserService} from '../../authentication/services/user.service';
+import {User} from '../../shared/model/user.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-confirm-deactivation',
@@ -7,7 +11,14 @@ import {MatDialogRef} from '@angular/material/dialog';
   styleUrl: './confirm-deactivation.component.css'
 })
 export class ConfirmDeactivationComponent {
-  constructor(public dialogRef: MatDialogRef<ConfirmDeactivationComponent>) {}
+  user: User;
+  isDeletable: boolean;
+  errorMessage: string;
+
+  constructor(public dialogRef: MatDialogRef<ConfirmDeactivationComponent>, private profileService: ProfileService, private userService: UserService, private router: Router) {
+    this.user = userService.getUserData();
+    this.isDeletable = true;
+  }
 
   // Handle "Go Back" button
   onCancel(): void {
@@ -16,6 +27,23 @@ export class ConfirmDeactivationComponent {
 
   // Handle "Yes, Deactivate" button
   onConfirm(): void {
-    this.dialogRef.close(true); // Close dialog and return true
+    this.profileService.deactivateAccount(this.user.id).subscribe({
+      next: (response) => {
+        console.log('Account deactivated');
+        this.userService.clearUserData();
+        this.dialogRef.close();
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        this.isDeletable = false;
+        if(this.user.role === 'EVENT_ORGANIZER'){
+          this.errorMessage = "Your account can't be deactivated, you have upcoming events."
+        }else if(this.user.role == 'SERVICE_PROVIDER'){
+          this.errorMessage = "Your account can't be deactivated, you have upcoming bookings."
+        }
+        console.error('Cant be deactivated:', err);
+      },
+    });
+
   }
 }
