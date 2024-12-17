@@ -1,9 +1,9 @@
 <div class="events-cards">
-  <div *ngIf="favoriteEvents === null" class="no-events-block">
+  <div *ngIf="favoriteEvents === null || favoriteEvents === [] || favoriteEvents.length === 0" class="no-events-block">
     <p>You have not favorited any events yet.</p>
   </div>
 
-  <div class="row-events" *ngIf="favoriteEvents != null">
+  <div class="row-events" *ngIf="favoriteEvents != null  && favoriteEvents.length != 0 && favoriteEvents!= []">
     <div *ngFor="let event of favoriteEvents; let i = index" class="single-card-item">
       <app-event-card [event]="event"></app-event-card>
     </div>
