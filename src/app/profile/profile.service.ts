@@ -38,4 +38,14 @@ export class ProfileService {
     return this.httpClient.put(environment.apiHost + "/accounts/" + id + "/company", updateCompanyAccount);
   }
 
+  editPerson(id: string, updatePersonDTO: UpdatePersonDTO): Observable<any> {
+    return this.httpClient.put(environment.apiHost + "/persons/" + id , updatePersonDTO);
+  }
+
+  getPerson(id: string): Observable<any> {
+    return this.httpClient.get(environment.apiHost + "/persons/" + id );
+  }
+
+
+
 }

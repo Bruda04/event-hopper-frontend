@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import {EventService} from '../../event/event.service';
 import {InvitationService} from '../invitation.service';
 import {ProfileService} from '../../profile/profile.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import { InvitationDTO } from '../../shared/dto/invitations/InvitationDTO.model';
 import {SimpleAccountDTO} from '../../shared/dto/users/account/SimpleAccountDTO.model';
+import {UserService} from '../../authentication/services/user.service';
 
 
 @Component({
@@ -17,34 +18,56 @@ export class InvitationRedirectionComponent {
   invitationId: string | null = null;
   invitation: InvitationDTO | null = null;
   account: SimpleAccountDTO | null = null;
+  person: any;
+  user: any;
 
   constructor(private invitationService: InvitationService,
               private eventService: EventService,
               private profileService: ProfileService,
-              private route: ActivatedRoute) {}
+              private userService: UserService,
+              private route: ActivatedRoute,
+              private router: Router,
+  ) {}
 
 
   ngOnInit(): void {
     this.invitationId = this.route.snapshot.paramMap.get('id');
     console.log('Invitation ID:', this.invitationId);
 
-    // Dobavljanje pozivnice
     this.invitationService.getInvitation(this.invitationId).subscribe({
       next: data => {
         console.log('Invitation Data:', data);
         this.invitation = data;
 
-        // Tek kada imamo invitation, možemo dobaviti profil
         this.profileService.getProfileByEmail(this.invitation.targetEmail).subscribe({
           next: profileData => {
             console.log('Profile Data:', profileData);
             this.account = profileData;
+            this.user = this.userService.getUserData()
 
-            //logika za login
+
+            if (this.user) {
+              this.profileService.getPerson(this.user.id).subscribe({
+                next: person => {
+                  this.person = person;
+
+
+
+                },
+                error: err => {
+                  console.error('Error getting person data:', err);
+                }
+              });
+              //dodaj event u pracenje
+              //this.router.navigate(['/login'], { queryParams: { invitationId: this.invitationId } });
+            }else{
+              this.router.navigate(['/login'], { queryParams: { invitationId: this.invitationId } });
+            }
+
           },
           error: err => {
             if(err.status ===404){
-              console.log("No account found, redirecting to registration...");
+              this.router.navigate(['/register-user'], { queryParams: { invitationId: this.invitationId } });
             }else{
               console.error('Error getting profile:', err);
             }
