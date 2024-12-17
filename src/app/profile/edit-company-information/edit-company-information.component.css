@@ -1,0 +1,59 @@
+/* Title Styling */
+h2 {
+  align-self: center;
+  color: var(--font-dark-blue) !important;
+
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* Adds spacing between fields */
+}
+
+.mat-form-field {
+  width: 100%; /* Ensures fields take up full width */
+}
+
+/* Mat-dialog Actions (Buttons) */
+.dialog-actions {
+  padding-top: 20px;
+}
+
+.dialog-actions button {
+  margin-left: 8px;
+  color: white;
+  text-transform: uppercase; /* Style buttons consistently */
+}
+
+
+.actions-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.5em 1em;
+}
+
+.actions-container button {
+  min-width: 100px;
+  color: white;
+}
+
+
+/* Hint Text */
+.password-hint {
+  font-size: 12px;
+  color: var(--primary-color);
+}
+
+
+.primary-button {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.cancel-button {
+  background-color: var(--primary-color);
+  color: white;
+}

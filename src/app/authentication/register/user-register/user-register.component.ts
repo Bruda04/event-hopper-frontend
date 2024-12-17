@@ -26,7 +26,7 @@ export class UserRegisterComponent {
   hideConfirmPassword: boolean = true;
   imagePreview: string | null = null;
   // usersEmail: string | null = null;
-  usersEmail: string ="lukab04@gmail.com";        //treba da se uzme email iz tokena??
+  usersEmail: string ="vanjakostic03@gmail.com";        //treba da se uzme email iz tokena??
 
   constructor(private formBuilder: FormBuilder, private router: Router, private registrationService: RegistrationService) {
     this.registerForm = this.formBuilder.group(

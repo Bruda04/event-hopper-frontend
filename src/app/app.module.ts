@@ -8,20 +8,20 @@ import { SolutionsModule } from './solutions/solutions.module';
 import { AuthenticationModule } from './authentication/authentication.module'; // Import AuthenticationModule here
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './infrastructure/material/material.module';
-import { HomeComponent } from './layout/home/home.component';
 import { EventModule } from './event/event.module';
-import { ProfileComponent } from './profile/profile.component';
 import {AdminDashboardModule} from './admin-dashboard/admin-dashboard.module';
 import {provideHttpClient} from '@angular/common/http';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
-import { LocationComponent } from './location/location.component';
 import {InvitationModule} from './invitation/invitation.module';
+import {ProfileModule} from './profile/profile.module';
+import {CalendarModule, DateAdapter} from 'angular-calendar';
+import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProfileComponent,
-    LocationComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -35,6 +35,12 @@ import {InvitationModule} from './invitation/invitation.module';
     SolutionsModule,
     AdminDashboardModule,
     InvitationModule,
+    AdminDashboardModule,
+    ProfileModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
   ],
   providers: [
     provideAnimationsAsync(),

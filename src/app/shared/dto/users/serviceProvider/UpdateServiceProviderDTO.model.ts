@@ -1,10 +1,7 @@
-import {UpdatePersonDTO} from '../person/UpdatePersonDTO.model';
-import {LocationDTO} from '../location/LocationDTO.model';
+import {LocationDTO} from '../../locations/LocationDTO.model';
 
-export interface UpdateServiceProviderDTO extends UpdatePersonDTO{
+export interface UpdateServiceProviderDTO {
   companyDescription: string;
-  companyPhotos: string[];
-  workStart: string;
-  workEnd: string;
+  companyPhoneNumber: string;
   companyLocation: LocationDTO;
 }

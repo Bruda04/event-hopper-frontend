@@ -1,9 +1,9 @@
-import { Component, ComponentFactoryResolver, HostListener, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../authentication/services/user.service';
 import { ChangeDetectorRef } from '@angular/core';
-import { User } from '../../authentication/services/user.modul';
 import { NotificationComponent } from '../../notification/notification/notification.component';
+import {User} from '../../shared/model/user.model';
 
 @Component({
   selector: 'app-nav-bar',

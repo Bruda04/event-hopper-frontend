@@ -1,5 +1,5 @@
 import {UpdatedPersonDTO} from '../person/UpdatedPersonDTO.model';
-import {LocationDTO} from '../location/LocationDTO.model';
+import {LocationDTO} from '../../locations/LocationDTO.model';
 
 export interface UpdatedServiceProviderDTO extends UpdatedPersonDTO{
   companyName: string;
