@@ -8,13 +8,12 @@ import { SolutionsModule } from './solutions/solutions.module';
 import { AuthenticationModule } from './authentication/authentication.module'; // Import AuthenticationModule here
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './infrastructure/material/material.module';
-import { HomeComponent } from './layout/home/home.component';
 import { EventModule } from './event/event.module';
 import {AdminDashboardModule} from './admin-dashboard/admin-dashboard.module';
 import {provideHttpClient} from '@angular/common/http';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
-import { LocationComponent } from './location/location.component';
 import {ProfileModule} from './profile/profile.module';
+import { ServiceProviderPageComponent } from './service-provider-page/service-provider-page.component';
 import {CalendarModule, DateAdapter} from 'angular-calendar';
 import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
 
@@ -22,7 +21,7 @@ import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
 @NgModule({
   declarations: [
     AppComponent,
-
+    ServiceProviderPageComponent,
   ],
   imports: [
     BrowserModule,

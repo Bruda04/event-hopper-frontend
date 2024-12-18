@@ -1,0 +1,83 @@
+<div class="product-page" *ngIf="solution">
+    <div class="product-container">
+      <div class="image-gallery">
+        <div class="grid-item">
+          <p-carousel
+            [value]="solution.pictures"
+            [numVisible]="1"
+            [showIndicators]="false"
+            [circular]="true"
+            [autoplayInterval]="5000"
+          >
+            <ng-template pTemplate="item" let-image>
+              <div class="carousel-item">
+                <img [src]="image">
+              </div>
+            </ng-template>
+          </p-carousel>
+        </div>
+      </div>
+
+      <div class="product-details">
+        <div class="header">
+          <h1>{{solution.name}}</h1>
+          <mat-icon [ngClass]="{'filled': solution.isFavorite}" (click)="toggleFavorites()" *ngIf="user.id">star</mat-icon>
+        </div>
+        <p>
+         {{solution.description}}
+        </p>
+        <p>
+          Category: {{solution.category.name}} <br>
+          Event Types: {{ eventTypes }}
+        </p>
+        <p *ngIf="solution.service">
+          Duration: {{solution.durationMinutes}} minutes <br>
+          Reservation Window: {{solution.reservationWindowDays}} day(s) <br>
+          Cancellation Window: {{solution.cancellationWindowDays}} day(s) <br>
+
+        </p>
+
+        <p class="provider">
+            <span *ngIf="solution.service">Service provider:&nbsp; </span>
+            <span *ngIf="!solution.service">Product provider:&nbsp; </span>
+            <strong (click)="goToProvider()">{{solution.provider.companyName}}</strong>
+        </p>
+
+        <div class="prices">
+          <span class="sale-price">{{solution.price.finalPrice}}€</span>
+          <span class="on-sale" *ngIf="solution.price.discount">ON SALE</span>
+          <span class="old-price" *ngIf="solution.price.discount">{{solution.price.basePrice}}€</span>
+        </div>
+
+        <div class="rating">
+          <mat-icon *ngFor="let star of [1, 2, 3, 4, 5]" [ngClass]="{'filled': star <= solution.rating}">star</mat-icon>
+        </div>
+
+        <p class="available"><strong>{{ !solution.available ? "UNAVAILABLE" : null }}</strong></p>
+
+        <button mat-raised-button class="chat-btn" (click)="chatWithUs()">
+          <mat-icon>chat</mat-icon>
+          You need more info? Chat with us!
+        </button>
+      </div>
+    </div>
+
+  <div class="reviews">
+    <div class="review" *ngFor="let comment of solution.comments" [id]="comment.id">
+      <img [src]="comment.author.profilePicture" alt="User profile" />
+      <div class="review-content">
+        <strong>{{ comment.author.name }} {{ comment.author.surname }}</strong>
+        <p>{{ comment.content }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!solution && !notFound" class="loading">
+  <p>Loading product/service information...</p>
+</div>
+
+
+<div class="error-message" *ngIf="notFound">
+  <p>We were unable to find that product/service.</p>
+</div>

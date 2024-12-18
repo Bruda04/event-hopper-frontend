@@ -1,6 +1,6 @@
 export interface SimplePriceDTO {
   id: string;
-  price: number;
+  basePrice: number;
   discount: number;
   finalPrice: number;
   timestamp: string;

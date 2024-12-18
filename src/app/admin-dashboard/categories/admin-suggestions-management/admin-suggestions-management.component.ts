@@ -25,7 +25,7 @@ export class AdminSuggestionsManagementComponent implements OnInit {
     'actions',
   ];
 
-  @Output() categoryApproved = new EventEmitter<void>();
+  @Output() categoryApproved: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private categoriesService: CategoriesService, public dialog: MatDialog) {
