@@ -7,10 +7,10 @@ export const roleGuard: CanActivateFn = (route, state) => {
   const userRole = localStorage.getItem('userRole');
 
   // The required role for this route (pass in route data)
-  const requiredRole = route.data['role'];
+  const requiredRoles = route.data['roles'];
 
   // If the user's role matches the required role, allow navigation
-  if (userRole === requiredRole) {
+  if (requiredRoles && requiredRoles.includes(userRole)) {
     return true;
   }
 

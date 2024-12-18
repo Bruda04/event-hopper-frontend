@@ -1,0 +1,51 @@
+<h3 *ngIf="this.user.role === 'EVENT_ORGANIZER'">Organizer</h3>
+<h3 *ngIf="this.user.role === 'ADMIN'">Admin</h3>
+<h3 *ngIf="this.user.role === 'SERVICE_PROVIDER'">Product/service provider</h3>
+<h3 *ngIf="this.user.role === 'AUTHENTICATED_USER'">User</h3>
+
+<div class="container">
+    <div class="content">
+      <!-- Card 1: Profile Picture and Buttons -->
+      <div class="profile-picture-section">
+        <img src="profile.png" alt="Profile Picture" class="profile-picture" />
+        <button mat-raised-button class="btn">CHANGE PROFILE PICTURE</button>
+
+
+      </div>
+
+      <!-- Card 2: Regular Text -->
+      <div class="user-information-card">
+        <div class = "information">
+          <p><strong>Name:</strong> {{user.name}} {{user.surname}}</p>
+          <p><strong>Email:</strong> {{user.email}}</p>
+          <p><strong>Phone:</strong> +{{user.phoneNumber}}</p>
+          <p><strong>Address:</strong> {{user.address}}, {{user.city}}</p>
+        </div>
+        <button mat-raised-button class="btn" (click)="openEditAccountInformation()">EDIT INFORMATION</button>
+      </div>
+
+      <!-- Card 3: Text and Buttons -->
+      <div class="buttons-section">
+        <button mat-raised-button class="btn" (click)="openChangePasswordDialog()">CHANGE PASSWORD</button>
+        <button mat-raised-button class="btn" *ngIf="this.user.role === 'AUTHENTICATED_USER'">UPGRADE PROFILE</button>
+        <button mat-raised-button class="btn"  *ngIf="this.user.role === 'ADMIN'"  [routerLink]="'/admin-dashboard'">ADMIN DASHBOARD</button>
+        <button mat-raised-button class="btn" *ngIf="this.user.role === 'EVENT_ORGANIZER'">VIEW MY EVENTS</button>
+        <button mat-raised-button class="btn deactivate-account" (click)="openConfirmationDialog()">DEACTIVATE ACCOUNT</button>
+      </div>
+    </div>
+
+
+</div>
+<mat-tab-group>
+  <mat-tab label="My Calendar">
+    <app-profile-calendar></app-profile-calendar>
+  </mat-tab>
+
+  <mat-tab label="Favorite Events">
+    <app-favorite-events [favoriteEvents]="user.favoriteEvents"></app-favorite-events>
+  </mat-tab>
+
+  <mat-tab label="Favorite Products/Services">
+    <app-favorite-solutions></app-favorite-solutions>
+  </mat-tab>
+</mat-tab-group>

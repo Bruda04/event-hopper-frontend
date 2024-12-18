@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {ServicesService} from '../services.service';
 import {CreateServiceComponent} from '../create-service/create-service.component';
@@ -60,6 +60,7 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @Output() serviceChanged: EventEmitter<void> = new EventEmitter<void>();
 
   showFilterPanel: boolean = false;
 
@@ -109,6 +110,7 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
             {
               next: () => {
                 this.loadPagedEntities();
+                this.serviceChanged.emit();
               },
               error: () => {
                 console.error('Error adding service');
@@ -122,6 +124,7 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
                 {
                   next: () => {
                     this.loadPagedEntities();
+                    this.serviceChanged.emit();
                   },
                   error: () => {
                     console.error('Error adding service with suggested category');
@@ -140,6 +143,7 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
       {
         next: () => {
           this.loadPagedEntities()
+          this.serviceChanged.emit();
         },
         error: () => {
           console.error('Error removing service');
@@ -162,6 +166,7 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
           {
             next: () => {
               this.loadPagedEntities();
+              this.serviceChanged.emit();
             },
             error: () => {
               console.error('Error updating service');

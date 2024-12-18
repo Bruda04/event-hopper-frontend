@@ -7,6 +7,12 @@ import { CreateServiceComponent } from './create-service/create-service.componen
 import { EditServiceComponent } from './edit-service/edit-service.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import { ServiceCardComponent } from './service-card/service-card.component';
+import { SolutionPageComponent } from './solution-page/solution-page.component';
+import {CarouselModule} from 'primeng/carousel';
+import {EventModule} from '../event/event.module';
+import {PrimeTemplate} from 'primeng/api';
+import { PriceListManagementComponent } from './price-list-management/price-list-management.component';
+import { EditPriceComponent } from './edit-price/edit-price.component';
 
 
 @NgModule({
@@ -15,12 +21,18 @@ import { ServiceCardComponent } from './service-card/service-card.component';
     PUPServiceManagementComponent,
     CreateServiceComponent,
     EditServiceComponent,
-    ServiceCardComponent
+    ServiceCardComponent,
+    SolutionPageComponent,
+    PriceListManagementComponent,
+    EditPriceComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
+    CarouselModule,
+    EventModule,
+    PrimeTemplate,
   ],
   exports:[
     ServiceCardComponent

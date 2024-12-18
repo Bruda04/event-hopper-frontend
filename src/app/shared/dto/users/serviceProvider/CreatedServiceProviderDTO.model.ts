@@ -1,4 +1,4 @@
-import {LocationDTO} from '../location/LocationDTO.model';
+import {LocationDTO} from '../../locations/LocationDTO.model';
 import {CreatedPersonDTO} from '../person/CreatedPersonDTO.model';
 
 export interface CreatedServiceProviderDTO extends CreatedPersonDTO{
