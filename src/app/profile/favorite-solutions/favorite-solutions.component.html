@@ -1,1 +1,12 @@
-<p>favorite-solutions works!</p>
+<div class="solutions-cards">
+  <div *ngIf="favoriteSolutions === null || favoriteSolutions === [] || favoriteSolutions.length === 0" class="no-solutions-block">
+    <p>You have not favorited any products/services yet.</p>
+  </div>
+
+  <!-- Show cards when there are favorite solutions -->
+  <div class="row-services" *ngIf="favoriteSolutions != null && favoriteSolutions.length != 0 && favoriteSolutions!= []">
+    <div *ngFor="let solution of favoriteSolutions; let i = index" class="single-card-item">
+      <app-service-card [service]="solution"></app-service-card>
+    </div>
+  </div>
+</div>

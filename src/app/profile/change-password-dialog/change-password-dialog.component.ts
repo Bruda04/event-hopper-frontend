@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {ProfileService} from '../profile.service';
 import {UserService} from '../../authentication/services/user.service';
-import {User} from '../../authentication/services/user.modul';
 import {Router} from '@angular/router';
 import {ChangePasswordDTO} from '../../shared/dto/users/account/ChangePasswordDTO.model';
 import {MatDialogRef} from '@angular/material/dialog';
+import {User} from '../../shared/model/user.model';
 
 @Component({
   selector: 'app-change-password-dialog',
