@@ -3,6 +3,7 @@ import {ServiceProviderDetailsDTO} from '../shared/dto/users/serviceProvider/ser
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from "../authentication/services/user.service";
 import {ProfileService} from '../profile/profile.service';
+import {environment} from "../../env/envirements";
 
 @Component({
   selector: 'app-service-provider-page',
@@ -48,4 +49,6 @@ export class ServiceProviderPageComponent implements OnInit{
   report() {
 
   }
+
+    protected readonly environment = environment;
 }

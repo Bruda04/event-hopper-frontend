@@ -4,6 +4,7 @@ import {ProductService} from '../product.service';
 import {SolutionDetailsDTO} from '../../shared/dto/solutions/solutionDetailsDTO.model';
 import {UserService} from "../../authentication/services/user.service";
 import {ProfileService} from '../../profile/profile.service';
+import {environment} from "../../../env/envirements";
 
 @Component({
   selector: 'app-solution-page',
@@ -75,4 +76,6 @@ export class SolutionPageComponent implements OnInit {
   chatWithUs(): void {
 
   }
+
+    protected readonly environment = environment;
 }

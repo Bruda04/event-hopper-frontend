@@ -6,7 +6,7 @@
     <!-- Left Column -->
     <div class="provider-first-column">
       <div class="provider-logo">
-        <img [src]="provider.profilePicture" alt="Provider Logo" />
+        <img [src]="environment.apiImagesHost+provider.profilePicture" alt="Provider Logo" />
       </div>
       <div class="rating">
         <mat-icon *ngFor="let star of [1, 2, 3, 4, 5]" [ngClass]="{'filled': star <= provider.rating}">star</mat-icon>
@@ -50,7 +50,7 @@
         >
           <ng-template pTemplate="item" let-image>
             <div class="carousel-item">
-              <img [src]="image">
+              <img [src]="environment.apiImagesHost+image">
             </div>
           </ng-template>
         </p-carousel>
@@ -60,7 +60,7 @@
 
   <div class="reviews">
     <div class="review" *ngFor="let comment of provider.comments" [id]="comment.id">
-      <img [src]="comment.author.profilePicture" alt="User profile" />
+      <img [src]="environment.apiImagesHost+comment.author.profilePicture" alt="User profile" />
       <div class="review-content">
         <strong>{{ comment.author.name }} {{ comment.author.surname }}</strong>
         <p>{{ comment.content }}</p>
