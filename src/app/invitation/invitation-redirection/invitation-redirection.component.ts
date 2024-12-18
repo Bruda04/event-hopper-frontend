@@ -19,6 +19,7 @@ export class InvitationRedirectionComponent {
   invitation: InvitationDTO | null = null;
   account: SimpleAccountDTO | null = null;
   person: any;
+  event: any;
   user: any;
 
   constructor(private invitationService: InvitationService,
@@ -43,23 +44,20 @@ export class InvitationRedirectionComponent {
           next: profileData => {
             console.log('Profile Data:', profileData);
             this.account = profileData;
-            this.user = this.userService.getUserData()
-
+            this.user = this.userService.getUserData();
 
             if (this.user) {
               this.profileService.getPerson(this.user.id).subscribe({
                 next: person => {
                   this.person = person;
-
-
+                  this.profileService.addAttending(this.person.id, this.invitation.event.id);
+                  this.router.navigate(['/profil']);
 
                 },
                 error: err => {
                   console.error('Error getting person data:', err);
                 }
               });
-              //dodaj event u pracenje
-              //this.router.navigate(['/login'], { queryParams: { invitationId: this.invitationId } });
             }else{
               this.router.navigate(['/login'], { queryParams: { invitationId: this.invitationId } });
             }

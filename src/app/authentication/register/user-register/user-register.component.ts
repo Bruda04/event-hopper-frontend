@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {RegistrationService} from '../../services/registration/registration.service';
 import {CreateAuthenticatedUserDTO} from '../../../shared/dto/users/authenticatedUser/CreateAuthenticatedUserDTO.model';
 import {PersonType} from '../../../shared/model/PersonType.model';
@@ -28,7 +28,13 @@ export class UserRegisterComponent {
   // usersEmail: string | null = null;
   usersEmail: string ="vanjakostic03@gmail.com";        //treba da se uzme email iz tokena??
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private registrationService: RegistrationService) {
+  invitationId: string;
+
+  constructor(private formBuilder: FormBuilder,
+              private router: Router,
+              private route: ActivatedRoute,
+              private registrationService: RegistrationService) {
+
     this.registerForm = this.formBuilder.group(
       {
       fullName: new FormControl('', [Validators.required]),
@@ -50,6 +56,12 @@ export class UserRegisterComponent {
     },
     { validators: this.passwordMatchValidator }
     );
+  }
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.invitationId = params['invitationId'];
+    });
   }
 
   passwordMatchValidator(group: FormGroup): ValidationErrors | null {
@@ -101,7 +113,11 @@ export class UserRegisterComponent {
           console.error('Error registering event organizer:', err);
         },
       });
-
+      if (this.invitationId){
+        this.router.navigate(['/invitation-redirect'], { queryParams: { invitationId: this.invitationId } });
+      }else{
+        this.router.navigate(['/login']);
+      }
     } else {
       this.registerForm.markAllAsTouched();
       console.log('Form is invalid:', this.registerForm.value);

@@ -64,8 +64,9 @@ export class LoginComponent {
             this.userService.storeUserData(response.account);
             if (this.invitationId){
               this.router.navigate(['/invitation-redirect'], { queryParams: { invitationId: this.invitationId } });
+            }else{
+              this.router.navigate(['/home']);
             }
-            this.router.navigate(['/home']);
           }else{
             this.loginErrorMessage = response.message;
             console.error('Login error:', response.message);
