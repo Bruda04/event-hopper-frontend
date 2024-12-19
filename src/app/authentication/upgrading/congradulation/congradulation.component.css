@@ -1,0 +1,12 @@
+.confirmation-dialog {
+  padding: 30px;
+  text-align: center;
+}
+
+.dialog-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+  font-weight: lighter;
+}

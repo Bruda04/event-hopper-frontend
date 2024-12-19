@@ -15,6 +15,9 @@ import {roleGuard} from './authentication/guards/role.guard';
 import {EventSinglePageComponent} from './event/event-single-page/event-single-page.component';
 import {UserRegisterComponent} from './authentication/register/user-register/user-register.component';
 import {InvitationRedirectionComponent} from './invitation/invitation-redirection/invitation-redirection.component';
+import {
+  PupRegisterUpgradingComponent
+} from './authentication/upgrading/pup-register-upgrading/pup-register-upgrading.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -24,6 +27,7 @@ const routes: Routes = [
     data: { roles:  ['SERVICE_PROVIDER', 'ADMIN', 'AUTHENTICATED_USER', 'EVENT_ORGANIZER']  } },
   { path: 'register', component: RegisterComponent },
   { path: 'register-pup', component: PupRegisterComponent },
+  { path: 'upgrading-register-pup', component: PupRegisterUpgradingComponent},
   { path: 'register-organizer', component: OrganizerRegisterComponent },
   { path: 'register-user', component: UserRegisterComponent },
   { path: 'home', component: HomeComponent },
