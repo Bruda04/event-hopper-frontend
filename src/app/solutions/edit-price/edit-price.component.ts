@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MatDialogRef} from '../../infrastructure/material/material.module';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {PriceManagementDTO} from '../../shared/dto/prices/PriceManagementDTO.model';
@@ -11,7 +11,7 @@ import {UpdatePriceDTO} from '../../shared/dto/prices/updatePriceDTO.model';
   templateUrl: './edit-price.component.html',
   styleUrl: './edit-price.component.css'
 })
-export class EditPriceComponent {
+export class EditPriceComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<EditPriceComponent>, @Inject(MAT_DIALOG_DATA) private priceToEdit: PriceManagementDTO) {}
 
   editPriceForm = new FormGroup({

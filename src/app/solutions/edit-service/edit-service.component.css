@@ -44,4 +44,52 @@
   background-color: var(--primary-color);
 }
 
+.form-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+
+.images-preview {
+  position: relative;
+  margin-top: 1em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  gap: 10px;
+}
+
+.images-preview img {
+  max-width: 150px;
+  border-radius: 8px;
+  border: 1px solid var(--secondary-color);
+}
+
+.single-image-preview {
+  display: inline-block;
+  margin-right: 10px;
+  position: relative;
+}
+
+.image-close-btn:hover {
+  background-color: var(--error-color);
+}
+
+.image-close-btn {
+  position: absolute;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 5px;
+  right: 5px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
 

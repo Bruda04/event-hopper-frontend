@@ -5,6 +5,8 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {SimpleEventTypeDTO} from '../../shared/dto/eventTypes/simpleEventTypeDTO.model';
 import {CategoryDTO} from '../../shared/dto/categories/categoryDTO.model';
 import {CreateServiceDTO} from '../../shared/dto/solutions/createServiceDTO.model';
+import {ImageServiceService} from '../../shared/services/image-service.service';
+import {forkJoin, Observable} from 'rxjs';
 
 @Component({
   selector: 'app-create-service',
@@ -31,7 +33,9 @@ export class CreateServiceComponent {
 
   filteredEventTypes: SimpleEventTypeDTO[];
 
-  constructor(public dialogRef: MatDialogRef<CreateServiceComponent>, @Inject(MAT_DIALOG_DATA) protected categories: CategoryDTO[] ) {
+  constructor(public dialogRef: MatDialogRef<CreateServiceComponent>,
+              @Inject(MAT_DIALOG_DATA) protected categories: CategoryDTO[],
+              private imageService: ImageServiceService) {
     this.createServiceForm.get('category')?.valueChanges.subscribe((categoryId: any) => {
       const category: CategoryDTO = this.categories.find(cat => cat.id === categoryId);
       this.filteredEventTypes = category?.eventTypes || [];
@@ -50,30 +54,69 @@ export class CreateServiceComponent {
       return;
     }
 
-    if(this.createServiceForm.valid) {
-      let service :CreateServiceDTO = {
-          name: this.createServiceForm.value.name,
-          description: this.createServiceForm.value.description,
-          pictures: [],
-          basePrice: this.createServiceForm.value.basePrice,
-          discount: this.createServiceForm.value.discount,
-          finalPrice: this.createServiceForm.value.basePrice*(this.createServiceForm.value.discount/100),
-          categoryId: this.createServiceForm.value.category,
-          eventTypesIds: this.createServiceForm.value.eventType,
-          autoAccept: this.createServiceForm.value.acceptance === 'auto',
-          available: this.createServiceForm.value.available,
-          visible: this.createServiceForm.value.visible,
-          durationMinutes: this.createServiceForm.value.duration,
-          reservationWindowDays: this.createServiceForm.value.reservationWindow,
-          cancellationWindowDays: this.createServiceForm.value.cancellationWindow,
-        };
-        if (this.createServiceForm.value.categoryName) {
-          service.categoryId = this.createServiceForm.value.categoryName;
-        }
+    if(this.createServiceForm.valid && this.imageUploads.length > 0) {
 
-        this.dialogRef.close(service);
+      // Upload all images
+      const uploadObservables: Observable<string>[] = this.imageUploads.map((image: File): Observable<string> =>
+        this.imageService.uploadImage(image)
+      );
+
+      //wait for all images to be uploaded
+      forkJoin(uploadObservables).subscribe({
+        next: (uploadedImages: string[]): void => {
+          let service: CreateServiceDTO = {
+            name: this.createServiceForm.value.name,
+            description: this.createServiceForm.value.description,
+            pictures: uploadedImages,
+            basePrice: this.createServiceForm.value.basePrice,
+            discount: this.createServiceForm.value.discount,
+            finalPrice: this.createServiceForm.value.basePrice * (this.createServiceForm.value.discount / 100),
+            categoryId: this.createServiceForm.value.category,
+            eventTypesIds: this.createServiceForm.value.eventType,
+            autoAccept: this.createServiceForm.value.acceptance === 'auto',
+            available: this.createServiceForm.value.available,
+            visible: this.createServiceForm.value.visible,
+            durationMinutes: this.createServiceForm.value.duration,
+            reservationWindowDays: this.createServiceForm.value.reservationWindow,
+            cancellationWindowDays: this.createServiceForm.value.cancellationWindow,
+          };
+          if (this.createServiceForm.value.categoryName) {
+            service.categoryId = this.createServiceForm.value.categoryName;
+          }
+          this.dialogRef.close(service);
+        },
+        error: (err) => {
+          console.error('Error uploading images', err);
+        }
+      });
     } else {
       this.createServiceForm.markAllAsTouched();
+    }
+  }
+
+  imageUploads: File[] = [];
+  imageUrls: string[] = [];
+
+
+  clearServiceImage(index: number): void {
+    this.imageUploads.splice(index, 1); // Remove the selected image
+    this.imageUrls.splice(index, 1);
+  }
+
+  triggerFileInput(): void {
+    const inputElement = document.getElementById('companyPictures') as HTMLInputElement;
+    inputElement?.click();
+  }
+
+  onServiceImageSelected(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    const files: FileList = inputElement.files;
+
+    if (files) {
+      for (let i: number = 0; i < files.length; i++) {
+        this.imageUploads.push(files[i]);
+        this.imageUrls.push(URL.createObjectURL(files[i]));
+      }
     }
   }
 
