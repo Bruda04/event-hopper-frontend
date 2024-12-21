@@ -4,6 +4,10 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../env/envirements';
 import {PagedResponse} from '../shared/model/paged-response.model';
 import {ProductDTO} from '../shared/dto/solutions/productDTO.model';
+import {SolutionDetailsDTO} from '../shared/dto/solutions/solutionDetailsDTO.model';
+import {ServiceProviderDetailsDTO} from '../shared/dto/users/serviceProvider/serviceProviderDetailsDTO.model';
+import {PriceManagementDTO} from '../shared/dto/prices/PriceManagementDTO.model';
+import {UpdatePriceDTO} from '../shared/dto/prices/updatePriceDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +22,10 @@ export class ProductService {
 
   getSolution(id: string): Observable<ProductDTO> {
     return this.HttpClient.get<ProductDTO>(environment.apiHost + '/solutions/' + id);
+  }
+
+  getSolutionDetails(id: string): Observable<SolutionDetailsDTO> {
+    return this.HttpClient.get<SolutionDetailsDTO>(environment.apiHost + '/solutions/' + id + '/details');
   }
 
   getTop5Solutions(userId: string): Observable<ProductDTO[]> {
@@ -74,5 +82,13 @@ export class ProductService {
     }
 
     return this.HttpClient.get<PagedResponse<ProductDTO>>(environment.apiHost + '/solutions/search', { params });
+  }
+
+  getPricesForManagement(): Observable<PriceManagementDTO[]> {
+    return this.HttpClient.get<PriceManagementDTO[]>(environment.apiHost + '/prices/management');
+  }
+
+  updatePrice(productId: string, price: UpdatePriceDTO): Observable<any> {
+    return this.HttpClient.put(environment.apiHost + '/prices/'+ productId, price);
   }
 }

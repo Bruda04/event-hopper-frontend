@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
-import { User } from './user.modul';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
 
-  storeUserData(response: any): void {
-    localStorage.setItem('userId', response.id);
-    localStorage.setItem('userRole', response.type);
+  storeUserData(account: any): void {
+    localStorage.setItem('userId', account.id);
+    localStorage.setItem('userRole', account.type);
   }
 
   getUserData(): any {

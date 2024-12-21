@@ -41,7 +41,22 @@
 
       <!-- Right Column -->
       <div class="right-column">
-        <button mat-raised-button class="primary-button">UPLOAD PICTURES</button>
+        <div class="form-column">
+          <input type="file" id="companyPictures" (change)="onServiceImageSelected($event)" style="display: none;" accept="image/*" multiple />
+          <button mat-raised-button class="primary-button" type="button" (click)="triggerFileInput()">
+            UPLOAD SERVICE PICTURES
+          </button>
+
+          <!-- Image Preview and Cropping Section -->
+          <div class="images-preview" *ngIf="uploadedImages.length > 0">
+            <div *ngFor="let image of uploadedImages; let i = index" class="single-image-preview">
+              <img [src]="imageUrls[i]" alt="Service Preview {{i + 1}}" />
+              <button mat-icon-button aria-label="Remove Image" class="image-close-btn" type="button" (click)="clearCompanyImage(i)">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
 
         <mat-radio-group formControlName="acceptance">
           <mat-radio-button name="acceptance" value="auto" >Auto accept</mat-radio-button>

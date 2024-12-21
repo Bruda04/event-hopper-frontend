@@ -1,0 +1,23 @@
+.confirmation-dialog {
+  padding: 30px;
+  text-align: center;
+}
+
+.dialog-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+  font-weight: lighter;
+}
+
+.go-back-button {
+  color: white;
+  background-color: var(--primary-color);
+  width: 100px;
+}
+
+.deactivate-button {
+  color: white;
+  background-color: var(--error-color);
+}
