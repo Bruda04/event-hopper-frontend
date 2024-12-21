@@ -6,6 +6,7 @@ import {User} from '../../shared/model/user.model';
 import {CongradulationComponent} from './congradulation/congradulation.component';
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
+import {ProfileService} from '../../profile/profile.service';
 
 @Component({
   selector: 'app-upgrading',
@@ -19,6 +20,7 @@ export class UpgradingComponent {
   constructor(private dialogRef: MatDialogRef<UpgradingComponent>,
               private dialog: MatDialog,
               private router: Router,
+              private profileService: ProfileService,
               private userService: UserService,
               ) {
     this.user = userService.getUserData();
@@ -37,6 +39,19 @@ export class UpgradingComponent {
     this.dialog.open(CongradulationComponent, {
       width: '500px',
     });
+
+    console.log(this.user.id);
+    this.profileService.upgradeToOD(this.user.id).subscribe(
+      {
+        next: result => {
+          this.user = result;
+        },
+
+        error: err => {
+          console.log(err);
+        }
+      }
+    )
   }
 
   onServiceProvider():void{

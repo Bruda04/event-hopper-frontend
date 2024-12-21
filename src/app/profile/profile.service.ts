@@ -50,5 +50,9 @@ export class ProfileService {
     return this.httpClient.get(environment.apiHost + "/persons/" + personId + '/attending-events/'  + eventId);
   }
 
+  upgradeToOD(personId:string) : Observable<any> {
+    return this.httpClient.put(environment.apiHost + "/accounts/upgrade-to-OD/" + personId,{} );
+  }
+
 
 }
