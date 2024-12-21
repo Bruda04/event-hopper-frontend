@@ -1,14 +1,13 @@
-import { Component } from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {RegistrationService} from '../../services/registration/registration.service';
 import {Router} from '@angular/router';
-import {CreateServiceProviderDTO} from '../../../shared/dto/users/serviceProvider/CreateServiceProviderDTO.model';
-import {PersonType} from '../../../shared/model/PersonType.model';
 import {CreateLocationDTO} from '../../../shared/dto/locations/CreateLocationDTO.model';
-import {CreateServiceProviderAccountDTO} from '../../../shared/dto/users/account/CreateServiceProviderAccountDTO.model';
-import {CreateRegistrationRequestDTO} from '../../../shared/dto/registrationRequest/CreateRegistrationRequestDTO.model';
 import {User} from '../../../shared/model/user.model';
 import {ImageCroppedEvent} from 'ngx-image-cropper';
+import {DetailedServiceProviderDTO} from '../../../shared/dto/users/serviceProvider/DetailedServiceProviderDTO.model';
+import {ProfileService} from '../../../profile/profile.service';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-pup-register-upgrading',
@@ -24,8 +23,14 @@ export class PupRegisterUpgradingComponent {
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
-              private registrationService: RegistrationService,) {
+              private profileService: ProfileService,
+              private userService: UserService,
+              private cdr: ChangeDetectorRef,
+              ) {
 
+    this.user = this.userService.getUserData();
+    console.log(this.user);
+    console.log(this.user.id);
     this.upgradeForm = this.formBuilder.group({
       companyEmail: ['', [Validators.required, Validators.email]],
       companyName: ['', Validators.required],
@@ -36,49 +41,59 @@ export class PupRegisterUpgradingComponent {
     });
   }
 
+  ngOnInit() {
+
+    this.userService.clearUserData();
+    this.cdr.detectChanges();
+  }
+
 
   onSubmit() {
-    // if (this.isFormValid()) {
-    //   const createServiceProviderDTO: CreateServiceProviderDTO = {
-    //     type: PersonType.SERVICE_PROVIDER,
-    //     location: {
-    //       address: this.registerForm.value.address,
-    //       city: this.registerForm.value.city,
-    //     } as CreateLocationDTO,
-    //
-    //     companyEmail: this.registerForm.value.companyEmail,
-    //     companyName: this.registerForm.value.companyName,
-    //     companyPhoneNumber: this.registerForm.value.companyPhoneNumber,
-    //     companyLocation: {
-    //       address: this.registerForm.value.companyAddress,
-    //       city: this.registerForm.value.companyCity,
-    //     } as CreateLocationDTO,
-    //     companyDescription: this.registerForm.value.description,
-    //     companyPhotos: [""]
-    //   };
-    //
-    //   const createAccount: CreateServiceProviderAccountDTO = {
-    //     email: this.registerForm.value.email,
-    //     password: this.registerForm.value.password,
-    //     isVerified: false,
-    //     suspensionTimeStamp: null,
-    //     type: PersonType.SERVICE_PROVIDER,
-    //     person: createServiceProviderDTO,
-    //     registrationRequest:{} as CreateRegistrationRequestDTO,
-    //   }
-    //
-    //   console.log('Account Submitted:', createAccount);
-    //
-    //   this.registrationService.registerServiceProvider(createAccount).subscribe({
-    //     next: (response) => {
-    //       console.log('Service provider registered successfully:', response);
-    //       this.router.navigate(['/email-confirmation-sent']);
-    //     },
-    //     error: (err) => {
-    //       console.error('Error registering service provider:', err);
-    //     },
-    //   });
-    // }
+    console.log("lose");
+    if (this.isFormValid()) {
+      console.log("upao")
+      const details: DetailedServiceProviderDTO = {
+        companyEmail: this.upgradeForm.value.companyEmail,
+        companyName: this.upgradeForm.value.companyName,
+        companyPhoneNumber: this.upgradeForm.value.companyPhoneNumber,
+        companyLocation: {
+          address: this.upgradeForm.value.companyAddress,
+          city: this.upgradeForm.value.companyCity,
+        } as CreateLocationDTO,
+        companyDescription: this.upgradeForm.value.description,
+        companyPhotos: [""]
+      };
+
+      this.profileService.upgradeToPUP(this.user.id, details).subscribe(
+        {
+          next: result => {
+            console.log(result);
+          },
+          error: error => {
+            console.log(error);
+          }
+        }
+      );
+
+      this.router.navigate(['/upgrade-confirmation']);
+    }
+
+
+  }
+
+  isFormValid() {
+
+    const fields:string[] = [
+        'companyEmail',
+        'companyName',
+        'companyPhoneNumber',
+        'companyCity',
+        'companyAddress',
+        'description',
+      ];
+
+    fields.forEach((field) => this.upgradeForm.get(field)?.markAsTouched());
+    return fields.every((field) => this.upgradeForm.get(field)?.valid);
   }
 
 

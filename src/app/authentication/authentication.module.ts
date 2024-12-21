@@ -16,6 +16,7 @@ import { UserRegisterComponent } from './register/user-register/user-register.co
 import { UpgradingComponent } from './upgrading/upgrading.component';
 import { CongradulationComponent } from './upgrading/congradulation/congradulation.component';
 import { PupRegisterUpgradingComponent } from './upgrading/pup-register-upgrading/pup-register-upgrading.component';
+import { PupConfirmationComponent } from './upgrading/pup-confirmation/pup-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { PupRegisterUpgradingComponent } from './upgrading/pup-register-upgradin
     UpgradingComponent,
     CongradulationComponent,
     PupRegisterUpgradingComponent,
+    PupConfirmationComponent,
   ],
   imports: [
     CommonModule,

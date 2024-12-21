@@ -6,6 +6,7 @@ import {ChangePasswordDTO} from '../shared/dto/users/account/ChangePasswordDTO.m
 import {UpdatePersonDTO} from '../shared/dto/users/person/UpdatePersonDTO.model';
 import {UpdateServiceProviderDTO} from '../shared/dto/users/serviceProvider/UpdateServiceProviderDTO.model';
 import {UpdateCompanyAccountDTO} from '../shared/dto/users/account/UpdateCompanyAccountDTO.model';
+import {DetailedServiceProviderDTO} from '../shared/dto/users/serviceProvider/DetailedServiceProviderDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +53,10 @@ export class ProfileService {
 
   upgradeToOD(personId:string) : Observable<any> {
     return this.httpClient.put(environment.apiHost + "/accounts/upgrade-to-OD/" + personId,{} );
+  }
+
+  upgradeToPUP(personId:string, details: DetailedServiceProviderDTO ) : Observable<any> {
+    return this.httpClient.put(environment.apiHost + "/accounts/upgrade-to-PUP/" + personId,details );
   }
 
 

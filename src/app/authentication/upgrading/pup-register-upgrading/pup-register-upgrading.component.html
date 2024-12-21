@@ -3,7 +3,7 @@
   <h3 class="register-title">Product/Service Provider</h3>
   <label>Please provide us with some information about your company.</label>
 
-  <form [formGroup]="upgradeForm" (ngSubmit)="onSubmit()" class="register-form">
+  <form [formGroup]="upgradeForm" class="register-form">
     <div class = "form-grid">
       <div class = "form-column">
         <mat-form-field appearance="fill">
@@ -80,7 +80,7 @@
 
       </div>
 
-      <button mat-raised-button class="upgrade-button" type="submit">
+      <button mat-raised-button class="upgrade-button" (click)="onSubmit()" type="submit">
         UPGRADE
       </button>
     </div>

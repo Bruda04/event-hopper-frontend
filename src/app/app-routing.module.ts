@@ -18,6 +18,7 @@ import {InvitationRedirectionComponent} from './invitation/invitation-redirectio
 import {
   PupRegisterUpgradingComponent
 } from './authentication/upgrading/pup-register-upgrading/pup-register-upgrading.component';
+import {PupConfirmationComponent} from './authentication/upgrading/pup-confirmation/pup-confirmation.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -32,6 +33,7 @@ const routes: Routes = [
   { path: 'register-user', component: UserRegisterComponent },
   { path: 'home', component: HomeComponent },
   { path: 'email-confirmation-sent', component: EmailConfirmationSentComponent },
+  { path: 'upgrade-confirmation', component: PupConfirmationComponent },
   { path: 'invitations/:id', component: InvitationRedirectionComponent },
   { path: 'event', component: EventSinglePageComponent },
   { path: 'my-solutions', component: PUPServiceProductManagementComponent,

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatDialogRef} from '../../infrastructure/material/material.module';
 import {UserService} from '../services/user.service';
@@ -22,6 +22,7 @@ export class UpgradingComponent {
               private router: Router,
               private profileService: ProfileService,
               private userService: UserService,
+
               ) {
     this.user = userService.getUserData();
   }
@@ -40,7 +41,6 @@ export class UpgradingComponent {
       width: '500px',
     });
 
-    console.log(this.user.id);
     this.profileService.upgradeToOD(this.user.id).subscribe(
       {
         next: result => {
@@ -57,5 +57,6 @@ export class UpgradingComponent {
   onServiceProvider():void{
     this.dialogRef.close();
     this.router.navigate(['/upgrading-register-pup']);
+
   }
 }
