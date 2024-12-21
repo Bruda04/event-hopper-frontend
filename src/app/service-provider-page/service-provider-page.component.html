@@ -1,0 +1,80 @@
+<div class="page" *ngIf="provider">
+  <h2 class="header">
+    Product/Service Provider
+  </h2>
+  <div class="provider-container">
+    <!-- Left Column -->
+    <div class="provider-first-column">
+      <div class="provider-logo">
+        <img [src]="environment.apiImagesHost+provider.profilePicture" alt="Provider Logo" />
+      </div>
+      <div class="rating">
+        <mat-icon *ngFor="let star of [1, 2, 3, 4, 5]" [ngClass]="{'filled': star <= provider.rating}">star</mat-icon>
+      </div>
+    </div>
+
+    <!-- Middle Column -->
+    <div class="provider-details">
+      <div class="provider-info">
+        <h3>{{ provider.companyName }}</h3>
+        <p>Email: {{ provider.companyEmail }}</p>
+        <p>Address: {{ provider.companyLocation.address }}</p>
+        <p>City: {{ provider.companyLocation.city }}</p>
+        <p>Phone: {{ provider.companyPhoneNumber }}</p>
+        <p>
+          Owner: {{ provider.name }} {{ provider.surname }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="provider-description">
+      <p><strong>Description:</strong><br/>
+        {{ provider.companyDescription }}
+      </p>
+      <div class="action-buttons" *ngIf="user.id">
+        <button mat-raised-button (click)="block()">BLOCK USER</button>
+        <button mat-raised-button (click)="report()">REPORT ACCOUNT</button>
+      </div>
+    </div>
+
+    <!-- Image Gallery -->
+    <div class="image-gallery">
+      <div class="grid-item">
+        <p-carousel
+          [value]="provider.companyPhotos"
+          [numVisible]="1"
+          [showIndicators]="false"
+          [circular]="true"
+          [autoplayInterval]="5000"
+        >
+          <ng-template pTemplate="item" let-image>
+            <div class="carousel-item">
+              <img [src]="environment.apiImagesHost+image">
+            </div>
+          </ng-template>
+        </p-carousel>
+      </div>
+    </div>
+  </div>
+
+  <div class="reviews">
+    <div class="review" *ngFor="let comment of provider.comments" [id]="comment.id">
+      <img [src]="environment.apiImagesHost+comment.author.profilePicture" alt="User profile" />
+      <div class="review-content">
+        <strong>{{ comment.author.name }} {{ comment.author.surname }}</strong>
+        <p>{{ comment.content }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="!provider && !notFound" class="loading">
+  <p>Loading product/service provider information...</p>
+</div>
+
+
+<div class="error-message" *ngIf="notFound">
+  <p>We were unable to find that product/service provider.</p>
+</div>

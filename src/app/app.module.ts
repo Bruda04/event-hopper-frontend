@@ -14,6 +14,7 @@ import {provideHttpClient} from '@angular/common/http';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {InvitationModule} from './invitation/invitation.module';
 import {ProfileModule} from './profile/profile.module';
+import { ServiceProviderPageComponent } from './service-provider-page/service-provider-page.component';
 import {CalendarModule, DateAdapter} from 'angular-calendar';
 import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
 
@@ -21,7 +22,7 @@ import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
 @NgModule({
   declarations: [
     AppComponent,
-
+    ServiceProviderPageComponent,
   ],
   imports: [
     BrowserModule,

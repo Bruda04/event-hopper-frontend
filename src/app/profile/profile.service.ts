@@ -4,9 +4,9 @@ import {Observable} from 'rxjs';
 import {environment} from '../../env/envirements';
 import {ChangePasswordDTO} from '../shared/dto/users/account/ChangePasswordDTO.model';
 import {UpdatePersonDTO} from '../shared/dto/users/person/UpdatePersonDTO.model';
-import {UpdateServiceProviderDTO} from '../shared/dto/users/serviceProvider/UpdateServiceProviderDTO.model';
 import {UpdateCompanyAccountDTO} from '../shared/dto/users/account/UpdateCompanyAccountDTO.model';
 import {DetailedServiceProviderDTO} from '../shared/dto/users/serviceProvider/DetailedServiceProviderDTO.model';
+import { ServiceProviderDetailsDTO } from '../shared/dto/users/serviceProvider/serviceProviderDetailsDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -59,5 +59,16 @@ export class ProfileService {
     return this.httpClient.put(environment.apiHost + "/accounts/upgrade-to-PUP/" + personId,details );
   }
 
+  getServiceProviderDetails(id: string): Observable<ServiceProviderDetailsDTO> {
+    return this.httpClient.get<ServiceProviderDetailsDTO>(environment.apiHost + '/service-providers/' + id + '/details');
+  }
+
+  addSolutionToFavorites(id: string, solutionId: string): Observable<any> {
+    return this.httpClient.post(environment.apiHost + '/persons/' + id + '/favorite-solutions/' + solutionId, {});
+  }
+
+  removeSolutionFromFavorites(id: string, solutionId: string): Observable<any> {
+    return this.httpClient.delete(environment.apiHost + '/persons/' + id + '/favorite-solutions/' + solutionId);
+  }
 
 }
