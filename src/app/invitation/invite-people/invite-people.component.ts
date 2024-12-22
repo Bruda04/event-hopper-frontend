@@ -1,12 +1,13 @@
 import {Component, Inject, Injectable} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatDialogRef} from '../../infrastructure/material/material.module';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import {InvitationService} from "../invitation.service";
 import {CreateInvitationDTO} from "../../shared/dto/invitations/CreateInvitationDTO.model";
 import {EventService} from "../../event/event.service";
 import {EventDTO} from "../../shared/dto/events/eventDTO.model";
 import {firstValueFrom} from "rxjs";
+import {InviteConfirmationComponent} from '../invite-confirmation/invite-confirmation.component';
 
 @Component({
   selector: 'app-invite-people',
@@ -18,37 +19,52 @@ export class InvitePeopleComponent {
   inviteForm: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
   });
-  invitedEmails: string[] =[];
+  invitedEmails: string[] = [];
 
+  isLoading: boolean = false;
   constructor(private invitationService: InvitationService,
               private eventService: EventService,
+              private dialog: MatDialog,
               private dialogRef: MatDialogRef<InvitePeopleComponent>,
-              ) {
+  ) {
   }
 
 
   async invite(): Promise<void> {
-    for (let email of this.invitedEmails) {
-      try {
+    this.isLoading = true;
+    let allSuccessful = true;
 
-        //moram cekati da se prvo dobavi event pa onda dalje
-         const event: EventDTO = await firstValueFrom(this.eventService.getEvent("3f7b2c9e-4a6f-4d5b-b8c1-7a2f9e3b6d4a"));
 
-        const createInvitationDTO: CreateInvitationDTO = {
-          targetEmail: email,
-          picture: "",
-          event: event,  // Ovde dodajemo učitani event
-        };
+    try {
+      for (let email of this.invitedEmails) {
+        try {
 
-        // Kreiramo pozivnicu
-        await this.invitationService.create(createInvitationDTO).toPromise();
-        console.log("Invitation created for:", email);
-      } catch (error) {
-        console.error('Error creating invitation:', error);
+          //moram cekati da se prvo dobavi event pa onda dalje
+          const event: EventDTO = await firstValueFrom(this.eventService.getEvent("3f7b2c9e-4a6f-4d5b-b8c1-7a2f9e3b6d4a"));
+
+          const createInvitationDTO: CreateInvitationDTO = {
+            targetEmail: email,
+            picture: "",
+            event: event,  // Ovde dodajemo učitani event
+          };
+
+          // Kreiramo pozivnicu
+          await this.invitationService.create(createInvitationDTO).toPromise();
+          console.log("Invitation created for:", email);
+        } catch (error) {
+          console.error('Error creating invitation:', error);
+          allSuccessful = false;
+        }
       }
-    }
 
-    //this.dialogRef.close();
+    }finally {
+      this.isLoading = false;
+      this.dialogRef.close();
+      this.dialog.open(InviteConfirmationComponent, {
+        width: '500px',
+        data :{ success: allSuccessful },
+      });
+    }
   }
 
   addEmail(): void {

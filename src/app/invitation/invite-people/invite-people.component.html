@@ -1,5 +1,5 @@
 <h2 mat-dialog-title>Invite people</h2>
-<mat-dialog-content>
+<mat-dialog-content *ngIf="!isLoading">
   <form [formGroup]="inviteForm">
     <!-- Input polje sa Invite dugmetom -->
     <div class="input-pair">
@@ -31,7 +31,11 @@
 </mat-dialog-content>
 
 <!-- Dugmad Cancel i Submit -->
-<mat-dialog-actions class="actions-container">
+<mat-dialog-actions class="actions-container"  *ngIf="!isLoading">
   <button mat-raised-button mat-dialog-close class="cancel-button">CANCEL</button>
   <button mat-raised-button color="primary" (click)="invite()" class="submit-button">SUBMIT</button>
 </mat-dialog-actions>
+
+<div *ngIf="isLoading" class="spinner-container">
+  <mat-spinner></mat-spinner>
+</div>
