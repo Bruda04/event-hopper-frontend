@@ -44,9 +44,9 @@ export class AdminSuggestionsManagementComponent implements OnInit {
           data: {product: element, categories: categories},
         });
 
-        dialogRef.afterClosed().subscribe((result: boolean | null) => {
+        dialogRef.afterClosed().subscribe((result: string | null) => {
           if (result) {
-            this.categoriesService.reject(element.id, {status: 'REJECTED'}).subscribe({
+            this.categoriesService.reject(element.id, result).subscribe({
               next: (_) => {
                 this.load();
               },
@@ -71,7 +71,7 @@ export class AdminSuggestionsManagementComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: boolean | null) => {
       if (result) {
-        this.categoriesService.approve(element.id, {status: 'APPROVED'}).subscribe({
+        this.categoriesService.approve(element.id).subscribe({
           next: (_) => {
             this.load();
             this.categoryApproved.emit();

@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {SimpleProductDTO} from '../../../shared/dto/solutions/simpleProductDTO';
 import {SimpleCategoryDTO} from '../../../shared/dto/categories/simpleCategoryDTO.model';
+import {elementAt} from 'rxjs';
 
 
 @Component({
@@ -23,8 +24,7 @@ export class EditSuggestionComponent {
 
   onSave(): void {
     if (this.editProductsCategoryForm.valid) {
-      this.dialogRef.close();
+      this.dialogRef.close(this.editProductsCategoryForm.value.category);
     }
-    this.dialogRef.close(true);
   }
 }
