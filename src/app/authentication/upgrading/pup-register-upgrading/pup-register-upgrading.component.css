@@ -1,7 +1,7 @@
 :host {
   display: block;
   background-color: var(--primary-color);
-  min-height: 100vh;
+  min-height: 90vh;
   padding: 2em;
 }
 
@@ -30,7 +30,7 @@ mat-error {
 
 .register-title {
   color: var(--beige);
-  margin:0;
+  margin: 0px;
 }
 
 .register-form {
@@ -45,7 +45,6 @@ mat-error {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.5em;
-  width: 100%;
 }
 
 .form-column {
@@ -55,63 +54,17 @@ mat-error {
 }
 
 mat-form-field {
-  width: 100%;
+  width: 400px;
 
 }
 
-.register-container {
-  text-align: center;
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.register-image {
-  max-width: 100px;
-  height: auto;
-}
-
-.register-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-.button-group {
-  display: flex;
-  justify-content: center; /* This will place the buttons at opposite ends */
-  margin-top: 1em;
-  width: 100%; /* Make sure the button container spans the full width */
-}
-
-.back-button, .register-button {
-  width: 30%; /* Set width to less than 50% to allow space between the buttons */
-  padding: 0.8em;
+.upgrade-button {
+  width: 30%;
+  margin-top: 5px;
   font-weight: normal;
   background-color: var(--secondary-color) !important;
-  color: white !important;
-  cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.back-button{
-  background-color: var(--primary-color) !important;
-}
-
-.back-button:hover, .register-button:hover {
-  background-color: var(--font-dark-blue);
   color: white;
 }
-
-
-
-.password-hint {
-  font-size: 12px;
-  color: white;
-  margin-top: 5px;
-}
-
 
 .upload-button {
   width: 100%;
@@ -139,10 +92,6 @@ mat-form-field {
   border: 1px solid var(--secondary-color);
 }
 
-
-
-
-
 .image-close-btn {
   position: absolute;
   top: 5px;
@@ -163,4 +112,37 @@ mat-form-field {
 
 .image-close-btn:hover {
   background-color: var(--error-color);
+}
+
+
+.company-image-preview {
+  display: inline-block;
+  margin-right: 10px;
+  position: relative;
+}
+
+.company-image-preview img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.image-close-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+.upload-button {
+  width: 100%;
+  font-size: 14px;
+}
+
+.image-preview {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  gap: 10px;
 }

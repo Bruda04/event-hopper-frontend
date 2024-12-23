@@ -1,0 +1,17 @@
+<div class="confirmation-dialog">
+  <div *ngIf="data.success; else failureContent">
+    <h6>Congratulations!</h6>
+    <p>Invitations are sent successfully!</p>
+  </div>
+
+  <ng-template #failureContent>
+    <div>
+      <h6>Ooops!</h6>
+      <p>Something went wrong! Try again later or contact us!</p>
+    </div>
+  </ng-template>
+
+  <div class="dialog-buttons">
+    <button mat-button class="button" (click)="onOk()">OK, GOT IT!</button>
+  </div>
+</div>

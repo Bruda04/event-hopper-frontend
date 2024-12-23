@@ -79,7 +79,8 @@
                 *ngIf="this.user.role != 'SERVICE_PROVIDER'">CHANGE PASSWORD</button>
 
         <button mat-raised-button class="btn"
-                *ngIf="this.user.role === 'AUTHENTICATED_USER'">UPGRADE PROFILE</button>
+                *ngIf="this.user.role === 'AUTHENTICATED_USER'"
+                (click)="openUpgradingDialog()">UPGRADE PROFILE</button>
 
         <button mat-raised-button class="btn"
                 *ngIf="this.user.role === 'ADMIN'"

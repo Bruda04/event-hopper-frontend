@@ -14,6 +14,13 @@ import {
 import {roleGuard} from './authentication/guards/role.guard';
 import {EventSinglePageComponent} from './event/event-single-page/event-single-page.component';
 import {UserRegisterComponent} from './authentication/register/user-register/user-register.component';
+import {InvitationRedirectionComponent} from './invitation/invitation-redirection/invitation-redirection.component';
+import {
+  PupRegisterUpgradingComponent
+} from './authentication/upgrading/pup-register-upgrading/pup-register-upgrading.component';
+import {PupConfirmationComponent} from './authentication/upgrading/pup-confirmation/pup-confirmation.component';
+import {EventSinglePageComponent} from './event/event-single-page/event-single-page.component';
+import {UserRegisterComponent} from './authentication/register/user-register/user-register.component';
 import {SolutionPageComponent} from './solutions/solution-page/solution-page.component';
 import {ServiceProviderPageComponent} from './service-provider-page/service-provider-page.component';
 
@@ -25,10 +32,13 @@ const routes: Routes = [
     data: { roles:  ['SERVICE_PROVIDER', 'ADMIN', 'AUTHENTICATED_USER', 'EVENT_ORGANIZER']  } },
   { path: 'register', component: RegisterComponent },
   { path: 'register-pup', component: PupRegisterComponent },
+  { path: 'upgrading-register-pup', component: PupRegisterUpgradingComponent},
   { path: 'register-organizer', component: OrganizerRegisterComponent },
   { path: 'register-user', component: UserRegisterComponent },
   { path: 'home', component: HomeComponent },
   { path: 'email-confirmation-sent', component: EmailConfirmationSentComponent },
+  { path: 'upgrade-confirmation', component: PupConfirmationComponent },
+  { path: 'invitations/:id', component: InvitationRedirectionComponent },
   { path: 'event', component: EventSinglePageComponent },
   { path: 'my-solutions', component: PUPServiceProductManagementComponent,
     canActivate: [roleGuard],

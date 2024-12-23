@@ -13,6 +13,11 @@ import { RouterModule } from '@angular/router';
 import { EmailConfirmationSentComponent } from './email-confirmation-sent/email-confirmation-sent.component'; // Import RouterModule
 import { ImageCropperComponent } from 'ngx-image-cropper';
 import { UserRegisterComponent } from './register/user-register/user-register.component';
+import { UpgradingComponent } from './upgrading/upgrading.component';
+import { CongradulationComponent } from './upgrading/congradulation/congradulation.component';
+import { PupRegisterUpgradingComponent } from './upgrading/pup-register-upgrading/pup-register-upgrading.component';
+import { PupConfirmationComponent } from './upgrading/pup-confirmation/pup-confirmation.component';
+
 
 @NgModule({
   declarations: [
@@ -22,6 +27,10 @@ import { UserRegisterComponent } from './register/user-register/user-register.co
     PupRegisterComponent,
     EmailConfirmationSentComponent,
     UserRegisterComponent,
+    UpgradingComponent,
+    CongradulationComponent,
+    PupRegisterUpgradingComponent,
+    PupConfirmationComponent,
   ],
   imports: [
     CommonModule,

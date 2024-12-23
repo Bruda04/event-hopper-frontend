@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { UserService } from '../services/user.service';
 import {LoginService} from '../services/login/login.service';
 import {LoginDTO} from '../../shared/dto/users/account/LoginDTO.model';
@@ -21,7 +21,19 @@ export class LoginComponent {
     ])
   });
 
-  constructor(private loginService: LoginService, private userService: UserService, private router: Router) {}
+  invitationId: string;
+
+  constructor(private loginService: LoginService,
+              private userService: UserService,
+              private router: Router,
+              private route: ActivatedRoute ,) {}
+
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.invitationId = params['invitationId'];
+    });
+  }
 
   // Getters for easier access in the template
   get email() {
@@ -50,7 +62,11 @@ export class LoginComponent {
           if(response.success){
             console.log('User logged in successfully:', response);
             this.userService.storeUserData(response.account);
-            this.router.navigate(['/home']);
+            if (this.invitationId){
+              this.router.navigate(['/invitation-redirect'], { queryParams: { invitationId: this.invitationId } });
+            }else{
+              this.router.navigate(['/home']);
+            }
           }else{
             this.loginErrorMessage = response.message;
             console.error('Login error:', response.message);
