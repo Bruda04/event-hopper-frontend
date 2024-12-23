@@ -10,7 +10,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './infrastructure/material/material.module';
 import { EventModule } from './event/event.module';
 import {AdminDashboardModule} from './admin-dashboard/admin-dashboard.module';
-import {provideHttpClient} from '@angular/common/http';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {InvitationModule} from './invitation/invitation.module';
 import {ProfileModule} from './profile/profile.module';
@@ -18,6 +17,8 @@ import { ServiceProviderPageComponent } from './service-provider-page/service-pr
 import {CalendarModule, DateAdapter} from 'angular-calendar';
 import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
 
+import {HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi} from '@angular/common/http';
+import { AuthInterceptor} from './authentication/guards/AuthInterceptor';
 
 @NgModule({
   declarations: [
@@ -44,8 +45,13 @@ import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
     }),
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,  // Allows multiple interceptors to be used
+    },
+    provideHttpClient(withFetch(), withInterceptorsFromDi()),
     provideAnimationsAsync(),
-    provideHttpClient()
   ],
   bootstrap: [AppComponent]
 })

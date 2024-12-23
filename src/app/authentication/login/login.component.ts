@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import { UserService } from '../services/user.service';
 import {LoginService} from '../services/login/login.service';
 import {LoginDTO} from '../../shared/dto/users/account/LoginDTO.model';
+import {LoginResponse} from '../../shared/dto/users/account/LoginResponse.model';
 
 @Component({
   selector: 'app-login',
@@ -57,11 +58,11 @@ export class LoginComponent {
 
 
       this.loginService.loginUser(loginDTO).subscribe({
-        next: (response) => {
+        next: (response:LoginResponse) => {
           console.log(response);
           if(response.success){
             console.log('User logged in successfully:', response);
-            this.userService.storeUserData(response.account);
+            this.userService.storeToken(response.token);
             if (this.invitationId){
               this.router.navigate(['/invitation-redirect'], { queryParams: { invitationId: this.invitationId } });
             }else{
@@ -74,7 +75,7 @@ export class LoginComponent {
 
         },
         error: (err) => {
-          this.loginErrorMessage = err.error;
+          this.loginErrorMessage = err.error.message;
           console.error('Login error:', err);
         },
       });

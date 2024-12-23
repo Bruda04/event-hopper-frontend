@@ -8,6 +8,8 @@ import {PersonType} from '../../../shared/model/PersonType.model';
 import {CreateLocationDTO} from '../../../shared/dto/locations/CreateLocationDTO.model';
 import {CreateEventOrganizerAccountDTO} from '../../../shared/dto/users/account/CreateEventOrganizerAccountDTO.model';
 import {CreateRegistrationRequestDTO} from '../../../shared/dto/registrationRequest/CreateRegistrationRequestDTO.model';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../../../env/envirements';
 
 function phoneMinLengthValidator(control: AbstractControl): ValidationErrors | null {
   const value = control.value?.toString() || ''; // Convert the number to a string
@@ -25,8 +27,9 @@ export class OrganizerRegisterComponent {
   hidePassword = true;
   hideConfirmPassword = true;
   imagePreview: string | null = null;
+  profilePhoto: string | null = null;
 
-  constructor(private fb: FormBuilder, private router: Router, private registrationService: RegistrationService) {
+  constructor(private fb: FormBuilder, private router: Router, private registrationService: RegistrationService, private http: HttpClient) {
     this.registerForm = this.fb.group(
       {
         fullName: ['', Validators.required],
@@ -71,7 +74,7 @@ export class OrganizerRegisterComponent {
       const createEventOrganizerDTO: CreateEventOrganizerDTO = {
         name: this.registerForm.value.fullName.split(' ')[0], //first name
         surname: this.registerForm.value.fullName.split(' ').slice(1).join(' ') || '',
-        profilePicture: "",//this.registerForm.value.profileImage, // Image file
+        profilePicture: this.registerForm.value.profileImage, // Image file
         phoneNumber: this.registerForm.value.phoneNumber,
         type: PersonType.EVENT_ORGANIZER,
         location: {
@@ -117,22 +120,28 @@ export class OrganizerRegisterComponent {
   }
 
   onFileSelected(event: Event) {
-    const inputElement = event.target as HTMLInputElement;
-    const file = inputElement.files?.[0];
-
+    const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (e: ProgressEvent<FileReader>) => {
-        this.imagePreview = e.target?.result as string; // Update preview
-        this.registerForm.patchValue({ profileImage: file }); // Update form control
-        this.registerForm.get('profileImage')?.updateValueAndValidity(); // Sync validity
-      };
-      reader.readAsDataURL(file);
+      const formData = new FormData();
+      formData.append('image', file);
+
+      this.http.post<{ fileName: string }>(`${environment.apiHost}/images`, formData).subscribe({
+        next: (response) => {
+          this.profilePhoto = response.fileName; // Store the file name
+          this.imagePreview = URL.createObjectURL(file); // Show the preview
+          console.log('Image uploaded successfully:', response.fileName);
+        },
+        error: (error) => {
+          console.error('Image upload failed:', error);
+        },
+      });
     }
   }
 
+
   clearImage() {
-    this.imagePreview = null; // Clear preview
+    this.imagePreview = null;
+    this.profilePhoto = null;
     this.registerForm.patchValue({ profileImage: null }); // Clear form control value
     this.registerForm.get('profileImage')?.updateValueAndValidity(); // Sync validity
   }

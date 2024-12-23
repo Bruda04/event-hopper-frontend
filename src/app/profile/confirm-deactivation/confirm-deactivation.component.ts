@@ -33,7 +33,7 @@ export class ConfirmDeactivationComponent {
     this.profileService.deactivateAccount(this.user.id).subscribe({
       next: (response) => {
         console.log('Account deactivated');
-        this.userService.clearUserData();
+        this.userService.clearToken();
         this.dialogRef.close();
         this.router.navigate(['/login']);
       },
