@@ -12,8 +12,6 @@ import {
   PUPServiceProductManagementComponent
 } from './solutions/pupservice-product-management/pupservice-product-management.component';
 import {roleGuard} from './authentication/guards/role.guard';
-import {EventSinglePageComponent} from './event/event-single-page/event-single-page.component';
-import {UserRegisterComponent} from './authentication/register/user-register/user-register.component';
 import {InvitationRedirectionComponent} from './invitation/invitation-redirection/invitation-redirection.component';
 import {
   PupRegisterUpgradingComponent
