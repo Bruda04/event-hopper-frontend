@@ -1,0 +1,71 @@
+:host {
+  background-color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+
+p{
+  font-size: medium;
+  color: var(--font-dark-blue);
+  width: 50%;
+}
+
+.mat-form-field .mat-icon{
+  margin-right: 20px;
+}
+
+.confirm-container {
+  text-align: center;
+  align-items: center;
+  margin-top: -15%;
+  width: 100%;
+  max-width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+
+.confirm-email-image {
+  max-width: 100px;
+  height: auto;
+  margin-bottom: 1em;
+}
+
+.confirm-email-title {
+  color: var(--beige);
+}
+
+.confirm-email-form {
+  display: flex;
+  flex-direction: column; /* Stack inputs vertically */
+  align-items: center;
+  width: 100%;
+}
+
+
+.back-to-login-button {
+  width: 30%;
+  padding: 0.8em;
+  font-weight: normal;
+  background-color: var(--secondary-color) !important;
+  color: white !important;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin-top: 1em;
+}
+
+.back-to-login-button:hover {
+  background-color: var(--font-dark-blue);
+  color: white;
+}
+
+
+.confirm-email-text {
+  margin-top: 1em;
+  font-size: 0.9em;
+  text-decoration: none;
+  color: var(--font-dark-blue);
+}

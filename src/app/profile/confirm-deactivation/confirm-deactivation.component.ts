@@ -15,7 +15,10 @@ export class ConfirmDeactivationComponent {
   isDeletable: boolean;
   errorMessage: string;
 
-  constructor(public dialogRef: MatDialogRef<ConfirmDeactivationComponent>, private profileService: ProfileService, private userService: UserService, private router: Router) {
+  constructor(public dialogRef: MatDialogRef<ConfirmDeactivationComponent>,
+              private profileService: ProfileService,
+              private userService: UserService,
+              private router: Router) {
     this.user = userService.getUserData();
     this.isDeletable = true;
   }

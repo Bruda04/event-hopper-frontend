@@ -5,7 +5,8 @@ import {environment} from '../../env/envirements';
 import {ChangePasswordDTO} from '../shared/dto/users/account/ChangePasswordDTO.model';
 import {UpdatePersonDTO} from '../shared/dto/users/person/UpdatePersonDTO.model';
 import {UpdateCompanyAccountDTO} from '../shared/dto/users/account/UpdateCompanyAccountDTO.model';
-import {ServiceProviderDetailsDTO} from '../shared/dto/users/serviceProvider/serviceProviderDetailsDTO.model';
+import {DetailedServiceProviderDTO} from '../shared/dto/users/serviceProvider/DetailedServiceProviderDTO.model';
+import { ServiceProviderDetailsDTO } from '../shared/dto/users/serviceProvider/serviceProviderDetailsDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,10 @@ export class ProfileService {
 
   getProfileDetailsForPerson( id: string): Observable<any> {
     return this.httpClient.get(environment.apiHost + "/accounts/" + id + '/profile');
+  }
+
+  getProfileByEmail(email: string): Observable<any> {
+    return this.httpClient.get(environment.apiHost + "/accounts/active/" + email);
   }
 
   changePassword( id: string, changePasswordDTO: ChangePasswordDTO): Observable<any> {
@@ -32,6 +37,26 @@ export class ProfileService {
 
   editCompanyInformation(id: string, updateCompanyAccount: UpdateCompanyAccountDTO): Observable<any> {
     return this.httpClient.put(environment.apiHost + "/accounts/" + id + "/company", updateCompanyAccount);
+  }
+
+  editPerson(id: string, updatePersonDTO: UpdatePersonDTO): Observable<any> {
+    return this.httpClient.put(environment.apiHost + "/persons/" + id , updatePersonDTO);
+  }
+
+  getPerson(id: string): Observable<any> {
+    return this.httpClient.get(environment.apiHost + "/persons/" + id );
+  }
+
+  addAttending(personId: string, eventId: string): Observable<any> {
+    return this.httpClient.get(environment.apiHost + "/persons/" + personId + '/attending-events/'  + eventId);
+  }
+
+  upgradeToOD(personId:string) : Observable<any> {
+    return this.httpClient.put(environment.apiHost + "/accounts/upgrade-to-OD/" + personId,{} );
+  }
+
+  upgradeToPUP(personId:string, details: DetailedServiceProviderDTO ) : Observable<any> {
+    return this.httpClient.put(environment.apiHost + "/accounts/upgrade-to-PUP/" + personId,details );
   }
 
   getServiceProviderDetails(id: string): Observable<ServiceProviderDetailsDTO> {

@@ -51,6 +51,7 @@ h2 {
 }
 
 ::ng-deep .invite-button {
+  margin-bottom: 1.4em;
   flex-shrink: 0 !important; /* Dugme ne rasteže se */
   background-color: var(--font-dark-blue) !important;
   color: var(--light-beige) !important;
@@ -59,7 +60,7 @@ h2 {
 
 .invite-button:hover {
   background-color: var(--primary-color)!important;
-  color: var(--font-dark-blue)!important;
+  color: white !important;
 }
 
 .email-list {
@@ -108,3 +109,15 @@ h2 {
   background-color: #004f6f;
   color: white;
 }
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Ili visina kontejnera */
+}
+
+mat-spinner {
+  color: var(--font-dark-blue) !important;
+}
+

@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { UserService} from '../../authentication/services/user.service';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog,MatDialogRef } from '@angular/material/dialog';
 import {ProfileService} from '../profile.service';
 import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';
 import {ConfirmDeactivationComponent} from '../confirm-deactivation/confirm-deactivation.component';
 import {EditAccountInformationComponent} from '../edit-account-information/edit-account-information.component';
 import {EditCompanyInformationComponent} from '../edit-company-information/edit-company-information.component';
 import {User} from '../../shared/model/user.model';
+import {UpgradingComponent} from '../../authentication/upgrading/upgrading.component';
 
 
 @Component({
@@ -18,7 +19,10 @@ import {User} from '../../shared/model/user.model';
 export class ProfileComponent {
   user: User;
 
-  constructor(private userService: UserService, private router: Router, private profileService: ProfileService, private dialog: MatDialog) {
+  constructor(private userService: UserService,
+              private router: Router,
+              private profileService: ProfileService,
+              public dialog: MatDialog) {
     this.user = this.userService.getUserData();
   }
 
@@ -99,6 +103,12 @@ export class ProfileComponent {
 
   openChangePasswordDialog(): void {
     this.dialog.open(ChangePasswordDialogComponent, {
+      width: '500px'
+    });
+  }
+
+  openUpgradingDialog():void {
+    this.dialog.open(UpgradingComponent, {
       width: '500px'
     });
   }

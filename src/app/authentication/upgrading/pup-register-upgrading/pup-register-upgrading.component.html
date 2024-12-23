@@ -1,0 +1,88 @@
+<div class="register-container">
+  <img src="logo.png" alt="Logo Image" class="register-image">
+  <h3 class="register-title">Product/Service Provider</h3>
+  <label>Please provide us with some information about your company.</label>
+
+  <form [formGroup]="upgradeForm" class="register-form">
+    <div class = "form-grid">
+      <div class = "form-column">
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="Company Email" formControlName="companyEmail" />
+          <mat-error *ngIf="upgradeForm.get('companyEmail')?.hasError('required')">
+            Email is required
+          </mat-error>
+          <mat-error *ngIf="upgradeForm.get('companyEmail')?.hasError('email')">
+            Invalid email format
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Phone Number</mat-label>
+          <input matInput placeholder="Phone Number" formControlName="companyPhoneNumber" type="number" />
+          <mat-error *ngIf="upgradeForm.get('companyPhoneNumber')?.hasError('required')">
+            Phone Number is required
+          </mat-error>
+        </mat-form-field>
+
+        <div class="form-column">
+          <input type="file" id="companyPictures" (change)="onCompanyImageSelected($event)" style="display: none;" accept="image/*" multiple />
+          <button mat-raised-button class="upload-button" type="button" (click)="triggerFileInput(1)">
+            UPLOAD COMPANY PICTURES (OPTIONAL)
+          </button>
+
+          <!-- Image Preview and Cropping Section -->
+          <div class="image-preview" *ngIf="companyImages.length > 0">
+            <div *ngFor="let image of companyImages; let i = index" class="company-image-preview">
+              <img [src]="image.cropped || image.src" alt="Company Preview {{i + 1}}" />
+              <button mat-icon-button aria-label="Remove Image" class="image-close-btn" type="button" (click)="clearCompanyImage(i)">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class = "form-column">
+
+        <mat-form-field appearance="fill">
+          <mat-label>Company Name</mat-label>
+          <input matInput placeholder="Company Name" formControlName="companyName" />
+          <mat-error *ngIf="upgradeForm.get('companyName')?.hasError('required')">
+            Company Name is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>City</mat-label>
+          <input matInput placeholder="City" formControlName="companyCity" />
+          <mat-error *ngIf="upgradeForm.get('companyCity')?.hasError('required')">
+            City is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Address</mat-label>
+          <input matInput placeholder="Company Address" formControlName="companyAddress" />
+          <mat-error *ngIf="upgradeForm.get('companyAddress')?.hasError('required')">
+            Address is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Description</mat-label>
+          <textarea matInput placeholder="Description" formControlName="description"></textarea>
+          <mat-error *ngIf="upgradeForm.get('description')?.hasError('required')">
+            Description is required
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+
+      <button mat-raised-button class="upgrade-button" (click)="onSubmit()" type="submit">
+        UPGRADE
+      </button>
+    </div>
+  </form>
+</div>
