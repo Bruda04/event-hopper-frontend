@@ -12,6 +12,9 @@ import { EventModule } from './event/event.module';
 import {AdminDashboardModule} from './admin-dashboard/admin-dashboard.module';
 import {provideHttpClient} from '@angular/common/http';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
+
+import {InvitationModule} from './invitation/invitation.module';
+
 import {ProfileModule} from './profile/profile.module';
 import { ServiceProviderPageComponent } from './service-provider-page/service-provider-page.component';
 import {CalendarModule, DateAdapter} from 'angular-calendar';
@@ -34,6 +37,7 @@ import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
     EventModule,
     SolutionsModule,
     AdminDashboardModule,
+    InvitationModule,
     ProfileModule,
     CalendarModule.forRoot({
       provide: DateAdapter,

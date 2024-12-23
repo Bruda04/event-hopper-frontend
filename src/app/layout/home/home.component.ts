@@ -19,6 +19,9 @@ import {ProductDTO} from '../../shared/dto/solutions/productDTO.model';
 import {LocationDTO} from '../../shared/dto/locations/LocationDTO.model';
 import {SimpleEventTypeDTO} from '../../shared/dto/eventTypes/simpleEventTypeDTO.model';
 import {CategoryDTO} from '../../shared/dto/categories/categoryDTO.model';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {CreateServiceComponent} from '../../solutions/create-service/create-service.component';
+import {InvitePeopleComponent} from '../../invitation/invite-people/invite-people.component';
 
 
 @Component({
@@ -46,6 +49,7 @@ export class HomeComponent implements OnInit {
               private categoriesService: CategoriesService,
               private locationService: LocationService,
               private eventTypeService: EventTypesService,
+
               ) { }
 
   ngOnInit(): void {
