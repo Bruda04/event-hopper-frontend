@@ -9,6 +9,7 @@ import {EventDTO} from "../../shared/dto/events/eventDTO.model";
 import {firstValueFrom} from "rxjs";
 import {InviteConfirmationComponent} from '../invite-confirmation/invite-confirmation.component';
 
+
 @Component({
   selector: 'app-invite-people',
   templateUrl: './invite-people.component.html',
@@ -19,6 +20,7 @@ export class InvitePeopleComponent {
   inviteForm: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
   });
+
   invitedEmails: string[] = [];
 
   isLoading: boolean = false;
@@ -27,10 +29,12 @@ export class InvitePeopleComponent {
               private dialog: MatDialog,
               private dialogRef: MatDialogRef<InvitePeopleComponent>,
   ) {
+
   }
 
 
   async invite(): Promise<void> {
+
     this.isLoading = true;
     let allSuccessful = true;
 
@@ -65,6 +69,7 @@ export class InvitePeopleComponent {
         data :{ success: allSuccessful },
       });
     }
+
   }
 
   addEmail(): void {

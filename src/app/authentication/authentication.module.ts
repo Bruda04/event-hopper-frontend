@@ -18,6 +18,7 @@ import { CongradulationComponent } from './upgrading/congradulation/congradulati
 import { PupRegisterUpgradingComponent } from './upgrading/pup-register-upgrading/pup-register-upgrading.component';
 import { PupConfirmationComponent } from './upgrading/pup-confirmation/pup-confirmation.component';
 
+
 @NgModule({
   declarations: [
     LoginComponent,

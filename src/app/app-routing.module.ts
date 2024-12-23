@@ -12,7 +12,6 @@ import {
   PUPServiceProductManagementComponent
 } from './solutions/pupservice-product-management/pupservice-product-management.component';
 import {roleGuard} from './authentication/guards/role.guard';
-
 import {EventSinglePageComponent} from './event/event-single-page/event-single-page.component';
 import {UserRegisterComponent} from './authentication/register/user-register/user-register.component';
 import {InvitationRedirectionComponent} from './invitation/invitation-redirection/invitation-redirection.component';
@@ -20,7 +19,8 @@ import {
   PupRegisterUpgradingComponent
 } from './authentication/upgrading/pup-register-upgrading/pup-register-upgrading.component';
 import {PupConfirmationComponent} from './authentication/upgrading/pup-confirmation/pup-confirmation.component';
-
+import {EventSinglePageComponent} from './event/event-single-page/event-single-page.component';
+import {UserRegisterComponent} from './authentication/register/user-register/user-register.component';
 import {SolutionPageComponent} from './solutions/solution-page/solution-page.component';
 import {ServiceProviderPageComponent} from './service-provider-page/service-provider-page.component';
 

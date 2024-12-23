@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RegistrationService} from '../../services/registration/registration.service';

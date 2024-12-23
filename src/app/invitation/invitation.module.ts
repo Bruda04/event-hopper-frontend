@@ -8,11 +8,13 @@ import { InviteConfirmationComponent } from './invite-confirmation/invite-confir
 
 
 
+
 @NgModule({
   declarations: [
     InvitePeopleComponent,
     InvitationRedirectionComponent,
     InviteConfirmationComponent
+    InvitePeopleComponent
   ],
   imports: [
     CommonModule,
