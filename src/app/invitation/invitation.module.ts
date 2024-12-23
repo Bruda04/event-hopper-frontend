@@ -13,7 +13,7 @@ import { InviteConfirmationComponent } from './invite-confirmation/invite-confir
   declarations: [
     InvitePeopleComponent,
     InvitationRedirectionComponent,
-    InviteConfirmationComponent
+    InviteConfirmationComponent,
     InvitePeopleComponent
   ],
   imports: [
