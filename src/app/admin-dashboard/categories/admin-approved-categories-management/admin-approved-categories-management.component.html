@@ -29,7 +29,7 @@
           <button mat-icon-button (click)="edit(element)" [ngStyle]="{color: 'var(--primary-color)'}">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button [disabled]="element.eventTypes?.length > 0" (click)="remove(element)" [ngStyle]="{ color: element.eventTypes?.length > 0 ? 'var(--disabled-color)' : 'var(--error-color)'  }">
+          <button mat-icon-button [disabled]="!element.deletable" (click)="remove(element)" [ngStyle]="{ color: !element.deletable ? 'var(--disabled-color)' : 'var(--error-color)'  }">
             <mat-icon>delete</mat-icon>
           </button>
         </td>
