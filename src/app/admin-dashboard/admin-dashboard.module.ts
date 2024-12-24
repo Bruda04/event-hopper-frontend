@@ -22,6 +22,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { CreateEventTypeComponent } from './eventTypes/create-event-type/create-event-type.component';
+import { DeleteCategoryComponent } from './categories/delete-category/delete-category.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { CreateEventTypeComponent } from './eventTypes/create-event-type/create-
     EditEventTypeComponent,
     AdminEventTypesManagementComponent,
     CreateEventTypeComponent,
+    DeleteCategoryComponent,
   ],
   imports: [
     CommonModule,

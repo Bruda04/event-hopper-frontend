@@ -5,7 +5,6 @@ import {Observable} from 'rxjs';
 import {environment} from '../../../env/envirements';
 import {CreateCategoryDTO} from '../../shared/dto/categories/createCategoryDTO.model';
 import {UpdateCategoryDTO} from '../../shared/dto/categories/UpdateCategoryDTO.model';
-import {UpdateCategorySuggestionDTO} from '../../shared/dto/categories/updateCategorySuggestionDTO.model';
 import {CreatedCategorySuggestionDTO} from '../../shared/dto/categories/createdCategorySuggestionDTO.model';
 import {CategoryDTO} from '../../shared/dto/categories/categoryDTO.model';
 import {CategorySuggestionDTO} from '../../shared/dto/categories/categorySuggestionDTO.model';
@@ -37,12 +36,12 @@ export class CategoriesService {
     return this.httpClient.put(environment.apiHost + '/categories/' + id, category);
   }
 
-  approve(id: string, suggestion: UpdateCategorySuggestionDTO): Observable<any> {
-    return this.httpClient.put(environment.apiHost + '/categories/suggestions/' + id, suggestion);
+  approve(id: string): Observable<any> {
+    return this.httpClient.put(environment.apiHost + '/categories/suggestions/' + id + '/approve', {});
   }
 
-  reject(categoryId: string, suggestion: UpdateCategorySuggestionDTO): Observable<any> {
-    return this.httpClient.put(environment.apiHost + '/categories/suggestions/' + categoryId, suggestion);
+  reject(categoryId: string, substituteCategoryId: string): Observable<any> {
+    return this.httpClient.put(environment.apiHost + '/categories/suggestions/' + categoryId + '/reject/' + substituteCategoryId, {});
   }
 
   makeSuggestion(categoryName: string): Observable<CreatedCategorySuggestionDTO> {

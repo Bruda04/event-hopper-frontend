@@ -10,6 +10,8 @@ import {CreateCategoryComponent} from '../create-category/create-category.compon
 import {CategoryDTO} from '../../../shared/dto/categories/categoryDTO.model';
 import {UpdateCategoryDTO} from '../../../shared/dto/categories/UpdateCategoryDTO.model';
 import {CreateCategoryDTO} from '../../../shared/dto/categories/createCategoryDTO.model';
+import {ApproveSuggestionComponent} from '../approve-suggestion/approve-suggestion.component';
+import {DeleteCategoryComponent} from '../delete-category/delete-category.component';
 
 @Component({
   selector: 'app-admin-approved-categories-management',
@@ -35,12 +37,21 @@ export class AdminApprovedCategoriesManagementComponent implements OnInit {
   }
 
   remove(category: CategoryDTO): void {
-    this.categoriesService.remove(category.id).subscribe({
-      next: (_) => {
-        this.load();
-      },
-      error: (_) => {
-        console.error("Error removing category")
+    const dialogRef = this.dialog.open(DeleteCategoryComponent, {
+      minWidth: '30vw',
+      data: category.name,
+    });
+
+    dialogRef.afterClosed().subscribe((result: boolean | null) => {
+      if (result) {
+        this.categoriesService.remove(category.id).subscribe({
+          next: (_) => {
+            this.load();
+          },
+          error: (_) => {
+            console.error("Error removing category")
+          }
+        });
       }
     });
 

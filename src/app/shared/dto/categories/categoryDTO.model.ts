@@ -6,4 +6,5 @@ export interface CategoryDTO {
   description: string;
   status: string;
   eventTypes: SimpleEventTypeDTO[];
+  deletable: boolean;
 }
