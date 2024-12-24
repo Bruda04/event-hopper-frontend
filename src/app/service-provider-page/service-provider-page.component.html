@@ -32,7 +32,7 @@
       <p><strong>Description:</strong><br/>
         {{ provider.companyDescription }}
       </p>
-      <div class="action-buttons" *ngIf="user.id">
+      <div class="action-buttons" *ngIf="user?.id">
         <button mat-raised-button (click)="block()">BLOCK USER</button>
         <button mat-raised-button (click)="report()">REPORT ACCOUNT</button>
       </div>
