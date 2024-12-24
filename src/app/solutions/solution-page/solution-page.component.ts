@@ -36,7 +36,6 @@ export class SolutionPageComponent implements OnInit {
       {
         next: (solution: SolutionDetailsDTO): void => {
           this.solution = solution;
-          this.solution.isFavorite = false;
           this.eventTypes = solution.eventTypes.map(eventType => eventType.name).join(', ');
         },
         error: () : void=> {
@@ -51,19 +50,19 @@ export class SolutionPageComponent implements OnInit {
   }
 
   toggleFavorites(): void {
-    if (!this.solution.isFavorite) {
-      this.profileService.addSolutionToFavorites(this.user.id, this.solutionId).subscribe({
+    if (!this.solution.favorite) {
+      this.profileService.addSolutionToFavorites(this.solutionId).subscribe({
         next: () => {
-          this.solution.isFavorite = !this.solution.isFavorite;
+          this.solution.favorite = !this.solution.favorite;
         },
         error: (err) => {
           console.log('Error adding solution to favorites');
         }
       });
     } else {
-      this.profileService.removeSolutionFromFavorites(this.user.id, this.solutionId).subscribe({
+      this.profileService.removeSolutionFromFavorites(this.solutionId).subscribe({
         next: () => {
-          this.solution.isFavorite = !this.solution.isFavorite;
+          this.solution.favorite = !this.solution.favorite;
         },
         error: (err) => {
           console.log('Error removing solution from favorites');

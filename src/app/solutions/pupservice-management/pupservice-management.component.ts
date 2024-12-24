@@ -247,8 +247,8 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
           this.dataSource = new MatTableDataSource(response.content);
           this.pageProperties.totalCount = response.totalElements;
         },
-        error: () => {
-          console.error('Error loading services');
+        error: (e) => {
+          console.error('Error loading services', e);
         }
       });
   }
