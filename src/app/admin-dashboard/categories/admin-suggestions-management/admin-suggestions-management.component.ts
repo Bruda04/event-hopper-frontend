@@ -41,7 +41,7 @@ export class AdminSuggestionsManagementComponent implements OnInit {
       next: (categories: SimpleCategoryDTO[]) => {
         const dialogRef = this.dialog.open(EditSuggestionComponent, {
           minWidth: '30vw',
-          data: {product: element, categories: categories},
+          data: {product: element.product, categories: categories},
         });
 
         dialogRef.afterClosed().subscribe((result: string | null) => {
