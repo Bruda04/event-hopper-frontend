@@ -21,7 +21,7 @@
       <div class="product-details">
         <div class="header">
           <h1>{{solution.name}}</h1>
-          <mat-icon [ngClass]="{'filled': solution.isFavorite}" (click)="toggleFavorites()" *ngIf="user.id">star</mat-icon>
+          <mat-icon [ngClass]="{'filled': solution.favorite}" (click)="toggleFavorites()" *ngIf="user?.id">star</mat-icon>
         </div>
         <p>
          {{solution.description}}
@@ -55,7 +55,7 @@
 
         <p class="available"><strong>{{ !solution.available ? "UNAVAILABLE" : null }}</strong></p>
 
-        <button mat-raised-button class="chat-btn" (click)="chatWithUs()">
+        <button mat-raised-button class="chat-btn" (click)="chatWithUs()" >
           <mat-icon>chat</mat-icon>
           You need more info? Chat with us!
         </button>

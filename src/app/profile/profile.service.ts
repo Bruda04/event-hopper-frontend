@@ -63,12 +63,12 @@ export class ProfileService {
     return this.httpClient.get<ServiceProviderDetailsDTO>(environment.apiHost + '/service-providers/' + id + '/details');
   }
 
-  addSolutionToFavorites(id: string, solutionId: string): Observable<any> {
-    return this.httpClient.post(environment.apiHost + '/persons/' + id + '/favorite-solutions/' + solutionId, {});
+  addSolutionToFavorites(solutionId: string): Observable<any> {
+    return this.httpClient.post(environment.apiHost + '/persons/favorite-solutions/' + solutionId, {});
   }
 
-  removeSolutionFromFavorites(id: string, solutionId: string): Observable<any> {
-    return this.httpClient.delete(environment.apiHost + '/persons/' + id + '/favorite-solutions/' + solutionId);
+  removeSolutionFromFavorites(solutionId: string): Observable<any> {
+    return this.httpClient.delete(environment.apiHost + '/persons/favorite-solutions/' + solutionId);
   }
 
 }
