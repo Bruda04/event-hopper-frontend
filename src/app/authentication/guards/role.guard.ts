@@ -1,10 +1,15 @@
 import { CanActivateFn } from '@angular/router';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
+import {UserService} from '../services/user.service';
 
 export const roleGuard: CanActivateFn = (route, state) => {
   // Get the user role from localStorage
-  const userRole = localStorage.getItem('userRole');
+
+
+  const userService = inject(UserService);
+
+  const userRole = userService.getUserData()?.role;
 
   // The required role for this route (pass in route data)
   const requiredRoles = route.data['roles'];

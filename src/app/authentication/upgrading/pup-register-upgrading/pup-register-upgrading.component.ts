@@ -43,7 +43,7 @@ export class PupRegisterUpgradingComponent {
 
   ngOnInit() {
 
-    this.userService.clearUserData();
+    this.userService.clearToken();
     this.cdr.detectChanges();
   }
 

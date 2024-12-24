@@ -22,7 +22,7 @@ export class CongradulationComponent {
   onOk(): void { // Funkcija za odjavu
     // Implementacija logout logike
 
-    this.userService.clearUserData();
+    this.userService.clearToken();
     this.router.navigate(['/login']); // Preusmeravanje na login stranicu
     this.dialogRef.close(); // Zatvaranje modala
     this.cdr.detectChanges(); // Ručno osvežavanje prikaza

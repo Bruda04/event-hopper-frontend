@@ -27,7 +27,11 @@ export class NavBarComponent {
     // Listen for route changes
     this.router.events.subscribe(() => {
       this.user = this.userService.getUserData();
-      this.loggedIn = this.user.id != null;
+      if(this.user == null){
+        this.loggedIn = false;
+      }else{
+        this.loggedIn = this.user.id != null;
+      }
 
       this.isLoginRoute = this.router.url === '/login';
       this.isRegisterRoute =
@@ -43,7 +47,7 @@ export class NavBarComponent {
 
   logout() {
     this.loggedIn = false;
-    this.userService.clearUserData();
+    this.userService.clearToken();
     this.user = null;
     this.router.navigate(['/login']);  // Redirect to login after logout
 
