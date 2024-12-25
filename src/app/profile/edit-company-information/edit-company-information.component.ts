@@ -60,7 +60,7 @@ export class EditCompanyInformationComponent {
 
       this.profileService.editCompanyInformation(this.user.id, updateCompanyAccountDTO).subscribe({
         next: (response) => {
-          console.log('Company information changed successfully:', response);
+          console.log('Company information changed successfully');
           this.dialogRef.close(response);
         },
         error: (err) => {

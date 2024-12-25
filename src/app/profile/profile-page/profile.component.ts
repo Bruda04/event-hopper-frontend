@@ -29,8 +29,6 @@ export class ProfileComponent {
   ngOnInit() {
     this.profileService.getProfileDetailsForPerson(this.user.id).subscribe({
       next: (response) => {
-        console.log('User data loaded');
-
         this.user.email = response.email;
         this.user.name = response.name;
         this.user.surname = response.surname;
@@ -50,7 +48,6 @@ export class ProfileComponent {
           this.user.companyDescription = response.companyDescription;
           this.user.companyLocation = response.companyLocation;
         }
-        console.log("Profile of user loaded: ", this.user);
       },
       error: (err) => {
         console.error('No user found error:', err);
