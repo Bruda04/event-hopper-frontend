@@ -93,11 +93,9 @@ export class OrganizerRegisterComponent {
         registrationRequest:{} as CreateRegistrationRequestDTO,
       }
 
-      console.log('Account Submitted:',createAccount);
 
       this.registrationService.registerEventOrganizer(createAccount).subscribe({
         next: (response) => {
-          console.log('Event organizer registered successfully:', response);
           this.router.navigate(['/email-confirmation-sent']);
         },
         error: (err) => {

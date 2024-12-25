@@ -27,7 +27,7 @@ export class ProfileComponent {
   }
 
   ngOnInit() {
-    this.profileService.getProfileDetailsForPerson(this.user.id).subscribe({
+    this.profileService.getProfileDetailsForPerson().subscribe({
       next: (response) => {
         this.user.email = response.email;
         this.user.name = response.name;

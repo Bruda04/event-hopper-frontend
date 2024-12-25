@@ -61,7 +61,7 @@ export class EditAccountInformationComponent {
       };
 
 
-      this.profileService.editProfileInformation(this.user.id, updateProfileInformationDTO).subscribe({
+      this.profileService.editProfileInformation(updateProfileInformationDTO).subscribe({
         next: (response) => {
           console.log('Profile information changed successfully');
           this.dialogRef.close(response);

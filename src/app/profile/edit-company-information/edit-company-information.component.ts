@@ -58,7 +58,7 @@ export class EditCompanyInformationComponent {
       };
 
 
-      this.profileService.editCompanyInformation(this.user.id, updateCompanyAccountDTO).subscribe({
+      this.profileService.editCompanyInformation(updateCompanyAccountDTO).subscribe({
         next: (response) => {
           console.log('Company information changed successfully');
           this.dialogRef.close(response);

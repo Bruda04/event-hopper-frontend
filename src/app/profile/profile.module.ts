@@ -21,6 +21,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {RouterLink} from '@angular/router';
 import {SolutionsModule} from '../solutions/solutions.module';
 import {EventModule} from '../event/event.module';
+import { PasswordChangedSuccessfullyComponent } from './password-changed-successfully/password-changed-successfully.component';
 
 
 
@@ -35,6 +36,7 @@ import {EventModule} from '../event/event.module';
     FavoriteEventsComponent,
     FavoriteSolutionsComponent,
     EditCompanyInformationComponent,
+    PasswordChangedSuccessfullyComponent,
   ],
   imports: [
     CommonModule,

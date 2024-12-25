@@ -96,11 +96,9 @@ export class PupRegisterComponent {
         registrationRequest:{} as CreateRegistrationRequestDTO,
       }
 
-      console.log('Account Submitted:', createAccount);
 
       this.registrationService.registerServiceProvider(createAccount).subscribe({
         next: (response) => {
-          console.log('Service provider registered successfully:', response);
           this.router.navigate(['/email-confirmation-sent']);
         },
         error: (err) => {
