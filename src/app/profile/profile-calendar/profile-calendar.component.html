@@ -62,8 +62,12 @@
 </div>
 
 <br />
-
-<!-- Calendar Display -->
+  <h6>
+    <span style="display: inline-block; width: 10px; height: 10px; background-color: #e3bc08; border-radius: 50%; margin-right: 5px;"></span>
+    Your events are colored yellow,
+    <span style="display: inline-block; width: 10px; height: 10px; background-color: #1E90FF; border-radius: 50%; margin-right: 5px;"></span>
+    your attending events are blue.
+  </h6><!-- Calendar Display -->
 <div [ngSwitch]="view" class="calendar">
   <mwl-calendar-month-view
     *ngSwitchCase="CalendarView.Month"

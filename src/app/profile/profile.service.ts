@@ -23,8 +23,8 @@ export class ProfileService {
     return this.httpClient.get(environment.apiHost + "/accounts/active/" + email);
   }
 
-  changePassword( id: string, changePasswordDTO: ChangePasswordDTO): Observable<any> {
-    return this.httpClient.post(environment.apiHost + "/accounts/" + id + '/change-password', changePasswordDTO);
+  changePassword(changePasswordDTO: ChangePasswordDTO): Observable<any> {
+    return this.httpClient.post(environment.apiHost + "/accounts/change-password", changePasswordDTO);
   }
 
   deactivateAccount(id: string): Observable<any> {

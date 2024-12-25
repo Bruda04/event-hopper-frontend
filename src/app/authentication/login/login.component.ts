@@ -59,9 +59,7 @@ export class LoginComponent {
 
       this.loginService.loginUser(loginDTO).subscribe({
         next: (response:LoginResponse) => {
-          console.log(response);
           if(response.success){
-            console.log('User logged in successfully:', response);
             this.userService.storeToken(response.token);
             if (this.invitationId){
               this.router.navigate(['/invitation-redirect'], { queryParams: { invitationId: this.invitationId } });
@@ -70,13 +68,11 @@ export class LoginComponent {
             }
           }else{
             this.loginErrorMessage = response.message;
-            console.error('Login error:', response.message);
           }
 
         },
         error: (err) => {
           this.loginErrorMessage = err.error.message;
-          console.error('Login error:', err);
         },
       });
 

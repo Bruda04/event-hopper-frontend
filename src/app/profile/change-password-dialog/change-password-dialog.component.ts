@@ -44,18 +44,15 @@ export class ChangePasswordDialogComponent {
   }
 
   onSubmit() {
-    console.log("IN ON SUBMIT")
     if (this.changePasswordForm.valid) {
-
       console.log('Form valid.');
-
 
       const changePasswordDTO: ChangePasswordDTO = {
         oldPassword: this.changePasswordForm.value.oldPassword,
         newPassword: this.changePasswordForm.value.newPassword
       }
 
-      this.profileService.changePassword(this.user.id, changePasswordDTO).subscribe({
+      this.profileService.changePassword(changePasswordDTO).subscribe({
         next: (response) => {
           console.log('Password changed successfully.');
           this.dialogRef.close();

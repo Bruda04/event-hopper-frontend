@@ -31,12 +31,6 @@ export class ProfileCalendarComponent {
   }
 
   loadCalendarEvents(): void {
-    console.log("My events", this.myEvents);
-    console.log("My events are YELLOW");
-    console.log("Attending events", this.attendingEvents);
-    console.log("Attending events are BLUE");
-
-
     if(this.user.role === 'EVENT_ORGANIZER'){
       for (const event of this.myEvents) {
         const calendarEvent: CalendarEvent = {
@@ -67,7 +61,6 @@ export class ProfileCalendarComponent {
 
   // Handle event click
   handleEvent(action: string, event: CalendarEvent): void {
-    console.log(`${action}:`, event);
     alert(`Event: ${event.title}\nStarts at: ${event.start}\nEnds at: ${event.end}`);
   }
 
