@@ -30,7 +30,7 @@ export class ConfirmDeactivationComponent {
 
   // Handle "Yes, Deactivate" button
   onConfirm(): void {
-    this.profileService.deactivateAccount(this.user.id).subscribe({
+    this.profileService.deactivateAccount().subscribe({
       next: (response) => {
         console.log('Account deactivated');
         this.userService.clearToken();
