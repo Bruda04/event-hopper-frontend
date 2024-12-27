@@ -11,7 +11,6 @@ import {SimpleCategoryDTO} from '../../../shared/dto/categories/simpleCategoryDT
 import {EventTypeManagementDTO} from '../../../shared/dto/eventTypes/EventTypeManagementDTO.model';
 import {CreateEventTypeDTO} from '../../../shared/dto/eventTypes/CreateEventTypeDTO.model';
 import {UpdateEventTypeDTO} from '../../../shared/dto/eventTypes/UpdateEventTypeDTO.model';
-import {join} from '@angular/compiler-cli';
 
 @Component({
   selector: 'app-admin-event-types-management',
@@ -41,6 +40,8 @@ export class AdminEventTypesManagementComponent implements OnInit, AfterViewInit
     this.eventTypesService.getEventTypesForManagement().subscribe({
       next: (eventTypesForManagement: EventTypeManagementDTO) => {
         this.eventTypes = eventTypesForManagement.eventTypes;
+        console.log("heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+        console.log(this.eventTypes);
         this.categories = eventTypesForManagement.allCategories;
         this.dataSource = new MatTableDataSource(this.eventTypes);
       },
@@ -104,7 +105,7 @@ export class AdminEventTypesManagementComponent implements OnInit, AfterViewInit
   }
 
   remove(eventType: EventType): void {
-
+    console.log("in remove",eventType);
     this.eventTypesService.remove(eventType.id).subscribe({
       next: () => {
         this.loadEventTypes();
