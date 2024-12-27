@@ -83,19 +83,15 @@ export class AdminEventTypesManagementComponent implements OnInit, AfterViewInit
     });
   }
 
-  edit(eventType: EventType): void {
+  edit(eventType: SimpleEventTypeDTO): void {
     const dialogRef = this.dialog.open(EditEventTypeComponent, {
       minWidth: '30vw',
-      data: eventType,
+      data: { eventType, allCategories: this.categories }
     });
 
-    dialogRef.afterClosed().subscribe((result: EventType | null) => {
+    dialogRef.afterClosed().subscribe((result: UpdateEventTypeDTO | null) => {
       if (result) {
-        const updateEventTypeDTO : UpdateEventTypeDTO = {
-          description: result.description,
-          suggestedCategories: []
-        };
-        this.eventTypesService.update(result.id, updateEventTypeDTO).subscribe({
+        this.eventTypesService.update(eventType.id, result).subscribe({
           next: () => {
             this.loadEventTypes();
           },
