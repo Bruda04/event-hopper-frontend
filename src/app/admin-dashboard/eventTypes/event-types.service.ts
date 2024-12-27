@@ -29,7 +29,7 @@ export class EventTypesService {
   }
 
   add(createEventTypeDTO: CreateEventTypeDTO): Observable<any> {
-    return this.httpClient.post(environment.apiHost + '/event-types/', createEventTypeDTO);
+    return this.httpClient.post(environment.apiHost + '/event-types', createEventTypeDTO);
   }
 
   remove(id: string): Observable<any> {

@@ -2,9 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef } from "../../../infrastructure/material/material.module";
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import {CategoriesService} from '../../categories/categories.service';
 import {CategoryDTO} from '../../../shared/dto/categories/categoryDTO.model';
-import {EventType} from '../../../shared/model/eventType.model';
 import {UpdateEventTypeDTO} from '../../../shared/dto/eventTypes/UpdateEventTypeDTO.model';
 import {SimpleEventTypeDTO} from '../../../shared/dto/eventTypes/SimpleEventTypeDTO.model';
 

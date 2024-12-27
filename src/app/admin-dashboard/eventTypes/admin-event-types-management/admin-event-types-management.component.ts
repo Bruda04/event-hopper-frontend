@@ -40,8 +40,6 @@ export class AdminEventTypesManagementComponent implements OnInit, AfterViewInit
     this.eventTypesService.getEventTypesForManagement().subscribe({
       next: (eventTypesForManagement: EventTypeManagementDTO) => {
         this.eventTypes = eventTypesForManagement.eventTypes;
-        console.log("heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-        console.log(this.eventTypes);
         this.categories = eventTypesForManagement.allCategories;
         this.dataSource = new MatTableDataSource(this.eventTypes);
       },
@@ -61,18 +59,13 @@ export class AdminEventTypesManagementComponent implements OnInit, AfterViewInit
   create(): void {
     const dialogRef: MatDialogRef<CreateEventTypeComponent> = this.dialog.open(CreateEventTypeComponent, {
       minWidth: '30vw',
-      minHeight: '40vh'
+      minHeight: '40vh',
+      data: { categories: this.categories }
     });
 
-    dialogRef.afterClosed().subscribe((newEventType: EventType | null) => {
-      if (newEventType) {
-        const createEventTypeDTO: CreateEventTypeDTO = {
-          name: newEventType.name,
-          description: newEventType.description,
-          suggestedCategories: []
-        };
-
-        this.eventTypesService.add(createEventTypeDTO).subscribe({
+    dialogRef.afterClosed().subscribe((createDTO: CreateEventTypeDTO | null) => {
+      if (createDTO) {
+        this.eventTypesService.add(createDTO).subscribe({
           next: () => {
             this.loadEventTypes();
           },
@@ -105,7 +98,6 @@ export class AdminEventTypesManagementComponent implements OnInit, AfterViewInit
   }
 
   remove(eventType: EventType): void {
-    console.log("in remove",eventType);
     this.eventTypesService.remove(eventType.id).subscribe({
       next: () => {
         this.loadEventTypes();

@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import { MatDialogRef } from "../../../infrastructure/material/material.module";
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import {CategoriesService} from '../../categories/categories.service';
-import {CategoryDTO} from '../../../shared/dto/categories/categoryDTO.model';
 import {EventType} from '../../../shared/model/eventType.model';
+import {SimpleCategoryDTO} from '../../../shared/dto/categories/simpleCategoryDTO.model';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {CreateEventTypeDTO} from '../../../shared/dto/eventTypes/CreateEventTypeDTO.model';
 
 @Component({
   selector: 'app-create-event-type',
@@ -11,24 +12,17 @@ import {EventType} from '../../../shared/model/eventType.model';
   styleUrls: ['./create-event-type.component.css']
 })
 export class CreateEventTypeComponent {
-  categories : CategoryDTO[];
+  categories : SimpleCategoryDTO[];
 
-  constructor(public dialogRef: MatDialogRef<CreateEventTypeComponent>, private categoriesService: CategoriesService) {
-    categoriesService.getApproved().subscribe({
-      next: (categories: CategoryDTO[]) => {
-        this.categories = categories;
-      },
-      error: (_) => {
-        console.error("Error loading categories");
-      }
-    });
+  constructor(public dialogRef: MatDialogRef<CreateEventTypeComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: { categories: SimpleCategoryDTO[] } ) {
+
+    this.categories = data.categories;
   }
 
   onCategorySelect(selectedCategories: string[]): void {
     this.createEventTypeForm.patchValue({ suggestedSolutionCategories: selectedCategories });
   }
-
-
 
   createEventTypeForm = new FormGroup({
     name: new FormControl<string>('', [Validators.required]),
@@ -38,11 +32,15 @@ export class CreateEventTypeComponent {
 
   create(): void {
     if(this.createEventTypeForm.valid) {
-      const eventType: EventType = {
+      const eventType: CreateEventTypeDTO = {
         name: this.createEventTypeForm.value.name,
         description: this.createEventTypeForm.value.description,
-        suggestedSolutionCategories: this.createEventTypeForm.value.suggestedSolutionCategories,
-        isDeactivated: false // default value, can be changed based on requirements
+        suggestedCategories: this.createEventTypeForm.value.suggestedSolutionCategories
+          .map(categoryName =>
+            this.categories.find(category => category.name === categoryName) // Find the category by name
+          )
+          .filter(category => category !== undefined),
+
       };
       this.dialogRef.close(eventType);
     } else {
