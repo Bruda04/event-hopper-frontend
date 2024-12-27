@@ -11,7 +11,7 @@ import {PageEvent} from '@angular/material/paginator';
 import {PagedResponse} from '../../shared/model/paged-response.model';
 import {ServiceManagementDTO} from '../../shared/dto/solutions/serviceManagementDTO.model';
 import {CategoryDTO} from '../../shared/dto/categories/categoryDTO.model';
-import {SimpleEventTypeDTO} from '../../shared/dto/eventTypes/simpleEventTypeDTO.model';
+import {SimpleEventTypeDTO} from '../../shared/dto/eventTypes/SimpleEventTypeDTO.model';
 import {CategoriesService} from '../../admin-dashboard/categories/categories.service';
 import {CreateServiceDTO} from '../../shared/dto/solutions/createServiceDTO.model';
 import {CreatedCategorySuggestionDTO} from '../../shared/dto/categories/createdCategorySuggestionDTO.model';

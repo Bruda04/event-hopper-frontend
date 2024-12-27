@@ -31,14 +31,11 @@
       <!-- Suggested Categories Column -->
       <ng-container matColumnDef="suggestedSolutionCategories">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Suggested Categories </th>
-        <td mat-cell *matCellDef="let element"> {{element.suggestedSolutionCategories?.join(', ') || '-' }} </td>
+        <td mat-cell *matCellDef="let element">
+          {{ getCategoryNames(element.suggestedCategories) }}
+        </td>
       </ng-container>
 
-      <!-- Events Column -->
-      <ng-container matColumnDef="events">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Events </th>
-        <td mat-cell *matCellDef="let element"> {{element.events?.join(', ') || '-' }} </td>
-      </ng-container>
 
       <!-- Actions Column -->
       <ng-container matColumnDef="actions">

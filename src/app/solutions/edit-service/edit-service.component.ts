@@ -3,7 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatDialogRef} from '../../infrastructure/material/material.module';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {ServiceManagementDTO} from '../../shared/dto/solutions/serviceManagementDTO.model';
-import {SimpleEventTypeDTO} from '../../shared/dto/eventTypes/simpleEventTypeDTO.model';
+import {SimpleEventTypeDTO} from '../../shared/dto/eventTypes/SimpleEventTypeDTO.model';
 import {UpdateServiceDTO} from '../../shared/dto/solutions/updateServiceDTO.model';
 import {ImageServiceService} from '../../shared/services/image-service.service';
 import {environment} from '../../../env/envirements';

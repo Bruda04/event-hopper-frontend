@@ -1,6 +1,6 @@
 import {SimplePriceDTO} from '../prices/simplePriceDTO.model';
 import {SimpleCategoryDTO} from '../categories/simpleCategoryDTO.model';
-import {SimpleEventTypeDTO} from '../eventTypes/simpleEventTypeDTO.model';
+import {SimpleEventTypeDTO} from '../eventTypes/SimpleEventTypeDTO.model';
 
 export interface ServiceManagementDTO {
     id?: string
