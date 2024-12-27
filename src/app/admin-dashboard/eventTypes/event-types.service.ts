@@ -35,23 +35,4 @@ export class EventTypesService {
   remove(id: string): Observable<any> {
     return this.httpClient.delete(environment.apiHost + '/event-types/' + id);
   }
-  /**
-
-   add(eventType: EventType): void {
-   eventType.isDeactivated = false;
-   this.eventTypesList.push(eventType);
-   }
-
-   remove(eventType: EventType): void {
-   const event = this.eventTypesList.find((c: EventType) => c.id === eventType.id);
-   if (event) {
-   event.isDeactivated = true;
-   }
-   }
-
-  update(eventType: EventType): void {
-    const index: number = this.eventTypesList.findIndex((c: EventType) => c.id === eventType.id);
-    this.eventTypesList[index] = eventType;
-  }
-  **/
 }
