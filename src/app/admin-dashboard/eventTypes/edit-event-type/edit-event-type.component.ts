@@ -2,9 +2,9 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef } from "../../../infrastructure/material/material.module";
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import {CategoriesService} from '../../categories/categories.service';
 import {CategoryDTO} from '../../../shared/dto/categories/categoryDTO.model';
-import {EventType} from '../../../shared/model/eventType.model';
+import {UpdateEventTypeDTO} from '../../../shared/dto/eventTypes/UpdateEventTypeDTO.model';
+import {SimpleEventTypeDTO} from '../../../shared/dto/eventTypes/SimpleEventTypeDTO.model';
 
 @Component({
   selector: 'app-edit-event-type',
@@ -15,14 +15,15 @@ export class EditEventTypeComponent implements OnInit {
   categories: CategoryDTO[] = []; // Available categories to choose from
   selectedCategories: string[] = []; // Selected category names
   availableCategories: CategoryDTO[] = []; // Categories that can be selected (not selected yet)
+  eventTypeToEdit: SimpleEventTypeDTO;
 
   constructor(
     public dialogRef: MatDialogRef<EditEventTypeComponent>,
-    @Inject(MAT_DIALOG_DATA) public eventTypeToEdit: EventType,
-    private categoriesService: CategoriesService
+    @Inject(MAT_DIALOG_DATA) public data: { eventType: SimpleEventTypeDTO, allCategories: CategoryDTO[] },
   ) {
 
   }
+
 
   editEventTypeForm = new FormGroup({
     description: new FormControl<string>('', [Validators.required]),
@@ -30,33 +31,34 @@ export class EditEventTypeComponent implements OnInit {
 
   update(): void {
     if (this.editEventTypeForm.valid) {
-      const updatedEventType: EventType = {
-        ...this.eventTypeToEdit,
+      const updateEventType:  UpdateEventTypeDTO= {
         description: this.editEventTypeForm.value.description,
-        suggestedSolutionCategories: this.selectedCategories,
+        suggestedCategories: this.selectedCategories
+          .map(categoryName =>
+            this.categories.find(category => category.name === categoryName) // Find the category by name
+          )
+          .filter(category => category !== undefined),
       };
-      this.dialogRef.close(updatedEventType);
+      this.dialogRef.close(updateEventType);
     } else {
       this.editEventTypeForm.markAllAsTouched();
     }
   }
 
   ngOnInit(): void {
-    this.editEventTypeForm.patchValue({
-      description: this.eventTypeToEdit.description,
-    });
+    if (this.data) {
+      this.eventTypeToEdit = this.data.eventType;
+      this.categories = this.data.allCategories;
 
-    this.categoriesService.getApproved().subscribe({
-      next: (categories: CategoryDTO[]) => {
-        this.categories = categories;
-        // Initialize selected categories and available categories
-        this.selectedCategories = [...(this.eventTypeToEdit.suggestedSolutionCategories || [])];
-        this.loadAvailableCategories();
-      },
-      error: (_) => {
-        console.error("Error loading categories");
-      }
-    });
+      this.editEventTypeForm.patchValue({
+        description: this.eventTypeToEdit.description,
+      });
+
+      this.selectedCategories = this.eventTypeToEdit.suggestedCategories
+        ? this.eventTypeToEdit.suggestedCategories.map(category => category.name)
+        : [];
+      this.loadAvailableCategories();
+    }
   }
 
   loadAvailableCategories(): void {

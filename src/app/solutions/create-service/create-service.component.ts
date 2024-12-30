@@ -2,7 +2,7 @@ import {Component, Inject, Injectable} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatDialogRef} from '../../infrastructure/material/material.module';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {SimpleEventTypeDTO} from '../../shared/dto/eventTypes/simpleEventTypeDTO.model';
+import {SimpleEventTypeDTO} from '../../shared/dto/eventTypes/SimpleEventTypeDTO.model';
 import {CategoryDTO} from '../../shared/dto/categories/categoryDTO.model';
 import {CreateServiceDTO} from '../../shared/dto/solutions/createServiceDTO.model';
 import {ImageServiceService} from '../../shared/services/image-service.service';

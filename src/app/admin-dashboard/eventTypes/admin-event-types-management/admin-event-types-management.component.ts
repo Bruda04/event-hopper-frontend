@@ -6,6 +6,11 @@ import { EditEventTypeComponent } from '../edit-event-type/edit-event-type.compo
 import { MatDialogRef } from '@angular/material/dialog';
 import { CreateEventTypeComponent } from '../create-event-type/create-event-type.component';
 import {EventType} from '../../../shared/model/eventType.model';
+import {SimpleEventTypeDTO} from '../../../shared/dto/eventTypes/SimpleEventTypeDTO.model';
+import {SimpleCategoryDTO} from '../../../shared/dto/categories/simpleCategoryDTO.model';
+import {EventTypeManagementDTO} from '../../../shared/dto/eventTypes/EventTypeManagementDTO.model';
+import {CreateEventTypeDTO} from '../../../shared/dto/eventTypes/CreateEventTypeDTO.model';
+import {UpdateEventTypeDTO} from '../../../shared/dto/eventTypes/UpdateEventTypeDTO.model';
 
 @Component({
   selector: 'app-admin-event-types-management',
@@ -13,10 +18,11 @@ import {EventType} from '../../../shared/model/eventType.model';
   styleUrls: ['./admin-event-types-management.component.css']
 })
 export class AdminEventTypesManagementComponent implements OnInit, AfterViewInit {
-  eventTypes: EventType[];
-  dataSource: MatTableDataSource<EventType>;
+  eventTypes: SimpleEventTypeDTO[];
+  categories: SimpleCategoryDTO[];
+  dataSource: MatTableDataSource<SimpleEventTypeDTO>;
 
-  displayedColumns: string[] = ['name', 'description', 'active', 'suggestedSolutionCategories', 'events', 'actions'];
+  displayedColumns: string[] = ['name', 'description', 'active', 'suggestedCategories', 'actions'];
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -31,40 +37,74 @@ export class AdminEventTypesManagementComponent implements OnInit, AfterViewInit
   }
 
   private loadEventTypes(): void {
-    this.eventTypes = this.eventTypesService.getEventTypes();
-    this.dataSource = new MatTableDataSource(this.eventTypes);
+    this.eventTypesService.getEventTypesForManagement().subscribe({
+      next: (eventTypesForManagement: EventTypeManagementDTO) => {
+        this.eventTypes = eventTypesForManagement.eventTypes;
+        this.categories = eventTypesForManagement.allCategories;
+        this.dataSource = new MatTableDataSource(this.eventTypes);
+      },
+      error: (_) => {
+        console.error("Error loading categories");
+      }
+    });
+
+
   }
+
+  getCategoryNames(categories: SimpleCategoryDTO[]): string {
+    return categories?.map(category => category.name).join(', ') || 'No Categories';
+  }
+
 
   create(): void {
     const dialogRef: MatDialogRef<CreateEventTypeComponent> = this.dialog.open(CreateEventTypeComponent, {
       minWidth: '30vw',
-      minHeight: '40vh'
+      minHeight: '40vh',
+      data: { categories: this.categories }
     });
 
-    dialogRef.afterClosed().subscribe((newEventType: EventType | null) => {
-      if (newEventType) {
-        this.eventTypesService.add(newEventType);
-        this.loadEventTypes();
+    dialogRef.afterClosed().subscribe((createDTO: CreateEventTypeDTO | null) => {
+      if (createDTO) {
+        this.eventTypesService.add(createDTO).subscribe({
+          next: () => {
+            this.loadEventTypes();
+          },
+          error: (_) => {
+            console.error("Error loading categories");
+          }
+        });
       }
     });
   }
 
-  edit(eventType: EventType): void {
+  edit(eventType: SimpleEventTypeDTO): void {
     const dialogRef = this.dialog.open(EditEventTypeComponent, {
       minWidth: '30vw',
-      data: eventType,
+      data: { eventType, allCategories: this.categories }
     });
 
-    dialogRef.afterClosed().subscribe((result: EventType | null) => {
+    dialogRef.afterClosed().subscribe((result: UpdateEventTypeDTO | null) => {
       if (result) {
-        this.eventTypesService.update(result);
-        this.loadEventTypes();
+        this.eventTypesService.update(eventType.id, result).subscribe({
+          next: () => {
+            this.loadEventTypes();
+          },
+          error: (_) => {
+            console.error("Error loading categories");
+          }
+        });
       }
     });
   }
 
   remove(eventType: EventType): void {
-    this.eventTypesService.remove(eventType);
-    this.loadEventTypes();
+    this.eventTypesService.remove(eventType.id).subscribe({
+      next: () => {
+        this.loadEventTypes();
+      },
+      error: (_) => {
+        console.error("Error loading categories");
+      }
+    });
   }
 }

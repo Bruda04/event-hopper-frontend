@@ -17,7 +17,7 @@ import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {EventDTO} from '../../shared/dto/events/eventDTO.model';
 import {ProductDTO} from '../../shared/dto/solutions/productDTO.model';
 import {LocationDTO} from '../../shared/dto/locations/LocationDTO.model';
-import {SimpleEventTypeDTO} from '../../shared/dto/eventTypes/simpleEventTypeDTO.model';
+import {SimpleEventTypeDTO} from '../../shared/dto/eventTypes/SimpleEventTypeDTO.model';
 import {CategoryDTO} from '../../shared/dto/categories/categoryDTO.model';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {CreateServiceComponent} from '../../solutions/create-service/create-service.component';
