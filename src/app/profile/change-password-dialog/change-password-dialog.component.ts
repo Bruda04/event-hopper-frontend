@@ -4,8 +4,11 @@ import {ProfileService} from '../profile.service';
 import {UserService} from '../../authentication/services/user.service';
 import {Router} from '@angular/router';
 import {ChangePasswordDTO} from '../../shared/dto/users/account/ChangePasswordDTO.model';
-import {MatDialogRef} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {User} from '../../shared/model/user.model';
+import {
+  PasswordChangedSuccessfullyComponent
+} from '../password-changed-successfully/password-changed-successfully.component';
 
 @Component({
   selector: 'app-change-password-dialog',
@@ -20,8 +23,16 @@ export class ChangePasswordDialogComponent {
   hideConfirmPassword: boolean = true;
   changePasswordErrorMessage: string | null = null;
 
-  constructor(private fb: FormBuilder, private profileService: ProfileService, private userService: UserService, private router: Router, private dialogRef: MatDialogRef<ChangePasswordDialogComponent>){
-    this.user = userService.getUserData();
+
+  constructor(
+    private fb: FormBuilder,
+    private profileService: ProfileService,
+    private userService: UserService,
+    private router: Router,
+    private dialog: MatDialog, // Inject MatDialog here
+    private dialogRef: MatDialogRef<ChangePasswordDialogComponent> // Inject MatDialogRef here
+  ) {
+    this.user = this.userService.getUserData();
 
     this.changePasswordForm = this.fb.group(
       {
@@ -56,7 +67,9 @@ export class ChangePasswordDialogComponent {
         next: (response) => {
           console.log('Password changed successfully.');
           this.dialogRef.close();
-
+          this.dialog.open(PasswordChangedSuccessfullyComponent, {
+            width: '300px',
+          });
         },
         error: (err) => {
           if (err.error?.message) {

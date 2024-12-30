@@ -15,8 +15,8 @@ export class ProfileService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getProfileDetailsForPerson( id: string): Observable<any> {
-    return this.httpClient.get(environment.apiHost + "/accounts/" + id + '/profile');
+  getProfileDetailsForPerson(): Observable<any> {
+    return this.httpClient.get(environment.apiHost + "/accounts/profile");
   }
 
   getProfileByEmail(email: string): Observable<any> {
@@ -27,20 +27,20 @@ export class ProfileService {
     return this.httpClient.post(environment.apiHost + "/accounts/change-password", changePasswordDTO);
   }
 
-  deactivateAccount(id: string): Observable<any> {
-    return this.httpClient.post(environment.apiHost + "/accounts/" + id + '/deactivate', {});
+  deactivateAccount(): Observable<any> {
+    return this.httpClient.post(environment.apiHost + "/accounts/deactivate", {});
   }
 
-  editProfileInformation(id: string, updatePersonDTO: UpdatePersonDTO): Observable<any> {
-    return this.httpClient.put(environment.apiHost + "/accounts/" + id, updatePersonDTO);
+  editProfileInformation(updatePersonDTO: UpdatePersonDTO): Observable<any> {
+    return this.httpClient.put(environment.apiHost + "/accounts", updatePersonDTO);
   }
 
-  editCompanyInformation(id: string, updateCompanyAccount: UpdateCompanyAccountDTO): Observable<any> {
-    return this.httpClient.put(environment.apiHost + "/accounts/" + id + "/company", updateCompanyAccount);
+  editCompanyInformation(updateCompanyAccount: UpdateCompanyAccountDTO): Observable<any> {
+    return this.httpClient.put(environment.apiHost + "/accounts/company", updateCompanyAccount);
   }
 
-  editPerson(id: string, updatePersonDTO: UpdatePersonDTO): Observable<any> {
-    return this.httpClient.put(environment.apiHost + "/persons/" + id , updatePersonDTO);
+  editPerson(updatePersonDTO: UpdatePersonDTO): Observable<any> {
+    return this.httpClient.put(environment.apiHost + "/persons/", updatePersonDTO);
   }
 
   getPerson(id: string): Observable<any> {
