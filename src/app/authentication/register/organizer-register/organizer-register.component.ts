@@ -70,39 +70,50 @@ export class OrganizerRegisterComponent {
 
   onSubmit() {
     if (this.registerForm.valid) {
+      this.registrationService.isEmailTaken(this.registerForm.value.email).subscribe({
+        next: (isTaken) => {
+          if (isTaken) {
+            this.registerForm.get('email')?.setErrors({ emailTaken: true });
+            return;
+          }
 
-      const createEventOrganizerDTO: CreateEventOrganizerDTO = {
-        name: this.registerForm.value.fullName.split(' ')[0], //first name
-        surname: this.registerForm.value.fullName.split(' ').slice(1).join(' ') || '',
-        profilePicture: this.registerForm.value.profileImage, // Image file
-        phoneNumber: this.registerForm.value.phoneNumber,
-        type: PersonType.EVENT_ORGANIZER,
-        location: {
-          address: this.registerForm.value.address,
-          city: this.registerForm.value.city,
-        } as CreateLocationDTO,
-      };
+          const createEventOrganizerDTO: CreateEventOrganizerDTO = {
+            name: this.registerForm.value.fullName.split(' ')[0], //first name
+            surname: this.registerForm.value.fullName.split(' ').slice(1).join(' ') || '',
+            profilePicture: this.registerForm.value.profileImage, // Image file
+            phoneNumber: this.registerForm.value.phoneNumber,
+            type: PersonType.EVENT_ORGANIZER,
+            location: {
+              address: this.registerForm.value.address,
+              city: this.registerForm.value.city,
+            } as CreateLocationDTO,
+          };
 
-      const createAccount: CreateEventOrganizerAccountDTO = {
-        email: this.registerForm.value.email,
-        password: this.registerForm.value.password,
-        isVerified: false,
-        suspensionTimeStamp: null,
-        type: PersonType.EVENT_ORGANIZER,
-        person: createEventOrganizerDTO,
-        registrationRequest:{} as CreateRegistrationRequestDTO,
-      }
+          const createAccount: CreateEventOrganizerAccountDTO = {
+            email: this.registerForm.value.email,
+            password: this.registerForm.value.password,
+            isVerified: false,
+            suspensionTimeStamp: null,
+            type: PersonType.EVENT_ORGANIZER,
+            person: createEventOrganizerDTO,
+            registrationRequest:{} as CreateRegistrationRequestDTO,
+          }
 
 
-      this.registrationService.registerEventOrganizer(createAccount).subscribe({
-        next: (response) => {
-          this.router.navigate(['/email-confirmation-sent']);
+          this.registrationService.registerEventOrganizer(createAccount).subscribe({
+            next: (response) => {
+              this.router.navigate(['/email-confirmation-sent']);
+            },
+            error: (err) => {
+              console.error('Error registering event organizer:', err);
+            },
+          });
+
         },
         error: (err) => {
-          console.error('Error registering event organizer:', err);
+          console.error('Error finding email', err);
         },
       });
-
     } else {
       this.registerForm.markAllAsTouched();
       console.log('Form is invalid:', this.registerForm.value);

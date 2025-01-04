@@ -52,7 +52,20 @@ export class PupRegisterComponent {
 
   onNext() {
     if (this.currentStep === 0 && this.isStepValid(0)) {
-      this.currentStep++;
+      this.registrationService.isEmailTaken(this.registerForm.value.email).subscribe({
+        next: (isTaken) => {
+          if (isTaken) {
+            this.registerForm.get('email')?.setErrors({ emailTaken: true });
+            return;
+          }else{
+            this.currentStep++;
+          }
+        },
+        error: (err) => {
+          console.error('Error finding email', err);
+        },
+      });
+
     }
   }
 

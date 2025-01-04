@@ -15,6 +15,10 @@ export class RegistrationService {
 
   constructor(private httpClient: HttpClient) {  }
 
+  isEmailTaken(email: String): Observable<boolean> {
+    return this.httpClient.post<boolean>(environment.apiHost + '/accounts/check-email', email);
+  }
+
   registerServiceProvider(createDTO: CreateServiceProviderAccountDTO): Observable<any> {
     return this.httpClient.post(environment.apiHost + '/accounts/service-provider', createDTO);
   }
