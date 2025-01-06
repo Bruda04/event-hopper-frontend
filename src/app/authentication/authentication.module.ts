@@ -17,6 +17,7 @@ import { UpgradingComponent } from './upgrading/upgrading.component';
 import { CongradulationComponent } from './upgrading/congradulation/congradulation.component';
 import { PupRegisterUpgradingComponent } from './upgrading/pup-register-upgrading/pup-register-upgrading.component';
 import { PupConfirmationComponent } from './upgrading/pup-confirmation/pup-confirmation.component';
+import { EmailVerifiedComponent } from './register/email-verified/email-verified.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { PupConfirmationComponent } from './upgrading/pup-confirmation/pup-confi
     CongradulationComponent,
     PupRegisterUpgradingComponent,
     PupConfirmationComponent,
+    EmailVerifiedComponent,
   ],
   imports: [
     CommonModule,
