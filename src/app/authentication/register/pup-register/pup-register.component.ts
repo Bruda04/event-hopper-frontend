@@ -109,7 +109,7 @@ export class PupRegisterComponent {
         registrationRequest:{} as CreateRegistrationRequestDTO,
       }
 
-      //this also sends an email so i dont want it to wait
+      //this also sends an email so i don't want it to wait
       this.router.navigate(['/email-confirmation-sent']);
       this.registrationService.registerServiceProvider(createAccount).subscribe({
         next: (response) => {

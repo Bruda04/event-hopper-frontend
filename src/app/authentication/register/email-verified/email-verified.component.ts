@@ -40,14 +40,15 @@ export class EmailVerifiedComponent {
 
   }
 
-  sendEmailAgain(): void{
-    this.newEmailRequested = true;
+  resendEmail(): void{
     this.verificationService.resendVerificationEmail(this.token).subscribe({
       next: () => {
         this.newEmailSent = true;
+        this.newEmailRequested = true;
       },
       error: (err) => {
         this.newEmailSent = false;
+        this.newEmailRequested = true;
       },
     });
   }
