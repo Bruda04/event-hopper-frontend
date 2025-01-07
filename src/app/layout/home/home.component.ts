@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../authentication/services/user.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -11,18 +11,13 @@ import {PagedResponse} from '../../shared/model/paged-response.model';
 import {CategoriesService} from '../../admin-dashboard/categories/categories.service';
 import {LocationService} from '../../location/location.service';
 import {EventTypesService} from '../../admin-dashboard/eventTypes/event-types.service';
-import {MatRadioChange} from '@angular/material/radio';
+import {MatRadioChange, MatRadioGroup} from '@angular/material/radio';
 import {CheckboxChangeEvent} from 'primeng/checkbox';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {EventDTO} from '../../shared/dto/events/eventDTO.model';
 import {ProductDTO} from '../../shared/dto/solutions/productDTO.model';
-import {LocationDTO} from '../../shared/dto/locations/LocationDTO.model';
 import {SimpleEventTypeDTO} from '../../shared/dto/eventTypes/SimpleEventTypeDTO.model';
 import {CategoryDTO} from '../../shared/dto/categories/categoryDTO.model';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {CreateServiceComponent} from '../../solutions/create-service/create-service.component';
-import {InvitePeopleComponent} from '../../invitation/invite-people/invite-people.component';
-
 
 @Component({
   selector: 'app-home',
@@ -49,6 +44,7 @@ export class HomeComponent implements OnInit {
               private categoriesService: CategoriesService,
               private locationService: LocationService,
               private eventTypeService: EventTypesService,
+              private cdRef: ChangeDetectorRef
 
               ) { }
 
@@ -65,7 +61,7 @@ export class HomeComponent implements OnInit {
     this.loadPagedSolutions();
     this.loadTop5Events();
     this.loadTop5Solutions();
-    this.loadLocations();
+    this.loadCities();
     this.loadCategories();
     this.loadEventTypes();
     this.loadFilteredEventTypes()
@@ -104,14 +100,15 @@ export class HomeComponent implements OnInit {
   showServices: boolean = true;
 
   date: Date = null;
+  @ViewChild('dateInput') dateInput!: ElementRef;
 
-  locations: LocationDTO[];
+  cities: String[];
   eventTypes: SimpleEventTypeDTO[];
   filteredEventTypes: SimpleEventTypeDTO[];
   categories: CategoryDTO[];
 
   filterEventForm: FormGroup= new FormGroup({
-    location: new FormControl<string>(''),
+    city: new FormControl<string>(''),
     eventType: new FormControl<string>(''),
     date: new FormControl<Date | null>(null),
   });
@@ -132,16 +129,6 @@ export class HomeComponent implements OnInit {
     this.showSolutionFilterPanel = !this.showSolutionFilterPanel; // Menja stanje panela
   }
 
-  applyFilters(): void {
-    if (this.filterSolutionForm.valid || this.filterEventForm.valid) {
-      return;
-    } else if (!this.filterSolutionForm.valid) {
-      this.filterSolutionForm.markAsTouched();
-
-    }else if (!this.filterEventForm.valid){
-      this.filterEventForm.markAsTouched();
-    }
-  }
 
   resetFilters(): void {
     this.filterSolutionForm.patchValue({
@@ -151,14 +138,26 @@ export class HomeComponent implements OnInit {
       maxPrice: null,
       availability: ''
     });
+    //this.solutionSort="";
 
     this.filterEventForm.patchValue({
-      location: '',
+      city: '',
       eventType: '',
       date: null
     });
+    //this.eventSort = "";
 
-    this.applyFilters();
+    this.date = null;
+    this.filterEventForm.get('date')?.updateValueAndValidity();
+    if (this.dateInput) {
+      this.dateInput.nativeElement.value = '';
+    }
+
+
+    this.cdRef.detectChanges();
+
+    this.loadPagedEvents();
+    this.loadPagedSolutions();
   }
 
   private loadTop5Events() {
@@ -198,7 +197,7 @@ export class HomeComponent implements OnInit {
 
   loadPagedEvents() :void {
 
-    const locationId = this.filterEventForm.value.location?.city || null;
+    const locationId = this.filterEventForm.value?.city || null;
     const eventTypeId = this.filterEventForm.value.eventType?.id || null;
 
     let pickedDate = "";
@@ -269,16 +268,17 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  private loadLocations() {
-    this.locationService.getLocations().subscribe(
+  private loadCities(){
+    this.locationService.getCities().subscribe(
       {
-        next: (locations: LocationDTO[]) => {
-          this.locations = locations
+        next:(cities: String[]) => {
+          this.cities = cities;
         },
         error: () => {
-          console.error('Error loading locations');
+          console.error('Error loading cities');
         }
-      });
+      }
+    )
   }
 
   loadEventTypes(){
@@ -339,6 +339,7 @@ export class HomeComponent implements OnInit {
 
   OnDateChange(event: MatDatepickerInputEvent<any, any>){
     this.date = event.value;
+    this.filterEventForm.get('date')?.setValue(event.value);
   }
 
 }
