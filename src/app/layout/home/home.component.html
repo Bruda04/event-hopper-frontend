@@ -179,7 +179,7 @@
     <form [formGroup]="filterSolutionForm" class="filter-form">
       <mat-form-field appearance="fill" class="filter-field">
         <mat-label>Category</mat-label>
-        <mat-select formControlName="category">
+        <mat-select (selectionChange)="loadFilteredEventTypes($event)" formControlName="category">
           <mat-option *ngFor="let category of categories" [value]="category">
             {{ category.name }}
           </mat-option>
@@ -188,7 +188,7 @@
 
       <mat-form-field appearance="fill" class="filter-field">
         <mat-label>Event Type</mat-label>
-        <mat-select formControlName="eventType" multiple>
+        <mat-select formControlName="eventTypes" multiple>
           <mat-option *ngFor="let eventType of filteredEventTypes" [value]="eventType">
             {{ eventType.name }}
           </mat-option>

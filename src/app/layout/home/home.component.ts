@@ -19,6 +19,7 @@ import {ProductDTO} from '../../shared/dto/solutions/productDTO.model';
 import {SimpleEventTypeDTO} from '../../shared/dto/eventTypes/SimpleEventTypeDTO.model';
 import {CategoryDTO} from '../../shared/dto/categories/categoryDTO.model';
 import {EventTypeManagementDTO} from '../../shared/dto/eventTypes/EventTypeManagementDTO.model';
+import {MatSelectChange} from '@angular/material/select';
 
 @Component({
   selector: 'app-home',
@@ -65,7 +66,8 @@ export class HomeComponent implements OnInit {
     this.loadCities();
     this.loadCategories();
     this.loadEventTypes();
-    this.loadFilteredEventTypes()
+    // this.loadFilteredEventTypes();
+
   }
 
   top5events: EventDTO[] ;
@@ -116,7 +118,7 @@ export class HomeComponent implements OnInit {
 
   filterSolutionForm: FormGroup= new FormGroup({
     category: new FormControl<string>(''),
-    eventType: new FormControl<string>(''),
+    eventTypes: new FormControl<string[]>([]),
     minPrice: new FormControl<number>(null, [Validators.min(0)]),
     maxPrice: new FormControl<number>(null, [Validators.min(0)]),
     availability: new FormControl<string>(''),
@@ -133,19 +135,17 @@ export class HomeComponent implements OnInit {
   resetFilters(): void {
     this.filterSolutionForm.patchValue({
       category: '',
-      eventType: '',
+      eventTypes: '',
       minPrice: null,
       maxPrice: null,
       availability: ''
     });
-    //this.solutionSort="";
 
     this.filterEventForm.patchValue({
       city: '',
       eventType: '',
       date: null
     });
-    //this.eventSort = "";
 
     this.date = null;
     this.filterEventForm.get('date')?.updateValueAndValidity();
@@ -237,7 +237,14 @@ export class HomeComponent implements OnInit {
 
   loadPagedSolutions() :void {
     const categoryId = this.filterSolutionForm.value.category?.id || null;
-    const eventTypeId = this.filterSolutionForm.value.eventType?.id || null;
+    const eventTypes = this.filterSolutionForm.value?.eventTypes || null;
+    console.log(eventTypes);
+    const eventTypeIds: string[] = [];
+    if(eventTypes!=null){
+      for(let eventType of eventTypes){
+        eventTypeIds.push(eventType.id);
+      }
+    }
 
     this.productService.getSolutionsPage(
       this.solutionPageProperties,
@@ -245,7 +252,7 @@ export class HomeComponent implements OnInit {
       this.showProducts,
       this.showServices,
       categoryId,
-      eventTypeId,
+      eventTypeIds,
       this.filterSolutionForm.value.minPrice || null,
       this.filterSolutionForm.value.maxPrice || null,
       this.filterSolutionForm.value.availability === 'available'
@@ -305,11 +312,11 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  loadFilteredEventTypes(): void {
-    this.filterSolutionForm.get('category')?.valueChanges.subscribe((categoryId: any) => {
-      const category: CategoryDTO = this.categories.find(cat => cat.id === categoryId);
-      this.filteredEventTypes = category?.eventTypes || [];
-    });
+  loadFilteredEventTypes(event: MatSelectChange): void {
+    console.log("Upaoooooooo");
+    const category = event.value;
+    this.filteredEventTypes = category?.eventTypes || [];
+    console.log(this.filteredEventTypes);
   }
 
   solutionRadioChange(event: MatRadioChange, data:any) {
