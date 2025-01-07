@@ -40,9 +40,8 @@ button{
 
 button:hover {
     background-color: var(--primary-color) !important; /* Promena boje na hover */
-    color: #073B4C;
-  }
-  
+}
+
 
 
 

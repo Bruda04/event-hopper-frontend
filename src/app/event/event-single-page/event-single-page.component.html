@@ -1,18 +1,18 @@
 <div class="event-container">
   <!-- Top Section -->
   <div class="top-section">
-    <img src="wedding.png" alt="Wedding" class="event-image" />
+    <img [src]="image" alt="Event cover image" class="event-image" />
     <div class="event-details">
-      <h1>Jen and John’s Wedding</h1>
+      <h1>{{ this.eventDetails.name }}</h1>
       <p>
-        Specializing in a wide variety of candles, from scented and decorative
-        to hand-poured artisanal pieces. Here, customers can explore unique
-        fragrances, seasonal collections, and candle accessories to create a
-        warm and relaxing ambiance at home.
+        {{ this.eventDetails.description }}
+        Kontig Tech Meetup is a dynamic gathering designed to inspire, connect, and empower technology enthusiasts, professionals, and innovators. This event brings together a vibrant community to exchange ideas, showcase cutting-edge advancements, and explore the latest trends in the tech world.
+
+        Attendees can dive into engaging talks and panel discussions led by industry experts, covering a wide array of topics from software development and AI innovations to emerging technologies and startup success stories. The meetup also offers interactive workshops and hands-on sessions.
       </p>
       <div class="action-buttons">
-        <button mat-button color="primary" (click) = "openInviteModal()">Invite People</button>
-        <button mat-button color="accent">Export to PDF</button>
+        <button mat-button color="primary" id="inviteBtn" (click) = "openInviteModal()">Invite People</button>
+        <button mat-button id="exportBtn">Export to PDF</button>
       </div>
     </div>
   </div>
@@ -20,13 +20,13 @@
   <!-- Banner Section -->
   <div class="info-banner">
     <div>
-      <h3>BlackStone Hall, New York</h3>
+      <h3>{{this.location}}</h3>
     </div>
     <div>
-      <h3>12:00–22:00 ET</h3>
+      <h3>{{this.time}}</h3>
     </div>
     <div>
-      <h3>Public</h3>
+      <h3>{{ this.eventDetails.privacy }}</h3>
     </div>
   </div>
 

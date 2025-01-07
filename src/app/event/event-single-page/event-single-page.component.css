@@ -8,7 +8,6 @@
   .top-section {
     display: flex;
     width: 100%;
-    background-color: #f9f9f9;
 
     .event-image {
       width: 50%; /* Take up half the container width */
@@ -27,13 +26,14 @@
       justify-content: space-between;
 
       h1 {
-        font-size: 2vw; /* Scale text size dynamically based on viewport width */
+        color:var(--font-dark-blue);
+        font-size: 3em;
         margin-bottom: 1vh;
       }
 
       p {
         font-size: 1.2vw; /* Dynamically scale paragraph text */
-        color: #666;
+        color:var(--font-dark-blue);
         margin-bottom: 2vh;
         line-height: 1.5;
       }
@@ -53,7 +53,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr; /* Divide into three equal parts */
     width: 100%;
-    background-color: #eef2f3;
+    background-color: var(--light-blue);
     padding: 2vh 0; /* Vertical padding using viewport height */
     text-align: center;
 
@@ -68,4 +68,18 @@
     max-width: 90vw; /* Restrict map width to 90% of the viewport width */
     margin: 5vh auto; /* Vertical margin using viewport height */
   }
+}
+
+#exportBtn{
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: normal;
+}
+
+#exportBtn:hover{
+  background-color: var(--secondary-color);
+}
+
+#inviteBtn{
+  color: var(--primary-color);
 }

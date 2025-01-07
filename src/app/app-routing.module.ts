@@ -38,7 +38,7 @@ const routes: Routes = [
   { path: 'email-confirmation-sent', component: EmailConfirmationSentComponent },
   { path: 'upgrade-confirmation', component: PupConfirmationComponent },
   { path: 'invitations/:id', component: InvitationRedirectionComponent },
-  { path: 'event', component: EventSinglePageComponent },
+  { path: 'event/:id', component: EventSinglePageComponent },
   { path: 'my-solutions', component: PUPServiceProductManagementComponent,
     canActivate: [roleGuard],
     data: { roles: ['SERVICE_PROVIDER'] }  },

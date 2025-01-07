@@ -9,5 +9,5 @@ export interface EventDTO{
   picture: string
   eventType: SimpleEventTypeDTO
   location: SimpleLocationDTO
-
+  privacy: string
 }
