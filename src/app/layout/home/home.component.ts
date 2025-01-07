@@ -161,7 +161,7 @@ export class HomeComponent implements OnInit {
   }
 
   private loadTop5Events() {
-    this.eventService.getTop5Events("d7b9e5c3-a6f4-49a2-b8c1-7e3f9a2d6b4f").subscribe(
+    this.eventService.getTop5Events().subscribe(
       {
         next: event => {
           this.top5events = event;
@@ -176,7 +176,7 @@ export class HomeComponent implements OnInit {
 
   private loadTop5Solutions() {
 
-    this.productService.getTop5Solutions("4b9c7f5a-d3e2-42a1-b6c8-3f7e9d5a2c6f").subscribe(
+    this.productService.getTop5Solutions().subscribe(
       {
         next: product => {
           this.top5solutions = product;
