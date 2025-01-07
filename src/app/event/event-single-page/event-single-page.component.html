@@ -12,7 +12,7 @@
       </p>
       <div class="action-buttons">
         <button mat-button color="primary" id="inviteBtn" (click) = "openInviteModal()">Invite People</button>
-        <button mat-button id="exportBtn">Export to PDF</button>
+        <button mat-button id="exportBtn" (click) = "exportToPDF()">Export to PDF</button>
       </div>
     </div>
   </div>
@@ -26,7 +26,7 @@
       <h3>{{this.time}}</h3>
     </div>
     <div>
-      <h3>{{ this.eventDetails.privacy }}</h3>
+      <h3>{{ this.eventDetails.privacy ? 'Public' : 'Private' }}</h3>
     </div>
   </div>
 
