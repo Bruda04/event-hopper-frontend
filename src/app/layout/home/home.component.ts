@@ -18,6 +18,7 @@ import {EventDTO} from '../../shared/dto/events/eventDTO.model';
 import {ProductDTO} from '../../shared/dto/solutions/productDTO.model';
 import {SimpleEventTypeDTO} from '../../shared/dto/eventTypes/SimpleEventTypeDTO.model';
 import {CategoryDTO} from '../../shared/dto/categories/categoryDTO.model';
+import {EventTypeManagementDTO} from '../../shared/dto/eventTypes/EventTypeManagementDTO.model';
 
 @Component({
   selector: 'app-home',
@@ -129,7 +130,6 @@ export class HomeComponent implements OnInit {
     this.showSolutionFilterPanel = !this.showSolutionFilterPanel; // Menja stanje panela
   }
 
-
   resetFilters(): void {
     this.filterSolutionForm.patchValue({
       category: '',
@@ -198,16 +198,14 @@ export class HomeComponent implements OnInit {
   loadPagedEvents() :void {
 
     const locationId = this.filterEventForm.value?.city || null;
-    const eventTypeId = this.filterEventForm.value.eventType?.id || null;
+    const eventTypeId = this.filterEventForm.value?.eventType.id || null;
 
     let pickedDate = "";
-    console.log(this.date);
     if (this.date !== null && this.date !== undefined) {
       let date = this.date.getDate().toString().padStart(2, '0'); // Dodaje vodeću nulu ako je potrebno
       let month = (this.date.getMonth() + 1).toString().padStart(2, '0'); // +1 da bi mesec bio ispravan i formatiran
       let year = this.date.getFullYear();
       pickedDate = `${year}-${month}-${date}T00:00:00`;
-
     }
 
     this.eventService.getEventsPage(
@@ -268,7 +266,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  private loadCities(){
+  loadCities(){
     this.locationService.getCities().subscribe(
       {
         next:(cities: String[]) => {
@@ -282,16 +280,17 @@ export class HomeComponent implements OnInit {
   }
 
   loadEventTypes(){
-    // this.eventTypeService.getEventTypes().subscribe(
-    //   {
-    //     next:(eventTypes: EventTypeDTO[]) => {
-    //       this.eventTypes = eventTypes;
-    //     },
-    //     error:()=>{
-    //       console.error('Error loading eventTypes');
-    //     }
-    //   }
-    // );
+    this.eventTypeService.getEventTypesForManagement().subscribe(
+      {
+        next:(eventTypes: EventTypeManagementDTO) => {
+          this.eventTypes = eventTypes.eventTypes;
+          console.log(this.eventTypes);
+        },
+        error:()=>{
+          console.error('Error loading eventTypes');
+        }
+      }
+    );
   }
 
   loadCategories(): void {
