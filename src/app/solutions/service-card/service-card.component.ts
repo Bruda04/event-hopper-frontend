@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {ProductDTO} from '../../shared/dto/solutions/productDTO.model';
+import {environment} from '../../../env/envirements';
 
 
 @Component({
@@ -17,4 +18,6 @@ export class ServiceCardComponent {
   onCardClicked(): void {
     this.clicked.emit(this.service)
   }
+
+  protected readonly environment = environment;
 }
