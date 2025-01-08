@@ -2,6 +2,7 @@ import { Component, Input, EventEmitter, Output } from '@angular/core';
 import {EventDTO} from '../../shared/dto/events/eventDTO.model';
 import {EventService} from '../event.service';
 import {Router} from '@angular/router';
+import {environment} from '../../../env/envirements';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class EventCardComponent {
   constructor(private router: Router) {
   }
 
+
   onCardClicked(): void {
     this.clicked.emit(this.event)
   }
@@ -27,4 +29,5 @@ export class EventCardComponent {
     this.router.navigate(['/events/' + id]);
   }
 
+  protected readonly environment = environment;
 }

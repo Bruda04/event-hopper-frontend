@@ -28,8 +28,8 @@ export class ProductService {
     return this.HttpClient.get<SolutionDetailsDTO>(environment.apiHost + '/solutions/' + id + '/details');
   }
 
-  getTop5Solutions(userId: string): Observable<ProductDTO[]> {
-    return this.HttpClient.get<ProductDTO[]>(environment.apiHost + '/solutions/persons-top-5/' + userId);
+  getTop5Solutions(): Observable<ProductDTO[]> {
+    return this.HttpClient.get<ProductDTO[]>(environment.apiHost + '/solutions/persons-top-5' );
   }
 
   getSolutionsPage(

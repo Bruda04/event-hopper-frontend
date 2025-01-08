@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../authentication/services/user.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -11,18 +11,15 @@ import {PagedResponse} from '../../shared/model/paged-response.model';
 import {CategoriesService} from '../../admin-dashboard/categories/categories.service';
 import {LocationService} from '../../location/location.service';
 import {EventTypesService} from '../../admin-dashboard/eventTypes/event-types.service';
-import {MatRadioChange} from '@angular/material/radio';
+import {MatRadioChange, MatRadioGroup} from '@angular/material/radio';
 import {CheckboxChangeEvent} from 'primeng/checkbox';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {EventDTO} from '../../shared/dto/events/eventDTO.model';
 import {ProductDTO} from '../../shared/dto/solutions/productDTO.model';
-import {LocationDTO} from '../../shared/dto/locations/LocationDTO.model';
 import {SimpleEventTypeDTO} from '../../shared/dto/eventTypes/SimpleEventTypeDTO.model';
 import {CategoryDTO} from '../../shared/dto/categories/categoryDTO.model';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {CreateServiceComponent} from '../../solutions/create-service/create-service.component';
-import {InvitePeopleComponent} from '../../invitation/invite-people/invite-people.component';
-
+import {EventTypeManagementDTO} from '../../shared/dto/eventTypes/EventTypeManagementDTO.model';
+import {MatSelectChange} from '@angular/material/select';
 
 @Component({
   selector: 'app-home',
@@ -49,6 +46,7 @@ export class HomeComponent implements OnInit {
               private categoriesService: CategoriesService,
               private locationService: LocationService,
               private eventTypeService: EventTypesService,
+              private cdRef: ChangeDetectorRef
 
               ) { }
 
@@ -65,10 +63,11 @@ export class HomeComponent implements OnInit {
     this.loadPagedSolutions();
     this.loadTop5Events();
     this.loadTop5Solutions();
-    this.loadLocations();
+    this.loadCities();
     this.loadCategories();
     this.loadEventTypes();
-    this.loadFilteredEventTypes()
+    // this.loadFilteredEventTypes();
+
   }
 
   top5events: EventDTO[] ;
@@ -104,21 +103,22 @@ export class HomeComponent implements OnInit {
   showServices: boolean = true;
 
   date: Date = null;
+  @ViewChild('dateInput') dateInput!: ElementRef;
 
-  locations: LocationDTO[];
+  cities: String[];
   eventTypes: SimpleEventTypeDTO[];
   filteredEventTypes: SimpleEventTypeDTO[];
   categories: CategoryDTO[];
 
   filterEventForm: FormGroup= new FormGroup({
-    location: new FormControl<string>(''),
+    city: new FormControl<string>(''),
     eventType: new FormControl<string>(''),
     date: new FormControl<Date | null>(null),
   });
 
   filterSolutionForm: FormGroup= new FormGroup({
     category: new FormControl<string>(''),
-    eventType: new FormControl<string>(''),
+    eventTypes: new FormControl<string[]>([]),
     minPrice: new FormControl<number>(null, [Validators.min(0)]),
     maxPrice: new FormControl<number>(null, [Validators.min(0)]),
     availability: new FormControl<string>(''),
@@ -132,37 +132,36 @@ export class HomeComponent implements OnInit {
     this.showSolutionFilterPanel = !this.showSolutionFilterPanel; // Menja stanje panela
   }
 
-  applyFilters(): void {
-    if (this.filterSolutionForm.valid || this.filterEventForm.valid) {
-      return;
-    } else if (!this.filterSolutionForm.valid) {
-      this.filterSolutionForm.markAsTouched();
-
-    }else if (!this.filterEventForm.valid){
-      this.filterEventForm.markAsTouched();
-    }
-  }
-
   resetFilters(): void {
     this.filterSolutionForm.patchValue({
       category: '',
-      eventType: '',
+      eventTypes: '',
       minPrice: null,
       maxPrice: null,
       availability: ''
     });
 
     this.filterEventForm.patchValue({
-      location: '',
+      city: '',
       eventType: '',
       date: null
     });
 
-    this.applyFilters();
+    this.date = null;
+    this.filterEventForm.get('date')?.updateValueAndValidity();
+    if (this.dateInput) {
+      this.dateInput.nativeElement.value = '';
+    }
+
+
+    this.cdRef.detectChanges();
+
+    this.loadPagedEvents();
+    this.loadPagedSolutions();
   }
 
   private loadTop5Events() {
-    this.eventService.getTop5Events("d7b9e5c3-a6f4-49a2-b8c1-7e3f9a2d6b4f").subscribe(
+    this.eventService.getTop5Events().subscribe(
       {
         next: event => {
           this.top5events = event;
@@ -177,7 +176,7 @@ export class HomeComponent implements OnInit {
 
   private loadTop5Solutions() {
 
-    this.productService.getTop5Solutions("4b9c7f5a-d3e2-42a1-b6c8-3f7e9d5a2c6f").subscribe(
+    this.productService.getTop5Solutions().subscribe(
       {
         next: product => {
           this.top5solutions = product;
@@ -198,17 +197,15 @@ export class HomeComponent implements OnInit {
 
   loadPagedEvents() :void {
 
-    const locationId = this.filterEventForm.value.location?.city || null;
-    const eventTypeId = this.filterEventForm.value.eventType?.id || null;
+    const locationId = this.filterEventForm.value?.city || null;
+    const eventTypeId = this.filterEventForm.value?.eventType.id || null;
 
     let pickedDate = "";
-    console.log(this.date);
     if (this.date !== null && this.date !== undefined) {
       let date = this.date.getDate().toString().padStart(2, '0'); // Dodaje vodeću nulu ako je potrebno
       let month = (this.date.getMonth() + 1).toString().padStart(2, '0'); // +1 da bi mesec bio ispravan i formatiran
       let year = this.date.getFullYear();
       pickedDate = `${year}-${month}-${date}T00:00:00`;
-
     }
 
     this.eventService.getEventsPage(
@@ -240,7 +237,14 @@ export class HomeComponent implements OnInit {
 
   loadPagedSolutions() :void {
     const categoryId = this.filterSolutionForm.value.category?.id || null;
-    const eventTypeId = this.filterSolutionForm.value.eventType?.id || null;
+    const eventTypes = this.filterSolutionForm.value?.eventTypes || null;
+    console.log(eventTypes);
+    const eventTypeIds: string[] = [];
+    if(eventTypes!=null){
+      for(let eventType of eventTypes){
+        eventTypeIds.push(eventType.id);
+      }
+    }
 
     this.productService.getSolutionsPage(
       this.solutionPageProperties,
@@ -248,7 +252,7 @@ export class HomeComponent implements OnInit {
       this.showProducts,
       this.showServices,
       categoryId,
-      eventTypeId,
+      eventTypeIds,
       this.filterSolutionForm.value.minPrice || null,
       this.filterSolutionForm.value.maxPrice || null,
       this.filterSolutionForm.value.availability === 'available'
@@ -269,29 +273,31 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  private loadLocations() {
-    this.locationService.getLocations().subscribe(
+  loadCities(){
+    this.locationService.getCities().subscribe(
       {
-        next: (locations: LocationDTO[]) => {
-          this.locations = locations
+        next:(cities: String[]) => {
+          this.cities = cities;
         },
         error: () => {
-          console.error('Error loading locations');
+          console.error('Error loading cities');
         }
-      });
+      }
+    )
   }
 
   loadEventTypes(){
-    // this.eventTypeService.getEventTypes().subscribe(
-    //   {
-    //     next:(eventTypes: EventTypeDTO[]) => {
-    //       this.eventTypes = eventTypes;
-    //     },
-    //     error:()=>{
-    //       console.error('Error loading eventTypes');
-    //     }
-    //   }
-    // );
+    this.eventTypeService.getEventTypesForManagement().subscribe(
+      {
+        next:(eventTypes: EventTypeManagementDTO) => {
+          this.eventTypes = eventTypes.eventTypes;
+          console.log(this.eventTypes);
+        },
+        error:()=>{
+          console.error('Error loading eventTypes');
+        }
+      }
+    );
   }
 
   loadCategories(): void {
@@ -306,11 +312,11 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  loadFilteredEventTypes(): void {
-    this.filterSolutionForm.get('category')?.valueChanges.subscribe((categoryId: any) => {
-      const category: CategoryDTO = this.categories.find(cat => cat.id === categoryId);
-      this.filteredEventTypes = category?.eventTypes || [];
-    });
+  loadFilteredEventTypes(event: MatSelectChange): void {
+    console.log("Upaoooooooo");
+    const category = event.value;
+    this.filteredEventTypes = category?.eventTypes || [];
+    console.log(this.filteredEventTypes);
   }
 
   solutionRadioChange(event: MatRadioChange, data:any) {
@@ -339,6 +345,7 @@ export class HomeComponent implements OnInit {
 
   OnDateChange(event: MatDatepickerInputEvent<any, any>){
     this.date = event.value;
+    this.filterEventForm.get('date')?.setValue(event.value);
   }
 
 }
