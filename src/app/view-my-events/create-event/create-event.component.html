@@ -91,12 +91,17 @@
 
           <mat-form-field appearance="fill" class="filter-field">
             <mat-label>Event type</mat-label>
-            <mat-select formControlName="eventTypes" multiple>
+            <mat-select formControlName="eventTypes">
               <mat-option *ngFor="let eventType of allEventTypes" [value]="eventType">
                 {{ eventType.name }}
               </mat-option>
             </mat-select>
+            <mat-error *ngIf="eventForm.get('eventTypes')?.hasError('required')">
+              Event type is required.
+            </mat-error>
           </mat-form-field>
+
+
 
 
 

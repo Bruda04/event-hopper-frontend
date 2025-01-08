@@ -33,11 +33,10 @@ export class CreateEventComponent {
       title: ['', Validators.required],
       numParticipants: ['', [Validators.required, Validators.min(1), Validators.max(100000), ]],
       description: ['', Validators.required],
-      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{8,}$')]],
       city: ['', Validators.required],
       address: ['', Validators.required],
       date : ['', Validators.required],
-      eventTypes: [[this.allField], Validators.required],
+      eventTypes: ['', Validators.required],
     });
   }
 
@@ -68,7 +67,7 @@ export class CreateEventComponent {
 
   isStepValid(step: number): boolean {
     const fields = step === 0
-      ? ['title', 'numParticipants', 'description', 'city', 'address']
+      ? ['title', 'numParticipants', 'description', 'city', 'address', 'date', 'eventTypes']
       : [
         'companyEmail',
         'password',
@@ -125,11 +124,9 @@ export class CreateEventComponent {
   private loadEventTypes(): void {
     this.eventTypesService.getEventTypesForManagement().subscribe({
       next: (eventTypesForManagement: EventTypeManagementDTO) => {
-
         this.allEventTypes = eventTypesForManagement.eventTypes;
         //place it at the top
         this.allEventTypes.unshift(this.allField);
-
       },
       error: (_) => {
         console.error("Error loading event types");
