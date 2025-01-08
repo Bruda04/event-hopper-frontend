@@ -45,7 +45,7 @@ export class EventSinglePageComponent {
     this.eventService.getEvent(this.id).subscribe({
       next: (event) => {
         this.image = environment.apiImagesHost + event.picture;
-        this.time = this.datePipe.transform(event.time, 'HH:mm, dd.MM.yyyy');
+        this.time = this.datePipe.transform(event.time, 'dd.MM.yyyy');
         this.eventDetails = event
         this.location = event.location.address + ", " + event.location.city;
 

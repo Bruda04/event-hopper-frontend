@@ -27,6 +27,11 @@ export class CreateEventComponent {
     suggestedCategories: []
   };
 
+  imageUpload: File;
+  imageUrl: string;
+  imageSubmitted: boolean = false;
+  agendaForm: FormGroup;
+  agendaActivities: any[] = [];
 
   constructor(private fb: FormBuilder, private router: Router, private eventTypesService: EventTypesService) {
     this.eventForm = this.fb.group({
@@ -37,6 +42,15 @@ export class CreateEventComponent {
       address: ['', Validators.required],
       date : ['', Validators.required],
       eventTypes: ['', Validators.required],
+    });
+
+
+    this.agendaForm = this.fb.group({
+      name: ['', Validators.required],
+      description: [''],
+      locationName: [''],
+      startTime: ['', Validators.required],
+      endTime: ['', Validators.required],
     });
   }
 
@@ -78,7 +92,9 @@ export class CreateEventComponent {
         'companyAddress',
         'description',
       ];
-    console.log(this.eventForm)
+    if(!this.imageSubmitted){
+      return false;
+    }
     fields.forEach((field) => this.eventForm.get(field)?.markAsTouched());
     return fields.every((field) => this.eventForm.get(field)?.valid);
   }
@@ -94,32 +110,33 @@ export class CreateEventComponent {
         this.imagePreview = e.target?.result as string;
       };
       reader.readAsDataURL(files[0]);
+
+      this.imageUpload = files[0];
+      this.imageSubmitted = true;
+      this.imageUrl = URL.createObjectURL((files[0]));
     }
   }
 
   clearImage() {
     this.imagePreview = null;
+    this.imageSubmitted = false;
+    this.imageUrl = '';
+    this.imageUpload = null;
   }
-
-
 
   triggerFileInput(step: number) {
     const inputElement = document.getElementById('profilePic') as HTMLInputElement;
     inputElement?.click();
   }
 
-
-
   OnDateChange(event: MatDatepickerInputEvent<any, any>){
     this.date = event.value;
     this.eventForm.get('date')?.setValue(event.value);
   }
 
-
   eventRadioChange(event: MatRadioChange) {
     this.privacy = event.value;
   }
-
 
   private loadEventTypes(): void {
     this.eventTypesService.getEventTypesForManagement().subscribe({
@@ -134,6 +151,58 @@ export class CreateEventComponent {
     });
   }
 
+
+
+
+
+
+
+  //Agenda-----------------------------
+  addActivity() {
+    const activity = this.agendaForm.value;
+
+    // Convert times to minutes for comparison
+    const startMinutes = this.convertTimeToMinutes(activity.startTime);
+    const endMinutes = this.convertTimeToMinutes(activity.endTime);
+
+    // Validate start and end times
+    if (startMinutes >= endMinutes) {
+      alert('End time must be after start time.');
+      return;
+    }
+
+    // Validate time overlap
+    const isOverlapping = this.agendaActivities.some((existing) => {
+      const existingStart = this.convertTimeToMinutes(existing.startTime);
+      const existingEnd = this.convertTimeToMinutes(existing.endTime);
+
+      return (
+        (startMinutes >= existingStart && startMinutes < existingEnd) ||
+        (endMinutes > existingStart && endMinutes <= existingEnd) ||
+        (startMinutes <= existingStart && endMinutes >= existingEnd)
+      );
+    });
+
+    if (isOverlapping) {
+      alert('The activity times overlap with an existing activity.');
+      return;
+    }
+
+    this.agendaActivities.push(activity);
+    this.agendaActivities.sort((a, b) =>
+      this.convertTimeToMinutes(a.startTime) - this.convertTimeToMinutes(b.startTime)
+    );
+    this.agendaForm.reset();
+  }
+
+  removeActivity(index: number) {
+    this.agendaActivities.splice(index, 1);
+  }
+
+  private convertTimeToMinutes(time: string): number {
+    const [hours, minutes] = time.split(':').map(Number);
+    return hours * 60 + minutes;
+  }
 
 
 
