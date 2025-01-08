@@ -1,5 +1,6 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
 import {EventDTO} from '../../shared/dto/events/eventDTO.model';
+import {environment} from '../../../env/envirements';
 
 
 @Component({
@@ -14,8 +15,10 @@ export class EventCardComponent {
   @Output()
   clicked: EventEmitter<EventDTO> = new EventEmitter<EventDTO>();
 
+
   onCardClicked(): void {
     this.clicked.emit(this.event)
   }
 
+  protected readonly environment = environment;
 }

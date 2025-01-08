@@ -1,5 +1,5 @@
 <mat-card>
-    <img mat-card-image src={{event.picture}}>
+    <img mat-card-image [src]="environment.apiImagesHost + event.picture">
     <mat-card-header>
       <mat-card-title>{{event.name}}</mat-card-title>
     </mat-card-header>
