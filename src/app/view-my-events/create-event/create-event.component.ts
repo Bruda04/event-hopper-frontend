@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
+import {MatRadioChange} from '@angular/material/radio';
+import {SimpleEventTypeDTO} from '../../shared/dto/eventTypes/SimpleEventTypeDTO.model';
+import {EventTypeManagementDTO} from '../../shared/dto/eventTypes/EventTypeManagementDTO.model';
+import {EventTypesService} from '../../admin-dashboard/eventTypes/event-types.service';
 
 @Component({
   selector: 'app-create-event',
@@ -11,11 +16,19 @@ export class CreateEventComponent {
   eventForm: FormGroup;
   currentStep: number = 0;
   imagePreview: string | null = null;
+  date: any;
+  today: Date = new Date();
+  privacy: string = 'public';
+  allEventTypes: SimpleEventTypeDTO[] = [];
+  allField : SimpleEventTypeDTO = {
+    id: '',
+    name: 'All',
+    description: '',
+    suggestedCategories: []
+  };
 
 
-
-
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private eventTypesService: EventTypesService) {
     this.eventForm = this.fb.group({
       title: ['', Validators.required],
       numParticipants: ['', [Validators.required, Validators.min(1), Validators.max(100000), ]],
@@ -23,17 +36,18 @@ export class CreateEventComponent {
       phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{8,}$')]],
       city: ['', Validators.required],
       address: ['', Validators.required],
-      companyEmail: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
-      companyName: ['', Validators.required],
-      companyPhoneNumber: ['', Validators.required],
-      companyCity: ['', Validators.required],
-      companyAddress: ['', Validators.required],
+      date : ['', Validators.required],
+      eventTypes: [[this.allField], Validators.required],
     });
   }
 
+  ngOnInit(): void {
+    this.loadEventTypes();
+  }
+
+
   onNext() {
+    console.log(this.isStepValid(0))
     if (this.currentStep === 0 && this.isStepValid(0)) {
       this.currentStep++;
     }
@@ -54,7 +68,7 @@ export class CreateEventComponent {
 
   isStepValid(step: number): boolean {
     const fields = step === 0
-      ? ['title', 'email', 'phoneNumber', 'city', 'address']
+      ? ['title', 'numParticipants', 'description', 'city', 'address']
       : [
         'companyEmail',
         'password',
@@ -65,7 +79,7 @@ export class CreateEventComponent {
         'companyAddress',
         'description',
       ];
-
+    console.log(this.eventForm)
     fields.forEach((field) => this.eventForm.get(field)?.markAsTouched());
     return fields.every((field) => this.eventForm.get(field)?.valid);
   }
@@ -97,13 +111,31 @@ export class CreateEventComponent {
 
 
 
+  OnDateChange(event: MatDatepickerInputEvent<any, any>){
+    this.date = event.value;
+    this.eventForm.get('date')?.setValue(event.value);
+  }
 
 
+  eventRadioChange(event: MatRadioChange) {
+    this.privacy = event.value;
+  }
 
 
+  private loadEventTypes(): void {
+    this.eventTypesService.getEventTypesForManagement().subscribe({
+      next: (eventTypesForManagement: EventTypeManagementDTO) => {
 
+        this.allEventTypes = eventTypesForManagement.eventTypes;
+        //place it at the top
+        this.allEventTypes.unshift(this.allField);
 
-
+      },
+      error: (_) => {
+        console.error("Error loading event types");
+      }
+    });
+  }
 
 
 

@@ -313,7 +313,6 @@ export class HomeComponent implements OnInit {
   }
 
   loadFilteredEventTypes(event: MatSelectChange): void {
-    console.log("Upaoooooooo");
     const category = event.value;
     this.filteredEventTypes = category?.eventTypes || [];
     console.log(this.filteredEventTypes);

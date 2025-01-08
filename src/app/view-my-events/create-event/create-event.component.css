@@ -10,6 +10,12 @@ label{
   color: white;
 }
 
+mat-radio-group{
+  font-size: 14px;
+
+}
+
+
 mat-error {
   color: var(--error-color-lighter) !important;
   font-size: 12px;
@@ -185,3 +191,5 @@ mat-form-field {
   justify-content: start;
   gap: 10px;
 }
+
+

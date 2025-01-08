@@ -111,8 +111,8 @@
 
 
 </div>
-<mat-tab-group >
-  <mat-tab label="My Calendar" *ngIf="user.attendingEvents">
+<mat-tab-group selectedIndex="0">
+  <mat-tab label="My Calendar">
     <app-profile-calendar [attendingEvents]="user.attendingEvents"
                           [myEvents]="user.myEvents"></app-profile-calendar>
   </mat-tab>

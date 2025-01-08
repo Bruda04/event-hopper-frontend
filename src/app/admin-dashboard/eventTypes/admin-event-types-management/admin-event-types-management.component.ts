@@ -47,8 +47,6 @@ export class AdminEventTypesManagementComponent implements OnInit, AfterViewInit
         console.error("Error loading categories");
       }
     });
-
-
   }
 
   getCategoryNames(categories: SimpleCategoryDTO[]): string {
