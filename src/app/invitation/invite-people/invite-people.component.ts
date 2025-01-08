@@ -8,6 +8,7 @@ import {EventService} from "../../event/event.service";
 import {EventDTO} from "../../shared/dto/events/eventDTO.model";
 import {firstValueFrom} from "rxjs";
 import {InviteConfirmationComponent} from '../invite-confirmation/invite-confirmation.component';
+import {SinglePageEventDTO} from '../../shared/dto/events/SinglePageEventDTO.model';
 
 
 @Component({
@@ -44,7 +45,7 @@ export class InvitePeopleComponent {
         try {
 
           //moram cekati da se prvo dobavi event pa onda dalje
-          const event: EventDTO = await firstValueFrom(this.eventService.getEvent("3f7b2c9e-4a6f-4d5b-b8c1-7a2f9e3b6d4a"));
+          const event: SinglePageEventDTO = await firstValueFrom(this.eventService.getEvent("3f7b2c9e-4a6f-4d5b-b8c1-7a2f9e3b6d4a"));
 
           const createInvitationDTO: CreateInvitationDTO = {
             targetEmail: email,

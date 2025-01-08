@@ -11,7 +11,7 @@
         Attendees can dive into engaging talks and panel discussions led by industry experts, covering a wide array of topics from software development and AI innovations to emerging technologies and startup success stories. The meetup also offers interactive workshops and hands-on sessions.
       </p>
       <div class="action-buttons">
-        <button mat-button color="primary" id="inviteBtn" (click) = "openInviteModal()">Invite People</button>
+        <button mat-button color="primary"  *ngIf="organizerLoggedIn" id="inviteBtn" (click) = "openInviteModal()">Invite People</button>
         <button mat-button id="exportBtn" (click) = "exportToPDF()">Export to PDF</button>
       </div>
     </div>
@@ -26,7 +26,8 @@
       <h3>{{this.time}}</h3>
     </div>
     <div>
-      <h3>{{ this.eventDetails.privacy ? 'Public' : 'Private' }}</h3>
+      <h3>{{ this.eventDetails.privacy === 'PUBLIC' ? 'Public' :
+        this.eventDetails.privacy === 'PRIVATE' ? 'Private' : 'Unknown' }}</h3>
     </div>
   </div>
 

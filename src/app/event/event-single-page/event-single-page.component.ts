@@ -10,6 +10,8 @@ import {DatePipe} from '@angular/common';
 import jsPDF from 'jspdf';
 import {PriceManagementDTO} from '../../shared/dto/prices/PriceManagementDTO.model';
 import autoTable from 'jspdf-autotable';
+import {SinglePageEventDTO} from '../../shared/dto/events/SinglePageEventDTO.model';
+import {UserService} from '../../authentication/services/user.service';
 
 @Component({
   selector: 'app-event-single-page',
@@ -18,19 +20,26 @@ import autoTable from 'jspdf-autotable';
 })
 export class EventSinglePageComponent {
   id: string;
-  eventDetails: EventDTO;
+  eventDetails: SinglePageEventDTO;
   location: string;
   image: string;
   time: string;
+  organizerLoggedIn = false;
+  user: any;
+
+
   datePipe = new DatePipe('en-US');
 
 
-  constructor(public dialog: MatDialog, private route: ActivatedRoute, private eventService: EventService) {
+  constructor(public dialog: MatDialog, private route: ActivatedRoute, private eventService: EventService,
+              private userService: UserService) {
+
   }
 
   ngOnInit(): void {
+    this.user = this.userService.getUserData();
+
     this.id = this.route.snapshot.paramMap.get('id');
-    console.log('Event ID', this.id);
     this.eventService.getEvent(this.id).subscribe({
       next: (event) => {
         console.log('Event found', event);
@@ -38,6 +47,10 @@ export class EventSinglePageComponent {
         this.time = this.datePipe.transform(event.time, 'HH:mm, dd.MM.yyyy');
         this.eventDetails = event
         this.location = event.location.address + ", " + event.location.city;
+
+        if(this.user){
+          this.organizerLoggedIn = this.user.id === event.eventOrganizerId;
+        }
       },
       error: (err) => {
         console.error('Error finding event', err);
@@ -85,7 +98,8 @@ export class EventSinglePageComponent {
     pdf.setTextColor(7, 59, 76);
     pdf.text('Privacy:', 15, 110);
     pdf.setFontSize(12);
-    pdf.text(this.eventDetails.privacy ? 'Public' : 'Private', 15, 120);
+    pdf.text(this.eventDetails.privacy === 'PUBLIC' ? 'Public' :
+      this.eventDetails.privacy === 'PRIVATE' ? 'Private' : 'Unknown', 15, 120);
 
     // Optional: Include an image (event picture)
     if (this.image) {
