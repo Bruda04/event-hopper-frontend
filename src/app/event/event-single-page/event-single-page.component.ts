@@ -12,6 +12,7 @@ import {PriceManagementDTO} from '../../shared/dto/prices/PriceManagementDTO.mod
 import autoTable from 'jspdf-autotable';
 import {SinglePageEventDTO} from '../../shared/dto/events/SinglePageEventDTO.model';
 import {UserService} from '../../authentication/services/user.service';
+import {ProfileService} from '../../profile/profile.service';
 
 @Component({
   selector: 'app-event-single-page',
@@ -24,7 +25,8 @@ export class EventSinglePageComponent {
   location: string;
   image: string;
   time: string;
-  organizerLoggedIn = false;
+  notFound: boolean = false;
+  loaded: boolean = false;
   user: any;
 
 
@@ -32,7 +34,7 @@ export class EventSinglePageComponent {
 
 
   constructor(public dialog: MatDialog, private route: ActivatedRoute, private eventService: EventService,
-              private userService: UserService) {
+              private userService: UserService, private profileService: ProfileService) {
 
   }
 
@@ -42,22 +44,46 @@ export class EventSinglePageComponent {
     this.id = this.route.snapshot.paramMap.get('id');
     this.eventService.getEvent(this.id).subscribe({
       next: (event) => {
-        console.log('Event found', event);
         this.image = environment.apiImagesHost + event.picture;
         this.time = this.datePipe.transform(event.time, 'HH:mm, dd.MM.yyyy');
         this.eventDetails = event
         this.location = event.location.address + ", " + event.location.city;
 
-        if(this.user){
-          this.organizerLoggedIn = this.user.id === event.eventOrganizerId;
-        }
+        this.loaded = true;
       },
-      error: (err) => {
-        console.error('Error finding event', err);
+      error: () :void=>{
+        console.log('Error finding event');
+        this.loaded = true;
+        this.notFound = true;
       },
     });
 
   }
+
+
+
+  toggleFavorites(): void {
+    if (!this.eventDetails.favorite) {
+      this.profileService.addEventToFavorites(this.id).subscribe({
+        next: () => {
+          this.eventDetails.favorite = true;
+        },
+        error: (err) => {
+          console.log('Error adding solution to favorites');
+        }
+      });
+    } else {
+      this.profileService.removeEventFromFavorites(this.id).subscribe({
+        next: () => {
+          this.eventDetails.favorite = false;
+        },
+        error: (err) => {
+          console.log('Error removing event from favorites');
+        }
+      });
+    }
+  }
+
 
   exportToPDF() {
     const pdf: jsPDF = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF

@@ -71,4 +71,12 @@ export class ProfileService {
     return this.httpClient.delete(environment.apiHost + '/persons/favorite-solutions/' + solutionId);
   }
 
+  addEventToFavorites(eventId: string): Observable<any> {
+    return this.httpClient.post(environment.apiHost + '/persons/favorite-events/' + eventId, {});
+  }
+
+  removeEventFromFavorites(eventId: string): Observable<any> {
+    return this.httpClient.delete(environment.apiHost + '/persons/favorite-events/' + eventId);
+  }
+
 }

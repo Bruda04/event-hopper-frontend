@@ -10,5 +10,6 @@ export interface SinglePageEventDTO {
   eventType: SimpleEventTypeDTO
   location: SimpleLocationDTO
   privacy: string
-  eventOrganizerId: string
+  eventOrganizerLoggedIn: boolean;
+  favorite: boolean;
 }

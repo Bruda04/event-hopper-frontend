@@ -68,7 +68,7 @@ export class SolutionPageComponent implements OnInit {
           console.log('Error removing solution from favorites');
         }
       });
-  }
+    }
   }
 
   // TODO: Implement this method

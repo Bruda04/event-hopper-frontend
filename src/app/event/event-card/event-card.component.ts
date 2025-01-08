@@ -24,7 +24,7 @@ export class EventCardComponent {
   }
 
   viewMore( id: string): void {
-    this.router.navigate(['/event/' + id]);
+    this.router.navigate(['/events/' + id]);
   }
 
 }

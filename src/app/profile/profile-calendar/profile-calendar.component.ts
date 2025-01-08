@@ -64,7 +64,7 @@ export class ProfileCalendarComponent {
 
   // Handle event click
   handleEvent(action: string, event: CalendarEvent): void {
-    this.router.navigate(['/event/' + event.id]);
+    this.router.navigate(['/events/' + event.id]);
   }
 
   // Set the current view (day, week, month)

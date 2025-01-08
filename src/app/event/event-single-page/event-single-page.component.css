@@ -22,16 +22,12 @@
 
     .event-details {
       width: 50%; /* Take up the other half of the container */
-      padding: 5%; /* Add some spacing inside */
+      padding: 2%; /* Add some spacing inside */
       display: flex;
       flex-direction: column;
       justify-content: space-between;
 
-      h1 {
-        color:var(--font-dark-blue);
-        font-size: 3em;
-        margin-bottom: 1vh;
-      }
+
 
       p {
         font-size: 1.2vw; /* Dynamically scale paragraph text */
@@ -83,5 +79,32 @@
 }
 
 #inviteBtn{
+  color: var(--primary-color);
+}
+
+.error-message, .loading-message {
+  font-size: 3em;
+  color: var(--font-dark-blue);
+  font-variant: all-petite-caps;
+  text-align: center;
+  margin: 15% 0;
+  line-height: 1.2;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.header .mat-icon {
+  color: var(--disabled-color);
+  cursor: pointer;
+  font-size: 2.5em;
+  width: fit-content;
+  height: fit-content;
+}
+
+.header .mat-icon.filled {
   color: var(--primary-color);
 }
