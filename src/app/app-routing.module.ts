@@ -21,6 +21,7 @@ import {EventSinglePageComponent} from './event/event-single-page/event-single-p
 import {UserRegisterComponent} from './authentication/register/user-register/user-register.component';
 import {SolutionPageComponent} from './solutions/solution-page/solution-page.component';
 import {ServiceProviderPageComponent} from './service-provider-page/service-provider-page.component';
+import {EmailVerifiedComponent} from './authentication/register/email-verified/email-verified.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -48,6 +49,7 @@ const routes: Routes = [
   },
   { path: 'solutions/:id', component: SolutionPageComponent },
   { path: 'providers/:id', component: ServiceProviderPageComponent },
+  { path: 'verify-email/:token', component: EmailVerifiedComponent },
 ];
 
 

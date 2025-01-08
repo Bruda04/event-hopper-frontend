@@ -1,0 +1,72 @@
+:host {
+  background-color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+
+}
+
+p{
+  font-size: medium;
+  color: var(--font-dark-blue);
+  width: 50%;
+}
+
+.mat-form-field .mat-icon{
+  margin-right: 20px;
+}
+
+.verify-email-container {
+  text-align: center;
+  align-items: center;
+  margin-top: -15%;
+  width: 100%;
+  max-width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+
+.verify-email-image {
+  max-width: 100px;
+  height: auto;
+  margin-bottom: 1em;
+}
+
+.verify-email-title {
+  color: var(--beige);
+}
+
+.verify-email-form {
+  display: flex;
+  flex-direction: column; /* Stack inputs vertically */
+  align-items: center;
+  width: 100%;
+}
+
+
+.loginBtn {
+  width: 30%;
+  padding: 0.8em;
+  font-weight: normal;
+  background-color: var(--secondary-color) !important;
+  color: white !important;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin-top: 1em;
+}
+
+.loginBtn:hover {
+  background-color: var(--font-dark-blue);
+  color: white;
+}
+
+
+.verify-email-text {
+  margin-top: 1em;
+  font-size: 0.9em;
+  text-decoration: none;
+  color: var(--font-dark-blue);
+}

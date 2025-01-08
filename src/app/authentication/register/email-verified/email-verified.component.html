@@ -1,0 +1,17 @@
+<div class="verify-email-container">
+  <img src="logo.png" alt="Logo Image" class="verify-email-image">
+  <h3 class="verify-email-title"  *ngIf="this.isLoading==true">Loading...</h3>
+  <h3 class="verify-email-title" *ngIf="state===VerificationTokenState.ACCEPTED && !this.isLoading">Congratulations!</h3>
+  <h3 class="verify-email-title" *ngIf="state===VerificationTokenState.MISSING && !this.isLoading">Oops! Something went wrong...</h3>
+  <h3 class="verify-email-title" *ngIf="state===VerificationTokenState.EXPIRED && !this.isLoading">Oops! Too late...</h3>
+
+
+  <p *ngIf="state===VerificationTokenState.ACCEPTED && !this.isLoading">Your account has been verified. You can now log in and start using your account.</p>
+  <p *ngIf="state===VerificationTokenState.EXPIRED && !this.isLoading">Your verification expired, you may request a new email to be sent.</p>
+  <p *ngIf="state===VerificationTokenState.MISSING && !this.isLoading">We couldn't find your account, your account may have been suspended.</p>
+
+  <button mat-raised-button *ngIf="state===VerificationTokenState.ACCEPTED && !this.isLoading" class="loginBtn" [routerLink]="'/login'">LOGIN</button>
+  <button mat-raised-button *ngIf="state===VerificationTokenState.EXPIRED && !this.isLoading" class="loginBtn" id="resendEmailBtn" (click)="resendEmail()">RESEND EMAIL</button>
+  <p *ngIf="newEmailSent && newEmailRequested">Email sent. Please check your inbox.</p>
+  <p *ngIf="!newEmailSent && newEmailRequested">Error with resending email.</p>
+</div>
