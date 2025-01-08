@@ -1,0 +1,181 @@
+<div class="event-container">
+  <img src="logo.png" alt="Logo Image" class="event-image">
+  <h3 class="event-title">Create Event</h3>
+  <label *ngIf="currentStep === 0">Please provide us with some information about your event.</label>
+  <label *ngIf="currentStep === 1">Please create an agenda for your event.</label>
+
+  <form [formGroup]="eventForm" (ngSubmit)="onSubmit()" class="event-form">
+    <div *ngIf="currentStep === 0">
+      <div class="form-grid">
+        <!-- First Column of Inputs -->
+        <div class="form-column">
+          <mat-form-field appearance="fill">
+            <mat-label>Title</mat-label>
+            <input matInput placeholder="Title" formControlName="title" />
+            <mat-error *ngIf="eventForm.get('title')?.hasError('required')">
+              Title is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Maximum number of participants</mat-label>
+            <input matInput placeholder="Maximum number of participanss" formControlName="numParticipants" type="number"/>
+            <mat-error *ngIf="eventForm.get('numParticipants')?.hasError('required')">
+              Field is required
+            </mat-error>
+            <mat-error *ngIf="eventForm.get('numParticipants')?.hasError('min')">
+              Can't be less than 1.
+            </mat-error>
+            <mat-error *ngIf="eventForm.get('numParticipants')?.hasError('max')">
+              Can't be more than 100k.
+            </mat-error>
+          </mat-form-field>
+
+
+          <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea matInput placeholder="Description" formControlName="description"></textarea>
+            <mat-error *ngIf="eventForm.get('description')?.hasError('required')">
+              Description is required
+            </mat-error>
+          </mat-form-field>
+
+
+        </div>
+
+        <!-- Second Column of Inputs -->
+        <div class="form-column">
+          <mat-form-field appearance="fill">
+            <mat-label>City</mat-label>
+            <input matInput placeholder="City" formControlName="city" />
+            <mat-error *ngIf="eventForm.get('city')?.hasError('required')">
+              City is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Address</mat-label>
+            <input matInput placeholder="Address" formControlName="address" />
+            <mat-error *ngIf="eventForm.get('address')?.hasError('required')">
+              Address is required
+            </mat-error>
+          </mat-form-field>
+
+
+          <div class="form-column">
+            <div class="profile-pic">
+              <input type="file" id="profilePic" (change)="onImageSelected($event)" style="display: none;" accept="image/*" />
+              <button mat-raised-button class="upload-button" type="button" (click)="triggerFileInput(0)" *ngIf="!imagePreview">
+                UPLOAD COVER PICTURE
+              </button>
+
+              <!-- Image Preview Section -->
+              <div class="image-preview" *ngIf="imagePreview">
+                <img [src]="imagePreview" alt="Profile Preview" />
+                <button mat-icon-button aria-label="Remove Image" class="image-close-btn" type="button" (click)="clearImage()">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Company Data -->
+    <div *ngIf="currentStep === 1">
+      <div class="form-grid">
+        <!-- First Column of Inputs -->
+        <div class="form-column">
+          <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Company Email" formControlName="companyEmail" />
+            <mat-error *ngIf="eventForm.get('companyEmail')?.hasError('required')">
+              Email is required
+            </mat-error>
+            <mat-error *ngIf="eventForm.get('companyEmail')?.hasError('email')">
+              Invalid email format
+            </mat-error>
+          </mat-form-field>
+
+
+
+
+
+
+          <mat-form-field appearance="fill">
+            <mat-label>Phone Number</mat-label>
+            <input matInput placeholder="Phone Number" formControlName="companyPhoneNumber" type="number" />
+            <mat-error *ngIf="eventForm.get('companyPhoneNumber')?.hasError('required')">
+              Phone Number is required
+            </mat-error>
+          </mat-form-field>
+
+
+
+        </div>
+
+
+        <!-- Second Column of Inputs -->
+        <div class="form-column">
+          <mat-form-field appearance="fill">
+            <mat-label>Company Name</mat-label>
+            <input matInput placeholder="Company Name" formControlName="companyName" />
+            <mat-error *ngIf="eventForm.get('companyName')?.hasError('required')">
+              Company Name is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>City</mat-label>
+            <input matInput placeholder="City" formControlName="companyCity" />
+            <mat-error *ngIf="eventForm.get('companyCity')?.hasError('required')">
+              City is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Address</mat-label>
+            <input matInput placeholder="Company Address" formControlName="companyAddress" />
+            <mat-error *ngIf="eventForm.get('companyAddress')?.hasError('required')">
+              Address is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea matInput placeholder="Description" formControlName="description"></textarea>
+            <mat-error *ngIf="eventForm.get('description')?.hasError('required')">
+              Description is required
+            </mat-error>
+          </mat-form-field>
+
+
+
+
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="button-group">
+      <button mat-raised-button class="back-button" *ngIf="currentStep == 0" type="button" [routerLink]="'/create-event'">
+        BACK
+      </button>
+
+      <button mat-raised-button class="back-button" id="back-button2" *ngIf="currentStep > 0" type="button" (click)="onBack()">
+        BACK
+      </button>
+      <button mat-raised-button class="next-button" *ngIf="currentStep === 0" type="button" (click)="onNext()">
+        NEXT
+      </button>
+      <button mat-raised-button class="event-button" *ngIf="currentStep === 1" type="submit">
+        event
+      </button>
+
+    </div>
+  </form>
+</div>

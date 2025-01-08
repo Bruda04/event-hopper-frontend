@@ -56,6 +56,9 @@ export class ProfileComponent {
 
   }
 
+  openViewMyEvents(): void {
+    this.router.navigate(['/my-events']);
+  }
 
   openConfirmationDialog(): void {
     const dialogRef = this.dialog.open(ConfirmDeactivationComponent, {

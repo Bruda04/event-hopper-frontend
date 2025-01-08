@@ -26,6 +26,7 @@
         </div>
         <button mat-raised-button class="btn"
                 [ngClass]="{ 'btn-pup': user.role === 'SERVICE_PROVIDER' }"
+                *ngIf="user.role != 'ADMIN'"
                 (click)="openEditAccountInformation()">EDIT INFORMATION</button>
       </div>
 
@@ -74,6 +75,10 @@
       <!-- Card 3: Text and Buttons  and pup image carousel-->
       <div class="buttons-section">
         <button mat-raised-button class="btn"
+                *ngIf="user.role === 'ADMIN'"
+                (click)="openEditAccountInformation()">EDIT INFORMATION</button>
+
+        <button mat-raised-button class="btn"
                 [ngClass]="{ 'btn-pup': user.role === 'SERVICE_PROVIDER' }"
                 (click)="openChangePasswordDialog()"
                 *ngIf="this.user.role != 'SERVICE_PROVIDER'">CHANGE PASSWORD</button>
@@ -86,11 +91,13 @@
                 *ngIf="this.user.role === 'ADMIN'"
                 [routerLink]="'/admin-dashboard'">ADMIN DASHBOARD</button>
 
+
+
         <button mat-raised-button class="btn"
-                *ngIf="this.user.role === 'EVENT_ORGANIZER'">VIEW MY EVENTS</button>
+                *ngIf="this.user.role === 'EVENT_ORGANIZER'" (click)="openViewMyEvents()">VIEW MY EVENTS</button>
 
         <button mat-raised-button class="btn deactivate-account"
-                *ngIf="this.user.role != 'SERVICE_PROVIDER'"
+                *ngIf="this.user.role != 'SERVICE_PROVIDER' && this.user.role != 'ADMIN'"
                 (click)="openConfirmationDialog()">DEACTIVATE ACCOUNT</button>
 
 

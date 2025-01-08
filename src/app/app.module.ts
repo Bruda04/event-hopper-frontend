@@ -19,11 +19,15 @@ import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
 
 import {HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi} from '@angular/common/http';
 import { AuthInterceptor} from './authentication/guards/AuthInterceptor';
+import { ViewMyEventsComponent } from './view-my-events/view-my-events.component';
+import { CreateEventComponent } from './view-my-events/create-event/create-event.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ServiceProviderPageComponent,
+    ViewMyEventsComponent,
+    CreateEventComponent,
   ],
   imports: [
     BrowserModule,

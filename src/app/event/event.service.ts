@@ -26,6 +26,10 @@ export class EventService {
     return this.HttpClient.get<EventDTO[]>(environment.apiHost + '/events/persons-top-5' );
   }
 
+  getOrganizerEvents() : Observable<EventDTO[]> {
+    return this.HttpClient.get<EventDTO[]>(environment.apiHost + '/events/organizer');
+  }
+
   getEventsPage(
     pageProperties: any,
     sortField: string,
@@ -60,4 +64,6 @@ export class EventService {
     }
     return this.HttpClient.get<PagedResponse<EventDTO>>(environment.apiHost +  '/events/search', { params });
   }
+
+
 }
