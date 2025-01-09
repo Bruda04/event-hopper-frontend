@@ -12,6 +12,7 @@ import {CreateLocationDTO} from '../../shared/dto/locations/CreateLocationDTO.mo
 import {EventPrivacyType} from '../../shared/model/EventPrivacyType.model';
 import {ImageServiceService} from '../../shared/services/image-service.service';
 import {SimpleEventTypeDTO} from '../../shared/dto/eventTypes/SimpleEventTypeDTO.model';
+import {format} from 'date-fns';
 
 @Component({
   selector: 'app-create-event',
@@ -81,14 +82,23 @@ export class CreateEventComponent {
 
   onSubmit() {
     if (this.isStepValid(1)) {
+      const eventDate: string = this.eventForm.get('date')?.value;
+
       let agenda : CreateAgendaActivityDTO[] = [];
       this.agendaActivities.forEach((activity) => {
+        const parsedDate = new Date(eventDate);
+        const isoDate = parsedDate.toISOString().split('T')[0];
+
+        const startTime = `${isoDate}T${activity.startTime}:00`;
+        const endTime = `${isoDate}T${activity.endTime}:00`;
+
+
         agenda.push({
           name: activity.name,
           description: activity.description,
           locationName: activity.locationName,
-          startTime: activity.startTime,
-          endTime: activity.endTime,
+          startTime: startTime,
+          endTime: endTime,
         });
       });
 
@@ -108,9 +118,13 @@ export class CreateEventComponent {
         eventPrivacyType: eventPrivacy,
         time: this.eventForm.get('date')?.value,
         picture: '',
-        eventTypeId: this.eventForm.get('eventTypes')?.value.id,
+        eventTypeId: '',
         agendaActivities: agenda,
         location: locationDTO,
+      }
+
+      if(this.eventForm.get('eventTypes')?.value !== 'All'){
+        createEventDTO.eventTypeId = this.eventForm.get('eventTypes')?.value.id;
       }
 
       this.imageService.uploadImage(this.imageUpload).subscribe({
