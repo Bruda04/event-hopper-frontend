@@ -167,6 +167,12 @@
               <mat-error *ngIf="agendaForm.get('endTime')?.hasError('required')">
                 End time is required
               </mat-error>
+              <mat-error *ngIf="agendaForm.get('endTime')?.hasError('invalidTimeRange')">
+                End time must be after start time.
+              </mat-error>
+              <mat-error *ngIf="agendaForm.get('endTime')?.hasError('overlappingTime')">
+                This time range overlaps with an existing activity.
+              </mat-error>
             </mat-form-field>
 
             <button mat-raised-button color="primary" type="submit">

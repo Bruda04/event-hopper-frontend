@@ -3,9 +3,15 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {MatRadioChange} from '@angular/material/radio';
-import {SimpleEventTypeDTO} from '../../shared/dto/eventTypes/SimpleEventTypeDTO.model';
 import {EventTypeManagementDTO} from '../../shared/dto/eventTypes/EventTypeManagementDTO.model';
 import {EventTypesService} from '../../admin-dashboard/eventTypes/event-types.service';
+import {EventService} from '../../event/event.service';
+import {CreateEventDTO} from '../../shared/dto/events/CreateEventDTO.model';
+import {CreateAgendaActivityDTO} from '../../shared/dto/events/CreateAgendaActivityDTO.model.';
+import {CreateLocationDTO} from '../../shared/dto/locations/CreateLocationDTO.model';
+import {EventPrivacyType} from '../../shared/model/EventPrivacyType.model';
+import {ImageServiceService} from '../../shared/services/image-service.service';
+import {SimpleEventTypeDTO} from '../../shared/dto/eventTypes/SimpleEventTypeDTO.model';
 
 @Component({
   selector: 'app-create-event',
@@ -24,7 +30,8 @@ export class CreateEventComponent {
     id: '',
     name: 'All',
     description: '',
-    suggestedCategories: []
+    suggestedCategories: [],
+    deactivated: false,
   };
 
   imageUpload: File;
@@ -33,7 +40,8 @@ export class CreateEventComponent {
   agendaForm: FormGroup;
   agendaActivities: any[] = [];
 
-  constructor(private fb: FormBuilder, private router: Router, private eventTypesService: EventTypesService) {
+  constructor(private fb: FormBuilder, private router: Router, private eventTypesService: EventTypesService,
+              private eventService: EventService, private imageService: ImageServiceService) {
     this.eventForm = this.fb.group({
       title: ['', Validators.required],
       numParticipants: ['', [Validators.required, Validators.min(1), Validators.max(100000), ]],
@@ -60,7 +68,6 @@ export class CreateEventComponent {
 
 
   onNext() {
-    console.log(this.isStepValid(0))
     if (this.currentStep === 0 && this.isStepValid(0)) {
       this.currentStep++;
     }
@@ -74,24 +81,71 @@ export class CreateEventComponent {
 
   onSubmit() {
     if (this.isStepValid(1)) {
-      //this also sends an email so i don't want it to wait
-      this.router.navigate(['/email-confirmation-sent']);
+      let agenda : CreateAgendaActivityDTO[] = [];
+      this.agendaActivities.forEach((activity) => {
+        agenda.push({
+          name: activity.name,
+          description: activity.description,
+          locationName: activity.locationName,
+          startTime: activity.startTime,
+          endTime: activity.endTime,
+        });
+      });
+
+      const locationDTO: CreateLocationDTO = {
+        city: this.eventForm.get('city')?.value,
+        address: this.eventForm.get('address')?.value,
+        latitude: 0,
+        longitude: 0,
+      }
+
+      const eventPrivacy: EventPrivacyType = this.privacy === 'public' ? EventPrivacyType.PUBLIC : EventPrivacyType.PRIVATE;
+
+      const createEventDTO: CreateEventDTO = {
+        name: this.eventForm.get('title')?.value,
+        maxAttendance: this.eventForm.get('numParticipants')?.value,
+        description: this.eventForm.get('description')?.value,
+        eventPrivacyType: eventPrivacy,
+        time: this.eventForm.get('date')?.value,
+        picture: '',
+        eventTypeId: this.eventForm.get('eventTypes')?.value.id,
+        agendaActivities: agenda,
+        location: locationDTO,
+      }
+
+      this.imageService.uploadImage(this.imageUpload).subscribe({
+        next: (url: string) => {
+          createEventDTO.picture = url;
+
+
+          console.log(createEventDTO);
+          this.eventService.addEvent(createEventDTO).subscribe({
+            next: () => {
+              console.log('Event created');
+              this.router.navigate(['/my-events']);
+            },
+            error: () => {
+              console.error('Error creating event');
+            }
+          });
+        },
+        error: () => {
+          console.error('Error uploading image');
+        }
+      })
+
+
+
+
+
+
+
+
     }
   }
 
   isStepValid(step: number): boolean {
-    const fields = step === 0
-      ? ['title', 'numParticipants', 'description', 'city', 'address', 'date', 'eventTypes']
-      : [
-        'companyEmail',
-        'password',
-        'confirmPassword',
-        'companyName',
-        'companyPhoneNumber',
-        'companyCity',
-        'companyAddress',
-        'description',
-      ];
+    const fields = ['title', 'numParticipants', 'description', 'city', 'address', 'date', 'eventTypes'];
     if(!this.imageSubmitted){
       return false;
     }
@@ -140,8 +194,12 @@ export class CreateEventComponent {
 
   private loadEventTypes(): void {
     this.eventTypesService.getEventTypesForManagement().subscribe({
-      next: (eventTypesForManagement: EventTypeManagementDTO) => {
-        this.allEventTypes = eventTypesForManagement.eventTypes;
+      next: (eventTypesDTOs: EventTypeManagementDTO) => {
+        eventTypesDTOs.eventTypes.forEach((eventType) => {
+          if(!eventType.deactivated){
+            this.allEventTypes.push(eventType);
+          }
+        });
         //place it at the top
         this.allEventTypes.unshift(this.allField);
       },
@@ -165,11 +223,14 @@ export class CreateEventComponent {
     const startMinutes = this.convertTimeToMinutes(activity.startTime);
     const endMinutes = this.convertTimeToMinutes(activity.endTime);
 
-    // Validate start and end times
+
     if (startMinutes >= endMinutes) {
-      alert('End time must be after start time.');
+      this.agendaForm.get('endTime')?.setErrors({ invalidTimeRange: true });
       return;
+    } else {
+      this.agendaForm.get('endTime')?.setErrors(null); // Clear custom error if valid
     }
+
 
     // Validate time overlap
     const isOverlapping = this.agendaActivities.some((existing) => {
@@ -184,8 +245,10 @@ export class CreateEventComponent {
     });
 
     if (isOverlapping) {
-      alert('The activity times overlap with an existing activity.');
+      this.agendaForm.get('endTime')?.setErrors({ overlappingTime: true });
       return;
+    } else {
+      this.agendaForm.get('endTime')?.setErrors(null); // Clear custom error if valid
     }
 
     this.agendaActivities.push(activity);

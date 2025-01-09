@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {PagedResponse} from '../shared/model/paged-response.model';
 import {EventDTO} from '../shared/dto/events/eventDTO.model';
 import {SinglePageEventDTO} from '../shared/dto/events/SinglePageEventDTO.model';
+import {CreateEventDTO} from '../shared/dto/events/CreateEventDTO.model';
 
 
 @Injectable({
@@ -13,6 +14,10 @@ import {SinglePageEventDTO} from '../shared/dto/events/SinglePageEventDTO.model'
 export class EventService {
 
   constructor(private HttpClient: HttpClient) {}
+
+  addEvent(createDTO: CreateEventDTO) : Observable<any> {
+    return this.HttpClient.post(environment.apiHost + '/events', createDTO);
+  }
 
   getEvents(): Observable<EventDTO[]> {
     return this.HttpClient.get<EventDTO[]>(environment.apiHost + '/events');
