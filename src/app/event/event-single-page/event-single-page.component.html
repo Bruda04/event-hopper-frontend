@@ -12,8 +12,10 @@
         {{ this.eventDetails.description }}
       </p>
       <div class="action-buttons">
-        <button mat-button color="primary"  *ngIf="eventDetails.eventOrganizerLoggedIn" id="inviteBtn" (click) = "openInviteModal()">Invite People</button>
+        <button mat-button color="primary"  *ngIf="eventDetails.eventOrganizerLoggedIn && this.eventDetails.privacy === 'PRIVATE'" id="inviteBtn" (click) = "openInviteModal()">Invite People</button>
         <button mat-button id="exportBtn" (click) = "exportToPDF()">Export to PDF</button>
+        <button mat-button id="exportBtn2"  *ngIf="eventDetails.eventOrganizerLoggedIn && this.eventDetails.privacy === 'PRIVATE'" (click) = "exportToPDF()">Download Guest List</button>
+
       </div>
     </div>
   </div>

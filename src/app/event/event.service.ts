@@ -6,6 +6,7 @@ import {PagedResponse} from '../shared/model/paged-response.model';
 import {EventDTO} from '../shared/dto/events/eventDTO.model';
 import {SinglePageEventDTO} from '../shared/dto/events/SinglePageEventDTO.model';
 import {CreateEventDTO} from '../shared/dto/events/CreateEventDTO.model';
+import {GetEventAgendasDTO} from '../shared/dto/events/GetEventAgendasDTO.model';
 
 
 @Injectable({
@@ -34,6 +35,11 @@ export class EventService {
   getOrganizerEvents() : Observable<EventDTO[]> {
     return this.HttpClient.get<EventDTO[]>(environment.apiHost + '/events/organizer');
   }
+
+  getAgendaForEvent(id: string) : Observable<GetEventAgendasDTO> {
+    return this.HttpClient.get<GetEventAgendasDTO>(environment.apiHost + '/events/'+ id + '/agenda');
+  }
+
 
   getEventsPage(
     pageProperties: any,
@@ -69,6 +75,7 @@ export class EventService {
     }
     return this.HttpClient.get<PagedResponse<EventDTO>>(environment.apiHost +  '/events/search', { params });
   }
+
 
 
 }

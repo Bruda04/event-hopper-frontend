@@ -131,8 +131,6 @@ export class CreateEventComponent {
         next: (url: string) => {
           createEventDTO.picture = url;
 
-
-          console.log(createEventDTO);
           this.eventService.addEvent(createEventDTO).subscribe({
             next: () => {
               console.log('Event created');
