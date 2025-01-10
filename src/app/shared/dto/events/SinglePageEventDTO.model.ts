@@ -1,7 +1,7 @@
 import {SimpleEventTypeDTO} from '../eventTypes/SimpleEventTypeDTO.model';
 import {SimpleLocationDTO} from '../locations/SimpleLocationDTO.model';
 
-export interface EventDTO{
+export interface SinglePageEventDTO {
   id: string
   name: string
   description: string
@@ -10,4 +10,6 @@ export interface EventDTO{
   eventType: SimpleEventTypeDTO
   location: SimpleLocationDTO
   privacy: string
+  eventOrganizerLoggedIn: boolean;
+  favorite: boolean;
 }

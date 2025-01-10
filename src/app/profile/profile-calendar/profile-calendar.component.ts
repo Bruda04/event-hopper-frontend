@@ -3,6 +3,7 @@ import {CalendarEvent, CalendarView} from 'angular-calendar';
 import {Subject} from 'rxjs';
 import {UserService} from '../../authentication/services/user.service';
 import {User} from '../../shared/model/user.model';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class ProfileCalendarComponent {
   redColor = { primary: '#ad2121', secondary: '#FAE3E3' };
   blueColor = {primary: '#1e90ff', secondary: '#D1E8FF'};
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private router: Router) {
     this.user = userService.getUserData();
   }
 
@@ -34,6 +35,7 @@ export class ProfileCalendarComponent {
     if(this.user.role === 'EVENT_ORGANIZER'){
       for (const event of this.myEvents) {
         const calendarEvent: CalendarEvent = {
+          id: event.id,
           title: event.name,
           start: new Date(event.time),
           color: this.yellowColor,
@@ -46,6 +48,7 @@ export class ProfileCalendarComponent {
 
     for (const event of this.attendingEvents) {
       const calendarEvent: CalendarEvent = {
+        id: event.id,
         title: event.name,
         start: new Date(event.time),
         color: this.blueColor,
@@ -61,7 +64,7 @@ export class ProfileCalendarComponent {
 
   // Handle event click
   handleEvent(action: string, event: CalendarEvent): void {
-    alert(`Event: ${event.title}\nStarts at: ${event.start}\nEnds at: ${event.end}`);
+    this.router.navigate(['/events/' + event.id]);
   }
 
   // Set the current view (day, week, month)
