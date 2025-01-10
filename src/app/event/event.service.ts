@@ -5,6 +5,8 @@ import {Observable} from 'rxjs';
 import {PagedResponse} from '../shared/model/paged-response.model';
 import {EventDTO} from '../shared/dto/events/eventDTO.model';
 import {SinglePageEventDTO} from '../shared/dto/events/SinglePageEventDTO.model';
+import {CreateEventDTO} from '../shared/dto/events/CreateEventDTO.model';
+import {GetEventAgendasDTO} from '../shared/dto/events/GetEventAgendasDTO.model';
 
 
 @Injectable({
@@ -13,6 +15,10 @@ import {SinglePageEventDTO} from '../shared/dto/events/SinglePageEventDTO.model'
 export class EventService {
 
   constructor(private HttpClient: HttpClient) {}
+
+  addEvent(createDTO: CreateEventDTO) : Observable<any> {
+    return this.HttpClient.post(environment.apiHost + '/events', createDTO);
+  }
 
   getEvents(): Observable<EventDTO[]> {
     return this.HttpClient.get<EventDTO[]>(environment.apiHost + '/events');
@@ -25,6 +31,15 @@ export class EventService {
   getTop5Events(): Observable<EventDTO[]> {
     return this.HttpClient.get<EventDTO[]>(environment.apiHost + '/events/persons-top-5' );
   }
+
+  getOrganizerEvents() : Observable<EventDTO[]> {
+    return this.HttpClient.get<EventDTO[]>(environment.apiHost + '/events/organizer');
+  }
+
+  getAgendaForEvent(id: string) : Observable<GetEventAgendasDTO> {
+    return this.HttpClient.get<GetEventAgendasDTO>(environment.apiHost + '/events/'+ id + '/agenda');
+  }
+
 
   getEventsPage(
     pageProperties: any,
@@ -60,4 +75,7 @@ export class EventService {
     }
     return this.HttpClient.get<PagedResponse<EventDTO>>(environment.apiHost +  '/events/search', { params });
   }
+
+
+
 }

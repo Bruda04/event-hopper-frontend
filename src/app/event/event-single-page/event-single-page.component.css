@@ -78,6 +78,16 @@
   background-color: var(--secondary-color);
 }
 
+#exportBtn2{
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: normal;
+}
+
+#exportBtn2:hover{
+  background-color: var(--secondary-color);
+}
+
 #inviteBtn{
   color: var(--primary-color);
 }

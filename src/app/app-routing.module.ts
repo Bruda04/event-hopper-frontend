@@ -22,6 +22,8 @@ import {UserRegisterComponent} from './authentication/register/user-register/use
 import {SolutionPageComponent} from './solutions/solution-page/solution-page.component';
 import {ServiceProviderPageComponent} from './service-provider-page/service-provider-page.component';
 import {EmailVerifiedComponent} from './authentication/register/email-verified/email-verified.component';
+import {ViewMyEventsComponent} from './view-my-events/view-my-events.component';
+import {CreateEventComponent} from './view-my-events/create-event/create-event.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -30,6 +32,14 @@ const routes: Routes = [
     canActivate: [roleGuard],
     data: { roles:  ['SERVICE_PROVIDER', 'ADMIN', 'AUTHENTICATED_USER', 'EVENT_ORGANIZER']  } },
   { path: 'register', component: RegisterComponent },
+  {path:'my-events', component: ViewMyEventsComponent,
+    canActivate: [roleGuard],
+    data: { roles: ['EVENT_ORGANIZER'] }
+    },
+  {path:'create-event', component: CreateEventComponent,
+    canActivate: [roleGuard],
+    data: { roles: ['EVENT_ORGANIZER'] }
+  },
   { path: 'register-pup', component: PupRegisterComponent },
   { path: 'upgrading-register-pup', component: PupRegisterUpgradingComponent},
   { path: 'register-organizer', component: OrganizerRegisterComponent },

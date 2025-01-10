@@ -1,0 +1,59 @@
+.title {
+  font-size: 2.5em;
+  color: var(--font-dark-blue);
+  padding: 3vh;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+p{
+  padding-left: 3vh;
+  padding-top: 1vh;
+  color: var(--font-dark-blue);
+}
+
+.header{
+  width: 100%;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: end; /* Align search container left and button right */
+  align-items: center;
+}
+
+
+.row-events{
+  display: grid;
+  grid-template-columns: 19% 19% 19% 19% 19%;
+  margin-top: 1em;
+  margin-left: 3em;
+  margin-bottom: 3em;
+  grid-gap: 1em;
+  transition: transform 0.3s ease !important;
+
+}
+
+
+.no-events-block {
+  height: 300px; /* Makes the block tall */
+  display: flex;
+  justify-content: center; /* Horizontally center text */
+  align-items: center; /* Vertically center text */
+  color: var(--font-dark-blue);
+  font-size: 1.2em; /* Larger font size */
+  text-align: center;
+  margin: 0 auto;
+}
+
+/* CREATE Button */
+.create-button {
+  height: 3em;
+  background-color: var(--secondary-color) !important;
+  color: white !important;
+  margin-right: 3em;
+}
+
+.create-button mat-icon {
+  margin-right: 0.5em;
+}
