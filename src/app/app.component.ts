@@ -11,6 +11,8 @@ export class AppComponent {
   title = 'EventHopper';
 
   constructor(private userService: UserService, private socket: WebSocketService) {
-    this.socket.initConnection();
+    if (this.userService.getUserData()?.id) {
+      this.socket.initConnection();
+    }
   }
 }

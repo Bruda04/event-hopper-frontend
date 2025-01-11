@@ -9,7 +9,6 @@ import {UserService} from '../user.service';
   providedIn: 'root',
 })
 export class WebSocketService {
-  private url: string = environment.apiHost + '/socket';
   private stompClient: CompatClient;
   public isLoaded: boolean = false;
 
@@ -17,7 +16,7 @@ export class WebSocketService {
 
   initConnection(): void {
     let wsf: () => WebSocket = (): WebSocket => {
-      return new SockJS(this.url, null);
+      return new WebSocket(environment.apiWebSocket);
     };
     this.stompClient = Stomp.over(wsf);
     this.stompClient.debug = (): void => {};
