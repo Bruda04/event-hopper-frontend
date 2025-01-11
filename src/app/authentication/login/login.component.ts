@@ -5,6 +5,7 @@ import { UserService } from '../services/user.service';
 import {LoginService} from '../services/login/login.service';
 import {LoginDTO} from '../../shared/dto/users/account/LoginDTO.model';
 import {LoginResponse} from '../../shared/dto/users/account/LoginResponse.model';
+import {WebSocketService} from '../services/web-sockets/web-socket.service';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +27,7 @@ export class LoginComponent {
 
   constructor(private loginService: LoginService,
               private userService: UserService,
+              private webSocketService: WebSocketService,
               private router: Router,
               private route: ActivatedRoute ,) {}
 
@@ -61,6 +63,7 @@ export class LoginComponent {
         next: (response:LoginResponse) => {
           if(response.success){
             this.userService.storeToken(response.token);
+            this.webSocketService.initConnection();
             if (this.invitationId){
               this.router.navigate(['/invitation-redirect'], { queryParams: { invitationId: this.invitationId } });
             }else{
