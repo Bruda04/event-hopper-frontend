@@ -127,13 +127,13 @@ mat-form-field {
 }
 
 
-.images-preview {
+.image-preview {
   position: relative;
   display: inline-block;
   margin-top: 1em;
 }
 
-.images-preview img {
+.image-preview img {
   max-width: 150px;
   border-radius: 8px;
   border: 1px solid var(--secondary-color);

@@ -10,6 +10,7 @@ import {CreateEventOrganizerAccountDTO} from '../../../shared/dto/users/account/
 import {CreateRegistrationRequestDTO} from '../../../shared/dto/registrationRequest/CreateRegistrationRequestDTO.model';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../env/envirements';
+import {ImageServiceService} from '../../../shared/services/image-service.service';
 
 function phoneMinLengthValidator(control: AbstractControl): ValidationErrors | null {
   const value = control.value?.toString() || ''; // Convert the number to a string
@@ -27,9 +28,11 @@ export class OrganizerRegisterComponent {
   hidePassword = true;
   hideConfirmPassword = true;
   imagePreview: string | null = null;
-  profilePhoto: string | null = null;
+  profileImageUpload: File;
+  profileImageUrl: string = "";
 
-  constructor(private fb: FormBuilder, private router: Router, private registrationService: RegistrationService, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private router: Router, private registrationService: RegistrationService, private http: HttpClient,
+                private imageService: ImageServiceService) {
     this.registerForm = this.fb.group(
       {
         fullName: ['', Validators.required],
@@ -47,7 +50,6 @@ export class OrganizerRegisterComponent {
         phoneNumber: ['', [Validators.required, phoneMinLengthValidator, Validators.pattern('[0-9]*')]],
         address: ['', Validators.required],
         city: ['', Validators.required],
-        profileImage: [null],
       },
       { validators: this.passwordMatchValidator } // Add custom validator here
     );
@@ -77,10 +79,11 @@ export class OrganizerRegisterComponent {
             return;
           }
 
+
           const createEventOrganizerDTO: CreateEventOrganizerDTO = {
             name: this.registerForm.value.fullName.split(' ')[0], //first name
             surname: this.registerForm.value.fullName.split(' ').slice(1).join(' ') || '',
-            profilePicture: this.registerForm.value.profileImage, // Image file
+            profilePicture: "",
             phoneNumber: this.registerForm.value.phoneNumber,
             type: PersonType.EVENT_ORGANIZER,
             location: {
@@ -88,7 +91,6 @@ export class OrganizerRegisterComponent {
               city: this.registerForm.value.city,
             } as CreateLocationDTO,
           };
-
           const createAccount: CreateEventOrganizerAccountDTO = {
             email: this.registerForm.value.email,
             password: this.registerForm.value.password,
@@ -98,17 +100,41 @@ export class OrganizerRegisterComponent {
             person: createEventOrganizerDTO,
             registrationRequest:{} as CreateRegistrationRequestDTO,
           }
+          if(this.profileImageUpload != null) {
+            this.imageService.uploadImage(this.profileImageUpload).subscribe({
+              next: (url: string) => {
+                createAccount.person.profilePicture = url;
 
-          //this also sends an email so i dont want it to wait
-          this.router.navigate(['/email-confirmation-sent']);
-          this.registrationService.registerEventOrganizer(createAccount).subscribe({
-            next: (response) => {
-              //this.router.navigate(['/email-confirmation-sent']);
-            },
-            error: (err) => {
-              console.error('Error registering event organizer:', err);
-            },
-          });
+
+                //this also sends an email - I don't want it to wait
+                this.router.navigate(['/email-confirmation-sent']);
+                this.registrationService.registerEventOrganizer(createAccount).subscribe({
+                  next: (response) => {
+                    //this.router.navigate(['/email-confirmation-sent']);
+                  },
+                  error: (err) => {
+                    console.error('Error registering event organizer:', err);
+                  },
+                });
+              },
+              error: (err) => {
+                console.error('Error uploading image:', err);
+              },
+            });
+
+          }else{
+            //this also sends an email - I don't want it to wait
+            this.router.navigate(['/email-confirmation-sent']);
+            this.registrationService.registerEventOrganizer(createAccount).subscribe({
+              next: (response) => {
+                //this.router.navigate(['/email-confirmation-sent']);
+              },
+              error: (err) => {
+                console.error('Error registering event organizer:', err);
+              },
+            });
+          }
+
 
         },
         error: (err) => {
@@ -130,30 +156,26 @@ export class OrganizerRegisterComponent {
   }
 
   onFileSelected(event: Event) {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (file) {
-      const formData = new FormData();
-      formData.append('image', file);
+    const inputElement = event.target as HTMLInputElement;
+    const files = inputElement.files;
 
-      this.http.post<{ fileName: string }>(`${environment.apiHost}/images`, formData).subscribe({
-        next: (response) => {
-          this.profilePhoto = response.fileName; // Store the file name
-          this.imagePreview = URL.createObjectURL(file); // Show the preview
-          console.log('Image uploaded successfully:', response.fileName);
-        },
-        error: (error) => {
-          console.error('Image upload failed:', error);
-        },
-      });
+    if (files && files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        this.imagePreview = e.target?.result as string;
+      };
+      reader.readAsDataURL(files[0]);
     }
+
+    this.profileImageUpload = files[0];
+    this.profileImageUrl = URL.createObjectURL(files[0]);
   }
 
 
   clearImage() {
     this.imagePreview = null;
-    this.profilePhoto = null;
-    this.registerForm.patchValue({ profileImage: null }); // Clear form control value
-    this.registerForm.get('profileImage')?.updateValueAndValidity(); // Sync validity
+    this.profileImageUpload = null;
+    this.profileImageUrl = '';
   }
 
   triggerFileInput() {

@@ -45,7 +45,11 @@ h3 {
 }
 
 .profile-picture {
-  max-width: 150px;
+  width: 200px;
+  height: 200px; /* Ensures the image is a square */
+  border-radius: 50%; /* Crops the image into a circle */
+  object-fit: cover; /* Ensures the image is scaled and cropped to fill the circle */
+  overflow: hidden;
 }
 
 

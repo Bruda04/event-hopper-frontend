@@ -9,6 +9,7 @@ import {EditAccountInformationComponent} from '../edit-account-information/edit-
 import {EditCompanyInformationComponent} from '../edit-company-information/edit-company-information.component';
 import {User} from '../../shared/model/user.model';
 import {UpgradingComponent} from '../../authentication/upgrading/upgrading.component';
+import {environment} from '../../../env/envirements';
 
 
 @Component({
@@ -18,6 +19,7 @@ import {UpgradingComponent} from '../../authentication/upgrading/upgrading.compo
 })
 export class ProfileComponent {
   user: User;
+  profilePicture: string;
 
   constructor(private userService: UserService,
               private router: Router,
@@ -30,6 +32,7 @@ export class ProfileComponent {
     this.profileService.getProfileDetailsForPerson().subscribe({
       next: (response) => {
         this.user.email = response.email;
+        this.user.profilePicture = response.profilePicture;
         this.user.name = response.name;
         this.user.surname = response.surname;
         this.user.address = response.location.address;
@@ -48,7 +51,15 @@ export class ProfileComponent {
           this.user.companyDescription = response.companyDescription;
           this.user.companyLocation = response.companyLocation;
         }
+        if(this.user.profilePicture == ""){
+          this.profilePicture = "profile.png";
+        }else{
+          this.profilePicture = environment.apiImagesHost + this.user.profilePicture;
+        }
       },
+
+
+
       error: (err) => {
         console.error('No user found error:', err);
       },

@@ -147,12 +147,6 @@ export class CreateEventComponent {
       })
 
 
-
-
-
-
-
-
     }
   }
 

@@ -7,7 +7,8 @@
     <div class="content">
       <!-- Card 1: Profile Picture and Buttons -->
       <div class="profile-picture-section">
-        <img src="profile.png" alt="Profile Picture" class="profile-picture" />
+
+        <img [src]="this.profilePicture" alt="Profile Picture" class="profile-picture" />
         <button mat-raised-button class="btn"
                 [ngClass]="{ 'btn-pup': user.role === 'SERVICE_PROVIDER' }">CHANGE PROFILE PICTURE</button>
 
