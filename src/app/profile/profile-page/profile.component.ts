@@ -53,7 +53,6 @@ export class ProfileComponent {
           this.user.companyDescription = response.companyDescription;
           this.user.companyLocation = response.companyLocation;
           this.user.companyPhotos = response.companyPhotos;
-          console.log(this.user.companyPhotos);
         }
         if(this.user.profilePicture == ""){
           this.profilePicture = "profile.png";
@@ -140,7 +139,6 @@ export class ProfileComponent {
 
     this.imageService.uploadImage(files[0]).subscribe({
       next: (url: string) => {
-        console.log(url);
         this.user.profilePicture = url;
         this.profilePicture = environment.apiImagesHost + url;
 
