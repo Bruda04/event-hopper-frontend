@@ -50,7 +50,8 @@ export class EditServiceProviderPhotosComponent {
 
 
   update(): void {
-    if(this.uploadedImages.length > 0){
+    if(this.uploadedImages.length > 0) {
+      // Upload all images
       const uploadObservables: Observable<string>[] = this.uploadedImages
         .filter((image: File | null): boolean => image !== null)
         .map((image: File): Observable<string> => this.imageService.uploadImage(image));
@@ -65,7 +66,6 @@ export class EditServiceProviderPhotosComponent {
 
       forkJoin(uploadObservables).subscribe({
         next: (uploadedImages: string[]): void => {
-
           this.dialogRef.close(imageNames.concat(uploadedImages));
         },
         error: (err ): void => {
@@ -75,12 +75,11 @@ export class EditServiceProviderPhotosComponent {
 
       // If there are no images to upload, close the dialog
       if (uploadObservables.length === 0) {
-        this.dialogRef.close(null);
-      }else{
-        console.log("Error with image upload")
+        this.dialogRef.close(imageNames);
       }
 
-
+    } else {
+      this.dialogRef.close([]);
     }
   }
 
