@@ -8,6 +8,10 @@ import {PersonType} from '../../../shared/model/PersonType.model';
 import {CreateLocationDTO} from '../../../shared/dto/locations/CreateLocationDTO.model';
 import {CreateServiceProviderAccountDTO} from '../../../shared/dto/users/account/CreateServiceProviderAccountDTO.model';
 import {CreateRegistrationRequestDTO} from '../../../shared/dto/registrationRequest/CreateRegistrationRequestDTO.model';
+import {ImageServiceService} from '../../../shared/services/image-service.service';
+import {forkJoin, Observable} from 'rxjs';
+import {environment} from '../../../../env/envirements';
+import {UpdateServiceDTO} from '../../../shared/dto/solutions/updateServiceDTO.model';
 
 @Component({
   selector: 'app-pup-register',
@@ -20,11 +24,16 @@ export class PupRegisterComponent {
   hidePassword: boolean = true;
   hideConfirmPassword: boolean = true;
 
+  profileImageUpload: File;
+  profileImageUrl: string = "";
   // Separate attributes for profile and company images
   imagePreview: string | null = null; // Profile image
   companyImages: { src: string, cropped: string }[] = []; // Multiple company images with cropped versions
 
-  constructor(private fb: FormBuilder, private router: Router, private registrationService: RegistrationService) {
+  uploadedImages: File[] = []; // all to add
+  imageUrls: string[] = []; // to preview and remove
+
+  constructor(private fb: FormBuilder, private router: Router, private registrationService: RegistrationService, private imageService: ImageServiceService) {
     this.registerForm = this.fb.group({
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -75,41 +84,32 @@ export class PupRegisterComponent {
     }
   }
 
-  onSubmit() {
-    if (this.isStepValid(1)) {
-      const createServiceProviderDTO: CreateServiceProviderDTO = {
-        name: this.registerForm.value.fullName.split(' ')[0], //first name
-        surname: this.registerForm.value.fullName.split(' ').slice(1).join(' ') || '',
-        profilePicture: "",//this.registerForm.value.profileImage, // Image file
-        phoneNumber: this.registerForm.value.phoneNumber,
-        type: PersonType.SERVICE_PROVIDER,
-        location: {
-          address: this.registerForm.value.address,
-          city: this.registerForm.value.city,
-        } as CreateLocationDTO,
 
-        companyEmail: this.registerForm.value.companyEmail,
-        companyName: this.registerForm.value.companyName,
-        companyPhoneNumber: this.registerForm.value.companyPhoneNumber,
-        companyLocation: {
-          address: this.registerForm.value.companyAddress,
-          city: this.registerForm.value.companyCity,
-        } as CreateLocationDTO,
-        companyDescription: this.registerForm.value.description,
-        companyPhotos: [""]
-      };
 
-      const createAccount: CreateServiceProviderAccountDTO = {
-        email: this.registerForm.value.email,
-        password: this.registerForm.value.password,
-        isVerified: false,
-        suspensionTimeStamp: null,
-        type: PersonType.SERVICE_PROVIDER,
-        person: createServiceProviderDTO,
-        registrationRequest:{} as CreateRegistrationRequestDTO,
-      }
+  uploadProfilePictureAndAccount(createAccount: CreateServiceProviderAccountDTO){
+    if(this.profileImageUpload != null) {
+      this.imageService.uploadImage(this.profileImageUpload).subscribe({
+        next: (url: string) => {
+          createAccount.person.profilePicture = url;
 
-      //this also sends an email so i don't want it to wait
+
+          //this also sends an email - I don't want it to wait
+          this.router.navigate(['/email-confirmation-sent']);
+          this.registrationService.registerServiceProvider(createAccount).subscribe({
+            next: (response) => {
+              //this.router.navigate(['/email-confirmation-sent']);
+            },
+            error: (err) => {
+              console.error('Error registering service provider:', err);
+            },
+          });
+        },
+        error: (err) => {
+          console.error('Error uploading image:', err);
+        },
+      });
+    }else{
+      //this also sends an email - I don't want it to wait
       this.router.navigate(['/email-confirmation-sent']);
       this.registrationService.registerServiceProvider(createAccount).subscribe({
         next: (response) => {
@@ -119,6 +119,109 @@ export class PupRegisterComponent {
           console.error('Error registering service provider:', err);
         },
       });
+    }
+  }
+
+
+  onSubmit() {
+    if (this.isStepValid(1)) {
+      // Upload all images
+      const uploadObservables: Observable<string>[] = this.uploadedImages
+        .filter((image: File | null): boolean => image !== null)
+        .map((image: File): Observable<string> => this.imageService.uploadImage(image));
+
+      // Extract the image names from the URLs
+      const imageNames: string[] = this.imageUrls
+        .map(
+          image =>
+            image.includes(environment.apiImagesHost) ? image.replace(environment.apiImagesHost, '') : '')
+        .filter(image => image !== '');
+
+
+      console.log(uploadObservables)
+      console.log(imageNames)
+      console.log(this.imageUrls)
+      forkJoin(uploadObservables).subscribe({
+        next: (uploadedImages: string[]): void => {
+          const createServiceProviderDTO: CreateServiceProviderDTO = {
+            name: this.registerForm.value.fullName.split(' ')[0], //first name
+            surname: this.registerForm.value.fullName.split(' ').slice(1).join(' ') || '',
+            profilePicture: "",
+            phoneNumber: this.registerForm.value.phoneNumber,
+            type: PersonType.SERVICE_PROVIDER,
+            location: {
+              address: this.registerForm.value.address,
+              city: this.registerForm.value.city,
+            } as CreateLocationDTO,
+
+            companyEmail: this.registerForm.value.companyEmail,
+            companyName: this.registerForm.value.companyName,
+            companyPhoneNumber: this.registerForm.value.companyPhoneNumber,
+            companyLocation: {
+              address: this.registerForm.value.companyAddress,
+              city: this.registerForm.value.companyCity,
+            } as CreateLocationDTO,
+            companyDescription: this.registerForm.value.description,
+            companyPhotos: imageNames.concat(uploadedImages)
+          };
+
+          const createAccount: CreateServiceProviderAccountDTO = {
+            email: this.registerForm.value.email,
+            password: this.registerForm.value.password,
+            isVerified: false,
+            suspensionTimeStamp: null,
+            type: PersonType.SERVICE_PROVIDER,
+            person: createServiceProviderDTO,
+            registrationRequest:{} as CreateRegistrationRequestDTO,
+          }
+          this.uploadProfilePictureAndAccount(createAccount);
+
+        },
+        error: (err ): void => {
+          console.log(imageNames);
+          console.log(this.uploadedImages
+            .filter((image: File | null): boolean => image !== null))
+          console.error("Error uploading images", err);
+        }
+      });
+
+      // If there are no images to upload
+      if (uploadObservables.length === 0) {
+        const createServiceProviderDTO: CreateServiceProviderDTO = {
+          name: this.registerForm.value.fullName.split(' ')[0], //first name
+          surname: this.registerForm.value.fullName.split(' ').slice(1).join(' ') || '',
+          profilePicture: "",
+          phoneNumber: this.registerForm.value.phoneNumber,
+          type: PersonType.SERVICE_PROVIDER,
+          location: {
+            address: this.registerForm.value.address,
+            city: this.registerForm.value.city,
+          } as CreateLocationDTO,
+
+          companyEmail: this.registerForm.value.companyEmail,
+          companyName: this.registerForm.value.companyName,
+          companyPhoneNumber: this.registerForm.value.companyPhoneNumber,
+          companyLocation: {
+            address: this.registerForm.value.companyAddress,
+            city: this.registerForm.value.companyCity,
+          } as CreateLocationDTO,
+          companyDescription: this.registerForm.value.description,
+          companyPhotos: null
+        };
+
+        const createAccount: CreateServiceProviderAccountDTO = {
+          email: this.registerForm.value.email,
+          password: this.registerForm.value.password,
+          isVerified: false,
+          suspensionTimeStamp: null,
+          type: PersonType.SERVICE_PROVIDER,
+          person: createServiceProviderDTO,
+          registrationRequest:{} as CreateRegistrationRequestDTO,
+        }
+        this.uploadProfilePictureAndAccount(createAccount);
+      }
+
+
     }
   }
 
@@ -152,9 +255,14 @@ export class PupRegisterComponent {
       };
       reader.readAsDataURL(files[0]);
     }
+
+    this.profileImageUpload = files[0];
+    this.profileImageUrl = URL.createObjectURL(files[0]);
   }
 
   clearProfileImage() {
+    this.profileImageUpload = null;
+    this.profileImageUrl = '';
     this.imagePreview = null;
   }
 
@@ -170,6 +278,9 @@ export class PupRegisterComponent {
           this.companyImages.push({ src: e.target?.result as string, cropped: '' });
         };
         reader.readAsDataURL(files[i]);
+
+        this.uploadedImages.push(files[i]);
+        this.imageUrls.push(URL.createObjectURL(files[i]));
       }
     }
   }
@@ -180,6 +291,8 @@ export class PupRegisterComponent {
   }
 
   clearCompanyImage(index: number) {
+    this.uploadedImages.splice(index, 1); // Remove the selected image
+    this.imageUrls.splice(index, 1);
     this.companyImages.splice(index, 1); // Remove the selected image
   }
 

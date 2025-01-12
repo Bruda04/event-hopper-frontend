@@ -10,6 +10,7 @@ import {EditCompanyInformationComponent} from '../edit-company-information/edit-
 import {User} from '../../shared/model/user.model';
 import {UpgradingComponent} from '../../authentication/upgrading/upgrading.component';
 import {environment} from '../../../env/envirements';
+import {ImageServiceService} from '../../shared/services/image-service.service';
 
 
 @Component({
@@ -24,7 +25,8 @@ export class ProfileComponent {
   constructor(private userService: UserService,
               private router: Router,
               private profileService: ProfileService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private imageService: ImageServiceService) {
     this.user = this.userService.getUserData();
   }
 
@@ -50,6 +52,8 @@ export class ProfileComponent {
           this.user.companyPhoneNumber = response.companyPhoneNumber;
           this.user.companyDescription = response.companyDescription;
           this.user.companyLocation = response.companyLocation;
+          this.user.companyPhotos = response.companyPhotos;
+          console.log(this.user.companyPhotos);
         }
         if(this.user.profilePicture == ""){
           this.profilePicture = "profile.png";
@@ -123,4 +127,38 @@ export class ProfileComponent {
       width: '500px'
     });
   }
+
+  triggerFileInput() {
+    const fileInput = document.getElementById('profilePic') as HTMLInputElement;
+    fileInput?.click();
+  }
+
+  onFileSelected(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const files = inputElement.files;
+
+
+    this.imageService.uploadImage(files[0]).subscribe({
+      next: (url: string) => {
+        console.log(url);
+        this.user.profilePicture = url;
+        this.profilePicture = environment.apiImagesHost + url;
+
+        this.profileService.changeProfilePicture(url).subscribe({
+          next: (response) => {
+            console.log("Profile picture changed.")
+          },error: (err) => {
+            console.log("Profile picture error.")
+          },
+        });
+
+        }, error: (err) => {
+        console.error('Error uploading image:', err);
+      },
+    });
+
+  }
+
+
+  protected readonly environment = environment;
 }

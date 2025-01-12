@@ -22,6 +22,8 @@ import {RouterLink} from '@angular/router';
 import {SolutionsModule} from '../solutions/solutions.module';
 import {EventModule} from '../event/event.module';
 import { PasswordChangedSuccessfullyComponent } from './password-changed-successfully/password-changed-successfully.component';
+import {CarouselModule} from "primeng/carousel";
+import {PrimeTemplate} from "primeng/api";
 
 
 
@@ -38,17 +40,19 @@ import { PasswordChangedSuccessfullyComponent } from './password-changed-success
     EditCompanyInformationComponent,
     PasswordChangedSuccessfullyComponent,
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterLink,
-    CalendarMonthModule,
-    CalendarWeekModule,
-    CalendarDayModule,
-    SolutionsModule,
-    EventModule,
-    MaterialModule,
-    CalendarModule,
-  ]
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        RouterLink,
+        CalendarMonthModule,
+        CalendarWeekModule,
+        CalendarDayModule,
+        SolutionsModule,
+        EventModule,
+        MaterialModule,
+        CalendarModule,
+        CarouselModule,
+        PrimeTemplate,
+    ]
 })
 export class ProfileModule { }
