@@ -8,6 +8,8 @@ import {SolutionDetailsDTO} from '../shared/dto/solutions/solutionDetailsDTO.mod
 import {ServiceProviderDetailsDTO} from '../shared/dto/users/serviceProvider/serviceProviderDetailsDTO.model';
 import {PriceManagementDTO} from '../shared/dto/prices/PriceManagementDTO.model';
 import {UpdatePriceDTO} from '../shared/dto/prices/updatePriceDTO.model';
+import {CreateProductRatingDTO} from '../shared/dto/ratings/CreateProductRatingDTO.model';
+import {CreateCommentDTO} from '../shared/dto/comments/createCommentDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -90,5 +92,13 @@ export class ProductService {
 
   updatePrice(productId: string, price: UpdatePriceDTO): Observable<any> {
     return this.HttpClient.put(environment.apiHost + '/prices/'+ productId, price);
+  }
+
+  rateProduct(rating: CreateProductRatingDTO): Observable<any> {
+    return this.HttpClient.post(environment.apiHost + '/ratings/solution', rating);
+  }
+
+  commentProduct(comment: CreateCommentDTO): Observable<any> {
+    return this.HttpClient.post(environment.apiHost + '/comments', comment);
   }
 }

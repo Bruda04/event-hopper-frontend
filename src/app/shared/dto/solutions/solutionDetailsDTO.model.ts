@@ -22,4 +22,6 @@ export interface SolutionDetailsDTO {
   reservationWindowDays: number;
   cancellationWindowDays: number;
   favorite: boolean;
+  pendingComment: boolean;
+  pendingRating: boolean;
 }

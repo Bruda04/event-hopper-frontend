@@ -13,6 +13,7 @@ import {EventModule} from '../event/event.module';
 import {PrimeTemplate} from 'primeng/api';
 import { PriceListManagementComponent } from './price-list-management/price-list-management.component';
 import { EditPriceComponent } from './edit-price/edit-price.component';
+import { ProductReviewComponent } from './product-review/product-review.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { EditPriceComponent } from './edit-price/edit-price.component';
     ServiceCardComponent,
     SolutionPageComponent,
     PriceListManagementComponent,
-    EditPriceComponent
+    EditPriceComponent,
+    ProductReviewComponent
   ],
   imports: [
     CommonModule,

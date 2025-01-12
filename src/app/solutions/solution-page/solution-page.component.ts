@@ -5,6 +5,13 @@ import {SolutionDetailsDTO} from '../../shared/dto/solutions/solutionDetailsDTO.
 import {UserService} from "../../authentication/services/user.service";
 import {ProfileService} from '../../profile/profile.service';
 import {environment} from "../../../env/envirements";
+import {MatDialogRef} from '@angular/material/dialog';
+import {EditPriceComponent} from '../edit-price/edit-price.component';
+import {UpdatePriceDTO} from '../../shared/dto/prices/updatePriceDTO.model';
+import {ProductReviewComponent} from '../product-review/product-review.component';
+import {MatDialog} from '../../infrastructure/material/material.module';
+import {CreateProductRatingDTO} from '../../shared/dto/ratings/CreateProductRatingDTO.model';
+import {CreateCommentDTO} from '../../shared/dto/comments/createCommentDTO.model';
 
 @Component({
   selector: 'app-solution-page',
@@ -22,7 +29,8 @@ export class SolutionPageComponent implements OnInit {
               private router: Router,
               private productService: ProductService,
               private profileService: ProfileService,
-              private userService: UserService
+              private userService: UserService,
+              public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -37,6 +45,7 @@ export class SolutionPageComponent implements OnInit {
         next: (solution: SolutionDetailsDTO): void => {
           this.solution = solution;
           this.eventTypes = solution.eventTypes.map(eventType => eventType.name).join(', ');
+          console.log(this.solution);
         },
         error: () : void=> {
           this.notFound = true;
@@ -73,8 +82,38 @@ export class SolutionPageComponent implements OnInit {
 
   // TODO: Implement this method
   chatWithUs(): void {
-
   }
 
-    protected readonly environment = environment;
+  protected readonly environment = environment;
+
+  review(): void {
+    const dialogRef: MatDialogRef<ProductReviewComponent> = this.dialog.open(ProductReviewComponent, {
+      minWidth: '40vw',
+      minHeight: '40vh',
+      data: this.solution
+    });
+
+    dialogRef.afterClosed().subscribe((result: {rating: CreateProductRatingDTO, comment: CreateCommentDTO}): void => {
+      if (result.comment != null) {
+        this.productService.commentProduct(result.comment).subscribe({
+          next: () => {
+            this.loadSolution();
+          },
+          error: () => {
+            console.error('Error creating comment');
+          }
+        });
+      }
+      if (result.rating != null) {
+        this.productService.rateProduct(result.rating).subscribe({
+          next: () => {
+            this.loadSolution();
+          },
+          error: () => {
+            console.error('Error rating product');
+          }
+        });
+      }
+    });
+  }
 }

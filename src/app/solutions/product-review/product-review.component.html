@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Review</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="reviewForm">
+    <div class="form-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Rating</mat-label>
+        <input matInput placeholder="Enter rating" name="rating" type="number" formControlName="rating" min="1" max="5" [disabled]="!this.solution.pendingRating"/>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Comment</mat-label>
+        <textarea matInput placeholder="Enter comment" name="comment" formControlName="comment" maxlength="255" [disabled]="!this.solution.pendingComment"></textarea>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="actions-container">
+  <button mat-raised-button mat-dialog-close class="cancel-button">CANCEL</button>
+  <button mat-raised-button (click)="save()" class="primary-button">SAVE</button>
+</mat-dialog-actions>
