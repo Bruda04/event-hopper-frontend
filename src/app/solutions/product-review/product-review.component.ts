@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatDialogRef} from '../../infrastructure/material/material.module';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
@@ -11,9 +11,9 @@ import {CreateCommentDTO} from '../../shared/dto/comments/createCommentDTO.model
   templateUrl: './product-review.component.html',
   styleUrl: './product-review.component.css'
 })
-export class ProductReviewComponent {
+export class ProductReviewComponent implements OnInit {
   reviewForm = new FormGroup({
-    rating: new FormControl<number | null>(null, [Validators.min(1), Validators.max(5)]),
+    rating: new FormControl<number | null>(null, [Validators.min(1), Validators.max(5), Validators.pattern(/^\d+$/)]),
     comment: new FormControl<string | null>(null, [Validators.maxLength(255)]),
   });
 
@@ -32,11 +32,20 @@ export class ProductReviewComponent {
       }
       const review = {
         rating: rating.value ? rating: null,
-        comment: comment.content.length ? comment: null,
+        comment: comment.content?.length ? comment: null,
       };
       this.dialogRef.close(review);
     } else {
       this.reviewForm.markAllAsTouched();
     }
+  }
+
+  ngOnInit(): void {
+    if (!this.solution.pendingRating) {
+      this.reviewForm.controls['rating'].disable()
+    }
+    if (!this.solution.pendingComment) {
+      this.reviewForm.controls['comment'].disable();
+      }
   }
 }

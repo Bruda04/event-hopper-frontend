@@ -6,8 +6,6 @@ import {UserService} from "../../authentication/services/user.service";
 import {ProfileService} from '../../profile/profile.service';
 import {environment} from "../../../env/envirements";
 import {MatDialogRef} from '@angular/material/dialog';
-import {EditPriceComponent} from '../edit-price/edit-price.component';
-import {UpdatePriceDTO} from '../../shared/dto/prices/updatePriceDTO.model';
 import {ProductReviewComponent} from '../product-review/product-review.component';
 import {MatDialog} from '../../infrastructure/material/material.module';
 import {CreateProductRatingDTO} from '../../shared/dto/ratings/CreateProductRatingDTO.model';
@@ -94,6 +92,9 @@ export class SolutionPageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: {rating: CreateProductRatingDTO, comment: CreateCommentDTO}): void => {
+      if (result == null) {
+        return;
+      }
       if (result.comment != null) {
         this.productService.commentProduct(result.comment).subscribe({
           next: () => {

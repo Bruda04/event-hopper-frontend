@@ -5,12 +5,12 @@
     <div class="form-container">
       <mat-form-field appearance="fill">
         <mat-label>Rating</mat-label>
-        <input matInput placeholder="Enter rating" name="rating" type="number" formControlName="rating" min="1" max="5" [disabled]="!this.solution.pendingRating"/>
+        <input matInput placeholder="Enter rating" name="rating" type="number" formControlName="rating" min="1" max="5"/>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Comment</mat-label>
-        <textarea matInput placeholder="Enter comment" name="comment" formControlName="comment" maxlength="255" [disabled]="!this.solution.pendingComment"></textarea>
+        <textarea matInput placeholder="Enter comment" name="comment" formControlName="comment" maxlength="255"></textarea>
       </mat-form-field>
     </div>
   </form>
