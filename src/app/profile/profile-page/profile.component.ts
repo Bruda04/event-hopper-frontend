@@ -86,19 +86,21 @@ export class ProfileComponent {
 
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log("RESULT", result)
-      this.profileService.changeCompanyPictures(result).subscribe({
-        next: ()=>{
-          if(result != null){
-            this.user.companyPhotos = result;
-          }
+      if(result!= null){
+        this.profileService.changeCompanyPictures(result).subscribe({
+          next: ()=>{
+            if(result != null){
+              this.user.companyPhotos = result;
+            }
 
-          console.log("Images changed.")
-        },
-        error: (err) =>{
-          console.error("Error with changing company photos", err);
-        },
-      })
+            console.log("Images changed.")
+          },
+          error: (err) =>{
+            console.error("Error with changing company photos", err);
+          },
+        })
+      }
+
     });
   }
 
