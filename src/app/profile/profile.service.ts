@@ -80,6 +80,10 @@ export class ProfileService {
   }
 
   changeProfilePicture(newProfilePicture: string): Observable<any> {
-    return this.httpClient.post(environment.apiHost + '/accounts/change-profile-picture', newProfilePicture);
+    return this.httpClient.post(environment.apiHost + '/accounts/change-profile-picture/', newProfilePicture);
+  }
+
+  changeCompanyPictures(companyPhotos: string[]): Observable<any> {
+    return this.httpClient.post(environment.apiHost + '/service-providers/change-company-pictures', companyPhotos);
   }
 }

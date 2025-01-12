@@ -28,9 +28,8 @@ export class ChangePasswordDialogComponent {
     private fb: FormBuilder,
     private profileService: ProfileService,
     private userService: UserService,
-    private router: Router,
-    private dialog: MatDialog, // Inject MatDialog here
-    private dialogRef: MatDialogRef<ChangePasswordDialogComponent> // Inject MatDialogRef here
+    private dialog: MatDialog,
+    private dialogRef: MatDialogRef<ChangePasswordDialogComponent>
   ) {
     this.user = this.userService.getUserData();
 
@@ -48,7 +47,7 @@ export class ChangePasswordDialogComponent {
         ],
         confirmPassword: ['', Validators.required],
       },
-      { validators: this.passwordMatchValidator } // Add custom validator here
+      { validators: this.passwordMatchValidator }
     );
 
 

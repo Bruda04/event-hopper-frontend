@@ -11,6 +11,9 @@ import {User} from '../../shared/model/user.model';
 import {UpgradingComponent} from '../../authentication/upgrading/upgrading.component';
 import {environment} from '../../../env/envirements';
 import {ImageServiceService} from '../../shared/services/image-service.service';
+import {
+  EditServiceProviderPhotosComponent
+} from '../edit-service-provider-photos/edit-service-provider-photos.component';
 
 
 @Component({
@@ -32,7 +35,7 @@ export class ProfileComponent {
 
   ngOnInit() {
     this.profileService.getProfileDetailsForPerson().subscribe({
-      next: (response) => {
+      next: (response)  => {
         this.user.email = response.email;
         this.user.profilePicture = response.profilePicture;
         this.user.name = response.name;
@@ -74,10 +77,37 @@ export class ProfileComponent {
     this.router.navigate(['/my-events']);
   }
 
+  openEditCompanyImages(): void{
+    const dialogRef = this.dialog.open(EditServiceProviderPhotosComponent, {
+      width: '700px',
+      height: '400px',
+      data: this.user.companyPhotos
+    });
+
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log("RESULT", result)
+      this.profileService.changeCompanyPictures(result).subscribe({
+        next: ()=>{
+          if(result != null){
+            this.user.companyPhotos = result;
+          }
+
+          console.log("Images changed.")
+        },
+        error: (err) =>{
+          console.error("Error with changing company photos", err);
+        },
+      })
+    });
+  }
+
   openConfirmationDialog(): void {
     const dialogRef = this.dialog.open(ConfirmDeactivationComponent, {
       width: '400px',
     });
+
+
   }
 
   openEditAccountInformation(): void {
@@ -113,7 +143,6 @@ export class ProfileComponent {
 
     });
   }
-
 
   openChangePasswordDialog(): void {
     this.dialog.open(ChangePasswordDialogComponent, {
