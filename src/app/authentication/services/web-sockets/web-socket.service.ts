@@ -19,10 +19,10 @@ export class WebSocketService {
       return new WebSocket(environment.apiWebSocket);
     };
     this.stompClient = Stomp.over(wsf);
-    this.stompClient.debug = (): void => {};
+    // this.stompClient.debug = (): void => {};
 
     this.stompClient.connect(
-      {},
+      {Authorization: `Bearer ${this.userService.getToken()}`},
       (): void => {
         this.isLoaded = true;
         this.subscribeToChannels();
@@ -55,11 +55,13 @@ export class WebSocketService {
   }
 
   private subscribeToChannels() {
-    this.subscribeToChannel(`/notifications/${this.userService.getUserData().id}`, (message: any): void => {
+    this.subscribeToChannel(`/user/topic/notifications`, (message: any): void => {
       // Call the notification service to display the notification
+      // console.log(message);
     });
-    this.subscribeToChannel(`/messages/${this.userService.getUserData().id}`, (message: any): void => {
+    this.subscribeToChannel(`/user/topic/chat`, (message: any): void => {
       // Call the chat service to display the message
+      console.log(message);
     });
   }
 }
