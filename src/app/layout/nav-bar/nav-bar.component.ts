@@ -4,6 +4,7 @@ import { UserService } from '../../authentication/services/user.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { NotificationComponent } from '../../notification/notification/notification.component';
 import {User} from '../../shared/model/user.model';
+import {WebSocketService} from '../../authentication/services/web-sockets/web-socket.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -23,6 +24,7 @@ export class NavBarComponent {
     private router: Router,
     private userService: UserService,
     private cdr: ChangeDetectorRef  ,
+    private webSocketService: WebSocketService
   ) {
     // Listen for route changes
     this.router.events.subscribe(() => {
@@ -50,6 +52,8 @@ export class NavBarComponent {
     this.userService.clearToken();
     this.user = null;
     this.router.navigate(['/login']);  // Redirect to login after logout
+
+    this.webSocketService.disconnect();
 
     // Manually trigger change detection to update the view
     this.cdr.detectChanges();
