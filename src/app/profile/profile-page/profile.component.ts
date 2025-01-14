@@ -9,6 +9,11 @@ import {EditAccountInformationComponent} from '../edit-account-information/edit-
 import {EditCompanyInformationComponent} from '../edit-company-information/edit-company-information.component';
 import {User} from '../../shared/model/user.model';
 import {UpgradingComponent} from '../../authentication/upgrading/upgrading.component';
+import {environment} from '../../../env/envirements';
+import {ImageServiceService} from '../../shared/services/image-service.service';
+import {
+  EditServiceProviderPhotosComponent
+} from '../edit-service-provider-photos/edit-service-provider-photos.component';
 
 
 @Component({
@@ -18,18 +23,21 @@ import {UpgradingComponent} from '../../authentication/upgrading/upgrading.compo
 })
 export class ProfileComponent {
   user: User;
+  profilePicture: string;
 
   constructor(private userService: UserService,
               private router: Router,
               private profileService: ProfileService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private imageService: ImageServiceService) {
     this.user = this.userService.getUserData();
   }
 
   ngOnInit() {
     this.profileService.getProfileDetailsForPerson().subscribe({
-      next: (response) => {
+      next: (response)  => {
         this.user.email = response.email;
+        this.user.profilePicture = response.profilePicture;
         this.user.name = response.name;
         this.user.surname = response.surname;
         this.user.address = response.location.address;
@@ -47,8 +55,17 @@ export class ProfileComponent {
           this.user.companyPhoneNumber = response.companyPhoneNumber;
           this.user.companyDescription = response.companyDescription;
           this.user.companyLocation = response.companyLocation;
+          this.user.companyPhotos = response.companyPhotos;
+        }
+        if(this.user.profilePicture == ""){
+          this.profilePicture = "profile.png";
+        }else{
+          this.profilePicture = environment.apiImagesHost + this.user.profilePicture;
         }
       },
+
+
+
       error: (err) => {
         console.error('No user found error:', err);
       },
@@ -60,10 +77,39 @@ export class ProfileComponent {
     this.router.navigate(['/my-events']);
   }
 
+  openEditCompanyImages(): void{
+    const dialogRef = this.dialog.open(EditServiceProviderPhotosComponent, {
+      width: '700px',
+      height: '400px',
+      data: this.user.companyPhotos
+    });
+
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result!= null){
+        this.profileService.changeCompanyPictures(result).subscribe({
+          next: ()=>{
+            if(result != null){
+              this.user.companyPhotos = result;
+            }
+
+            console.log("Images changed.")
+          },
+          error: (err) =>{
+            console.error("Error with changing company photos", err);
+          },
+        })
+      }
+
+    });
+  }
+
   openConfirmationDialog(): void {
     const dialogRef = this.dialog.open(ConfirmDeactivationComponent, {
       width: '400px',
     });
+
+
   }
 
   openEditAccountInformation(): void {
@@ -100,7 +146,6 @@ export class ProfileComponent {
     });
   }
 
-
   openChangePasswordDialog(): void {
     this.dialog.open(ChangePasswordDialogComponent, {
       width: '500px'
@@ -112,4 +157,37 @@ export class ProfileComponent {
       width: '500px'
     });
   }
+
+  triggerFileInput() {
+    const fileInput = document.getElementById('profilePic') as HTMLInputElement;
+    fileInput?.click();
+  }
+
+  onFileSelected(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const files = inputElement.files;
+
+
+    this.imageService.uploadImage(files[0]).subscribe({
+      next: (url: string) => {
+        this.user.profilePicture = url;
+        this.profilePicture = environment.apiImagesHost + url;
+
+        this.profileService.changeProfilePicture(url).subscribe({
+          next: (response) => {
+            console.log("Profile picture changed.")
+          },error: (err) => {
+            console.log("Profile picture error.")
+          },
+        });
+
+        }, error: (err) => {
+        console.error('Error uploading image:', err);
+      },
+    });
+
+  }
+
+
+  protected readonly environment = environment;
 }

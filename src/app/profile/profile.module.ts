@@ -22,6 +22,9 @@ import {RouterLink} from '@angular/router';
 import {SolutionsModule} from '../solutions/solutions.module';
 import {EventModule} from '../event/event.module';
 import { PasswordChangedSuccessfullyComponent } from './password-changed-successfully/password-changed-successfully.component';
+import {CarouselModule} from "primeng/carousel";
+import {PrimeTemplate} from "primeng/api";
+import { EditServiceProviderPhotosComponent } from './edit-service-provider-photos/edit-service-provider-photos.component';
 
 
 
@@ -37,18 +40,21 @@ import { PasswordChangedSuccessfullyComponent } from './password-changed-success
     FavoriteSolutionsComponent,
     EditCompanyInformationComponent,
     PasswordChangedSuccessfullyComponent,
+    EditServiceProviderPhotosComponent,
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterLink,
-    CalendarMonthModule,
-    CalendarWeekModule,
-    CalendarDayModule,
-    SolutionsModule,
-    EventModule,
-    MaterialModule,
-    CalendarModule,
-  ]
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        RouterLink,
+        CalendarMonthModule,
+        CalendarWeekModule,
+        CalendarDayModule,
+        SolutionsModule,
+        EventModule,
+        MaterialModule,
+        CalendarModule,
+        CarouselModule,
+        PrimeTemplate,
+    ]
 })
 export class ProfileModule { }
