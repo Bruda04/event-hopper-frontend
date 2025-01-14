@@ -57,7 +57,6 @@ export class ProfileComponent {
           this.user.companyLocation = response.companyLocation;
           this.user.companyPhotos = response.companyPhotos;
         }
-        console.log(this.user.profilePicture);
         if(this.user.profilePicture == "" || this.user.profilePicture == null){
           this.profilePicture = "profile.png";
         }else{
