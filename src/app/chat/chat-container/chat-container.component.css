@@ -1,0 +1,48 @@
+.chat-container {
+  position: fixed;
+  bottom: 16px; /* Distance from the bottom of the screen */
+  right: 16px;  /* Distance from the right side of the screen */
+  display: flex; /* Use flexbox layout */
+  flex-direction: column; /* Stack items vertically */
+  justify-content: flex-start; /* Align items from the top */
+  align-items: flex-end; /* Align the content to the right */
+  z-index: 1000; /* Keeps the chat container on top of other content */
+  border: 1px solid #ccc; /* Optional: Add border for better visibility */
+  border-radius: 8px; /* Optional: Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow */
+  background-color: #fff; /* Optional: Background for better contrast */
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: flex-end; /* Align action buttons to the right */
+  width: 100%; /* Ensure action buttons take the full width */
+  padding: 10px; /* Optional padding for spacing */
+}
+
+.close-button {
+  color: var(--primary-color);
+  cursor: pointer;
+  font-size: 24px;
+  transition: color 0.2s ease;
+}
+
+.close-button:hover {
+  color: var(--error-color);
+}
+
+.back-button {
+  color: var(--secondary-color);
+  cursor: pointer;
+  font-size: 24px;
+  transition: color 0.2s ease;
+}
+
+.back-button:hover {
+  color: var(--primary-color);
+}
+
+.child-element {
+  flex: 1; /* Take up the remaining space */
+  margin-bottom: 16px;
+}

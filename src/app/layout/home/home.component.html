@@ -270,7 +270,11 @@
   </div>
 </div>
 
-<button class="fixed-button" >
-  <mat-icon  >chat</mat-icon> Chat
+<button class="fixed-button" *ngIf="this.user?.id && !this.showChat" (click)="toggleChat()">
+  <mat-icon>chat</mat-icon> Chat
 </button>
 
+<app-chat-container
+  *ngIf="this.showChat"
+  (closeChat)="toggleChat()">
+</app-chat-container>
