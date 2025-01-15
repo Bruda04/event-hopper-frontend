@@ -15,8 +15,4 @@ export class VerificationService {
     return this.httpClient.get<VerificationTokenState>(environment.apiHost + '/accounts/verify/' + token);
   }
 
-  resendVerificationEmail(token: string) {
-    return this.httpClient.get(environment.apiHost + '/accounts/resend-verification-email/' + token);
-  }
-
 }
