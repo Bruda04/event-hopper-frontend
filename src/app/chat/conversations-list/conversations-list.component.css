@@ -75,3 +75,11 @@
   color: #aaa;
   user-select: none; /* Prevent selection of conversation-item */
 }
+
+.no-conversations {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #888;
+}
