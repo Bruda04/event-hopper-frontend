@@ -1,5 +1,5 @@
 <div class="conversations-list">
-  <div *ngFor="let conversation of conversations" class="conversation-item">
+  <div *ngFor="let conversation of conversations" class="conversation-item" (click)="onConversationClick(conversation)">
     <img [src]="environment.apiImagesHost + conversation.profilePictureUrl" alt="Profile Picture" class="profile-picture" />
     <div class="conversation-details">
       <div class="user-info">
@@ -8,7 +8,7 @@
       </div>
       <div class="last-message">
         <span class="message">{{ conversation.lastMessage.substring(0, 40) }}{{conversation.lastMessage.length >= 40 ? "...": null}}</span>
-        <span class="timestamp">{{ conversation.lastMessageTimestamp | date:'medium' }}</span>
+        <span class="timestamp">{{ conversation.lastMessageTimestamp | date:'d.M.yyyy. H:mm' }}</span>
       </div>
     </div>
   </div>

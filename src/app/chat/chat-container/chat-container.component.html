@@ -1,15 +1,21 @@
 <div class="chat-container">
   <div class="action-buttons">
-    <mat-icon class="back-button" (click)="backToConversationsList()" *ngIf="selectedConversation">arrow_back</mat-icon>
+    <mat-icon class="back-button" (click)="backToConversationsList()" *ngIf="showChat">arrow_back</mat-icon>
     <mat-icon class="close-button" (click)="close()">close</mat-icon>
   </div>
 
   <div class="child-element">
     <ng-container >
-      <app-conversations-list *ngIf="!selectedConversation; else chatView"></app-conversations-list>
+      <app-conversations-list
+        *ngIf="!showChat; else chatView"
+        (conversationSelected)="onConversationSelected($event)"
+      >
+      </app-conversations-list>
     </ng-container>
     <ng-template #chatView>
-      <app-single-chat></app-single-chat>
+      <app-single-chat
+        [chatPreview]="selectedConversation"
+      ></app-single-chat>
     </ng-template>
   </div>
 </div>

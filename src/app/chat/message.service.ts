@@ -11,10 +11,8 @@ import {WebSocketService} from '../authentication/services/web-sockets/web-socke
   providedIn: 'root'
 })
 export class MessageService {
-  private onMessageReceivedCallback: (message: ChatMessageDTO) => void;
 
   constructor(private HttpClient: HttpClient, private webSocketService: WebSocketService) {
-    this.webSocketService.setOnMessageReceivedCallback(this.onMessageReceivedCallback);
   }
 
   getConversationsPreview(): Observable<ConversationPreviewDTO[]> {
@@ -30,6 +28,6 @@ export class MessageService {
   }
 
   setOnMessageReceivedCallback(callback: (message: ChatMessageDTO) => void): void {
-    this.onMessageReceivedCallback = callback;
+    this.webSocketService.setOnMessageReceivedCallback(callback);
   }
 }

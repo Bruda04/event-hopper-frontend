@@ -1,1 +1,39 @@
-<p>single-chat works!</p>
+<div class="chat-container">
+  <!-- Chat Info Header -->
+  <div class="chat-header">
+    <img [src]="environment.apiImagesHost + chatPreview.profilePictureUrl" alt="Profile Picture" class="profile-picture" />
+    <div class="chat-details">
+      <span class="username">{{ chatPreview.username }}</span>
+      <span class="name">{{ chatPreview.name }} {{ chatPreview.surname }}</span>
+    </div>
+  </div>
+
+  <!-- Chat Messages -->
+  <div class="chat-messages">
+    <div
+      *ngFor="let message of chatMessages; let i = index"
+      [class]="message.sentByMe ? 'message sent' : 'message received'"
+    >
+      <span class="message-content">{{ message.content }}</span>
+      <span class="message-timestamp">{{ message.timestamp | date:'d.MM.yy HH:mm' }}</span>
+    </div>
+    <div #lastMessageAnchor></div>
+  </div>
+
+  <!-- Message Input -->
+  <div class="message-input">
+    <input
+      [(ngModel)]="newMessageContent"
+      placeholder="Type your message..."
+      class="input-field"
+      (keyup.enter)="sendMessage()"
+      maxlength="255"
+    />
+    <button
+      (click)="sendMessage()"
+      class="send-button"
+    >
+      <mat-icon>send</mat-icon>
+    </button>
+  </div>
+</div>

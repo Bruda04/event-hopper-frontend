@@ -57,7 +57,7 @@ export class WebSocketService {
   }
 
   private onNotificationReceivedCallback: (message: any) => void;
-  private onMessageReceivedCallback: (message: ChatMessageDTO) => void;
+  private onMessageReceivedCallback: (message: ChatMessageDTO) => void = null;
 
   setOnNotificationReceivedCallback(callback: (message: any) => void): void {
     this.onNotificationReceivedCallback = callback;
@@ -69,12 +69,18 @@ export class WebSocketService {
 
   private subscribeToChannels() {
     this.subscribeToChannel(`/user/topic/notifications`, (message: any): void => {
-      this.onNotificationReceivedCallback(message);
-      console.log(message);
+      if (this.onNotificationReceivedCallback) {
+        this.onNotificationReceivedCallback(message);
+      } else {
+        console.error('No callback set for notification received');
+      }
     });
     this.subscribeToChannel(`/user/topic/chat`, (message: ChatMessageDTO): void => {
-      this.onMessageReceivedCallback(message);
-      console.log(message);
+      if (this.onMessageReceivedCallback) {
+        this.onMessageReceivedCallback(message);
+      } else {
+        console.error('No callback set for message received');
+      }
     });
   }
 }

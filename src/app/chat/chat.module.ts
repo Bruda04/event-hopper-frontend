@@ -4,6 +4,7 @@ import {MaterialModule} from '../infrastructure/material/material.module';
 import { ChatContainerComponent } from './chat-container/chat-container.component';
 import { ConversationsListComponent } from './conversations-list/conversations-list.component';
 import { SingleChatComponent } from './single-chat/single-chat.component';
+import {FormsModule} from "@angular/forms";
 
 
 
@@ -16,9 +17,10 @@ import { SingleChatComponent } from './single-chat/single-chat.component';
   exports: [
     ChatContainerComponent
   ],
-  imports: [
-    CommonModule,
-    MaterialModule
-  ]
+    imports: [
+        CommonModule,
+        MaterialModule,
+        FormsModule
+    ]
 })
 export class ChatModule { }

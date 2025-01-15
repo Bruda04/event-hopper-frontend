@@ -2,8 +2,9 @@
   height: 35em; /* Limit height for scroll */
   width: 25em;
   overflow-y: auto; /* Vertical scroll for overflow */
-  padding: 8px; /* Inner padding */
   background-color: #fff; /* Background for better readability */
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) white;
 }
 
 .conversation-item {
@@ -11,6 +12,7 @@
   border-radius: 8px; /* Rounded corners */
   display: flex;
   align-items: center;
+  margin: 8px;
   padding: 8px;
   margin-bottom: 1em; /* Spacing between items */
   cursor: pointer; /* Indicate clickable items */
@@ -43,13 +45,13 @@
 }
 
 .username {
-  color: #333;
+  color: var(--primary-color);
   margin-right: 8px;
 }
 
 .name {
   font-size: 0.9rem;
-  color: #666;
+  color: var(--secondary-color);
 }
 
 .last-message {
