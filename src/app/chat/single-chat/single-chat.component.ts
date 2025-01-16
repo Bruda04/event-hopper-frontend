@@ -54,6 +54,8 @@ export class SingleChatComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.fetchChatMessages();
     this.messageService.setOnMessageReceivedCallback((message: ChatMessageDTO): void => {
+      if (message.sender !== this.chatPreview.username && message.recipient !== this.chatPreview.username) return;
+
       this.chatMessages.push(message)
       if (message.sentByMe) {
         this.scrollToBottomAfterRender();
