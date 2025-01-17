@@ -4,6 +4,8 @@ import {environment} from '../../../../env/envirements';
 import {CompatClient, IMessage, Stomp} from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import {UserService} from '../user.service';
+import {MessageService} from '../../../chat/message.service';
+import {ChatMessageDTO} from '../../../shared/dto/messages/chatMessageDTO.model';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +21,7 @@ export class WebSocketService {
       return new WebSocket(environment.apiWebSocket);
     };
     this.stompClient = Stomp.over(wsf);
-    // this.stompClient.debug = (): void => {};
+    this.stompClient.debug = (): void => {};
 
     this.stompClient.connect(
       {Authorization: `Bearer ${this.userService.getToken()}`},
@@ -54,14 +56,31 @@ export class WebSocketService {
     }
   }
 
+  private onNotificationReceivedCallback: (message: any) => void;
+  private onMessageReceivedCallback: (message: ChatMessageDTO) => void = null;
+
+  setOnNotificationReceivedCallback(callback: (message: any) => void): void {
+    this.onNotificationReceivedCallback = callback;
+  }
+
+  setOnMessageReceivedCallback(callback: (message: ChatMessageDTO) => void): void {
+    this.onMessageReceivedCallback = callback;
+  }
+
   private subscribeToChannels() {
     this.subscribeToChannel(`/user/topic/notifications`, (message: any): void => {
-      // Call the notification service to display the notification
-      // console.log(message);
+      if (this.onNotificationReceivedCallback) {
+        this.onNotificationReceivedCallback(message);
+      } else {
+        console.error('No callback set for notification received');
+      }
     });
-    this.subscribeToChannel(`/user/topic/chat`, (message: any): void => {
-      // Call the chat service to display the message
-      console.log(message);
+    this.subscribeToChannel(`/user/topic/chat`, (message: ChatMessageDTO): void => {
+      if (this.onMessageReceivedCallback) {
+        this.onMessageReceivedCallback(message);
+      } else {
+        console.error('No callback set for message received');
+      }
     });
   }
 }

@@ -1,0 +1,18 @@
+<div class="conversations-list">
+  <div *ngFor="let conversation of conversations" class="conversation-item" (click)="onConversationClick(conversation)">
+    <img [src]="environment.apiImagesHost + conversation.profilePictureUrl" alt="Profile Picture" class="profile-picture" />
+    <div class="conversation-details">
+      <div class="user-info">
+        <span class="username">{{ conversation.username }}</span>
+        <span class="name">{{ conversation.name }} {{ conversation.surname }}</span>
+      </div>
+      <div class="last-message">
+        <span class="message">{{ conversation.lastMessage.substring(0, 40) }}{{conversation.lastMessage.length >= 40 ? "...": null}}</span>
+        <span class="timestamp">{{ conversation.lastMessageTimestamp | date:'d.M.yyyy. H:mm' }}</span>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="conversations?.length == 0" class="no-conversations">
+    <span>Currently you dont have any messages</span>
+  </div>
+</div>

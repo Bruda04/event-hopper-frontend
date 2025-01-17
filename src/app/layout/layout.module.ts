@@ -12,6 +12,7 @@ import { TagModule } from 'primeng/tag';
 import { SolutionsModule } from '../solutions/solutions.module';
 import { NotificationModule } from '../notification/notification.module';
 import { FooterComponent } from './footer/footer.component';
+import {ChatModule} from "../chat/chat.module";
 
 
 @NgModule({
@@ -19,18 +20,19 @@ import { FooterComponent } from './footer/footer.component';
     NavBarComponent,
     HomeComponent,
     FooterComponent],
-  imports: [
-    CommonModule,
-    MaterialModule,
-    RouterModule,
-    EventModule,
-    SolutionsModule,
-    ReactiveFormsModule,
-    CarouselModule,
-    ButtonModule,
-    TagModule,
-    NotificationModule,
-  ],
+    imports: [
+        CommonModule,
+        MaterialModule,
+        RouterModule,
+        EventModule,
+        SolutionsModule,
+        ReactiveFormsModule,
+        CarouselModule,
+        ButtonModule,
+        TagModule,
+        NotificationModule,
+        ChatModule,
+    ],
     exports: [
         NavBarComponent,
         HomeComponent,

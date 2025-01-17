@@ -23,6 +23,7 @@ export class UserService {
       return {
         id: decoded.id,
         role: decoded.role,
+        email: decoded['sub'],
       };
     } catch (error) {
       console.error('Error decoding token:', error);

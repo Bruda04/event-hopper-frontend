@@ -347,4 +347,8 @@ export class HomeComponent implements OnInit {
     this.filterEventForm.get('date')?.setValue(event.value);
   }
 
+  protected showChat: boolean = false;
+  toggleChat(): void {
+    this.showChat = !this.showChat;
+  }
 }
