@@ -55,6 +55,8 @@
 
         <p class="available"><strong>{{ !solution.available ? "UNAVAILABLE" : null }}</strong></p>
 
+
+
         <button mat-raised-button class="chat-btn" (click)="chatWithUs()" >
           <mat-icon>chat</mat-icon>
           You need more info? Chat with us!
@@ -63,6 +65,10 @@
     </div>
 
   <div class="reviews">
+  <button mat-raised-button class="review-btn" (click)="review()" *ngIf="solution.pendingComment || solution.pendingRating" >
+    <mat-icon>edit_note</mat-icon>
+    Want to share your opinion? Leave a review!
+  </button>
     <div class="review" *ngFor="let comment of solution.comments" [id]="comment.id">
       <img [src]="environment.apiImagesHost+comment.author.profilePicture" alt="User profile" />
       <div class="review-content">

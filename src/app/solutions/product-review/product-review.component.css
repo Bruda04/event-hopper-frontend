@@ -1,0 +1,41 @@
+h2 {
+  align-self: center;
+  color: var(--font-dark-blue) !important;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Adds spacing between fields */
+}
+
+.mat-form-field {
+  width: 100%; /* Ensures fields take up full width */
+}
+
+.actions-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.5em 1em;
+}
+
+.actions-container button {
+  min-width: 100px;
+  color: white;
+}
+
+.primary-button {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.cancel-button {
+  background-color: var(--primary-color);
+}
+
+p {
+  color: var(--font-dark-blue);
+  font-size: 1.2rem;
+}
