@@ -8,6 +8,7 @@ import {PersonType} from '../../../shared/model/PersonType.model';
 import {CreateLocationDTO} from '../../../shared/dto/locations/CreateLocationDTO.model';
 import {CreateAuthenticatedUserAccountDTO} from '../../../shared/dto/users/account/CreateAuthenticatedUserAccountDTO.model';
 import {CreateRegistrationRequestDTO} from '../../../shared/dto/registrationRequest/CreateRegistrationRequestDTO.model';
+import {InvitationService} from '../../../invitation/invitation.service';
 
 function phoneMinLengthValidator(control: AbstractControl): ValidationErrors | null {
   const value = control.value?.toString() || ''; // Convert the number to a string
@@ -26,15 +27,16 @@ export class UserRegisterComponent {
   hidePassword: boolean = true;
   hideConfirmPassword: boolean = true;
   imagePreview: string | null = null;
-  // usersEmail: string | null = null;
-  usersEmail: string ="vanjakostic03@gmail.com";        //treba da se uzme email iz tokena??
+  usersEmail: string ="";
 
   invitationId: string;
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private route: ActivatedRoute,
-              private registrationService: RegistrationService) {
+              private registrationService: RegistrationService,
+              private invitationService: InvitationService,
+) {
 
     this.registerForm = this.formBuilder.group(
       {
@@ -63,6 +65,16 @@ export class UserRegisterComponent {
     this.route.queryParams.subscribe(params => {
       this.invitationId = params['invitationId'];
     });
+
+    this.invitationService.getInvitation(this.invitationId).subscribe(
+      {
+        next: (response) => {
+          this.usersEmail = response.targetEmail;
+        },
+        error: error => {
+          console.log(error);
+        }
+      });
   }
 
   passwordMatchValidator(group: FormGroup): ValidationErrors | null {
@@ -108,17 +120,18 @@ export class UserRegisterComponent {
       this.registrationService.registerAuthenticatedUser(createAccount).subscribe({
         next: (response) => {
           console.log('Authenticated user registered successfully:', response);
-          this.router.navigate(['/email-confirmation-sent']);
+          //this.router.navigate(['/email-confirmation-sent']);
+          this.router.navigate(['/login'],{ queryParams: { invitationId: this.invitationId } });
         },
         error: (err) => {
           console.error('Error registering event organizer:', err);
         },
       });
-      if (this.invitationId){
-        this.router.navigate(['/invitation-redirect'], { queryParams: { invitationId: this.invitationId } });
-      }else{
-        this.router.navigate(['/login']);
-      }
+      // if (this.invitationId){
+      //   this.router.navigate(['/invitation-redirect'], { queryParams: { invitationId: this.invitationId } });
+      // }else{
+      //    this.router.navigate(['/login'],{ queryParams: { invitationId: this.invitationId } });
+      // }
     } else {
       this.registerForm.markAllAsTouched();
       console.log('Form is invalid:', this.registerForm.value);

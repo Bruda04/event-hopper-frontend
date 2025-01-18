@@ -41,7 +41,7 @@ export class UpgradingComponent {
       width: '500px',
     });
 
-    this.profileService.upgradeToOD(this.user.id).subscribe(
+    this.profileService.upgradeToOD().subscribe(
       {
         next: result => {
           this.user = result;

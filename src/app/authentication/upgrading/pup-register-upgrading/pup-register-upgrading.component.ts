@@ -64,7 +64,7 @@ export class PupRegisterUpgradingComponent {
         companyPhotos: [""]
       };
 
-      this.profileService.upgradeToPUP(this.user.id, details).subscribe(
+      this.profileService.upgradeToPUP(details).subscribe(
         {
           next: result => {
             console.log(result);
