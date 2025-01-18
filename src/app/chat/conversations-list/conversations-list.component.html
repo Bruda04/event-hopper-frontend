@@ -1,6 +1,6 @@
 <div class="conversations-list">
   <div *ngFor="let conversation of conversations" class="conversation-item" (click)="onConversationClick(conversation)">
-    <img [src]="environment.apiImagesHost + conversation.profilePictureUrl" alt="Profile Picture" class="profile-picture" />
+    <img [src]="conversation.profilePictureUrl ? environment.apiImagesHost + conversation.profilePictureUrl : 'profile.png'" alt="Profile Picture" class="profile-picture" />
     <div class="conversation-details">
       <div class="user-info">
         <span class="username">{{ conversation.username }}</span>

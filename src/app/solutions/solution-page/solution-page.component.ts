@@ -43,7 +43,8 @@ export class SolutionPageComponent implements OnInit {
         next: (solution: SolutionDetailsDTO): void => {
           this.solution = solution;
           this.eventTypes = solution.eventTypes.map(eventType => eventType.name).join(', ');
-          console.log(this.solution);
+          this.solution.comments.map(c =>
+            c.author.profilePicture = c.author.profilePicture ? environment.apiImagesHost + c.author.profilePicture : 'profile.png');
         },
         error: () : void=> {
           this.notFound = true;

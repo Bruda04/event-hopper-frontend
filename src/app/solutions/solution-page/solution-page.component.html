@@ -3,6 +3,7 @@
       <div class="image-gallery">
         <div class="grid-item">
           <p-carousel
+            *ngIf="solution.pictures && solution.pictures?.length > 0"
             [value]="solution.pictures"
             [numVisible]="1"
             [showIndicators]="false"
@@ -70,7 +71,7 @@
     Want to share your opinion? Leave a review!
   </button>
     <div class="review" *ngFor="let comment of solution.comments" [id]="comment.id">
-      <img [src]="environment.apiImagesHost+comment.author.profilePicture" alt="User profile" />
+      <img [src]="comment.author.profilePicture" alt="User profile" />
       <div class="review-content">
         <strong>{{ comment.author.name }} {{ comment.author.surname }}</strong>
         <p>{{ comment.content }}</p>
