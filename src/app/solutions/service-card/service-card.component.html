@@ -8,6 +8,6 @@
       <p>{{service.description}}</p>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-flat-button>View More</button>
+      <button mat-flat-button (click) = "viewMore(service.id)">View More</button>
     </mat-card-actions>
   </mat-card>
