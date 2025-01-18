@@ -57,7 +57,7 @@
 
 
 
-        <button mat-raised-button class="chat-btn" (click)="chatWithUs()" >
+        <button mat-raised-button class="chat-btn" (click)="chatWithUs()" *ngIf="solution.conversationInitialization != null">
           <mat-icon>chat</mat-icon>
           You need more info? Chat with us!
         </button>
@@ -87,3 +87,12 @@
 <div class="error-message" *ngIf="notFound">
   <p>We were unable to find that product/service.</p>
 </div>
+
+
+<app-chat-container
+  *ngIf="this.showChat"
+  (closeChat)="chatWithUs()"
+  [conversation]="solution.conversationInitialization"
+>
+</app-chat-container>
+

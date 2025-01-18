@@ -78,8 +78,9 @@ export class SolutionPageComponent implements OnInit {
     }
   }
 
-  // TODO: Implement this method
+  protected showChat: boolean = false;
   chatWithUs(): void {
+    this.showChat = !this.showChat;
   }
 
   protected readonly environment = environment;
