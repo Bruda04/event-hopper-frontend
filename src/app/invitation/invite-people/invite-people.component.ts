@@ -18,6 +18,7 @@ import {SinglePageEventDTO} from '../../shared/dto/events/SinglePageEventDTO.mod
 })
 
 export class InvitePeopleComponent {
+
   inviteForm: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
   });
@@ -25,7 +26,9 @@ export class InvitePeopleComponent {
   invitedEmails: string[] = [];
 
   isLoading: boolean = false;
-  constructor(private invitationService: InvitationService,
+  constructor(
+              @Inject(MAT_DIALOG_DATA) public data: any,
+              private invitationService: InvitationService,
               private eventService: EventService,
               private dialog: MatDialog,
               private dialogRef: MatDialogRef<InvitePeopleComponent>,
@@ -45,12 +48,12 @@ export class InvitePeopleComponent {
         try {
 
           //moram cekati da se prvo dobavi event pa onda dalje
-          const event: SinglePageEventDTO = await firstValueFrom(this.eventService.getEvent("3f7b2c9e-4a6f-4d5b-b8c1-7a2f9e3b6d4a"));
+          const event: SinglePageEventDTO = await firstValueFrom(this.eventService.getEvent(this.data.id));
 
           const createInvitationDTO: CreateInvitationDTO = {
             targetEmail: email,
             picture: "",
-            event: event,  // Ovde dodajemo učitani event
+            event: event,
           };
 
           // Kreiramo pozivnicu

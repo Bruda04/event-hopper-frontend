@@ -170,19 +170,13 @@ export class EventSinglePageComponent {
 
 
 
-
-
-
-
-
-
   openInviteModal() {
     const dialogRef: MatDialogRef<InvitePeopleComponent> = this.dialog.open(InvitePeopleComponent, {
       minWidth: '70vw',
       maxWidth: '70vw',
       minHeight: '70vh',
       maxHeight: '70vh',
+      data: { id: this.id },
     });
-
   }
 }

@@ -47,8 +47,8 @@ export class ProfileService {
     return this.httpClient.get(environment.apiHost + "/persons/" + id );
   }
 
-  addAttending(personId: string, eventId: string): Observable<any> {
-    return this.httpClient.get(environment.apiHost + "/persons/" + personId + '/attending-events/'  + eventId);
+  addAttending( eventId: string): Observable<any> {
+    return this.httpClient.post(environment.apiHost + "/persons/attending-events/"  + eventId,{});
   }
 
   upgradeToOD(personId:string) : Observable<any> {
