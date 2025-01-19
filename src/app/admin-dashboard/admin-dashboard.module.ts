@@ -23,6 +23,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { CreateEventTypeComponent } from './eventTypes/create-event-type/create-event-type.component';
 import { DeleteCategoryComponent } from './categories/delete-category/delete-category.component';
+import { AdminCommentsManagementComponent } from './comments/admin-comments-management/admin-comments-management.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { DeleteCategoryComponent } from './categories/delete-category/delete-cat
     AdminEventTypesManagementComponent,
     CreateEventTypeComponent,
     DeleteCategoryComponent,
+    AdminCommentsManagementComponent,
   ],
   imports: [
     CommonModule,
