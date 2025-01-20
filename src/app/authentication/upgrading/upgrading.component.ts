@@ -27,24 +27,20 @@ export class UpgradingComponent {
     this.user = userService.getUserData();
   }
 
-  ngOnInit(): void {
-    console.log("hej");
-  }
-
   onCancel(): void {
     this.dialogRef.close();
   }
 
   onOrganizer(): void {
     this.dialogRef.close();
-    this.dialog.open(CongradulationComponent, {
-      width: '500px',
-    });
 
     this.profileService.upgradeToOD().subscribe(
       {
         next: result => {
           this.user = result;
+          this.dialog.open(CongradulationComponent, {
+            width: '500px',
+          });
         },
 
         error: err => {

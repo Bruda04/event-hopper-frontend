@@ -8,6 +8,10 @@ import {ImageCroppedEvent} from 'ngx-image-cropper';
 import {DetailedServiceProviderDTO} from '../../../shared/dto/users/serviceProvider/DetailedServiceProviderDTO.model';
 import {ProfileService} from '../../../profile/profile.service';
 import {UserService} from '../../services/user.service';
+import {forkJoin, Observable} from 'rxjs';
+import {image} from 'html2canvas/dist/types/css/types/image';
+import {environment} from '../../../../env/envirements';
+import {ImageServiceService} from '../../../shared/services/image-service.service';
 
 @Component({
   selector: 'app-pup-register-upgrading',
@@ -18,19 +22,20 @@ export class PupRegisterUpgradingComponent {
 
   user: User;
   upgradeForm: FormGroup;
-  imagePreview: string | null = null; // Profile image
   companyImages: { src: string, cropped: string }[] = []; // Multiple company images with cropped versions
+
+  uploadedImages: File[] = []; // all to add
+  imageUrls: string[] = []; // to preview and remove
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private profileService: ProfileService,
               private userService: UserService,
-              private cdr: ChangeDetectorRef,
+              private imageService: ImageServiceService,
+
               ) {
 
     this.user = this.userService.getUserData();
-    console.log(this.user);
-    console.log(this.user.id);
     this.upgradeForm = this.formBuilder.group({
       companyEmail: ['', [Validators.required, Validators.email]],
       companyName: ['', Validators.required],
@@ -41,44 +46,82 @@ export class PupRegisterUpgradingComponent {
     });
   }
 
-  ngOnInit() {
-
-    this.userService.clearToken();
-    this.cdr.detectChanges();
-  }
-
 
   onSubmit() {
-    console.log("lose");
+
     if (this.isFormValid()) {
-      console.log("upao")
-      const details: DetailedServiceProviderDTO = {
-        companyEmail: this.upgradeForm.value.companyEmail,
-        companyName: this.upgradeForm.value.companyName,
-        companyPhoneNumber: this.upgradeForm.value.companyPhoneNumber,
-        companyLocation: {
-          address: this.upgradeForm.value.companyAddress,
-          city: this.upgradeForm.value.companyCity,
-        } as CreateLocationDTO,
-        companyDescription: this.upgradeForm.value.description,
-        companyPhotos: [""]
-      };
 
-      this.profileService.upgradeToPUP(details).subscribe(
-        {
-          next: result => {
-            console.log(result);
-          },
-          error: error => {
-            console.log(error);
-          }
+      const uploadObservables: Observable<string>[]= this.uploadedImages
+        .filter((image: File | null):boolean => image !== null)
+        .map((image: File): Observable<string> => this.imageService.uploadImage(image))
+
+      const imageNames: string[] = this.imageUrls
+        .map(
+          image =>
+            image.includes(environment.apiImagesHost) ? image.replace(environment.apiImagesHost, '') : '')
+        .filter(image => image !== '');
+
+
+      forkJoin(uploadObservables).subscribe({
+        next: (uploadedImages: string[]) : void => {
+
+          const details: DetailedServiceProviderDTO = {
+            companyEmail: this.upgradeForm.value.companyEmail,
+            companyName: this.upgradeForm.value.companyName,
+            companyPhoneNumber: this.upgradeForm.value.companyPhoneNumber,
+            companyLocation: {
+              address: this.upgradeForm.value.companyAddress,
+              city: this.upgradeForm.value.companyCity,
+            } as CreateLocationDTO,
+            companyDescription: this.upgradeForm.value.description,
+            companyPhotos: imageNames.concat(uploadedImages)
+          };
+
+          this.profileService.upgradeToPUP(details).subscribe(
+            {
+              next: result => {
+                console.log(result);
+                this.router.navigate(['/upgrade-confirmation']);
+              },
+              error: error => {
+                console.log(error);
+              }
+            }
+          );
+
+        },
+        error: error => {
+          console.error("Error uploading images", error);
         }
-      );
+      });
 
-      this.router.navigate(['/upgrade-confirmation']);
+      if (uploadObservables.length === 0) {
+
+        const details: DetailedServiceProviderDTO = {
+          companyEmail: this.upgradeForm.value.companyEmail,
+          companyName: this.upgradeForm.value.companyName,
+          companyPhoneNumber: this.upgradeForm.value.companyPhoneNumber,
+          companyLocation: {
+            address: this.upgradeForm.value.companyAddress,
+            city: this.upgradeForm.value.companyCity,
+          } as CreateLocationDTO,
+          companyDescription: this.upgradeForm.value.description,
+          companyPhotos: null
+        };
+
+        this.profileService.upgradeToPUP(details).subscribe(
+          {
+            next: result => {
+              console.log(result);
+              this.router.navigate(['/upgrade-confirmation']);
+            },
+            error: error => {
+              console.log(error);
+            }
+          }
+        );
+      }
     }
-
-
   }
 
   isFormValid() {
@@ -97,24 +140,6 @@ export class PupRegisterUpgradingComponent {
   }
 
 
-  onProfileImageSelected(event: Event) {
-    const inputElement = event.target as HTMLInputElement;
-    const files = inputElement.files;
-
-    if (files && files[0]) {
-      const reader = new FileReader();
-      reader.onload = (e: ProgressEvent<FileReader>) => {
-        this.imagePreview = e.target?.result as string;
-      };
-      reader.readAsDataURL(files[0]);
-    }
-  }
-
-  clearProfileImage() {
-    this.imagePreview = null;
-  }
-
-  // Handle company images upload (Step 2)
   onCompanyImageSelected(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     const files = inputElement.files;
@@ -126,16 +151,21 @@ export class PupRegisterUpgradingComponent {
           this.companyImages.push({ src: e.target?.result as string, cropped: '' });
         };
         reader.readAsDataURL(files[i]);
+
+        this.uploadedImages.push(files[i]);
+        this.imageUrls.push(URL.createObjectURL(files[i]));
       }
     }
   }
 
-  // Cropping function for company images
+
   onCompanyImageCropped(event: ImageCroppedEvent, index: number) {
     this.companyImages[index].cropped = event.base64;
   }
 
   clearCompanyImage(index: number) {
+    this.uploadedImages.splice(index, 1); // Remove the selected image
+    this.imageUrls.splice(index, 1);
     this.companyImages.splice(index, 1); // Remove the selected image
   }
 
