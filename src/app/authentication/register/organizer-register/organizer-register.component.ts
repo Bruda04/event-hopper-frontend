@@ -122,7 +122,8 @@ export class OrganizerRegisterComponent {
               },
             });
 
-          }else{
+          }
+          else{
             //this also sends an email - I don't want it to wait
             this.router.navigate(['/email-confirmation-sent']);
             this.registrationService.registerEventOrganizer(createAccount).subscribe({

@@ -8,6 +8,8 @@ import {PersonType} from '../../../shared/model/PersonType.model';
 import {CreateLocationDTO} from '../../../shared/dto/locations/CreateLocationDTO.model';
 import {CreateAuthenticatedUserAccountDTO} from '../../../shared/dto/users/account/CreateAuthenticatedUserAccountDTO.model';
 import {CreateRegistrationRequestDTO} from '../../../shared/dto/registrationRequest/CreateRegistrationRequestDTO.model';
+import {InvitationService} from '../../../invitation/invitation.service';
+import {ImageServiceService} from '../../../shared/services/image-service.service';
 
 function phoneMinLengthValidator(control: AbstractControl): ValidationErrors | null {
   const value = control.value?.toString() || ''; // Convert the number to a string
@@ -26,15 +28,19 @@ export class UserRegisterComponent {
   hidePassword: boolean = true;
   hideConfirmPassword: boolean = true;
   imagePreview: string | null = null;
-  // usersEmail: string | null = null;
-  usersEmail: string ="vanjakostic03@gmail.com";        //treba da se uzme email iz tokena??
+  usersEmail: string ="";
+  profileImageUpload: File;
+  profileImageUrl: string = "";
 
   invitationId: string;
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private route: ActivatedRoute,
-              private registrationService: RegistrationService) {
+              private registrationService: RegistrationService,
+              private invitationService: InvitationService,
+              private imageService: ImageServiceService,
+) {
 
     this.registerForm = this.formBuilder.group(
       {
@@ -53,7 +59,6 @@ export class UserRegisterComponent {
       phoneNumber: ['', [Validators.required, phoneMinLengthValidator, Validators.pattern('[0-9]*')]],
       address: ['', Validators.required],
       city: ['', Validators.required],
-      profileImage: [null],
     },
     { validators: this.passwordMatchValidator }
     );
@@ -63,6 +68,16 @@ export class UserRegisterComponent {
     this.route.queryParams.subscribe(params => {
       this.invitationId = params['invitationId'];
     });
+
+    this.invitationService.getInvitation(this.invitationId).subscribe(
+      {
+        next: (response) => {
+          this.usersEmail = response.targetEmail;
+        },
+        error: error => {
+          console.log(error);
+        }
+      });
   }
 
   passwordMatchValidator(group: FormGroup): ValidationErrors | null {
@@ -104,21 +119,40 @@ export class UserRegisterComponent {
       }
 
       console.log('Account Submitted:',createAccount);
+      if(this.profileImageUpload != null){
+        this.imageService.uploadImage(this.profileImageUpload).subscribe({
+          next: (url:string) => {
+            createAccount.person.profilePicture = url;
 
-      this.registrationService.registerAuthenticatedUser(createAccount).subscribe({
-        next: (response) => {
-          console.log('Authenticated user registered successfully:', response);
-          this.router.navigate(['/email-confirmation-sent']);
-        },
-        error: (err) => {
-          console.error('Error registering event organizer:', err);
-        },
-      });
-      if (this.invitationId){
-        this.router.navigate(['/invitation-redirect'], { queryParams: { invitationId: this.invitationId } });
-      }else{
-        this.router.navigate(['/login']);
+            this.registrationService.registerAuthenticatedUser(createAccount).subscribe({
+              next: (response) => {
+                console.log('Authenticated user registered successfully:', response);
+                //this.router.navigate(['/email-confirmation-sent']);
+                this.router.navigate(['/login'],{ queryParams: { invitationId: this.invitationId } });
+              },
+              error: (err) => {
+                console.error('Error registering event organizer:', err);
+              },
+            });
+          },
+          error: (err) => {
+            console.error('Error uploading image:', err);
+          }
+        });
       }
+      else{
+        this.registrationService.registerAuthenticatedUser(createAccount).subscribe({
+          next: (response) => {
+            console.log('Authenticated user registered successfully:', response);
+            //this.router.navigate(['/email-confirmation-sent']);
+            this.router.navigate(['/login'],{ queryParams: { invitationId: this.invitationId } });
+          },
+          error: (err) => {
+            console.error('Error registering event organizer:', err);
+          },
+        });
+      }
+
     } else {
       this.registerForm.markAllAsTouched();
       console.log('Form is invalid:', this.registerForm.value);
@@ -141,18 +175,19 @@ export class UserRegisterComponent {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e: ProgressEvent<FileReader>) => {
-        this.imagePreview = e.target?.result as string; // Update preview
-        this.registerForm.patchValue({ profileImage: file }); // Update form control
-        this.registerForm.get('profileImage')?.updateValueAndValidity(); // Sync validity
+        this.imagePreview = e.target?.result as string;
       };
       reader.readAsDataURL(file);
     }
+
+    this.profileImageUpload = file;
+    this.profileImageUrl = URL.createObjectURL(file);
   }
 
   clearImage() {
     this.imagePreview = null; // Clear preview
-    this.registerForm.patchValue({ profileImage: null }); // Clear form control value
-    this.registerForm.get('profileImage')?.updateValueAndValidity(); // Sync validity
+    this.profileImageUrl = "";
+    this.profileImageUpload = null;
   }
 
   triggerFileInput() {

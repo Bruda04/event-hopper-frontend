@@ -50,7 +50,17 @@ export class InvitationRedirectionComponent {
               this.profileService.getPerson(this.user.id).subscribe({
                 next: person => {
                   this.person = person;
-                  this.profileService.addAttending(this.person.id, this.invitation.event.id);
+                  this.profileService.addAttending(this.invitation.event.id).subscribe({
+                    next: (response) => {
+                      console.log('Event successfully added to attending:', response);
+                    },
+                    error: (err) => {
+                      console.error('Error adding event to attending:', err);
+                    },
+                    complete: () => {
+                      console.log('Attending event request completed.');
+                    }
+                  });
                   this.router.navigate(['/profil']);
 
                 },

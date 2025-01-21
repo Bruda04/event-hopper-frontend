@@ -47,16 +47,16 @@ export class ProfileService {
     return this.httpClient.get(environment.apiHost + "/persons/" + id );
   }
 
-  addAttending(personId: string, eventId: string): Observable<any> {
-    return this.httpClient.get(environment.apiHost + "/persons/" + personId + '/attending-events/'  + eventId);
+  addAttending( eventId: string): Observable<any> {
+    return this.httpClient.post(environment.apiHost + "/persons/attending-events/"  + eventId,{});
   }
 
-  upgradeToOD(personId:string) : Observable<any> {
-    return this.httpClient.put(environment.apiHost + "/accounts/upgrade-to-OD/" + personId,{} );
+  upgradeToOD() : Observable<any> {
+    return this.httpClient.put(environment.apiHost + "/accounts/upgrade-to-OD",{} );
   }
 
-  upgradeToPUP(personId:string, details: DetailedServiceProviderDTO ) : Observable<any> {
-    return this.httpClient.put(environment.apiHost + "/accounts/upgrade-to-PUP/" + personId,details );
+  upgradeToPUP( details: DetailedServiceProviderDTO ) : Observable<any> {
+    return this.httpClient.put(environment.apiHost + "/accounts/upgrade-to-PUP",details );
   }
 
   getServiceProviderDetails(id: string): Observable<ServiceProviderDetailsDTO> {

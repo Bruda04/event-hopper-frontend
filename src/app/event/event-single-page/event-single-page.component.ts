@@ -168,12 +168,10 @@ export class EventSinglePageComponent {
     });
   }
 
-
   protected showChat: boolean = false;
   chatWithUs(): void {
     this.showChat = !this.showChat;
   }
-
 
 
   openInviteModal() {
@@ -182,7 +180,7 @@ export class EventSinglePageComponent {
       maxWidth: '70vw',
       minHeight: '70vh',
       maxHeight: '70vh',
+      data: { id: this.id },
     });
-
   }
 }
