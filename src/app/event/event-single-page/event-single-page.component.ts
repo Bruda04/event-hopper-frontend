@@ -169,10 +169,10 @@ export class EventSinglePageComponent {
   }
 
 
-
-
-
-
+  protected showChat: boolean = false;
+  chatWithUs(): void {
+    this.showChat = !this.showChat;
+  }
 
 
 

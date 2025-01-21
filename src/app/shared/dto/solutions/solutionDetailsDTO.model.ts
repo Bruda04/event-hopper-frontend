@@ -3,6 +3,7 @@ import {SimpleCategoryDTO} from '../categories/simpleCategoryDTO.model';
 import {SimpleEventTypeDTO} from '../eventTypes/SimpleEventTypeDTO.model';
 import {SimpleServiceProviderDTO} from '../users/serviceProvider/SimpleServiceProviderDTO.model';
 import {SimpleCommentDTO} from '../comments/simpleCommentDTO.model';
+import {ConversationPreviewDTO} from '../messages/conversationPreviewDTO.model';
 
 
 export interface SolutionDetailsDTO {
@@ -24,4 +25,5 @@ export interface SolutionDetailsDTO {
   favorite: boolean;
   pendingComment: boolean;
   pendingRating: boolean;
+  conversationInitialization: ConversationPreviewDTO;
 }

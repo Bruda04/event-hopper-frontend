@@ -32,6 +32,9 @@ export class ServiceProviderPageComponent implements OnInit{
       {
         next: (provider: ServiceProviderDetailsDTO): void => {
           this.provider = provider;
+          this.provider.comments.map(c =>
+            c.author.profilePicture = c.author.profilePicture ? environment.apiImagesHost + c.author.profilePicture : 'profile.png');
+          this.provider.profilePicture = this.provider.profilePicture ? environment.apiImagesHost + this.provider.profilePicture : 'profile.png';
         },
         error: () : void=> {
           this.notFound = true;

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ConversationPreviewDTO} from '../../shared/dto/messages/conversationPreviewDTO.model';
 
 @Component({
@@ -6,12 +6,22 @@ import {ConversationPreviewDTO} from '../../shared/dto/messages/conversationPrev
   templateUrl: './chat-container.component.html',
   styleUrl: './chat-container.component.css'
 })
-export class ChatContainerComponent {
+export class ChatContainerComponent implements OnInit {
   protected showChat: boolean;
   protected selectedConversation: ConversationPreviewDTO;
 
 
   @Output() closeChat = new EventEmitter<unknown>();
+  @Input() conversation: ConversationPreviewDTO;
+
+  ngOnInit(): void {
+    if (this.conversation) {
+      this.selectedConversation = this.conversation;
+      this.showChat = true;
+    } else {
+      this.showChat = false;
+    }
+  }
 
   close(): void {
     this.showChat = false;

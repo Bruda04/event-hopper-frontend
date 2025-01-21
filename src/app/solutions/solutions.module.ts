@@ -14,6 +14,7 @@ import {PrimeTemplate} from 'primeng/api';
 import { PriceListManagementComponent } from './price-list-management/price-list-management.component';
 import { EditPriceComponent } from './edit-price/edit-price.component';
 import { ProductReviewComponent } from './product-review/product-review.component';
+import {ChatModule} from "../chat/chat.module";
 
 
 @NgModule({
@@ -28,14 +29,15 @@ import { ProductReviewComponent } from './product-review/product-review.componen
     EditPriceComponent,
     ProductReviewComponent
   ],
-  imports: [
-    CommonModule,
-    MaterialModule,
-    ReactiveFormsModule,
-    CarouselModule,
-    EventModule,
-    PrimeTemplate,
-  ],
+    imports: [
+        CommonModule,
+        MaterialModule,
+        ReactiveFormsModule,
+        CarouselModule,
+        EventModule,
+        PrimeTemplate,
+        ChatModule,
+    ],
   exports:[
     ServiceCardComponent
   ]

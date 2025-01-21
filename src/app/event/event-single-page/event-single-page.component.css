@@ -74,7 +74,18 @@
   font-weight: normal;
 }
 
+
 #exportBtn:hover{
+  background-color: var(--secondary-color);
+}
+
+#chatBtn{
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: normal;
+}
+
+#chatBtn:hover{
   background-color: var(--secondary-color);
 }
 
