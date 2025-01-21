@@ -15,6 +15,7 @@
         <button mat-button color="primary"  *ngIf="eventDetails.eventOrganizerLoggedIn && this.eventDetails.privacy === 'PRIVATE'" id="inviteBtn" (click) = "openInviteModal()">Invite People</button>
         <button mat-button id="exportBtn" (click) = "exportToPDF()">Export to PDF</button>
         <button mat-button id="exportBtn2"  *ngIf="eventDetails.eventOrganizerLoggedIn && this.eventDetails.privacy === 'PRIVATE'" (click) = "exportToPDF()">Download Guest List</button>
+        <button mat-button id="chatBtn"  *ngIf="eventDetails.conversationInitialization" (click) = "chatWithUs()">Chat with Organizer</button>
 
       </div>
     </div>
@@ -48,3 +49,10 @@
     <p>We were unable to find that event.</p>
   </div>
 </div>
+
+<app-chat-container
+  *ngIf="this.showChat"
+  (closeChat)="chatWithUs()"
+  [conversation]="eventDetails.conversationInitialization"
+>
+</app-chat-container>

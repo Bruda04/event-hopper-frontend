@@ -1,5 +1,6 @@
 import {SimpleEventTypeDTO} from '../eventTypes/SimpleEventTypeDTO.model';
 import {SimpleLocationDTO} from '../locations/SimpleLocationDTO.model';
+import {ConversationPreviewDTO} from '../messages/conversationPreviewDTO.model';
 
 export interface SinglePageEventDTO {
   id: string
@@ -12,4 +13,5 @@ export interface SinglePageEventDTO {
   privacy: string
   eventOrganizerLoggedIn: boolean;
   favorite: boolean;
+  conversationInitialization: ConversationPreviewDTO;
 }

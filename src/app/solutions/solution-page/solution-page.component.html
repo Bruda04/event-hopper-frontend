@@ -3,6 +3,7 @@
       <div class="image-gallery">
         <div class="grid-item">
           <p-carousel
+            *ngIf="solution.pictures && solution.pictures?.length > 0"
             [value]="solution.pictures"
             [numVisible]="1"
             [showIndicators]="false"
@@ -57,7 +58,7 @@
 
 
 
-        <button mat-raised-button class="chat-btn" (click)="chatWithUs()" >
+        <button mat-raised-button class="chat-btn" (click)="chatWithUs()" *ngIf="solution.conversationInitialization != null">
           <mat-icon>chat</mat-icon>
           You need more info? Chat with us!
         </button>
@@ -70,7 +71,7 @@
     Want to share your opinion? Leave a review!
   </button>
     <div class="review" *ngFor="let comment of solution.comments" [id]="comment.id">
-      <img [src]="environment.apiImagesHost+comment.author.profilePicture" alt="User profile" />
+      <img [src]="comment.author.profilePicture" alt="User profile" />
       <div class="review-content">
         <strong>{{ comment.author.name }} {{ comment.author.surname }}</strong>
         <p>{{ comment.content }}</p>
@@ -87,3 +88,12 @@
 <div class="error-message" *ngIf="notFound">
   <p>We were unable to find that product/service.</p>
 </div>
+
+
+<app-chat-container
+  *ngIf="this.showChat"
+  (closeChat)="chatWithUs()"
+  [conversation]="solution.conversationInitialization"
+>
+</app-chat-container>
+
