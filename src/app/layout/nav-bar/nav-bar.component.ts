@@ -5,6 +5,9 @@ import { ChangeDetectorRef } from '@angular/core';
 import { NotificationComponent } from '../../notification/notification/notification.component';
 import {User} from '../../shared/model/user.model';
 import {WebSocketService} from '../../authentication/services/web-sockets/web-socket.service';
+import {BookingAServiceComponent} from '../../reservation/booking-a-service/booking-a-service.component';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {InvitePeopleComponent} from '../../invitation/invite-people/invite-people.component';
 
 @Component({
   selector: 'app-nav-bar',
@@ -24,7 +27,8 @@ export class NavBarComponent {
     private router: Router,
     private userService: UserService,
     private cdr: ChangeDetectorRef  ,
-    private webSocketService: WebSocketService
+    private webSocketService: WebSocketService,
+    public dialog: MatDialog,
   ) {
     // Listen for route changes
     this.router.events.subscribe(() => {
@@ -75,5 +79,15 @@ export class NavBarComponent {
     if (!clickedInside && !clickedButton) {
       this.showNotificationsPanel = false;
     }
+  }
+
+  booking() {
+    console.log("booking");
+    const dialogRef: MatDialogRef<BookingAServiceComponent> = this.dialog.open(BookingAServiceComponent, {
+      minWidth: '70vw',
+      maxWidth: '70vw',
+      minHeight: '70vh',
+      maxHeight: '70vh',
+    });
   }
 }

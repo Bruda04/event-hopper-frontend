@@ -5,6 +5,9 @@
         </a>
     </div>
     <div class="navbar-right">
+      <button mat-icon-button class="profile-button small-button" (click)="booking()"  aria-label="Book" *ngIf="loggedIn  && !isLoginRoute">
+        <mat-icon>account_circle</mat-icon>
+      </button>
     <button mat-icon-button class="profile-button small-button" [routerLink]="'/profile'" aria-label="Profile" *ngIf="loggedIn  && !isLoginRoute">
         <mat-icon>account_circle</mat-icon>
         </button>
