@@ -23,6 +23,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { CreateEventTypeComponent } from './eventTypes/create-event-type/create-event-type.component';
 import { DeleteCategoryComponent } from './categories/delete-category/delete-category.component';
+import { AdminCommentsManagementComponent } from './comments/admin-comments-management/admin-comments-management.component';
+import { ApproveCommentComponent } from './comments/approve-comment/approve-comment.component';
+import { DeleteCommentComponent } from './comments/delete-comment/delete-comment.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +40,9 @@ import { DeleteCategoryComponent } from './categories/delete-category/delete-cat
     AdminEventTypesManagementComponent,
     CreateEventTypeComponent,
     DeleteCategoryComponent,
+    AdminCommentsManagementComponent,
+    ApproveCommentComponent,
+    DeleteCommentComponent,
   ],
   imports: [
     CommonModule,
