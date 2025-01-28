@@ -13,6 +13,8 @@ export class BookingAServiceComponent {
 
   date: Date = null;
 
+  minDate: Date = new Date(); //ne moze da se bira datum u proslosti
+
   bookingForm: FormGroup = new FormGroup ({
     date : new FormControl<Date|null>(null),
     startTime : new FormControl<string>(''),
