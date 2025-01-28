@@ -24,4 +24,8 @@ export class BookingAServiceComponent {
     this.date = event.value;
     this.bookingForm.get('date')?.setValue(event.value);
   }
+
+  book() {
+
+  }
 }

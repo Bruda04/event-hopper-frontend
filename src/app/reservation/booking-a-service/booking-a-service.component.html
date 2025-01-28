@@ -1,22 +1,31 @@
-<h2 mat-dialog-content>Book a service</h2>
-<form [formGroup]="bookingForm">
-  <mat-form-field>
-    <mat-label>Choose a date</mat-label>
-    <input #dateInput (dateChange)="OnDateChange($event)" matInput [matDatepicker]="picker" >
-    <mat-hint>MM/DD/YYYY</mat-hint>
-    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
+<h2 mat-dialog-title>Book a service</h2>
+<mat-dialog-content>
+
+  <form [formGroup]="bookingForm">
+    <mat-form-field>
+      <mat-label>Choose a date</mat-label>
+      <input #dateInput (dateChange)="OnDateChange($event)" matInput [matDatepicker]="picker" >
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
 
 
-<!--  <mat-form-field appearance="fill" class="filter-field">-->
-<!--    <mat-label>Choose a term</mat-label>-->
-<!--    <mat-label>This service lasts </mat-label>-->
-<!--    <mat-select formControlName="startTime">-->
-<!--      <mat-option *ngFor="let term of freeTerms || []" [value]="term">-->
-<!--        {{ term }}-->
-<!--      </mat-option>-->
-<!--    </mat-select>-->
-<!--  </mat-form-field>-->
+    <mat-form-field appearance="fill" class="filter-field">
+      <mat-label>Choose a term</mat-label>
+      <mat-select formControlName="startTime">
+        <mat-option *ngFor="let term of freeTerms || []" [value]="term">
+          {{ term }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  <p class="label">*This service lasts </p>
+  </form>
 
-</form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="actions-container" >
+    <button mat-raised-button mat-dialog-close class="cancel-button">CANCEL</button>
+    <button mat-raised-button color="primary" (click)="book()" class="submit-button">SUBMIT</button>
+  </mat-dialog-actions>
+

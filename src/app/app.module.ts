@@ -21,6 +21,7 @@ import {HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi}
 import { AuthInterceptor} from './authentication/guards/AuthInterceptor';
 import { ViewMyEventsComponent } from './view-my-events/view-my-events.component';
 import { CreateEventComponent } from './view-my-events/create-event/create-event.component';
+import {ReservationModule} from './reservation/reservation.module';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { CreateEventComponent } from './view-my-events/create-event/create-event
     InvitationModule,
     AdminDashboardModule,
     ProfileModule,
+    ReservationModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,

@@ -1,0 +1,53 @@
+::ng-deep .mat-dialog-container {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+h2 {
+  text-align: center;
+  color: var(--font-dark-blue) !important;
+}
+
+
+form {
+  margin-top:4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Individualni form-field */
+mat-form-field {
+  flex: 1; /* Elementi imaju jednaku širinu */
+  max-width: 300px; /* Ograničava širinu */
+}
+
+
+
+.color {
+  background-color: var(--light-blue);
+  color: var(--font-dark-blue);
+}
+
+.actions-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.cancel-button {
+  background-color: #b81d1d;
+  color: white;
+}
+
+.submit-button {
+  background-color: #004f6f;
+  color: white;
+}
+
+
+
+.label {
+  color: var(--font-dark-blue);
+  font-size: 0.875rem;
+}
