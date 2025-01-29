@@ -284,4 +284,8 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
       verticalPosition: 'top',
     });
   }
+
+  goToSolution(element: ServiceManagementDTO): void {
+    window.open(`/solutions/${element.id}`, '_blank');
+  }
 }
