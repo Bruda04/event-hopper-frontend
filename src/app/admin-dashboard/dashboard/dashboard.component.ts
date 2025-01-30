@@ -14,4 +14,5 @@ export class DashboardComponent {
   refreshApprovedCategories() {
     this.approvedCategories.load();
   }
+
 }
