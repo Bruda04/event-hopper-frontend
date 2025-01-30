@@ -1,7 +1,7 @@
 <div class="chat-container">
   <!-- Chat Info Header -->
   <div class="chat-header">
-    <img [src]="chatPreview.profilePictureUrl ? environment.apiImagesHost + chatPreview.profilePictureUrl : 'profile.png'" alt="Profile Picture" class="profile-picture" />
+    <img [src]="chatPreview.profilePictureUrl ? environment.apiImagesHost + chatPreview.profilePictureUrl : 'profile.png'" alt="Profile Picture" (click)="showBlockReportDialog()" class="profile-picture" />
     <div class="chat-details">
       <span class="username">{{ chatPreview.username }}</span>
       <span class="name">{{ chatPreview.name }} {{ chatPreview.surname }}</span>
@@ -37,3 +37,5 @@
     </button>
   </div>
 </div>
+
+<app-block-report-dialog *ngIf="showBlockReportPanel"></app-block-report-dialog>
