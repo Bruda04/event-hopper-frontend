@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {ReportUserComponent} from '../../report/report-user/report-user.component';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 
@@ -14,6 +14,8 @@ export class BlockReportDialogComponent {
                ) {
   }
 
+  @Input() recipient!: string;
+
   block() {
 
   }
@@ -21,6 +23,7 @@ export class BlockReportDialogComponent {
   report() {
     this.dialog.open(ReportUserComponent, {
       width: '500px',
+      data: { recipient: this.recipient }
     })
   }
 }

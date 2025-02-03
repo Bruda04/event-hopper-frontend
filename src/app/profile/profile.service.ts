@@ -7,6 +7,7 @@ import {UpdatePersonDTO} from '../shared/dto/users/person/UpdatePersonDTO.model'
 import {UpdateCompanyAccountDTO} from '../shared/dto/users/account/UpdateCompanyAccountDTO.model';
 import {DetailedServiceProviderDTO} from '../shared/dto/users/serviceProvider/DetailedServiceProviderDTO.model';
 import { ServiceProviderDetailsDTO } from '../shared/dto/users/serviceProvider/serviceProviderDetailsDTO.model';
+import {SimpleAccountDTO} from '../shared/dto/users/account/SimpleAccountDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,10 @@ export class ProfileService {
 
   getProfileByEmail(email: string): Observable<any> {
     return this.httpClient.get(environment.apiHost + "/accounts/active/" + email);
+  }
+
+  getSimpleAccount(id: string): Observable<any> {
+    return this.httpClient.get(environment.apiHost + '/accounts/' + id + '/simple');
   }
 
   changePassword(changePasswordDTO: ChangePasswordDTO): Observable<any> {
@@ -86,4 +91,5 @@ export class ProfileService {
   changeCompanyPictures(companyPhotos: string[]): Observable<any> {
     return this.httpClient.post(environment.apiHost + '/service-providers/change-company-pictures', companyPhotos);
   }
+
 }

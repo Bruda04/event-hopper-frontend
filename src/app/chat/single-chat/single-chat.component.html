@@ -38,4 +38,4 @@
   </div>
 </div>
 
-<app-block-report-dialog *ngIf="showBlockReportPanel"></app-block-report-dialog>
+<app-block-report-dialog [recipient]="chatPreview.username" *ngIf="showBlockReportPanel"></app-block-report-dialog>
