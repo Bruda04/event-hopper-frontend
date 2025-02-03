@@ -26,6 +26,7 @@ import { DeleteCategoryComponent } from './categories/delete-category/delete-cat
 import { AdminCommentsManagementComponent } from './comments/admin-comments-management/admin-comments-management.component';
 import { ApproveCommentComponent } from './comments/approve-comment/approve-comment.component';
 import { DeleteCommentComponent } from './comments/delete-comment/delete-comment.component';
+import { AdminReportsManagementComponent } from './reports/admin-reports-management/admin-reports-management.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { DeleteCommentComponent } from './comments/delete-comment/delete-comment
     AdminCommentsManagementComponent,
     ApproveCommentComponent,
     DeleteCommentComponent,
+    AdminReportsManagementComponent,
   ],
   imports: [
     CommonModule,
