@@ -4,6 +4,8 @@ import {GetReportDTO} from '../../../shared/dto/reports/GetReportDTO.model';
 import {MatSort} from '@angular/material/sort';
 import {MatDialog} from '@angular/material/dialog';
 import {ReportsService} from '../reports.service';
+import {SuspendComponentComponent} from '../suspend-component/suspend-component.component';
+import {DeleteReportComponent} from '../delete-report/delete-report.component';
 
 @Component({
   selector: 'app-admin-reports-management',
@@ -20,7 +22,7 @@ export class AdminReportsManagementComponent implements OnInit {
     'actions',
   ]
 
-  @Output() commentsChange:EventEmitter<void> = new EventEmitter<void>();
+  @Output() reportsChange:EventEmitter<void> = new EventEmitter<void>();
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private reportsService: ReportsService,
@@ -32,11 +34,43 @@ export class AdminReportsManagementComponent implements OnInit {
   }
 
   delete(element:GetReportDTO) {
+    const dialogRef = this.dialog.open(DeleteReportComponent, {
+      minWidth: '30vw',
+    });
 
+    dialogRef.afterClosed().subscribe((result : boolean | null) =>{
+      if(result) {
+        this.reportsService.delete(element.id).subscribe({
+          next: result => {
+            this.load();
+            this.reportsChange.emit();
+          },
+          error: err => {
+            console.log(err);
+          }
+        });
+      }
+    });
   }
 
   suspend(element:GetReportDTO) {
+    const dialogRef = this.dialog.open(SuspendComponentComponent, {
+      minWidth: '30vw',
+    });
 
+    dialogRef.afterClosed().subscribe((result : boolean | null) =>{
+      if(result) {
+        this.reportsService.suspend(element.id).subscribe({
+          next: result => {
+            this.load();
+            this.reportsChange.emit();
+          },
+          error: err => {
+            console.log(err);
+          }
+        });
+      }
+    });
   }
 
   load():void{
