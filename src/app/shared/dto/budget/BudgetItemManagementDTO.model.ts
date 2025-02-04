@@ -5,6 +5,7 @@ export interface BudgetItemManagementDTO {
   id: string;
   category: SimpleCategoryDTO;
   amount: number;
+  minAmount: number;
   deletable: boolean;
   purchasedProducts: SimpleProductDTO[];
 }
