@@ -26,6 +26,15 @@
   margin: 0;
 }
 
+.form-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  width: 100%;
+  margin: 2em;
+}
+
 /* Form */
 .budgeting-form {
   display: flex;

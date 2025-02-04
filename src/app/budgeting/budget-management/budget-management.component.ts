@@ -8,7 +8,9 @@ import { BudgetItemManagementDTO } from '../../shared/dto/budget/BudgetItemManag
 import { SimpleCategoryDTO } from '../../shared/dto/categories/simpleCategoryDTO.model';
 import { FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {InvitePeopleComponent} from '../../invitation/invite-people/invite-people.component';
+import {
+  BudgetingPurchasedProductsComponent
+} from '../budgeting-purchased-products/budgeting-purchased-products.component';
 
 @Component({
   selector: 'app-budget-management',
@@ -55,6 +57,7 @@ export class BudgetManagementComponent implements OnInit {
       next: (budget: BudgetManagementDTO): void => {
         this.budget = budget;
         this.populateBudgetForm();
+        console.log(this.budget);
       },
       error: (error: any): void => {
         console.error(error);
@@ -143,6 +146,14 @@ export class BudgetManagementComponent implements OnInit {
   }
 
   viewProducts(i: number): void {
-
+    const dialogRef: MatDialogRef<BudgetingPurchasedProductsComponent> = this.dialog.open(BudgetingPurchasedProductsComponent, {
+      minWidth: '40vw',
+      minHeight: '40vh',
+      data: {
+        category: this.budget.budgetItems[i].category.name,
+        event: this.budget.event.name,
+        products: this.budget.budgetItems[i].purchasedProducts
+      }
+    });
   }
 }

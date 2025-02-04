@@ -5,7 +5,7 @@
   <form class="budgeting-form" *ngIf="budget" [formGroup]="budgetingForm">
     <!-- Category Selection -->
     <div class="form-group">
-      <mat-form-field appearance="fill" class="filter-field">
+      <mat-form-field appearance="fill">
         <mat-label>Category</mat-label>
         <mat-select formControlName="category" multiple>
           <mat-option *ngFor="let category of getAvailableCategories()" [value]="category">
@@ -36,8 +36,9 @@
             <mat-icon>delete</mat-icon> DELETE
           </button>
           <button mat-raised-button class="view-products-button" type="button" (click)="viewProducts(i)"
-                  [disabled]="!this.budget.budgetItems.at(i).purchasedProducts.length">
-            <mat-icon>shopping_cart</mat-icon> PURCHASED PRODUCTS
+                  [disabled]="this.budget.budgetItems.at(i).purchasedProducts.length === 0"
+                  >
+            <mat-icon>shopping_cart</mat-icon>PURCHASED PRODUCTS
           </button>
         </div>
       </div>
