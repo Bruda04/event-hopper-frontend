@@ -57,12 +57,12 @@ export class HomeComponent implements OnInit {
       console.log('No one is logged in.');
     } else {
       console.log("Logged in is : ", this.user.role);
+      this.loadTop5Events();
+      this.loadTop5Solutions();
     }
 
     this.loadPagedEvents();
     this.loadPagedSolutions();
-    this.loadTop5Events();
-    this.loadTop5Solutions();
     this.loadCities();
     this.loadCategories();
     this.loadEventTypes();
@@ -70,8 +70,8 @@ export class HomeComponent implements OnInit {
 
   }
 
-  top5events: EventDTO[] ;
-  top5solutions: ProductDTO[];
+  top5events: EventDTO[] = [] ;
+  top5solutions: ProductDTO[] = [];
   events: EventDTO[];
   solutions: ProductDTO[];
 
