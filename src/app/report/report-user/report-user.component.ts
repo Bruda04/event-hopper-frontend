@@ -35,7 +35,7 @@ export class ReportUserComponent {
             next: reported => {
               const report: CreateReportDTO = {
                 reason: this.reportForm.value.reason,
-                reported: reported,
+                reported: reported.id,
               };
 
               this.reportService.create(report).subscribe({
