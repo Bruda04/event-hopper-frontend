@@ -217,3 +217,15 @@
 .header .mat-icon.filled {
   color: var(--primary-color);
 }
+
+::ng-deep .mat-mdc-snackbar-surface {
+  background-color: var(--error-color) !important;
+  color: white !important;
+}
+::ng-deep .mat-mdc-snack-bar-container .mat-mdc-snack-bar-label {
+  color: white !important; /* Ensure text color is visible on orange */
+}
+::ng-deep .mat-mdc-snack-bar-container .mat-mdc-snack-bar-actions button {
+  color: white !important; /* White action button text */
+  font-weight: bold;
+}

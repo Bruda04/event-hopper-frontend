@@ -10,8 +10,8 @@ import {CreateCategoryComponent} from '../create-category/create-category.compon
 import {CategoryDTO} from '../../../shared/dto/categories/categoryDTO.model';
 import {UpdateCategoryDTO} from '../../../shared/dto/categories/UpdateCategoryDTO.model';
 import {CreateCategoryDTO} from '../../../shared/dto/categories/createCategoryDTO.model';
-import {ApproveSuggestionComponent} from '../approve-suggestion/approve-suggestion.component';
 import {DeleteCategoryComponent} from '../delete-category/delete-category.component';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-admin-approved-categories-management',
@@ -29,7 +29,9 @@ export class AdminApprovedCategoriesManagementComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private categoriesService: CategoriesService, public dialog: MatDialog) {
+  constructor(private categoriesService: CategoriesService,
+              public dialog: MatDialog,
+              private snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -48,8 +50,11 @@ export class AdminApprovedCategoriesManagementComponent implements OnInit {
           next: (_) => {
             this.load();
           },
-          error: (_) => {
-            console.error("Error removing category")
+          error: (err) => {
+            console.error("Error removing category");
+            if (err.error?.message) {
+              this.showErrorToast("Error removing category: " + err.error.message);
+            }
           }
         });
       }
@@ -70,9 +75,11 @@ export class AdminApprovedCategoriesManagementComponent implements OnInit {
           next: (_) => {
             this.load();
           },
-          error: (any) => {
-            console.log(any);
+          error: (err) => {
             console.error("Error updating category");
+            if (err.error?.message) {
+              this.showErrorToast("Error updating category: " + err.error.message);
+            }
           }
         });
       }
@@ -91,8 +98,11 @@ export class AdminApprovedCategoriesManagementComponent implements OnInit {
           next: (_) => {
             this.load();
           },
-          error: (_) => {
+          error: (err) => {
             console.error("Error creating category");
+            if (err.error?.message) {
+              this.showErrorToast("Error creating category: " + err.error.message);
+            }
           }
         });
       }
@@ -105,9 +115,20 @@ export class AdminApprovedCategoriesManagementComponent implements OnInit {
         this.dataSource = new MatTableDataSource<CategoryDTO>(categories);
         this.dataSource.sort = this.sort;
       },
-      error: (_) => {
+      error: (err) => {
         console.error("Error loading categories");
+        if (err.error?.message) {
+          this.showErrorToast("Error loading categories: " + err.error.message);
+        }
       }
+    });
+  }
+
+  private showErrorToast(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000, // 3 seconds
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
     });
   }
 
