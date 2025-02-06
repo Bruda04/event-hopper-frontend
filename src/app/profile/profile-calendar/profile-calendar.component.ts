@@ -28,8 +28,11 @@ export class ProfileCalendarComponent {
   }
 
   ngOnInit(){
+    console.log("hello", this.attendingEvents);
     this.loadCalendarEvents();
   }
+
+
 
   loadCalendarEvents(): void {
     if(this.user.role === 'EVENT_ORGANIZER'){
