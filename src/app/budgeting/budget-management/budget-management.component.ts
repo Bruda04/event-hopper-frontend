@@ -6,11 +6,12 @@ import { BudgetManagementDTO } from '../../shared/dto/budget/BudgetManagementDTO
 import { UpdateBudgetItemDTO } from '../../shared/dto/budget/UpdateBudgetItemDTO.model';
 import { BudgetItemManagementDTO } from '../../shared/dto/budget/BudgetItemManagementDTO.model';
 import { SimpleCategoryDTO } from '../../shared/dto/categories/simpleCategoryDTO.model';
-import { FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
+import {FormControl, FormGroup, Validators, FormArray, AbstractControl} from '@angular/forms';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {
   BudgetingPurchasedProductsComponent
 } from '../budgeting-purchased-products/budgeting-purchased-products.component';
+import {distinctUntilChanged} from 'rxjs';
 
 @Component({
   selector: 'app-budget-management',
@@ -20,6 +21,7 @@ import {
 export class BudgetManagementComponent implements OnInit {
 
   eventId: string;
+  spentAmount: number;
   budget: BudgetManagementDTO;
   budgetingForm = new FormGroup({
     category: new FormControl<SimpleCategoryDTO[]>(null, [Validators.required]),
@@ -50,6 +52,7 @@ export class BudgetManagementComponent implements OnInit {
     }
 
     this.loadBudget();
+
   }
 
   private loadBudget(): void {
@@ -57,6 +60,9 @@ export class BudgetManagementComponent implements OnInit {
       next: (budget: BudgetManagementDTO): void => {
         this.budget = budget;
         this.populateBudgetForm();
+        this.spentAmount = this.budget.budgetItems.reduce((acc: number, item: BudgetItemManagementDTO): number => acc + item.amount, 0)-this.budget.leftAmount;
+        this.setLeftAmount();
+        this.budgetingForm.valueChanges.subscribe(() => {this.setLeftAmount()});
         console.log(this.budget);
       },
       error: (error: any): void => {
@@ -73,14 +79,24 @@ export class BudgetManagementComponent implements OnInit {
     this.itemsFormArray.clear();
 
     this.budget.budgetItems.forEach((item: BudgetItemManagementDTO): void => {
-      this.itemsFormArray.push(
-        new FormGroup({
-          id: new FormControl(item.id),
-          category: new FormControl(item.category, { nonNullable: true }),
-          amount: new FormControl(item.amount, [Validators.required, Validators.min(item.minAmount)])
-        })
-      );
+      const fg =  new FormGroup({
+        id: new FormControl(item.id),
+        category: new FormControl(item.category, { nonNullable: true }),
+        amount: new FormControl(item.amount, [Validators.required, Validators.min(item.minAmount)])
+      })
+      fg.get("amount").valueChanges.pipe(
+        distinctUntilChanged()
+      ).subscribe((value: number): void => {
+        if (value < item.minAmount) {
+          fg.get("amount").setErrors({ minAmount: item.minAmount });
+        } else {
+          fg.get("amount").setErrors(null);
+        }
+      });
+
+      this.itemsFormArray.push(fg);
     });
+
   }
 
   add(): void {
@@ -97,18 +113,32 @@ export class BudgetManagementComponent implements OnInit {
       };
 
       this.budget.budgetItems.push(newItem);
-      this.itemsFormArray.push(
-        new FormGroup({
-          id: new FormControl(null),
-          category: new FormControl(cat, { nonNullable: true }),
-          amount: new FormControl<number>(0, [Validators.required, Validators.min(0)])
-        })
-      );
+      const fg = new FormGroup({
+        id: new FormControl(null),
+        category: new FormControl(cat, { nonNullable: true }),
+        amount: new FormControl<number>(0, [Validators.required, Validators.min(newItem.minAmount)])
+      })
+      fg.get("amount").valueChanges.pipe(
+        distinctUntilChanged()
+      ).subscribe((value: number): void => {
+        if (value < newItem.minAmount) {
+          fg.get("amount").setErrors({ minAmount: newItem.minAmount });
+        } else {
+          fg.get("amount").setErrors(null);
+        }
+      });
+
+      this.itemsFormArray.push(fg);
       this.budgetingForm.get('category').reset();
     }
   }
 
   save(): void {
+    if (this.itemsFormArray.invalid) {
+      console.error('Invalid form');
+      return;
+    }
+
     const updatedBudget: UpdateBudgetItemDTO[] = this.budgetingForm.value.items.map(
       (item: { id: string, category: SimpleCategoryDTO, amount: number }): UpdateBudgetItemDTO => ({
         id: item.id,
@@ -155,5 +185,11 @@ export class BudgetManagementComponent implements OnInit {
         products: this.budget.budgetItems[i].purchasedProducts
       }
     });
+  }
+
+
+  setLeftAmount(): void {
+    const formItems: number[]= this.budgetingForm.value.items.map((item: { id: string, category: SimpleCategoryDTO, amount: number }): number => item.amount);
+    this.budget.leftAmount = formItems.reduce((acc: number, item: number): number => acc + item, 0) - this.spentAmount;
   }
 }

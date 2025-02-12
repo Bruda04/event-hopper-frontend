@@ -30,20 +30,28 @@
           <mat-form-field appearance="fill">
             <mat-label>Amount (€)</mat-label>
             <input matInput placeholder="Enter amount" type="number" formControlName="amount" min="0"/>
+            <mat-error *ngIf="itemCtrl.get('amount')?.hasError('minAmount')">
+              Amount must be greater than {{ itemCtrl.get('amount')?.getError('minAmount') }} €
+            </mat-error>
           </mat-form-field>
           <button mat-raised-button class="delete-button" type="button" (click)="delete(i)"
-                  [disabled]="!this.budget.budgetItems.at(i).deletable">
+                  [disabled]="!this.budget.budgetItems.at(i).deletable"
+                  [ngClass]="{ 'disabled-button': !this.budget.budgetItems.at(i).deletable }"
+          >
             <mat-icon>delete</mat-icon> DELETE
           </button>
           <button mat-raised-button class="view-products-button" type="button" (click)="viewProducts(i)"
                   [disabled]="this.budget.budgetItems.at(i).purchasedProducts.length === 0"
+                  [ngClass]="{ 'disabled-button': this.budget.budgetItems.at(i).purchasedProducts.length === 0 }"
                   >
             <mat-icon>shopping_cart</mat-icon>PURCHASED PRODUCTS
           </button>
         </div>
       </div>
     </div>
-
+    <div class="left-label" *ngIf="!itemsFormArray.invalid">
+      Left to spend: <b>{{ this.budget?.leftAmount }} €</b>
+    </div>
     <!-- Navigation Buttons -->
     <div class="button-group">
       <button mat-raised-button class="save-button" type="button" (click)="save()">SAVE</button>

@@ -2,7 +2,7 @@ import {BudgetItemManagementDTO} from './BudgetItemManagementDTO.model';
 import {SimpleEventDTO} from '../events/simpleEventDTO.model';
 
 export interface BudgetManagementDTO {
-  totalAmount: number;
+  leftAmount: number;
   budgetItems: BudgetItemManagementDTO[];
   event: SimpleEventDTO;
 }

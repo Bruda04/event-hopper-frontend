@@ -71,6 +71,13 @@
   text-align: left;
 }
 
+.left-label {
+  margin: 1.5em;
+  font-size: 24px;
+  color: var(--beige);
+  text-align: left;
+}
+
 /* Buttons */
 .button-group {
   display: flex;
@@ -99,4 +106,10 @@
 .delete-button {
   background-color: var(--error-color) !important;
   color: white;
+}
+
+.disabled-button {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
+  color: var(--mdc-protected-button-disabled-label-text-color);
+  background-color: var(--mdc-protected-button-disabled-container-color)!important;
 }
