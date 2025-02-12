@@ -22,6 +22,7 @@ import { AuthInterceptor} from './authentication/guards/AuthInterceptor';
 import { ViewMyEventsComponent } from './view-my-events/view-my-events.component';
 import { CreateEventComponent } from './view-my-events/create-event/create-event.component';
 import {ReportModule} from './report/report.module';
+import {BlockingModule} from './blocking/blocking.module';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import {ReportModule} from './report/report.module';
     AdminDashboardModule,
     InvitationModule,
     AdminDashboardModule,
+    BlockingModule,
     ProfileModule,
     ReportModule,
     CalendarModule.forRoot({
