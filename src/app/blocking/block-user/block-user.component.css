@@ -1,15 +1,20 @@
 .component {
   text-align: center;
   color: var(--font-dark-blue);
+  padding-right: 4em;
+  padding-left: 4em;
 }
 
-h2 {
-  font-size: 20px;
-  margin-bottom: 10px;
+p {
+  font-size: 1em;
+  text-align: justify;
 }
 
-h3 {
+.header {
   font-weight: bold;
+  font-size: 1.5em;
+  text-align: center;
+  margin-top: 1em;
 }
 
 .actions-container {
@@ -18,6 +23,7 @@ h3 {
   align-items: center;
   width: 100%;
   padding: 0.5em 1em;
+  margin-bottom: 1em;
 }
 
 .actions-container button {
