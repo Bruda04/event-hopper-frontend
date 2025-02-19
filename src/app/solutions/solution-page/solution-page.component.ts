@@ -127,13 +127,13 @@ export class SolutionPageComponent implements OnInit {
   }
 
   selectEventForPurchase(): void {
-    // if (this.solution.applicableEvents.length === 1) {
-    //   // if (!this.solution.service) {
-    //   //   this.buyProduct(this.solution.applicableEvents[0].id);
-    //   // } else {
-    //   //   this.bookService(this.solution.applicableEvents[0].id);
-    //   // }
-    // } else {
+    if (this.solution.applicableEvents.length === 1) {
+      if (!this.solution.service) {
+        this.buyProduct(this.solution.applicableEvents[0].id);
+      } else {
+        this.bookService(this.solution.applicableEvents[0].id);
+      }
+    } else {
       const dialogRef: MatDialogRef<DialogSelectEventComponent> = this.dialog.open(DialogSelectEventComponent, {
         minWidth: '30vw',
         minHeight: '20vh',
@@ -151,7 +151,7 @@ export class SolutionPageComponent implements OnInit {
           }
         }
       });
-    // }
+    }
   }
 
   private buyProduct(eventId: string) {
