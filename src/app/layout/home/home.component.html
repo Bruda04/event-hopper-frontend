@@ -1,12 +1,12 @@
-<div class="grid-container-top5events">
-  <div class="grid-item">
+<div class="grid-container-top5events" *ngIf="top5events.length >0 && true">
+  <div class="grid-item" >
     <div class="headers">
       <p class="header1">Get ready to experience the best of what’s happening near you!</p>
       <p class="header2">We've handpicked the top 5 events for you to explore.</p>
     </div>
   </div>
 
-  <div class="grid-item">
+  <div class="grid-item" >
       <p-carousel
         [value]="top5events"
         [numVisible]="1.5"
@@ -22,7 +22,7 @@
   </div>
 </div>
 
-<div class="grid-container-top5solutions">
+<div class="grid-container-top5solutions"*ngIf="top5solutions.length >0 && true">
   <div class="grid-item">
 
     <p-carousel

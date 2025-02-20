@@ -16,6 +16,7 @@ import {CategoriesService} from '../../admin-dashboard/categories/categories.ser
 import {CreateServiceDTO} from '../../shared/dto/solutions/createServiceDTO.model';
 import {CreatedCategorySuggestionDTO} from '../../shared/dto/categories/createdCategorySuggestionDTO.model';
 import {UpdateServiceDTO} from '../../shared/dto/solutions/updateServiceDTO.model';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-pupservice-management',
@@ -78,7 +79,8 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
 
   constructor(private serviceService: ServicesService,
               private categoriesService: CategoriesService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -112,8 +114,11 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
                 this.loadPagedEntities();
                 this.serviceChanged.emit();
               },
-              error: () => {
+              error: (err) => {
                 console.error('Error adding service');
+                if (err.error?.message) {
+                  this.showErrorToast("Error creating service: " + err.error.message);
+                }
               }
             });
         } else {
@@ -126,8 +131,11 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
                     this.loadPagedEntities();
                     this.serviceChanged.emit();
                   },
-                  error: () => {
+                  error: (err) => {
                     console.error('Error adding service with suggested category');
+                    if (err.error?.message) {
+                      this.showErrorToast("Error creating service: " + err.error.message);
+                    }
                   }
                 }
               )
@@ -145,8 +153,11 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
           this.loadPagedEntities()
           this.serviceChanged.emit();
         },
-        error: () => {
+        error: (err) => {
           console.error('Error removing service');
+          if (err.error?.message) {
+            this.showErrorToast("Error removing service: " + err.error.message);
+          }
         }
       }
     );
@@ -168,8 +179,11 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
               this.loadPagedEntities();
               this.serviceChanged.emit();
             },
-            error: () => {
+            error: (err) => {
               console.error('Error updating service');
+              if (err.error?.message) {
+                this.showErrorToast("Error updating service: " + err.error.message);
+              }
             }
           }
         );
@@ -214,7 +228,7 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
         next: (categories: CategoryDTO[]) => {
           this.categories = categories;
         },
-        error: () => {
+        error: (err) => {
           console.error('Error loading categories');
         }
       });
@@ -249,6 +263,9 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
         },
         error: (e) => {
           console.error('Error loading services', e);
+          if (e.error?.message) {
+            this.showErrorToast("Error loading services: " + e.error.message);
+          }
         }
       });
   }
@@ -258,5 +275,17 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
       const category: CategoryDTO = this.categories.find(cat => cat.id === categoryId);
       this.filteredEventTypes = category?.eventTypes || [];
     });
+  }
+
+  private showErrorToast(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000, // 3 seconds
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+    });
+  }
+
+  goToSolution(element: ServiceManagementDTO): void {
+    window.open(`/solutions/${element.id}`, '_blank');
   }
 }
