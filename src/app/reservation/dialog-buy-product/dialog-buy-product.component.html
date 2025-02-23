@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>Buy Product</h2>
+
+<mat-dialog-content>
+  <h3 class="text">
+    Are you sure you want to buy
+    <span class="highlight">{{ this.solution.name }}</span>
+    from <br>
+    <span class="highlight">{{ this.solution.provider.companyName }}</span>
+    for your event
+    <span class="highlight">{{ this.event.name }}</span>?
+  </h3>
+</mat-dialog-content>
+
+
+<mat-dialog-actions class="actions-container">
+  <button mat-raised-button mat-dialog-close class="cancel-button">CANCEL</button>
+  <button mat-raised-button (click)="buy()" class="primary-button">BUY</button>
+</mat-dialog-actions>

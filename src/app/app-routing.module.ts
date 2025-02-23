@@ -24,6 +24,7 @@ import {ServiceProviderPageComponent} from './service-provider-page/service-prov
 import {EmailVerifiedComponent} from './authentication/register/email-verified/email-verified.component';
 import {ViewMyEventsComponent} from './view-my-events/view-my-events.component';
 import {CreateEventComponent} from './view-my-events/create-event/create-event.component';
+import {BudgetManagementComponent} from './budgeting/budget-management/budget-management.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -60,6 +61,9 @@ const routes: Routes = [
   { path: 'solutions/:id', component: SolutionPageComponent },
   { path: 'providers/:id', component: ServiceProviderPageComponent },
   { path: 'verify-email/:token', component: EmailVerifiedComponent },
+  { path: 'events/:eventId/budgeting', component: BudgetManagementComponent ,
+    canActivate: [roleGuard],
+    data: { roles:  ['EVENT_ORGANIZER']  } },
 ];
 
 

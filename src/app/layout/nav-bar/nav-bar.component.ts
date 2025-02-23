@@ -81,13 +81,4 @@ export class NavBarComponent {
     }
   }
 
-  booking() {
-    console.log("booking");
-    const dialogRef: MatDialogRef<BookingAServiceComponent> = this.dialog.open(BookingAServiceComponent, {
-      minWidth: '70vw',
-      maxWidth: '70vw',
-      minHeight: '70vh',
-      maxHeight: '70vh',
-    });
-  }
 }

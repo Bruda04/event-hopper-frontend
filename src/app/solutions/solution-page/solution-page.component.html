@@ -62,6 +62,10 @@
           <mat-icon>chat</mat-icon>
           You need more info? Chat with us!
         </button>
+        <button mat-raised-button class="buy-btn" (click)="selectEventForPurchase()" *ngIf="solution.applicableEvents != null && solution.applicableEvents.length">
+          <mat-icon>shopping_bag</mat-icon>
+          Buy now!
+        </button>
       </div>
     </div>
 

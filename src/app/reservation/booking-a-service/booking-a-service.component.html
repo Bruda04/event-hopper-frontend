@@ -4,10 +4,10 @@
   <form [formGroup]="bookingForm">
     <mat-form-field>
       <mat-label>Choose a date</mat-label>
-      <input #dateInput (dateChange)="OnDateChange($event)" matInput [matDatepicker]="picker" [min]="minDate" >
+      <input #dateInput (dateChange)="OnDateChange($event)" matInput [matDatepicker]="picker" [matDatepickerFilter]="dateFilter" >
       <mat-hint>MM/DD/YYYY</mat-hint>
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
+      <mat-datepicker #picker [startAt]="eventDate" [dateClass]="dateClass" ></mat-datepicker>
     </mat-form-field>
 
 

@@ -83,6 +83,17 @@
   width: 100%;
 }
 
+.buy-btn {
+  font-weight: normal;
+  background-color: var(--secondary-color) !important;
+  color: white !important;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: flex;
+  width: 100%;
+  margin-top: 0.75em;
+}
+
 .reviews {
   margin-top: 20px;
   padding: 20px;
@@ -216,4 +227,16 @@
 
 .header .mat-icon.filled {
   color: var(--primary-color);
+}
+
+::ng-deep .mat-mdc-snackbar-surface {
+  background-color: var(--error-color) !important;
+  color: white !important;
+}
+::ng-deep .mat-mdc-snack-bar-container .mat-mdc-snack-bar-label {
+  color: white !important; /* Ensure text color is visible on orange */
+}
+::ng-deep .mat-mdc-snack-bar-container .mat-mdc-snack-bar-actions button {
+  color: white !important; /* White action button text */
+  font-weight: bold;
 }

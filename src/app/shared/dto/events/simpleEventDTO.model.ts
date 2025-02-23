@@ -1,5 +1,5 @@
-import {EventType} from '@angular/router';
 import {SimpleLocationDTO} from '../locations/SimpleLocationDTO.model';
+import {SimpleEventTypeDTO} from '../eventTypes/SimpleEventTypeDTO.model';
 
 export interface SimpleEventDTO {
   id: string;
@@ -7,6 +7,6 @@ export interface SimpleEventDTO {
   description: string;
   time: string;
   picture: string;
-  eventType: EventType;
+  eventType: SimpleEventTypeDTO;
   location: SimpleLocationDTO;
 }

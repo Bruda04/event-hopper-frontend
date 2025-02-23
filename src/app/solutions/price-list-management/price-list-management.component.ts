@@ -10,6 +10,7 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import {EditPriceComponent} from '../edit-price/edit-price.component';
 import {UpdatePriceDTO} from '../../shared/dto/prices/updatePriceDTO.model';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -34,7 +35,8 @@ export class PriceListManagementComponent implements OnInit {
   @Output() priceChanged: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(private productService: ProductService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -51,8 +53,11 @@ export class PriceListManagementComponent implements OnInit {
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         },
-        error: () => {
+        error: (err) => {
           console.error('Error loading prices');
+          if (err.error?.message) {
+            this.showErrorToast("Error loading prices: " + err.error.message);
+          }
         }
       }
     );
@@ -73,8 +78,11 @@ export class PriceListManagementComponent implements OnInit {
               this.loadPrices();
               this.priceChanged.emit();
             },
-            error: () => {
+            error: (err) => {
               console.error('Error updating price');
+              if (err.error?.message) {
+                this.showErrorToast("Error updating price: " + err.error.message);
+              }
             }
           }
         );
@@ -128,5 +136,13 @@ export class PriceListManagementComponent implements OnInit {
     );
 
     pdf.save('price-list.pdf');
+  }
+
+  private showErrorToast(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000, // 3 seconds
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+    });
   }
 }
