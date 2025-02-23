@@ -5,6 +5,8 @@ import {MatDialogRef} from '../../infrastructure/material/material.module';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {SolutionDetailsDTO} from '../../shared/dto/solutions/solutionDetailsDTO.model';
 import {SimpleEventDTO} from '../../shared/dto/events/simpleEventDTO.model';
+import {ReservationService} from '../reservation.service';
+import {MatSelectChange} from '@angular/material/select';
 
 
 @Component({
@@ -18,12 +20,15 @@ export class BookingAServiceComponent {
   solution: SolutionDetailsDTO;
 
   selectedDate: Date = null;      //choosen date
+  selectedStartTime: Date = null;
+  selectedEndTime: Date = null;
 
   eventDate: Date = null;
 
-  freeTerms:string[] = ["11:00","12:00", "13:00"];
+  freeTerms:string[] = [];
 
   constructor(public dialogRef: MatDialogRef<BookingAServiceComponent>,
+              private reservationService: ReservationService,
               @Inject(MAT_DIALOG_DATA) data: {eventId: string, solution: SolutionDetailsDTO}
   ) {
     this.solution = data.solution;
@@ -51,17 +56,10 @@ export class BookingAServiceComponent {
     eventDate.setHours(0, 0, 0, 0);
 
     const minEventWindow = new Date(eventDate);
-    minEventWindow.setDate(eventDate.getDate() - 3); // 3 dana pre eventa
+    minEventWindow.setDate(eventDate.getDate() - 3);
 
     const maxEventWindow = new Date(eventDate);
-    maxEventWindow.setDate(eventDate.getDate() + 2); // 2 dana posle eventa
-
-    console.log(`Checking date: ${d}`);
-    console.log('Today: ' + today);
-    console.log('Event date: ', eventDate);
-    console.log('Min Reservation: ', minReservationDate);
-    console.log('Min event Window: ', minEventWindow);
-    console.log('Max event Window: ', maxEventWindow);
+    maxEventWindow.setDate(eventDate.getDate() + 2);
 
 
     // 1. dates from the past can not be selected
@@ -93,9 +91,55 @@ export class BookingAServiceComponent {
   OnDateChange(event: MatDatepickerInputEvent<any, any>){
     this.selectedDate = event.value;
     this.bookingForm.get('date')?.setValue(event.value);
+
+    if (this.selectedDate) {
+      this.fetchAvailableTerms();
+    }
   }
+
+
+  fetchAvailableTerms(): void {
+    let dateString: string = '';
+    let date = this.selectedDate.getDate().toString().padStart(2, '0');
+    let month = (this.selectedDate.getMonth() + 1).toString().padStart(2, '0');
+    let year = this.selectedDate.getFullYear();
+    dateString = `${year}-${month}-${date}T00:00:00`;
+
+    this.reservationService.getAvailableTerms(this.solution.id,dateString).subscribe({
+      next: event => {
+        console.log(event);
+        this.convertTermsToString(event);
+      },
+      error: event => {
+        console.error(event);
+      }
+    });
+  }
+
+  convertTermsToString (termsDates: Date[]): void {
+    termsDates.forEach((date) => {
+      let dateString = date.toString().slice(11, 16);
+      this.freeTerms.push(dateString);
+    });
+  }
+
 
   book() {
     this.dialogRef.close(true);
+  }
+
+  changeTerm(event: MatSelectChange) {
+
+    const [hours, minutes] = event.value.split(":").map(Number);
+
+    this.selectedStartTime = new Date(this.selectedDate);
+    this.selectedStartTime.setHours(hours, minutes, 0, 0);
+
+    this.selectedEndTime = new Date(this.selectedStartTime);
+    this.selectedEndTime.setMinutes(this.selectedEndTime.getMinutes() + this.solution.durationMinutes);
+
+
+    console.log("Start:", this.selectedStartTime);
+    console.log("End:", this.selectedEndTime);
   }
 }

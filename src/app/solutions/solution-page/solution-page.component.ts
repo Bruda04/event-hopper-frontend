@@ -194,8 +194,8 @@ export class SolutionPageComponent implements OnInit {
 
   private bookService(eventId: string) {
     const  dialogRef: MatDialogRef<BookingAServiceComponent> = this.dialog.open(BookingAServiceComponent, {
-      minWidth: '30vw',
-      minHeight: '30vh',
+      minWidth: '60vw',
+      minHeight: '50vh',
       data: {solution: this.solution, eventId: eventId}
     });
 
@@ -203,11 +203,21 @@ export class SolutionPageComponent implements OnInit {
       if (!booking){
         return;
       } else{
+
+        const selectedStartTime = dialogRef.componentInstance.selectedStartTime;  // Ovo je vrednost koju ste odabrali u dijalogu
+        const selectedEndTime = dialogRef.componentInstance.selectedEndTime;  // Ovo je vrednost koju ste odabrali u dijalogu
+
+        if (!selectedStartTime) {
+          console.error('No time selected!');
+          return;
+        }
+
+
         const reservationRequest: CreateReservationServiceDTO = {
           eventId: eventId,
           productId: this.solution.id,
-          from: new Date(),
-          to: new Date(),
+          from: selectedStartTime,
+          to: selectedEndTime,
           //dodati dateove
         };
         this.reservationService.bookService(reservationRequest).subscribe({

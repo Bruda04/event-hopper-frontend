@@ -13,13 +13,13 @@
 
     <mat-form-field appearance="fill" class="filter-field">
       <mat-label>Choose a term</mat-label>
-      <mat-select formControlName="startTime">
+      <mat-select (selectionChange)="changeTerm($event)"  formControlName="startTime">
         <mat-option *ngFor="let term of freeTerms || []" [value]="term">
           {{ term }}
         </mat-option>
       </mat-select>
     </mat-form-field>
-  <p class="label">*This service lasts </p>
+  <p class="label">*This service lasts {{solution.durationMinutes}} minutes </p>
   </form>
 
   </mat-dialog-content>
