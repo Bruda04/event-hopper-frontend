@@ -1,5 +1,8 @@
 ::ng-deep .mat-dialog-container {
   background: rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 h2 {
@@ -47,11 +50,15 @@ mat-form-field {
   color: white;
 }
 
-
-
 .label {
   color: var(--font-dark-blue);
+  text-align: center;
+  display: flex;
+  justify-content: center; /* Centriranje po horizontali */
+  width: 100%;
   font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 

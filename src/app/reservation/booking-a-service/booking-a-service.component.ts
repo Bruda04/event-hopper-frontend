@@ -23,9 +23,12 @@ export class BookingAServiceComponent {
   selectedStartTime: Date = null;
   selectedEndTime: Date = null;
 
+  endTimeString: string = "";
+
   eventDate: Date = null;
 
   freeTerms:string[] = [];
+
 
   constructor(public dialogRef: MatDialogRef<BookingAServiceComponent>,
               private reservationService: ReservationService,
@@ -138,8 +141,6 @@ export class BookingAServiceComponent {
     this.selectedEndTime = new Date(this.selectedStartTime);
     this.selectedEndTime.setMinutes(this.selectedEndTime.getMinutes() + this.solution.durationMinutes);
 
-
-    console.log("Start:", this.selectedStartTime);
-    console.log("End:", this.selectedEndTime);
+    this.endTimeString = this.selectedEndTime.toTimeString().padStart(2, '0').slice(0, 8);
   }
 }

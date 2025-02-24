@@ -206,6 +206,8 @@ export class SolutionPageComponent implements OnInit {
 
         const selectedStartTime = dialogRef.componentInstance.selectedStartTime;  // Ovo je vrednost koju ste odabrali u dijalogu
         const selectedEndTime = dialogRef.componentInstance.selectedEndTime;  // Ovo je vrednost koju ste odabrali u dijalogu
+        console.log(selectedStartTime)
+        console.log(selectedEndTime);
 
         if (!selectedStartTime) {
           console.error('No time selected!');
@@ -218,7 +220,6 @@ export class SolutionPageComponent implements OnInit {
           productId: this.solution.id,
           from: selectedStartTime,
           to: selectedEndTime,
-          //dodati dateove
         };
         this.reservationService.bookService(reservationRequest).subscribe({
           next: (): void => {

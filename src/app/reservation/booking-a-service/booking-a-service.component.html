@@ -19,8 +19,9 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-  <p class="label">*This service lasts {{solution.durationMinutes}} minutes </p>
   </form>
+  <div class="label">*This service lasts {{solution.durationMinutes}} minutes</div>
+  <div class="label">*Term lasts until {{endTimeString}} </div>
 
   </mat-dialog-content>
 
@@ -28,4 +29,9 @@
     <button mat-raised-button mat-dialog-close class="cancel-button">CANCEL</button>
     <button mat-raised-button color="primary" (click)="book()" class="submit-button">SUBMIT</button>
   </mat-dialog-actions>
+
+<!--<div *ngIf="isLoading" class="spinner-container">-->
+<!--  <mat-spinner></mat-spinner>-->
+<!--</div>-->
+
 
