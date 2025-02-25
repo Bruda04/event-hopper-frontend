@@ -15,16 +15,7 @@
   margin-bottom: 1em;
 }
 
-/* CREATE Button */
-.create-button {
-  height: 3em;
-  background-color: var(--secondary-color) !important;
-  color: white !important;
-}
 
-.create-button mat-icon {
-  margin-right: 0.5em;
-}
 .table-container {
   overflow: auto;
 }

@@ -1,0 +1,21 @@
+.container {
+  background-color: var(--secondary-color);
+  width: 20em;
+  height: 5em;
+  border-radius: 0.5em;
+
+  position: fixed;
+  z-index: 1000;
+  display: flex;
+  top:12em;
+  right: 4em;
+}
+
+
+.submit-button{
+ gap: 1.5em;
+  margin-top: 1.5em;
+  margin-left: 1em;
+  border-radius: 20em;
+
+}

@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Report user</h2>
+
+<mat-dialog-content>
+
+  <form [formGroup]="reportForm">
+
+    <div>
+      <mat-form-field appearance="fill" class="reason-input">
+        <mat-label>Enter reason</mat-label>
+        <textarea
+          placeholder="Why do you want to report this user? "
+          formControlName="reason"
+        ></textarea>
+        <mat-error *ngIf="reportForm.get('reason')?.hasError('required')">
+          Reason is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="actions-container" >
+  <button mat-raised-button mat-dialog-close class="cancel-button">CANCEL</button>
+  <button mat-raised-button color="primary" (click)="report()" class="submit-button">SUBMIT</button>
+</mat-dialog-actions>

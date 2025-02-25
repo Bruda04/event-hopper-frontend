@@ -2,7 +2,7 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
-  ElementRef,
+  ElementRef, HostListener,
   Input,
   OnDestroy,
   OnInit,
@@ -26,9 +26,11 @@ export class SingleChatComponent implements OnInit, OnDestroy {
   chatMessages: ChatMessageDTO[] = [];
   newMessageContent: string = '';
 
+  showBlockReportPanel: boolean = false;
+
   constructor(private messageService: MessageService,
               private userService: UserService,
-              private cdr: ChangeDetectorRef
+              private cdr: ChangeDetectorRef,
   ) { }
 
 
@@ -86,4 +88,19 @@ export class SingleChatComponent implements OnInit, OnDestroy {
   }
 
   protected readonly environment = environment;
+
+  showBlockReportDialog() {
+    this.showBlockReportPanel = !this.showBlockReportPanel;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const clickedInside = (event.target as HTMLElement).closest('app-block-report-dialog');
+    const clickedButton = (event.target as HTMLElement).closest('.profile-picture');
+
+
+    if (!clickedInside && !clickedButton) {
+      this.showBlockReportPanel = false;
+    }
+  }
 }
