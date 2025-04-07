@@ -56,8 +56,6 @@ export class ProfileCalendarComponent {
       }
       this.events.push(calendarEvent);
     }
-
-
   }
 
   refresh = new Subject<void>(); // For refreshing the calendar view

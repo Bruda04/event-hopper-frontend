@@ -24,6 +24,7 @@ import {
 export class ProfileComponent {
   user: User;
   profilePicture: string;
+  loadedUser = false;
 
   constructor(private userService: UserService,
               private router: Router,
@@ -62,6 +63,7 @@ export class ProfileComponent {
         }else{
           this.profilePicture = environment.apiImagesHost + this.user.profilePicture;
         }
+        this.loadedUser = true;
       },
 
 
