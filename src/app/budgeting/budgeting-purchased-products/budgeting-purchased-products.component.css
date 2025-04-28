@@ -1,0 +1,58 @@
+.component {
+  text-align: center;
+  color: var(--font-dark-blue);
+  margin: 0.5em;
+}
+
+
+.product-card {
+  background: var(--light-beige);
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.product-header {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+h6 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.see-more-button {
+  color: var(--primary-color);
+}
+
+.see-more-button mat-icon {
+  font-size: 20px;
+}
+
+
+.actions-container {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 100%;
+  padding: 0.5em 1em;
+}
+
+.actions-container button {
+  min-width: 100px;
+  color: white;
+}
+
+.primary-button {
+  background-color: var(--error-color);
+  color: white;
+}
+
+.cancel-button {
+  background-color: var(--primary-color);
+}
+
