@@ -23,6 +23,7 @@ import { ViewMyEventsComponent } from './view-my-events/view-my-events.component
 import { CreateEventComponent } from './view-my-events/create-event/create-event.component';
 import {BudgetingModule} from './budgeting/budgeting.module';
 import {ReportModule} from './report/report.module';
+import {BlockingModule} from './blocking/blocking.module';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import {ReportModule} from './report/report.module';
     AdminDashboardModule,
     InvitationModule,
     AdminDashboardModule,
+    BlockingModule,
     ProfileModule,
     BudgetingModule,
     ReportModule,
