@@ -4,6 +4,7 @@ import {SimpleEventTypeDTO} from '../eventTypes/SimpleEventTypeDTO.model';
 import {SimpleServiceProviderDTO} from '../users/serviceProvider/SimpleServiceProviderDTO.model';
 import {SimpleCommentDTO} from '../comments/simpleCommentDTO.model';
 import {ConversationPreviewDTO} from '../messages/conversationPreviewDTO.model';
+import {SimpleEventDTO} from '../events/simpleEventDTO.model';
 
 
 export interface SolutionDetailsDTO {
@@ -26,4 +27,5 @@ export interface SolutionDetailsDTO {
   pendingComment: boolean;
   pendingRating: boolean;
   conversationInitialization: ConversationPreviewDTO;
+  applicableEvents: SimpleEventDTO[];
 }

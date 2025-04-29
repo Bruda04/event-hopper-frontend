@@ -22,6 +22,7 @@ import { AuthInterceptor} from './authentication/guards/AuthInterceptor';
 import { ViewMyEventsComponent } from './view-my-events/view-my-events.component';
 import { CreateEventComponent } from './view-my-events/create-event/create-event.component';
 import {BudgetingModule} from './budgeting/budgeting.module';
+import {ReservationModule} from './reservation/reservation.module';
 import {ReportModule} from './report/report.module';
 import {BlockingModule} from './blocking/blocking.module';
 
@@ -53,6 +54,7 @@ import {BlockingModule} from './blocking/blocking.module';
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
+    ReservationModule,
   ],
   providers: [
     {
