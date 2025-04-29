@@ -14,7 +14,7 @@ import {CreateCommentDTO} from '../../shared/dto/comments/createCommentDTO.model
 export class ProductReviewComponent implements OnInit {
   reviewForm = new FormGroup({
     rating: new FormControl<number | null>(null, [Validators.min(1), Validators.max(5), Validators.pattern(/^\d+$/)]),
-    comment: new FormControl<string | null>(null, [Validators.maxLength(255)]),
+    comment: new FormControl<string | null>(null, [Validators.maxLength(1000)]),
   });
 
   constructor(public dialogRef: MatDialogRef<ProductReviewComponent>, @Inject(MAT_DIALOG_DATA) protected solution: SolutionDetailsDTO) {}

@@ -10,6 +10,11 @@ import {ProductReviewComponent} from '../product-review/product-review.component
 import {MatDialog} from '../../infrastructure/material/material.module';
 import {CreateProductRatingDTO} from '../../shared/dto/ratings/CreateProductRatingDTO.model';
 import {CreateCommentDTO} from '../../shared/dto/comments/createCommentDTO.model';
+import {DialogBuyProductComponent} from '../../reservation/dialog-buy-product/dialog-buy-product.component';
+import {DialogSelectEventComponent} from '../../reservation/dialog-select-event/dialog-select-event.component';
+import {ReservationService} from '../../reservation/reservation.service';
+import {CreateReservationProductDTO} from '../../shared/dto/reservations/CreateReservationProductDTO.model';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-solution-page',
@@ -28,9 +33,11 @@ export class SolutionPageComponent implements OnInit {
               private productService: ProductService,
               private profileService: ProfileService,
               private userService: UserService,
-              public dialog: MatDialog
-  ) { }
-
+              private reservationService: ReservationService,
+              public dialog: MatDialog,
+              private snackBar: MatSnackBar
+  ) {
+  }
   ngOnInit(): void {
     this.solutionId = this.route.snapshot.paramMap.get('id');
     this.loadSolution();
@@ -45,8 +52,9 @@ export class SolutionPageComponent implements OnInit {
           this.eventTypes = solution.eventTypes.map(eventType => eventType.name).join(', ');
           this.solution.comments.map(c =>
             c.author.profilePicture = c.author.profilePicture ? environment.apiImagesHost + c.author.profilePicture : 'profile.png');
+          console.log(this.solution);
         },
-        error: () : void=> {
+        error: (): void => {
           this.notFound = true;
         }
       }
@@ -80,6 +88,7 @@ export class SolutionPageComponent implements OnInit {
   }
 
   protected showChat: boolean = false;
+
   chatWithUs(): void {
     this.showChat = !this.showChat;
   }
@@ -93,7 +102,7 @@ export class SolutionPageComponent implements OnInit {
       data: this.solution
     });
 
-    dialogRef.afterClosed().subscribe((result: {rating: CreateProductRatingDTO, comment: CreateCommentDTO}): void => {
+    dialogRef.afterClosed().subscribe((result: { rating: CreateProductRatingDTO, comment: CreateCommentDTO }): void => {
       if (result == null) {
         return;
       }
@@ -102,8 +111,11 @@ export class SolutionPageComponent implements OnInit {
           next: () => {
             this.loadSolution();
           },
-          error: () => {
+          error: (err) => {
             console.error('Error creating comment');
+            if (err.error?.message) {
+              this.showErrorToast('Error creating comment: ' + err.error.message);
+            }
           }
         });
       }
@@ -112,11 +124,82 @@ export class SolutionPageComponent implements OnInit {
           next: () => {
             this.loadSolution();
           },
-          error: () => {
+          error: (err) => {
             console.error('Error rating product');
+            if (err.error?.message) {
+              this.showErrorToast('Error rating product: ' + err.error.message);
+            }
           }
         });
       }
     });
   }
+
+  selectEventForPurchase(): void {
+    if (this.solution.applicableEvents.length === 1) {
+      if (!this.solution.service) {
+        this.buyProduct(this.solution.applicableEvents[0].id);
+      } else {
+        this.bookService(this.solution.applicableEvents[0].id);
+      }
+    } else {
+      const dialogRef: MatDialogRef<DialogSelectEventComponent> = this.dialog.open(DialogSelectEventComponent, {
+        minWidth: '30vw',
+        minHeight: '20vh',
+        data: this.solution.applicableEvents
+      });
+
+      dialogRef.afterClosed().subscribe((eventId: string | null): void => {
+        if (eventId == null) {
+          return;
+        } else {
+          if (!this.solution.service) {
+            this.buyProduct(eventId);
+          } else {
+            this.bookService(eventId);
+          }
+        }
+      });
+    }
+  }
+
+  private buyProduct(eventId: string) {
+    const dialogRef: MatDialogRef<DialogBuyProductComponent> = this.dialog.open(DialogBuyProductComponent, {
+      minWidth: '40vw',
+      minHeight: '35vh',
+      data: {solution: this.solution, eventId: eventId}
+    });
+
+    dialogRef.afterClosed().subscribe((buy: boolean | null): void => {
+      if (!buy) {
+        return;
+      } else {
+        const reservationRequest: CreateReservationProductDTO = {
+          eventId: eventId,
+          productId: this.solution.id
+        };
+        this.reservationService.buyProduct(reservationRequest).subscribe({
+          next: (): void => {
+            this.loadSolution();
+          },
+          error: (err: any): void => {
+            console.error('Error buying product', err);
+          }
+        });
+      }
+    });
+  }
+
+  private bookService(eventId: string) {
+
+  }
+
+  private showErrorToast(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000, // 3 seconds
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+    });
+  }
+
 }

@@ -1,0 +1,46 @@
+::ng-deep .mat-dialog-container {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+h2 {
+  align-self: center;
+  color: var(--font-dark-blue) !important;
+}
+
+.reason-input{
+  display: flex;
+}
+.reason-input textarea{
+  width: 100%;
+  border: 0.2em solid var(--secondary-color);
+  border-radius: 0.2em;
+  color: var(--font-dark-blue);
+  font-size:1em;
+}
+
+.dialog-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.color {
+  background-color: var(--light-blue);
+  color: var(--font-dark-blue);
+}
+
+.primary-button {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.cancel-button {
+  margin-left:1em;
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.actions-container {
+  gap: 1rem;
+}

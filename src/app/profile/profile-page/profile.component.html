@@ -129,12 +129,14 @@
                             [myEvents]="user.myEvents"></app-profile-calendar>
     </mat-tab>
 
+
   <mat-tab label="Favorite Events">
-    <app-favorite-events [favoriteEvents]="user.favoriteEvents"></app-favorite-events>
+    <app-favorite-events [favoriteEvents]="this.user.favoriteEvents"></app-favorite-events>
   </mat-tab>
 
+
   <mat-tab label="Favorite Products/Services">
-    <app-favorite-solutions [favoriteSolutions] = "user.favoriteSolutions"></app-favorite-solutions>
+    <app-favorite-solutions [favoriteSolutions] = "this.user.favoriteSolutions"></app-favorite-solutions>
   </mat-tab>
 
   </ng-container>

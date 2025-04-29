@@ -21,11 +21,6 @@ h2 {
   color: var(--font-dark-blue);
 }
 
-/*.actions-container button {*/
-/*  min-width: 100px; !* Ensures buttons are visually balanced *!*/
-/*  color: white;*/
-/*}*/
-
 .primary-button {
   background-color: var(--secondary-color);
   color: white;
