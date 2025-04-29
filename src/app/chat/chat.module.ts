@@ -5,6 +5,7 @@ import { ChatContainerComponent } from './chat-container/chat-container.componen
 import { ConversationsListComponent } from './conversations-list/conversations-list.component';
 import { SingleChatComponent } from './single-chat/single-chat.component';
 import {FormsModule} from "@angular/forms";
+import { BlockReportDialogComponent } from './block-report-dialog/block-report-dialog.component';
 
 
 
@@ -12,7 +13,8 @@ import {FormsModule} from "@angular/forms";
   declarations: [
     ChatContainerComponent,
     ConversationsListComponent,
-    SingleChatComponent
+    SingleChatComponent,
+    BlockReportDialogComponent
   ],
   exports: [
     ChatContainerComponent

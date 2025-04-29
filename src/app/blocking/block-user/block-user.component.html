@@ -1,0 +1,9 @@
+<div class="component">
+  <p class="header">Are you sure you want to block {{data.recipient}}? </p>
+    <p>You wont be able to communicate with this user </p>
+
+  <mat-dialog-actions class="actions-container">
+    <button mat-raised-button mat-dialog-close class="cancel-button">CANCEL</button>
+    <button mat-raised-button (click)="onBlock()" class="primary-button">BLOCK</button>
+  </mat-dialog-actions>
+</div>
