@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import { BookingAServiceComponent } from './booking-a-service/booking-a-service.component';
+import {MaterialModule} from '../infrastructure/material/material.module';
 import { DialogSelectEventComponent } from './dialog-select-event/dialog-select-event.component';
 import { DialogBuyProductComponent } from './dialog-buy-product/dialog-buy-product.component';
 import {MatButton} from '@angular/material/button';
@@ -15,10 +18,12 @@ import {MatSelect} from '@angular/material/select';
 
 @NgModule({
   declarations: [
+    BookingAServiceComponent,
     DialogSelectEventComponent,
     DialogBuyProductComponent
   ],
   imports: [
+    MaterialModule,
     CommonModule,
     MatButton,
     MatDialogActions,

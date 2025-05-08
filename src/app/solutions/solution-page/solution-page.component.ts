@@ -15,6 +15,8 @@ import {DialogSelectEventComponent} from '../../reservation/dialog-select-event/
 import {ReservationService} from '../../reservation/reservation.service';
 import {CreateReservationProductDTO} from '../../shared/dto/reservations/CreateReservationProductDTO.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {BookingAServiceComponent} from '../../reservation/booking-a-service/booking-a-service.component';
+import {CreateReservationServiceDTO} from '../../shared/dto/reservations/CreateReservationServiceDTO.model';
 
 @Component({
   selector: 'app-solution-page',
@@ -191,7 +193,44 @@ export class SolutionPageComponent implements OnInit {
   }
 
   private bookService(eventId: string) {
+    const  dialogRef: MatDialogRef<BookingAServiceComponent> = this.dialog.open(BookingAServiceComponent, {
+      minWidth: '60vw',
+      minHeight: '50vh',
+      data: {solution: this.solution, eventId: eventId}
+    });
 
+    dialogRef.afterClosed().subscribe((booking: boolean | null): void => {
+      if (!booking){
+        return;
+      } else{
+
+        const selectedStartTime = dialogRef.componentInstance.selectedStartTime;  // Ovo je vrednost koju ste odabrali u dijalogu
+        const selectedEndTime = dialogRef.componentInstance.selectedEndTime;  // Ovo je vrednost koju ste odabrali u dijalogu
+        console.log(selectedStartTime)
+        console.log(selectedEndTime);
+
+        if (!selectedStartTime) {
+          console.error('No time selected!');
+          return;
+        }
+
+
+        const reservationRequest: CreateReservationServiceDTO = {
+          eventId: eventId,
+          productId: this.solution.id,
+          from: selectedStartTime,
+          to: selectedEndTime,
+        };
+        this.reservationService.bookService(reservationRequest).subscribe({
+          next: (): void => {
+            this.loadSolution();
+          },
+          error: (err: any): void => {
+            console.error('Error booking service', err);
+          }
+        });
+      }
+    });
   }
 
   private showErrorToast(message: string): void {

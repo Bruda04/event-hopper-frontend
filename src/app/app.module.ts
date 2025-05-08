@@ -48,6 +48,7 @@ import {BlockingModule} from './blocking/blocking.module';
     AdminDashboardModule,
     BlockingModule,
     ProfileModule,
+    ReservationModule,
     BudgetingModule,
     ReportModule,
     CalendarModule.forRoot({
