@@ -26,4 +26,5 @@ export class ReservationService {
     params = params.set('date', date);
     return this.HttpClient.get(environment.apiHost + '/reservations/services/' + id + '/terms/' , {params})
   }
+
 }

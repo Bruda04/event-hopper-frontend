@@ -20,7 +20,7 @@
     </div>
 
     <!-- Card 2: Regular Text -->
-    <div class="user-information-card">
+    <div class="user-information-card" *ngIf ="loadedUser">
       <div class = "information">
         <h5>Personal information
           <mat-icon
@@ -43,7 +43,7 @@
 
 
     <!-- Card 3 -->
-    <div class="company-information-card" *ngIf="user.role === 'SERVICE_PROVIDER'">
+    <div class="company-information-card" *ngIf="user.role === 'SERVICE_PROVIDER' && loadedUser">
       <div class = "information">
         <h5>Company
           <mat-icon
@@ -122,10 +122,14 @@
 
 </div>
 <mat-tab-group selectedIndex="0">
-  <mat-tab label="My Calendar">
-    <app-profile-calendar *ngIf="user.attendingEvents && user.attendingEvents.length > 0" [attendingEvents]="user.attendingEvents"
-                          [myEvents]="user.myEvents"></app-profile-calendar>
-  </mat-tab>
+  <ng-container *ngIf="loadedUser">
+
+    <mat-tab label="My Calendar">
+      <app-profile-calendar [attendingEvents]="user.attendingEvents"
+                            [myEvents]="user.myEvents"></app-profile-calendar>
+    </mat-tab>
+
+
   <mat-tab label="Favorite Events">
     <app-favorite-events [favoriteEvents]="this.user.favoriteEvents"></app-favorite-events>
   </mat-tab>
@@ -134,4 +138,7 @@
   <mat-tab label="Favorite Products/Services">
     <app-favorite-solutions [favoriteSolutions] = "this.user.favoriteSolutions"></app-favorite-solutions>
   </mat-tab>
+
+  </ng-container>
+
 </mat-tab-group>
