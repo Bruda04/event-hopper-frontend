@@ -1,6 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {PUPServiceManagementComponent} from '../pupservice-management/pupservice-management.component';
 import {PriceListManagementComponent} from '../price-list-management/price-list-management.component';
+import {PupProductManagementComponent} from '../pup-product-management/pup-product-management.component';
 
 @Component({
   selector: 'app-pupservice-product-management',
@@ -10,6 +11,7 @@ import {PriceListManagementComponent} from '../price-list-management/price-list-
 export class PUPServiceProductManagementComponent {
   @ViewChild('services') servicesTab: PUPServiceManagementComponent;
   @ViewChild('prices') pricesTab: PriceListManagementComponent;
+  @ViewChild('products') productManagementTab: PupProductManagementComponent;
 
   refreshServices(): void {
     this.servicesTab.loadPagedEntities();

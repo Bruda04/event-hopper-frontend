@@ -15,6 +15,7 @@ import { PriceListManagementComponent } from './price-list-management/price-list
 import { EditPriceComponent } from './edit-price/edit-price.component';
 import { ProductReviewComponent } from './product-review/product-review.component';
 import {ChatModule} from "../chat/chat.module";
+import { PupProductManagementComponent } from './pup-product-management/pup-product-management.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {ChatModule} from "../chat/chat.module";
     SolutionPageComponent,
     PriceListManagementComponent,
     EditPriceComponent,
-    ProductReviewComponent
+    ProductReviewComponent,
+    PupProductManagementComponent
   ],
     imports: [
         CommonModule,
