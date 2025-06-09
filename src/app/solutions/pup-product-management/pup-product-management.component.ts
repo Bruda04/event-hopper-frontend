@@ -18,6 +18,8 @@ import {PageEvent} from '@angular/material/paginator';
 import {PagedResponse} from '../../shared/model/paged-response.model';
 import {ProductService} from '../product.service';
 import {ProductForManagementDTO} from '../../shared/dto/solutions/productForManagementDTO.model';
+import {CreateProductComponent} from '../create-product/create-product.component';
+import {CreateProductDTO} from '../../shared/dto/solutions/createProductDTO.model';
 
 @Component({
   selector: 'app-pup-product-management',
@@ -61,7 +63,7 @@ export class PupProductManagementComponent  implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @Output() serviceChanged: EventEmitter<void> = new EventEmitter<void>();
+  @Output() productChanged: EventEmitter<void> = new EventEmitter<void>();
 
   showFilterPanel: boolean = false;
 
@@ -99,42 +101,42 @@ export class PupProductManagementComponent  implements OnInit, AfterViewInit {
 
 
   add(): void {
-    const dialogRef: MatDialogRef<CreateServiceComponent> = this.dialog.open(CreateServiceComponent, {
+    const dialogRef: MatDialogRef<CreateProductComponent> = this.dialog.open(CreateProductComponent, {
       minWidth: '70vw',
       minHeight: '70vh',
       data: this.categories || []
     });
 
-    dialogRef.afterClosed().subscribe((newService: CreateServiceDTO | null) => {
-      if (newService) {
-        if (this.categories.find(c => c.id === newService.categoryId)) {
-          this.productService.add(newService).subscribe(
+    dialogRef.afterClosed().subscribe((newProduct: CreateProductDTO | null) => {
+      if (newProduct) {
+        if (this.categories.find(c => c.id === newProduct.categoryId)) {
+          this.productService.add(newProduct).subscribe(
             {
               next: () => {
                 this.loadPagedEntities();
-                this.serviceChanged.emit();
+                this.productChanged.emit();
               },
               error: (err) => {
-                console.error('Error adding service');
+                console.error('Error adding product');
                 if (err.error?.message) {
-                  this.showErrorToast("Error creating service: " + err.error.message);
+                  this.showErrorToast("Error creating product: " + err.error.message);
                 }
               }
             });
         } else {
-          this.categoriesService.makeSuggestion(newService.categoryId).subscribe({
+          this.categoriesService.makeSuggestion(newProduct.categoryId).subscribe({
             next: (categorySuggestion: CreatedCategorySuggestionDTO) => {
-              newService.categoryId = categorySuggestion.id;
-              this.productService.add(newService).subscribe(
+              newProduct.categoryId = categorySuggestion.id;
+              this.productService.add(newProduct).subscribe(
                 {
                   next: () => {
                     this.loadPagedEntities();
-                    this.serviceChanged.emit();
+                    this.productChanged.emit();
                   },
                   error: (err) => {
-                    console.error('Error adding service with suggested category');
+                    console.error('Error adding product with suggested category');
                     if (err.error?.message) {
-                      this.showErrorToast("Error creating service: " + err.error.message);
+                      this.showErrorToast("Error creating product: " + err.error.message);
                     }
                   }
                 }
@@ -151,7 +153,7 @@ export class PupProductManagementComponent  implements OnInit, AfterViewInit {
       {
         next: () => {
           this.loadPagedEntities()
-          this.serviceChanged.emit();
+          this.productChanged.emit();
         },
         error: (err) => {
           console.error('Error removing product');
@@ -177,7 +179,7 @@ export class PupProductManagementComponent  implements OnInit, AfterViewInit {
           {
             next: () => {
               this.loadPagedEntities();
-              this.serviceChanged.emit();
+              this.productChanged.emit();
             },
             error: (err) => {
               console.error('Error updating service');

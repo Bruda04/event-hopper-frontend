@@ -14,6 +14,7 @@ import {ServiceManagementDTO} from '../shared/dto/solutions/serviceManagementDTO
 import {ProductForManagementDTO} from '../shared/dto/solutions/productForManagementDTO.model';
 import {CreateServiceDTO} from '../shared/dto/solutions/createServiceDTO.model';
 import {UpdateServiceDTO} from '../shared/dto/solutions/updateServiceDTO.model';
+import {CreateProductDTO} from '../shared/dto/solutions/createProductDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -69,8 +70,8 @@ export class ProductService {
     return this.HttpClient.get<PagedResponse<ProductForManagementDTO>>(environment.apiHost + `/products/management`, {params: params});
   }
 
-  add(product: CreateServiceDTO): Observable<any> {
-    return this.HttpClient.post(environment.apiHost + '/products/', product);
+  add(product: CreateProductDTO): Observable<any> {
+    return this.HttpClient.post(environment.apiHost + '/products', product);
   }
 
   remove(id: string): Observable<any> {
