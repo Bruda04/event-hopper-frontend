@@ -6,7 +6,6 @@ import {CategoryDTO} from '../../shared/dto/categories/categoryDTO.model';
 import {SimpleEventTypeDTO} from '../../shared/dto/eventTypes/SimpleEventTypeDTO.model';
 import {MatDialog, MatPaginator, MatSort} from '../../infrastructure/material/material.module';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ServicesService} from '../services.service';
 import {CategoriesService} from '../../admin-dashboard/categories/categories.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatDialogRef} from '@angular/material/dialog';
@@ -17,6 +16,8 @@ import {EditServiceComponent} from '../edit-service/edit-service.component';
 import {UpdateServiceDTO} from '../../shared/dto/solutions/updateServiceDTO.model';
 import {PageEvent} from '@angular/material/paginator';
 import {PagedResponse} from '../../shared/model/paged-response.model';
+import {ProductService} from '../product.service';
+import {ProductForManagementDTO} from '../../shared/dto/solutions/productForManagementDTO.model';
 
 @Component({
   selector: 'app-pup-product-management',
@@ -33,8 +34,8 @@ import {PagedResponse} from '../../shared/model/paged-response.model';
   ]
 })
 export class PupProductManagementComponent  implements OnInit, AfterViewInit {
-  services: ServiceManagementDTO[];
-  dataSource: MatTableDataSource<ServiceManagementDTO>;
+  products: ProductForManagementDTO[];
+  dataSource: MatTableDataSource<ProductForManagementDTO>;
 
   categories: CategoryDTO[];
   filteredEventTypes: SimpleEventTypeDTO[] = [];
@@ -53,9 +54,8 @@ export class PupProductManagementComponent  implements OnInit, AfterViewInit {
     'finalPrice',
     'visible',
     'available',
-    'duration',
-    'cancellationWindow',
-    'reservationWindow',
+    'eventTypes',
+    'status',
     'actions'
   ];
 
@@ -77,7 +77,7 @@ export class PupProductManagementComponent  implements OnInit, AfterViewInit {
 
 
 
-  constructor(private serviceService: ServicesService,
+  constructor(private productService: ProductService,
               private categoriesService: CategoriesService,
               public dialog: MatDialog,
               private snackBar: MatSnackBar) {
@@ -108,7 +108,7 @@ export class PupProductManagementComponent  implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe((newService: CreateServiceDTO | null) => {
       if (newService) {
         if (this.categories.find(c => c.id === newService.categoryId)) {
-          this.serviceService.add(newService).subscribe(
+          this.productService.add(newService).subscribe(
             {
               next: () => {
                 this.loadPagedEntities();
@@ -125,7 +125,7 @@ export class PupProductManagementComponent  implements OnInit, AfterViewInit {
           this.categoriesService.makeSuggestion(newService.categoryId).subscribe({
             next: (categorySuggestion: CreatedCategorySuggestionDTO) => {
               newService.categoryId = categorySuggestion.id;
-              this.serviceService.add(newService).subscribe(
+              this.productService.add(newService).subscribe(
                 {
                   next: () => {
                     this.loadPagedEntities();
@@ -147,23 +147,23 @@ export class PupProductManagementComponent  implements OnInit, AfterViewInit {
   }
 
   remove(id: string): void {
-    this.serviceService.remove(id).subscribe(
+    this.productService.remove(id).subscribe(
       {
         next: () => {
           this.loadPagedEntities()
           this.serviceChanged.emit();
         },
         error: (err) => {
-          console.error('Error removing service');
+          console.error('Error removing product');
           if (err.error?.message) {
-            this.showErrorToast("Error removing service: " + err.error.message);
+            this.showErrorToast("Error removing product: " + err.error.message);
           }
         }
       }
     );
   }
 
-  edit(element: ServiceManagementDTO):void {
+  edit(element: ProductForManagementDTO):void {
     const dialogRef: MatDialogRef<EditServiceComponent> = this.dialog.open(EditServiceComponent, {
       minWidth: '70vw',
       minHeight: '70vh',
@@ -173,7 +173,7 @@ export class PupProductManagementComponent  implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe((updatedService: UpdateServiceDTO | null) => {
       if(updatedService) {
-        this.serviceService.update(element.id, updatedService).subscribe(
+        this.productService.update(element.id, updatedService).subscribe(
           {
             next: () => {
               this.loadPagedEntities();
@@ -245,7 +245,7 @@ export class PupProductManagementComponent  implements OnInit, AfterViewInit {
     const sortDirection = this.sort?.direction || ''; // 'asc' or 'desc'
 
 
-    this.serviceService.getAllForManagement(
+    this.productService.getAllForManagement(
       this.pageProperties,
       this.filterForm.value.category,
       this.filterForm.value.eventType,
@@ -257,12 +257,12 @@ export class PupProductManagementComponent  implements OnInit, AfterViewInit {
       sortDirection
     )
       .subscribe( {
-        next: (response: PagedResponse<ServiceManagementDTO>) => {
+        next: (response: PagedResponse<ProductForManagementDTO>) => {
           this.dataSource = new MatTableDataSource(response.content);
           this.pageProperties.totalCount = response.totalElements;
         },
         error: (e) => {
-          console.error('Error loading services', e);
+          console.error('Error loading products', e);
           if (e.error?.message) {
             this.showErrorToast("Error loading services: " + e.error.message);
           }
@@ -285,7 +285,7 @@ export class PupProductManagementComponent  implements OnInit, AfterViewInit {
     });
   }
 
-  goToSolution(element: ServiceManagementDTO): void {
+  goToProduct(element: ServiceManagementDTO): void {
     window.open(`/solutions/${element.id}`, '_blank');
   }
 }

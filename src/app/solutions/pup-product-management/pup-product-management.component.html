@@ -87,7 +87,7 @@
 
   <div class="table-container mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" class="mat-table" matSort>
-      <!-- Service Name Column -->
+      <!-- Product Name Column -->
       <ng-container matColumnDef="product">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="name"> Name </th>
         <td mat-cell *matCellDef="let element">
@@ -142,23 +142,25 @@
         </td>
       </ng-container>
 
-      <!-- Duration Column -->
-      <ng-container matColumnDef="duration">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="durationMinutes"> Duration </th>
-        <td mat-cell *matCellDef="let element"> {{element.durationMinutes}} min </td>
+      <ng-container matColumnDef="eventTypes">
+        <th mat-header-cell *matHeaderCellDef>Event Types</th>
+        <td mat-cell *matCellDef="let element">
+          <ng-container *ngIf="element.eventTypes?.length > 0; else noEventTypes">
+            <ng-container *ngFor="let et of element.eventTypes; let last = last">
+              {{ et.name }}<span *ngIf="!last">, </span>
+            </ng-container>
+          </ng-container>
+          <ng-template #noEventTypes>–</ng-template>
+        </td>
       </ng-container>
 
-      <!-- Cancellation Window Column -->
-      <ng-container matColumnDef="cancellationWindow">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="cancellationWindowDays"> Cancellation Window </th>
-        <td mat-cell *matCellDef="let element"> {{element.cancellationWindowDays}} day(s) </td>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.status }}
+        </td>
       </ng-container>
 
-      <!-- Reservation Window Column -->
-      <ng-container matColumnDef="reservationWindow">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="reservationWindowDays"> Reservation Window </th>
-        <td mat-cell *matCellDef="let element"> {{element.reservationWindowDays}} day(s) </td>
-      </ng-container>
 
       <!-- Actions Column -->
       <ng-container matColumnDef="actions">
@@ -171,7 +173,7 @@
             <mat-icon>delete</mat-icon>
           </button>
           <mat-icon *ngIf="element.status === 'PENDING'" [ngStyle]="{color: 'var(--primary-color)'}">sync</mat-icon>
-          <button mat-icon-button (click)="goToSolution(element)" [ngStyle]="{color: 'var(--primary-color)'}" *ngIf="element.status === 'APPROVED' && element.visible == true">
+          <button mat-icon-button (click)="goToProduct(element)" [ngStyle]="{color: 'var(--primary-color)'}" *ngIf="element.status === 'APPROVED' && element.visible == true">
             <mat-icon>
               open_in_new
             </mat-icon>
