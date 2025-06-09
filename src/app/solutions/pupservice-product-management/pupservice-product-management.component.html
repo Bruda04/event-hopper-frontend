@@ -2,6 +2,7 @@
   <mat-tab label="Products">
     <app-pup-product-management
       #services
+      (productChanged)="refreshPrices()"
     ></app-pup-product-management>
   </mat-tab>
   <mat-tab label="Services" >

@@ -9,8 +9,6 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {CategoriesService} from '../../admin-dashboard/categories/categories.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatDialogRef} from '@angular/material/dialog';
-import {CreateServiceComponent} from '../create-service/create-service.component';
-import {CreateServiceDTO} from '../../shared/dto/solutions/createServiceDTO.model';
 import {CreatedCategorySuggestionDTO} from '../../shared/dto/categories/createdCategorySuggestionDTO.model';
 import {EditServiceComponent} from '../edit-service/edit-service.component';
 import {UpdateServiceDTO} from '../../shared/dto/solutions/updateServiceDTO.model';
@@ -20,6 +18,8 @@ import {ProductService} from '../product.service';
 import {ProductForManagementDTO} from '../../shared/dto/solutions/productForManagementDTO.model';
 import {CreateProductComponent} from '../create-product/create-product.component';
 import {CreateProductDTO} from '../../shared/dto/solutions/createProductDTO.model';
+import {EditProductComponent} from '../edit-product/edit-product.component';
+import {UpdateProductDTO} from '../../shared/dto/solutions/updateProductDTO.model';
 
 @Component({
   selector: 'app-pup-product-management',
@@ -166,25 +166,25 @@ export class PupProductManagementComponent  implements OnInit, AfterViewInit {
   }
 
   edit(element: ProductForManagementDTO):void {
-    const dialogRef: MatDialogRef<EditServiceComponent> = this.dialog.open(EditServiceComponent, {
+    const dialogRef: MatDialogRef<EditProductComponent> = this.dialog.open(EditProductComponent, {
       minWidth: '70vw',
       minHeight: '70vh',
-      data: {serviceToEdit: element,
+      data: {productToEdit: element,
         eventTypes: this.categories.filter(c => element.category.id === c.id)[0]?.eventTypes || null}
     });
 
-    dialogRef.afterClosed().subscribe((updatedService: UpdateServiceDTO | null) => {
-      if(updatedService) {
-        this.productService.update(element.id, updatedService).subscribe(
+    dialogRef.afterClosed().subscribe((updateProduct: UpdateProductDTO | null) => {
+      if(updateProduct) {
+        this.productService.update(element.id, updateProduct).subscribe(
           {
             next: () => {
               this.loadPagedEntities();
               this.productChanged.emit();
             },
             error: (err) => {
-              console.error('Error updating service');
+              console.error('Error updating product');
               if (err.error?.message) {
-                this.showErrorToast("Error updating service: " + err.error.message);
+                this.showErrorToast("Error updating product: " + err.error.message);
               }
             }
           }
