@@ -19,6 +19,8 @@ export interface User {
     companyDescription: string;
     companyLocation: SimpleLocationDTO;
     companyPhotos: String[];
+    workStart: string;
+    workEnd: string;
     myEvents: SimpleEventDTO[];
     favoriteEvents: SimpleEventDTO[];
     favoriteSolutions: SimpleProductDTO[]

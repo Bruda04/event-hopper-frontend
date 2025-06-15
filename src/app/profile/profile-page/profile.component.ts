@@ -57,6 +57,8 @@ export class ProfileComponent {
           this.user.companyDescription = response.companyDescription;
           this.user.companyLocation = response.companyLocation;
           this.user.companyPhotos = response.companyPhotos;
+          this.user.workStart = response.workStart;
+          this.user.workEnd = response.workEnd;
         }
         if(this.user.profilePicture == "" || this.user.profilePicture == null){
           this.profilePicture = "profile.png";
@@ -68,11 +70,11 @@ export class ProfileComponent {
 
 
 
+
       error: (err) => {
         console.error('No user found error:', err);
       },
     });
-
   }
 
   openViewMyEvents(): void {
