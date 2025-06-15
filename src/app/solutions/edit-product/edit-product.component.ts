@@ -85,7 +85,7 @@ export class EditProductComponent {
           pictures: imageNames,
           eventTypesIds: this.editProductForm.value.eventTypes,
         };
-        
+
         if(this.eventTypes.length == 0){
           Product.eventTypesIds = [];
         }
