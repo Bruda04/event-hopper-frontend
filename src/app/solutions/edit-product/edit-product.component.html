@@ -14,7 +14,7 @@
           <textarea matInput placeholder="Enter description" name="description" formControlName="description" maxlength="1000"></textarea>
         </mat-form-field>
 
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="fill" *ngIf="eventTypes.length != 0">
           <mat-label>Event Type</mat-label>
           <mat-select formControlName="eventTypes" multiple>
             <mat-option *ngFor="let eventType of eventTypes" [value]="eventType.id">

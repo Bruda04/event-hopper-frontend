@@ -85,6 +85,10 @@ export class EditProductComponent {
           pictures: imageNames,
           eventTypesIds: this.editProductForm.value.eventTypes,
         };
+        
+        if(this.eventTypes.length == 0){
+          Product.eventTypesIds = [];
+        }
 
         this.dialogRef.close(Product);
       }
@@ -100,7 +104,7 @@ export class EditProductComponent {
       eventTypes: this.productToEdit.eventTypes.map(eventType => eventType.id)
     };
     this.editProductForm.patchValue(productToEdit);
-    if (!this.eventTypes) {
+    if (!this.eventTypes || this.eventTypes.length === 0) {
       this.editProductForm.get('eventTypes').disable();
     }
 
