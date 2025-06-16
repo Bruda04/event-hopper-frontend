@@ -112,8 +112,9 @@
               <button mat-raised-button class="upload-button" type="button" (click)="triggerFileInput(0)" *ngIf="!imagePreview">
                 UPLOAD COVER PICTURE
               </button>
-              <p class="error-image-message" *ngIf="!this.imageSubmitted">You must upload a picture to display on the event page.</p>
-
+              <p class="error-image-message" *ngIf="showImageError">
+                You must upload a picture to display on the event page.
+              </p>
               <!-- Image Preview Section -->
               <div class="image-preview" *ngIf="imagePreview">
                 <img [src]="imagePreview" alt="Profile Preview" />
