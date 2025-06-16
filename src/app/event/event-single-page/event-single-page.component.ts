@@ -11,6 +11,8 @@ import {SinglePageEventDTO} from '../../shared/dto/events/SinglePageEventDTO.mod
 import {UserService} from '../../authentication/services/user.service';
 import {ProfileService} from '../../profile/profile.service';
 import {GetEventAgendasDTO} from '../../shared/dto/events/GetEventAgendasDTO.model';
+import {SimpleAccountDTO} from '../../shared/dto/users/account/SimpleAccountDTO.model';
+
 
 @Component({
   selector: 'app-event-single-page',
@@ -83,6 +85,133 @@ export class EventSinglePageComponent {
   }
 
 
+
+  getGuestList(): void {
+    this.eventService.getGuestList(this.id).subscribe({
+      next: (guestList: SimpleAccountDTO[]) => {
+        const doc = new jsPDF();
+        const event = this.eventDetails;
+        const pageWidth = doc.internal.pageSize.getWidth();
+        let y = 20;
+
+// Header bar
+        doc.setFillColor(41, 128, 185);
+        doc.rect(0, 0, pageWidth, 25, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(20);
+        doc.text('Guest List', pageWidth / 2, 16, { align: 'center' });
+
+        y = 35;
+
+// Event Info Card
+        doc.setFillColor(240, 240, 240);
+        doc.roundedRect(12, y, pageWidth - 24, 45, 3, 3, 'F');
+        doc.setTextColor(0, 0, 0);
+        doc.setFontSize(13);
+        doc.text(`Event: ${event.name}`, 16, y + 8);
+
+        doc.setFontSize(11);
+        doc.setTextColor(80, 80, 80);
+        const descriptionLines = doc.splitTextToSize(event.description, pageWidth - 32);
+        doc.text('Description:', 16, y + 16);
+        doc.text(descriptionLines, 16, y + 23);
+
+        y += 23 + descriptionLines.length * 6;
+        doc.text(`Date & Time: ${new Date(event.time).toLocaleString()}`, 16, y);
+        y += 7;
+        doc.text(`Location: ${event.location.address}, ${event.location.city}`, 16, y);
+        y += 15;
+
+// Attendees Section Header
+        doc.setFontSize(14);
+        doc.setTextColor(41, 128, 185);
+        doc.text('Attendees', 14, y);
+        y += 5;
+
+// Draw line under attendees title
+        doc.setDrawColor(200);
+        doc.line(14, y, pageWidth - 14, y);
+        y += 5;
+
+// Constants
+        const imgSize = 15;
+        const spacing = imgSize + 10;
+        const marginBottom = 20;
+
+        const renderGuest = (guest: SimpleAccountDTO, yPos: number, callback: () => void) => {
+          const { name, surname, profilePicture } = guest.person;
+
+          // Guest card background
+          doc.setFillColor(248, 248, 248);
+          doc.roundedRect(12, yPos - 3, pageWidth - 24, spacing, 3, 3, 'F');
+
+          if (profilePicture) {
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.src = profilePicture;
+
+            img.onload = () => {
+              doc.addImage(img, 'JPEG', 16, yPos, imgSize, imgSize);
+              doc.setTextColor(0, 0, 0);
+              doc.setFontSize(11);
+              doc.text(`${name} ${surname}`, 16 + imgSize + 6, yPos + imgSize * 0.7);
+              callback();
+            };
+
+            img.onerror = () => {
+              doc.setTextColor(0, 0, 0);
+              doc.setFontSize(11);
+              doc.text(`${name} ${surname}`, 16, yPos + imgSize * 0.7);
+              callback();
+            };
+          } else {
+            // No image – draw initials circle
+            doc.setFillColor(41, 128, 185);
+            doc.circle(22, yPos + imgSize / 2, imgSize / 2, 'F');
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(9);
+            doc.text(`${name[0]}${surname[0]}`, 22, yPos + imgSize / 2 + 2.5, { align: 'center' });
+
+            // Name
+            doc.setTextColor(0, 0, 0);
+            doc.setFontSize(11);
+            doc.text(`${name} ${surname}`, 16 + imgSize + 6, yPos + imgSize * 0.7);
+            callback();
+          }
+        };
+
+        const renderGuestsSequentially = (index: number) => {
+          if (index >= guestList.length) {
+            doc.save(`${event.name}_Guest_List.pdf`);
+            return;
+          }
+
+          if (y + spacing > doc.internal.pageSize.getHeight() - marginBottom) {
+            doc.addPage();
+            y = 20;
+          }
+
+          renderGuest(guestList[index], y, () => {
+            y += spacing + 4;
+            renderGuestsSequentially(index + 1);
+          });
+        };
+
+        if (guestList.length === 0) {
+          doc.setFontSize(12);
+          doc.setTextColor(100);
+          doc.text('No guests found.', 14, y);
+          doc.save(`${event.name}_Guest_List.pdf`);
+        } else {
+          renderGuestsSequentially(0);
+        }
+
+      },
+      error: () => {
+        console.error('Failed to fetch guest list');
+      }
+    });
+  }
 
   exportToPDF() {
     this.eventService.getAgendaForEvent(this.id).subscribe({
