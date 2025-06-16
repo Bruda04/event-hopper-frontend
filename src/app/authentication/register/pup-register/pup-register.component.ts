@@ -242,6 +242,8 @@ export class PupRegisterComponent {
         'companyPhoneNumber',
         'companyCity',
         'companyAddress',
+        'endTime',
+        'startTime',
         'description',
       ];
 
