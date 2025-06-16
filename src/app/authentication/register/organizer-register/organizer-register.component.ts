@@ -17,6 +17,12 @@ function phoneMinLengthValidator(control: AbstractControl): ValidationErrors | n
   return value.length >= 8 ? null : { minlength: true };
 }
 
+export function fullNameValidator(control: AbstractControl): ValidationErrors | null {
+  const value = control.value?.trim();
+  if (!value) return null; // required validator handles empty case
+  const parts = value.split(/\s+/); // splits by spaces
+  return parts.length >= 2 ? null : { fullNameInvalid: true };
+}
 
 @Component({
   selector: 'app-organizer-register',
@@ -35,7 +41,7 @@ export class OrganizerRegisterComponent {
                 private imageService: ImageServiceService) {
     this.registerForm = this.fb.group(
       {
-        fullName: ['', Validators.required],
+        fullName: ['', [Validators.required, fullNameValidator]],
         email: ['', [Validators.required, Validators.email]],
         password: [
           '',
@@ -144,7 +150,6 @@ export class OrganizerRegisterComponent {
       });
     } else {
       this.registerForm.markAllAsTouched();
-      console.log('Form is invalid:', this.registerForm.value);
     }
   }
 

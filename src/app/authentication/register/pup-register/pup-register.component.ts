@@ -153,9 +153,6 @@ export class PupRegisterComponent {
         .filter(image => image !== '');
 
 
-      console.log(uploadObservables)
-      console.log(imageNames)
-      console.log(this.imageUrls)
       forkJoin(uploadObservables).subscribe({
         next: (uploadedImages: string[]): void => {
           const createServiceProviderDTO: CreateServiceProviderDTO = {
@@ -195,7 +192,6 @@ export class PupRegisterComponent {
 
         },
         error: (err ): void => {
-          console.log(imageNames);
           console.log(this.uploadedImages
             .filter((image: File | null): boolean => image !== null))
           console.error("Error uploading images", err);
