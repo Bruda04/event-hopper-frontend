@@ -12,6 +12,15 @@ import {ImageServiceService} from '../../../shared/services/image-service.servic
 import {forkJoin, Observable} from 'rxjs';
 import {environment} from '../../../../env/envirements';
 import {UpdateServiceDTO} from '../../../shared/dto/solutions/updateServiceDTO.model';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
+
+
+export function fullNameValidator(control: AbstractControl): ValidationErrors | null {
+  const value = control.value?.trim();
+  if (!value) return null; // required validator handles empty case
+  const parts = value.split(/\s+/); // splits by spaces
+  return parts.length >= 2 ? null : { fullNameInvalid: true };
+}
 
 @Component({
   selector: 'app-pup-register',
@@ -33,9 +42,13 @@ export class PupRegisterComponent {
   uploadedImages: File[] = []; // all to add
   imageUrls: string[] = []; // to preview and remove
 
+
+
+
+
   constructor(private fb: FormBuilder, private router: Router, private registrationService: RegistrationService, private imageService: ImageServiceService) {
     this.registerForm = this.fb.group({
-      fullName: ['', Validators.required],
+      fullName: ['', [Validators.required, fullNameValidator]],
       email: ['', [Validators.required, Validators.email]],
       phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{8,}$')]],
       city: ['', Validators.required],
