@@ -9,7 +9,7 @@
       </div>
 
       <button mat-stroked-button id="statsBtn"
-              *ngIf="eventDetails.eventOrganizerLoggedIn || eventDetails.adminLoggedIn"
+              *ngIf="eventDetails.anyEventOrganizerLoggedIn || eventDetails.adminLoggedIn"
               (click)="openStatsDialog()">
         <mat-icon>bar_chart</mat-icon>
         View Stats
@@ -38,13 +38,25 @@
     </div>
   </div>
 
-  <!-- Banner Section -->
   <div class="info-banner" *ngIf="!notFound && loaded">
-    <div><h3>{{ this.location }}</h3></div>
-    <div><h3>{{ this.time }}</h3></div>
-    <div><h3>{{ this.eventDetails.privacy === 'PUBLIC' ? 'Public' :
-      this.eventDetails.privacy === 'PRIVATE' ? 'Private' : 'Unknown' }}</h3></div>
+    <div>
+      <mat-icon>place</mat-icon>
+      <h3>{{ this.location }}</h3>
+    </div>
+    <div>
+      <mat-icon>calendar_today</mat-icon>
+      <h3>{{ this.time }}</h3>
+    </div>
+    <div>
+      <mat-icon>lock</mat-icon>
+      <h3>
+        {{ this.eventDetails.privacy === 'PUBLIC' ? 'Public' :
+        this.eventDetails.privacy === 'PRIVATE' ? 'Private' : 'Unknown' }}
+      </h3>
+    </div>
   </div>
+
+
 
   <!-- Map Section -->
   <div class="map-container" *ngIf="!notFound && loaded">

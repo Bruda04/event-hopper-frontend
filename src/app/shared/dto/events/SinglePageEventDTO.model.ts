@@ -12,6 +12,7 @@ export interface SinglePageEventDTO {
   location: SimpleLocationDTO
   privacy: string
   eventOrganizerLoggedIn: boolean;
+  anyEventOrganizerLoggedIn: boolean;
   adminLoggedIn:boolean;
   favorite: boolean;
   conversationInitialization: ConversationPreviewDTO;
