@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Event Statistics</h2>
+<div mat-dialog-content *ngIf="!loading && !stats?.error">
+  <p><strong>Total Guests:</strong> {{ stats.totalGuests }}</p>
+  <p><strong>Confirmed:</strong> {{ stats.confirmedGuests }}</p>
+  <p><strong>Favorites:</strong> {{ stats.favoriteCount }}</p>
+  <p><strong>Messages Sent:</strong> {{ stats.messageCount }}</p>
+  <!-- Add more stats as needed -->
+</div>
+
+<div mat-dialog-content *ngIf="loading">
+  <mat-progress-spinner diameter="30" mode="indeterminate"></mat-progress-spinner>
+</div>
+
+<div mat-dialog-content *ngIf="stats?.error">
+  <p>Unable to load stats.</p>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="close()">Close</button>
+</div>

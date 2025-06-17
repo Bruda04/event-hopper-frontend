@@ -25,6 +25,7 @@ import {BudgetingModule} from './budgeting/budgeting.module';
 import {ReservationModule} from './reservation/reservation.module';
 import {ReportModule} from './report/report.module';
 import {BlockingModule} from './blocking/blocking.module';
+import { EventStatsDialogComponent } from './event-stats-dialog/event-stats-dialog.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import {BlockingModule} from './blocking/blocking.module';
     ServiceProviderPageComponent,
     ViewMyEventsComponent,
     CreateEventComponent,
+    EventStatsDialogComponent,
   ],
   imports: [
     BrowserModule,

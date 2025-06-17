@@ -8,38 +8,48 @@
         <mat-icon [ngClass]="{'filled': eventDetails.favorite}" (click)="toggleFavorites()" *ngIf="user?.id">star</mat-icon>
       </div>
 
+      <button mat-stroked-button id="statsBtn"
+              *ngIf="eventDetails.eventOrganizerLoggedIn || eventDetails.adminLoggedIn"
+              (click)="openStatsDialog()">
+        <mat-icon>bar_chart</mat-icon>
+        View Stats
+      </button>
+
       <p>
         {{ this.eventDetails.description }}
       </p>
-      <div class="action-buttons">
-        <button mat-button color="primary"  *ngIf="eventDetails.eventOrganizerLoggedIn && this.eventDetails.privacy === 'PRIVATE'" id="inviteBtn" (click) = "openInviteModal()">Invite People</button>
-        <button mat-button id="exportBtn" (click) = "exportToPDF()">Export to PDF</button>
-        <button mat-button id="exportBtn2"  *ngIf="eventDetails.eventOrganizerLoggedIn && this.eventDetails.privacy === 'PRIVATE'" (click) = "getGuestList()">Download Guest List</button>
-        <button mat-button id="chatBtn"  *ngIf="eventDetails.conversationInitialization" (click) = "chatWithUs()">Chat with Organizer</button>
 
+      <div class="action-buttons">
+        <button mat-button color="primary"
+                *ngIf="eventDetails.eventOrganizerLoggedIn && this.eventDetails.privacy === 'PRIVATE'"
+                id="inviteBtn"
+                (click)="openInviteModal()">Invite People</button>
+
+        <button mat-button id="exportBtn" (click)="exportToPDF()">Export to PDF</button>
+
+        <button mat-button id="exportBtn2"
+                *ngIf="eventDetails.eventOrganizerLoggedIn && this.eventDetails.privacy === 'PRIVATE'"
+                (click)="getGuestList()">Download Guest List</button>
+
+        <button mat-button id="chatBtn"
+                *ngIf="eventDetails.conversationInitialization"
+                (click)="chatWithUs()">Chat with Organizer</button>
       </div>
     </div>
   </div>
 
   <!-- Banner Section -->
-  <div class="info-banner"  *ngIf="!notFound && loaded">
-    <div>
-      <h3>{{this.location}}</h3>
-    </div>
-    <div>
-      <h3>{{this.time}}</h3>
-    </div>
-    <div>
-      <h3>{{ this.eventDetails.privacy === 'PUBLIC' ? 'Public' :
-        this.eventDetails.privacy === 'PRIVATE' ? 'Private' : 'Unknown' }}</h3>
-    </div>
+  <div class="info-banner" *ngIf="!notFound && loaded">
+    <div><h3>{{ this.location }}</h3></div>
+    <div><h3>{{ this.time }}</h3></div>
+    <div><h3>{{ this.eventDetails.privacy === 'PUBLIC' ? 'Public' :
+      this.eventDetails.privacy === 'PRIVATE' ? 'Private' : 'Unknown' }}</h3></div>
   </div>
 
   <!-- Map Section -->
-  <div class="map-container"  *ngIf="!notFound && loaded">
+  <div class="map-container" *ngIf="!notFound && loaded">
     <p height="300px" width="100%"></p>
   </div>
-
 
   <div class="loading-message" *ngIf="!loaded">
     <p>We were unable to find that event.</p>
@@ -53,6 +63,5 @@
 <app-chat-container
   *ngIf="this.showChat"
   (closeChat)="chatWithUs()"
-  [conversation]="eventDetails.conversationInitialization"
->
+  [conversation]="eventDetails.conversationInitialization">
 </app-chat-container>
