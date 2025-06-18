@@ -14,7 +14,7 @@
   </div>
 
   <!-- Bar Chart -->
-  <div class="chart-block">
+  <div class="chart-block" *ngIf="!(stats.numAcceptedInvitations == 0 && stats.numDeclinesInvitations == 0 && stats.numPendingInvitations == 0)">
     <h3>Attendance</h3>
     <canvas #barChart></canvas>
   </div>

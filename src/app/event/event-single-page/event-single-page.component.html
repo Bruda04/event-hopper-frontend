@@ -9,7 +9,7 @@
       </div>
 
       <button mat-stroked-button id="statsBtn"
-              *ngIf="eventDetails.anyEventOrganizerLoggedIn || eventDetails.adminLoggedIn"
+              *ngIf="eventDetails.graphAuthorized"
               (click)="openStatsDialog()">
         <mat-icon>bar_chart</mat-icon>
         View Stats
