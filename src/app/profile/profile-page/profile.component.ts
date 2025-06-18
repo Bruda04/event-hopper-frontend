@@ -75,7 +75,6 @@ export class ProfileComponent {
         console.error('No user found error:', err);
       },
     });
-    console.log("Important", this.user.workStart)
   }
 
   openViewMyEvents(): void {

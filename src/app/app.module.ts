@@ -27,6 +27,7 @@ import {ReportModule} from './report/report.module';
 import {BlockingModule} from './blocking/blocking.module';
 import { EventStatsDialogComponent } from './event-stats-dialog/event-stats-dialog.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

@@ -63,10 +63,12 @@ export class EventSinglePageComponent {
 
 
   openStatsDialog(): void {
-    const dialogRef = this.dialog.open(EventStatsDialogComponent, {
-      width: '600px',
-      data: { eventId: this.id }
+    this.dialog.open(EventStatsDialogComponent, {
+      data: { eventId : this.id },
+      width: '90vh',
+      maxHeight: '90vh'
     });
+
   }
 
   toggleFavorites(): void {

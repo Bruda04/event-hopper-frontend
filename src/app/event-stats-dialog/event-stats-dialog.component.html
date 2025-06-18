@@ -1,20 +1,34 @@
-<h2 mat-dialog-title>Event Statistics</h2>
-<div mat-dialog-content *ngIf="!loading && !stats?.error">
-  <p><strong>Total Guests:</strong> {{ stats.totalGuests }}</p>
-  <p><strong>Confirmed:</strong> {{ stats.confirmedGuests }}</p>
-  <p><strong>Favorites:</strong> {{ stats.favoriteCount }}</p>
-  <p><strong>Messages Sent:</strong> {{ stats.messageCount }}</p>
-  <!-- Add more stats as needed -->
+<div class="dialog-content" *ngIf="!loading && !errorOccured" #chartsContainer>
+  <h2 class="main-title">Event Statistics</h2>
+
+  <!-- Line Chart -->
+  <div class="chart-block">
+    <h3>Ratings Over Time</h3>
+    <canvas #lineChart></canvas>
+  </div>
+
+  <!-- Pie Chart -->
+  <div class="chart-block" *ngIf="!(stats.numAcceptedInvitations == 0 && stats.numDeclinesInvitations == 0 && stats.numPendingInvitations == 0)">
+    <h3>Invitations</h3>
+    <canvas #pieChart style="max-width: 400px; max-height: 400px;"></canvas>
+  </div>
+
+  <!-- Bar Chart -->
+  <div class="chart-block">
+    <h3>Attendance</h3>
+    <canvas #barChart></canvas>
+  </div>
 </div>
 
-<div mat-dialog-content *ngIf="loading">
-  <mat-progress-spinner diameter="30" mode="indeterminate"></mat-progress-spinner>
+<div class="dialog-footer" *ngIf="!loading && !errorOccured">
+  <button mat-stroked-button color="primary" (click)="downloadPDF()">Download PDF</button>
+  <button mat-stroked-button color="warn" (click)="close()">Close</button>
 </div>
 
-<div mat-dialog-content *ngIf="stats?.error">
-  <p>Unable to load stats.</p>
+<div *ngIf="loading" class="loading-block">
+  <p>Loading statistics...</p>
 </div>
 
-<div mat-dialog-actions>
-  <button mat-button (click)="close()">Close</button>
+<div *ngIf="errorOccured" class="error-block">
+  <p>Error loading statistics. Please try again.</p>
 </div>
