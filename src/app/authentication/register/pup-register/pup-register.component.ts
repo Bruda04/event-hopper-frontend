@@ -48,6 +48,8 @@ export class PupRegisterComponent {
       companyCity: ['', Validators.required],
       companyAddress: ['', Validators.required],
       description: ['', Validators.required],
+      endTime: ['', Validators.required],
+      startTime: ['', Validators.required],
     });
   }
 
@@ -162,7 +164,9 @@ export class PupRegisterComponent {
               city: this.registerForm.value.companyCity,
             } as CreateLocationDTO,
             companyDescription: this.registerForm.value.description,
-            companyPhotos: imageNames.concat(uploadedImages)
+            companyPhotos: imageNames.concat(uploadedImages),
+            workStart: this.registerForm.value.startTime,
+            workEnd: this.registerForm.value.endTime
           };
 
           const createAccount: CreateServiceProviderAccountDTO = {
@@ -206,6 +210,8 @@ export class PupRegisterComponent {
             city: this.registerForm.value.companyCity,
           } as CreateLocationDTO,
           companyDescription: this.registerForm.value.description,
+          workStart: this.registerForm.value.startTime,
+          workEnd: this.registerForm.value.endTime,
           companyPhotos: null
         };
 
@@ -236,6 +242,8 @@ export class PupRegisterComponent {
         'companyPhoneNumber',
         'companyCity',
         'companyAddress',
+        'endTime',
+        'startTime',
         'description',
       ];
 

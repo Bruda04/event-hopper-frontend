@@ -7,5 +7,7 @@ export interface CreateServiceProviderDTO extends CreatePersonDTO{
   companyPhoneNumber: string;
   companyDescription: string;
   companyPhotos: string[];
-  companyLocation: CreateLocationDTO
+  companyLocation: CreateLocationDTO;
+  workStart: string;
+  workEnd: string;
 }
