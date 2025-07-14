@@ -38,6 +38,7 @@ export class CreateEventComponent {
   imageUpload: File;
   imageUrl: string;
   imageSubmitted: boolean = false;
+  showImageError: boolean = false;
   agendaForm: FormGroup;
   agendaActivities: any[] = [];
 
@@ -152,10 +153,12 @@ export class CreateEventComponent {
 
   isStepValid(step: number): boolean {
     const fields = ['title', 'numParticipants', 'description', 'city', 'address', 'date', 'eventTypes'];
+    fields.forEach((field) => this.eventForm.get(field)?.markAsTouched());
     if(!this.imageSubmitted){
+      this.showImageError = true;
       return false;
     }
-    fields.forEach((field) => this.eventForm.get(field)?.markAsTouched());
+
     return fields.every((field) => this.eventForm.get(field)?.valid);
   }
 
@@ -173,6 +176,7 @@ export class CreateEventComponent {
 
       this.imageUpload = files[0];
       this.imageSubmitted = true;
+      this.showImageError = false;
       this.imageUrl = URL.createObjectURL((files[0]));
     }
   }

@@ -16,6 +16,7 @@ mat-radio-group{
 }
 
 .error-image-message{
+  color: var(--error-color-lighter) !important;
   font-size: 12px;
 }
 
