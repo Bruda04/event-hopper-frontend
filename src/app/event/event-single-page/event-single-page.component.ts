@@ -12,6 +12,7 @@ import {UserService} from '../../authentication/services/user.service';
 import {ProfileService} from '../../profile/profile.service';
 import {GetEventAgendasDTO} from '../../shared/dto/events/GetEventAgendasDTO.model';
 import {SimpleAccountDTO} from '../../shared/dto/users/account/SimpleAccountDTO.model';
+import {EventStatsDialogComponent} from '../../event-stats-dialog/event-stats-dialog.component';
 
 
 @Component({
@@ -61,6 +62,14 @@ export class EventSinglePageComponent {
   }
 
 
+  openStatsDialog(): void {
+    this.dialog.open(EventStatsDialogComponent, {
+      data: { eventId : this.id },
+      width: '90vh',
+      maxHeight: '90vh'
+    });
+
+  }
 
   toggleFavorites(): void {
     if (!this.eventDetails.favorite) {

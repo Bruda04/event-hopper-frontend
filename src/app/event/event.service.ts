@@ -8,6 +8,7 @@ import {SinglePageEventDTO} from '../shared/dto/events/SinglePageEventDTO.model'
 import {CreateEventDTO} from '../shared/dto/events/CreateEventDTO.model';
 import {GetEventAgendasDTO} from '../shared/dto/events/GetEventAgendasDTO.model';
 import {SimpleAccountDTO} from '../shared/dto/users/account/SimpleAccountDTO.model';
+import {GraphDataDTO} from '../shared/dto/events/GraphDataDTO';
 
 
 @Injectable({
@@ -23,6 +24,10 @@ export class EventService {
 
   getEvents(): Observable<EventDTO[]> {
     return this.HttpClient.get<EventDTO[]>(environment.apiHost + '/events');
+  }
+
+  getEventStats(id: string): Observable<GraphDataDTO> {
+    return this.HttpClient.get<GraphDataDTO>(environment.apiHost + '/events/' + id + "/graph");
   }
 
   getEvent(id: string) : Observable<SinglePageEventDTO> {
