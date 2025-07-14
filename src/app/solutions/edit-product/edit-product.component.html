@@ -1,12 +1,12 @@
-<h2 mat-dialog-title>Edit Service</h2>
+<h2 mat-dialog-title>Edit Product</h2>
 <mat-dialog-content>
-  <form [formGroup]="editServiceForm">
+  <form [formGroup]="editProductForm">
     <div class="dialog-container">
       <!-- Left Column -->
       <div class="left-column">
         <mat-form-field appearance="fill">
           <mat-label>Name</mat-label>
-          <input matInput placeholder="Enter service name" name="name" type="text" formControlName="name" />
+          <input matInput placeholder="Enter Product name" name="name" type="text" formControlName="name" />
         </mat-form-field>
 
         <mat-form-field appearance="fill">
@@ -14,22 +14,7 @@
           <textarea matInput placeholder="Enter description" name="description" formControlName="description" maxlength="1000"></textarea>
         </mat-form-field>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Duration (min)</mat-label>
-          <input matInput placeholder="Enter duration" name="duration" type="number" formControlName="durationMinutes" min="0" max="1440"/>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-          <mat-label>Reservation window (days)</mat-label>
-          <input matInput placeholder="Enter reservation window" name="reservationWindow" type="number" formControlName="reservationWindowDays" min="0" />
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-          <mat-label>Cancellation window (days)</mat-label>
-          <input matInput placeholder="Enter cancellation window" name="cancellationWindow" type="number" formControlName="cancellationWindowDays" min="0" />
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="fill" *ngIf="eventTypes.length != 0">
           <mat-label>Event Type</mat-label>
           <mat-select formControlName="eventTypes" multiple>
             <mat-option *ngFor="let eventType of eventTypes" [value]="eventType.id">
@@ -42,26 +27,21 @@
       <!-- Right Column -->
       <div class="right-column">
         <div class="form-column">
-          <input type="file" id="companyPictures" (change)="onServiceImageSelected($event)" style="display: none;" accept="image/*" multiple />
+          <input type="file" id="companyPictures" (change)="onProductImageSelected($event)" style="display: none;" accept="image/*" multiple />
           <button mat-raised-button class="primary-button" type="button" (click)="triggerFileInput()">
-            UPLOAD SERVICE PICTURES
+            UPLOAD PRODUCT PICTURES
           </button>
 
           <!-- Image Preview and Cropping Section -->
           <div class="images-preview" *ngIf="uploadedImages.length > 0">
             <div *ngFor="let image of uploadedImages; let i = index" class="single-image-preview">
-              <img [src]="imageUrls[i]" alt="Service Preview {{i + 1}}" />
+              <img [src]="imageUrls[i]" alt="Product Preview {{i + 1}}" />
               <button mat-icon-button aria-label="Remove Image" class="image-close-btn" type="button" (click)="clearCompanyImage(i)">
                 <mat-icon>close</mat-icon>
               </button>
             </div>
           </div>
         </div>
-
-        <mat-radio-group formControlName="acceptance">
-          <mat-radio-button name="acceptance" value="auto" >Auto accept</mat-radio-button>
-          <mat-radio-button name="acceptance" value="manual">Manual accept</mat-radio-button>
-        </mat-radio-group>
 
         <div class="checkbox-container">
           <mat-checkbox name="visible" formControlName="visible">Visible</mat-checkbox>

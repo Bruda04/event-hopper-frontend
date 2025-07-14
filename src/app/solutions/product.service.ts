@@ -10,6 +10,12 @@ import {PriceManagementDTO} from '../shared/dto/prices/PriceManagementDTO.model'
 import {UpdatePriceDTO} from '../shared/dto/prices/updatePriceDTO.model';
 import {CreateProductRatingDTO} from '../shared/dto/ratings/CreateProductRatingDTO.model';
 import {CreateCommentDTO} from '../shared/dto/comments/createCommentDTO.model';
+import {ServiceManagementDTO} from '../shared/dto/solutions/serviceManagementDTO.model';
+import {ProductForManagementDTO} from '../shared/dto/solutions/productForManagementDTO.model';
+import {CreateServiceDTO} from '../shared/dto/solutions/createServiceDTO.model';
+import {UpdateServiceDTO} from '../shared/dto/solutions/updateServiceDTO.model';
+import {CreateProductDTO} from '../shared/dto/solutions/createProductDTO.model';
+import {UpdateProductDTO} from '../shared/dto/solutions/updateProductDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +23,65 @@ import {CreateCommentDTO} from '../shared/dto/comments/createCommentDTO.model';
 export class ProductService {
 
   constructor(private HttpClient: HttpClient) { }
+
+
+  getAllForManagement(pageProperties: any,
+                      categoryId: string,
+                      eventTypeIds: string[],
+                      minPrice: number,
+                      maxPrice: number,
+                      available: boolean,
+                      textSearch: string,
+                      sortField: string,
+                      sortDirection: string
+  ): Observable<PagedResponse<ProductForManagementDTO>> {
+    let params :HttpParams = new HttpParams();
+    if(pageProperties) {
+      params = params
+        .set('page', pageProperties.page)
+        .set('size', pageProperties.pageSize)
+    }
+
+    if(categoryId) {
+      params = params.set('categoryId', categoryId);
+    }
+    if(eventTypeIds) {
+      params = params.set('eventTypeIds', eventTypeIds.join(','));
+    }
+    if(minPrice) {
+      params = params.set('minPrice', minPrice);
+    }
+    if(maxPrice) {
+      params = params.set('maxPrice', maxPrice);
+    }
+    if(available !== null) {
+      params = params.set('isAvailable', available);
+    }
+    if (textSearch) {
+      params = params.set('searchContent', textSearch);
+    }
+    if (sortField) {
+      params = params.set('sortField', sortField);
+    }
+    if (sortDirection) {
+      params = params.set('sortDirection', sortDirection);
+    }
+
+
+    return this.HttpClient.get<PagedResponse<ProductForManagementDTO>>(environment.apiHost + `/products/management`, {params: params});
+  }
+
+  add(product: CreateProductDTO): Observable<any> {
+    return this.HttpClient.post(environment.apiHost + '/products', product);
+  }
+
+  remove(id: string): Observable<any> {
+    return this.HttpClient.delete(environment.apiHost + '/products/' + id);
+  }
+
+  update(id: string, product: UpdateProductDTO): Observable<any> {
+    return this.HttpClient.put(environment.apiHost + '/products/' + id, product);
+  }
 
   getSolutions(): Observable<ProductDTO[]>{
     return this.HttpClient.get<ProductDTO[]>(environment.apiHost + '/solutions');
