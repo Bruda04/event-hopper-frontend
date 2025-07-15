@@ -12,15 +12,7 @@ export class BlockingService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getBlocks(): Observable<GetBlockDTO[]> {
-    return this.httpClient.get<GetBlockDTO[]>(environment.apiHost + '/blocking');
-  }
-
   create(block: CreateBlockDTO): Observable<any> {
     return this.httpClient.post(environment.apiHost + '/blocking', block);
-  }
-
-  delete(id:string): Observable<any> {
-    return this.httpClient.delete(environment.apiHost + '/blocking/' + id);
   }
 }
