@@ -24,10 +24,6 @@ export class ProfileService {
     return this.httpClient.get(environment.apiHost + "/accounts/active/" + email);
   }
 
-  getSimpleAccount(id: string): Observable<any> {
-    return this.httpClient.get(environment.apiHost + '/accounts/' + id + '/simple');
-  }
-
   changePassword(changePasswordDTO: ChangePasswordDTO): Observable<any> {
     return this.httpClient.post(environment.apiHost + "/accounts/change-password", changePasswordDTO);
   }
@@ -42,10 +38,6 @@ export class ProfileService {
 
   editCompanyInformation(updateCompanyAccount: UpdateCompanyAccountDTO): Observable<any> {
     return this.httpClient.put(environment.apiHost + "/accounts/company", updateCompanyAccount);
-  }
-
-  editPerson(updatePersonDTO: UpdatePersonDTO): Observable<any> {
-    return this.httpClient.put(environment.apiHost + "/persons/", updatePersonDTO);
   }
 
   getPerson(id: string): Observable<any> {
