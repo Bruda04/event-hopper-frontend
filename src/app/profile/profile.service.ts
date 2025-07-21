@@ -24,11 +24,11 @@ export class ProfileService {
     return this.httpClient.get(environment.apiHost + "/accounts/active/" + email);
   }
 
-  changePassword(changePasswordDTO: ChangePasswordDTO): Observable<any> {
+  changePassword(changePasswordDTO: ChangePasswordDTO): Observable<unknown> {
     return this.httpClient.post(environment.apiHost + "/accounts/change-password", changePasswordDTO);
   }
 
-  deactivateAccount(): Observable<any> {
+  deactivateAccount(): Observable<unknown> {
     return this.httpClient.post(environment.apiHost + "/accounts/deactivate", {});
   }
 
@@ -60,27 +60,27 @@ export class ProfileService {
     return this.httpClient.get<ServiceProviderDetailsDTO>(environment.apiHost + '/service-providers/' + id + '/details');
   }
 
-  addSolutionToFavorites(solutionId: string): Observable<any> {
+  addSolutionToFavorites(solutionId: string): Observable<unknown> {
     return this.httpClient.post(environment.apiHost + '/persons/favorite-solutions/' + solutionId, {});
   }
 
-  removeSolutionFromFavorites(solutionId: string): Observable<any> {
+  removeSolutionFromFavorites(solutionId: string): Observable<unknown> {
     return this.httpClient.delete(environment.apiHost + '/persons/favorite-solutions/' + solutionId);
   }
 
-  addEventToFavorites(eventId: string): Observable<any> {
+  addEventToFavorites(eventId: string): Observable<unknown> {
     return this.httpClient.post(environment.apiHost + '/persons/favorite-events/' + eventId, {});
   }
 
-  removeEventFromFavorites(eventId: string): Observable<any> {
+  removeEventFromFavorites(eventId: string): Observable<unknown> {
     return this.httpClient.delete(environment.apiHost + '/persons/favorite-events/' + eventId);
   }
 
-  changeProfilePicture(newProfilePicture: string): Observable<any> {
+  changeProfilePicture(newProfilePicture: string): Observable<unknown> {
     return this.httpClient.post(environment.apiHost + '/accounts/change-profile-picture', newProfilePicture);
   }
 
-  changeCompanyPictures(companyPhotos: string[]): Observable<any> {
+  changeCompanyPictures(companyPhotos: string[]): Observable<unknown> {
     return this.httpClient.post(environment.apiHost + '/service-providers/change-company-pictures', companyPhotos);
   }
 

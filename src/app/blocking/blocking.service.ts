@@ -12,7 +12,7 @@ export class BlockingService {
 
   constructor(private httpClient: HttpClient) { }
 
-  create(block: CreateBlockDTO): Observable<any> {
+  create(block: CreateBlockDTO): Observable<unknown> {
     return this.httpClient.post(environment.apiHost + '/blocking', block);
   }
 }

@@ -63,7 +63,7 @@ export class ChangePasswordDialogComponent {
       }
 
       this.profileService.changePassword(changePasswordDTO).subscribe({
-        next: (response) => {
+        next: (_) => {
           console.log('Password changed successfully.');
           this.dialogRef.close();
           this.dialog.open(PasswordChangedSuccessfullyComponent, {

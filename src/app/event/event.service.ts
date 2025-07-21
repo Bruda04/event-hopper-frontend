@@ -18,7 +18,7 @@ export class EventService {
 
   constructor(private HttpClient: HttpClient) {}
 
-  addEvent(createDTO: CreateEventDTO) : Observable<any> {
+  addEvent(createDTO: CreateEventDTO) : Observable<unknown> {
     return this.HttpClient.post(environment.apiHost + '/events', createDTO);
   }
 

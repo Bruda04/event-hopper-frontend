@@ -19,11 +19,11 @@ export class RegistrationService {
     return this.httpClient.post<boolean>(environment.apiHost + '/accounts/check-email', email);
   }
 
-  registerServiceProvider(createDTO: CreateServiceProviderAccountDTO): Observable<any> {
+  registerServiceProvider(createDTO: CreateServiceProviderAccountDTO): Observable<unknown> {
     return this.httpClient.post(environment.apiHost + '/accounts/service-provider', createDTO);
   }
 
-  registerEventOrganizer(createDTO: CreateEventOrganizerAccountDTO): Observable<any> {
+  registerEventOrganizer(createDTO: CreateEventOrganizerAccountDTO): Observable<unknown> {
     return this.httpClient.post(environment.apiHost + '/accounts/event-organizer', createDTO);
   }
 

@@ -71,15 +71,15 @@ export class ProductService {
     return this.HttpClient.get<PagedResponse<ProductForManagementDTO>>(environment.apiHost + `/products/management`, {params: params});
   }
 
-  add(product: CreateProductDTO): Observable<any> {
+  add(product: CreateProductDTO): Observable<unknown> {
     return this.HttpClient.post(environment.apiHost + '/products', product);
   }
 
-  remove(id: string): Observable<any> {
+  remove(id: string): Observable<unknown> {
     return this.HttpClient.delete(environment.apiHost + '/products/' + id);
   }
 
-  update(id: string, product: UpdateProductDTO): Observable<any> {
+  update(id: string, product: UpdateProductDTO): Observable<unknown> {
     return this.HttpClient.put(environment.apiHost + '/products/' + id, product);
   }
 
@@ -155,15 +155,15 @@ export class ProductService {
     return this.HttpClient.get<PriceManagementDTO[]>(environment.apiHost + '/prices/management');
   }
 
-  updatePrice(productId: string, price: UpdatePriceDTO): Observable<any> {
+  updatePrice(productId: string, price: UpdatePriceDTO): Observable<unknown> {
     return this.HttpClient.put(environment.apiHost + '/prices/'+ productId, price);
   }
 
-  rateProduct(rating: CreateProductRatingDTO): Observable<any> {
+  rateProduct(rating: CreateProductRatingDTO): Observable<unknown> {
     return this.HttpClient.post(environment.apiHost + '/ratings/solution', rating);
   }
 
-  commentProduct(comment: CreateCommentDTO): Observable<any> {
+  commentProduct(comment: CreateCommentDTO): Observable<unknown> {
     return this.HttpClient.post(environment.apiHost + '/comments', comment);
   }
 }

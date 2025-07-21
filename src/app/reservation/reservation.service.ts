@@ -13,11 +13,11 @@ export class ReservationService {
 
   constructor(private HttpClient: HttpClient) { }
 
-  buyProduct(reservation: CreateReservationProductDTO): Observable<any> {
+  buyProduct(reservation: CreateReservationProductDTO): Observable<unknown> {
     return this.HttpClient.post(environment.apiHost + '/reservations/products', reservation);
   }
 
-  bookService(reservation: CreateReservationServiceDTO): Observable<any> {
+  bookService(reservation: CreateReservationServiceDTO): Observable<unknown> {
     return this.HttpClient.post(environment.apiHost + '/reservations/services', reservation);
   }
 

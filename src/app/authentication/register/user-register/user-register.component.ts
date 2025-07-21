@@ -126,7 +126,6 @@ export class UserRegisterComponent {
 
             this.registrationService.registerAuthenticatedUser(createAccount).subscribe({
               next: (response) => {
-                console.log('Authenticated user registered successfully:', response);
                 //this.router.navigate(['/email-confirmation-sent']);
                 this.router.navigate(['/login'],{ queryParams: { invitationId: this.invitationId } });
               },

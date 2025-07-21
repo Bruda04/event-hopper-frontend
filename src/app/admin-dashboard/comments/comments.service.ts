@@ -15,11 +15,11 @@ export class CommentsService {
     return this.httpClient.get<SimpleCommentDTO[]>(environment.apiHost + "/comments/pending");
   }
 
-  approve(id: string): Observable<any> {
+  approve(id: string): Observable<unknown> {
     return this.httpClient.put(environment.apiHost + "/comments/pending/" + id+ "/approve", {})
   }
 
-  delete(id: string): Observable<any> {
+  delete(id: string): Observable<unknown> {
     return this.httpClient.put(environment.apiHost + "/comments/pending/" + id+ "/delete", {})
   }
 
