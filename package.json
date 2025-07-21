@@ -37,6 +37,7 @@
     "primeicons": "^7.0.0",
     "primeng": "^17.18.12",
     "rxjs": "~7.8.0",
+    "selenium-webdriver": "^4.34.0",
     "sockjs": "^0.3.24",
     "sockjs-client": "^1.6.1",
     "swiper": "^11.1.14",
