@@ -57,8 +57,8 @@ export class CreateEventComponent {
 
     this.agendaForm = this.fb.group({
       name: ['', Validators.required],
-      description: [''],
-      locationName: [''],
+      description: ['', Validators.required],
+      locationName: ['', Validators.required],
       startTime: ['', Validators.required],
       endTime: ['', Validators.required],
     });
@@ -228,6 +228,13 @@ export class CreateEventComponent {
   //Agenda-----------------------------
   addActivity() {
     const activity = this.agendaForm.value;
+    const fields = ['name', 'description', 'locationName', 'startTime', 'endTime'];
+    fields.forEach((field) => this.agendaForm.get(field)?.markAsTouched());
+    let valid = fields.every((field) => this.agendaForm.get(field)?.valid);
+    if (!valid) {
+      return;
+    }
+
 
     // Convert times to minutes for comparison
     const startMinutes = this.convertTimeToMinutes(activity.startTime);
