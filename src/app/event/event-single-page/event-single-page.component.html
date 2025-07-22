@@ -15,6 +15,13 @@
         View Stats
       </button>
 
+      <button mat-stroked-button id="budgetingBtn"
+              *ngIf="eventDetails.eventOrganizerLoggedIn"
+              (click)="openBudgetingPage()">
+        <mat-icon>account_balance_wallet</mat-icon>
+        Edit Budget
+      </button>
+
       <p>
         {{ this.eventDetails.description }}
       </p>
