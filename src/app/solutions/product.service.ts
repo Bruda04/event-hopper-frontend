@@ -79,6 +79,7 @@ export class ProductService {
     return this.HttpClient.delete(environment.apiHost + '/products/' + id);
   }
 
+  //can return object, or can return a map with error message
   update(id: string, product: UpdateProductDTO): Observable<any> {
     return this.HttpClient.put(environment.apiHost + '/products/' + id, product);
   }
