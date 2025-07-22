@@ -8,6 +8,7 @@ import {UpdateCompanyAccountDTO} from '../shared/dto/users/account/UpdateCompany
 import {DetailedServiceProviderDTO} from '../shared/dto/users/serviceProvider/DetailedServiceProviderDTO.model';
 import { ServiceProviderDetailsDTO } from '../shared/dto/users/serviceProvider/serviceProviderDetailsDTO.model';
 import {SimpleAccountDTO} from '../shared/dto/users/account/SimpleAccountDTO.model';
+import {ProfileForPersonDTO} from '../shared/dto/users/account/ProfileForPersonDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,8 @@ export class ProfileService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getProfileDetailsForPerson(): Observable<any> {
-    return this.httpClient.get(environment.apiHost + "/accounts/profile");
+  getProfileDetailsForPerson(): Observable<ProfileForPersonDTO> {
+    return this.httpClient.get<ProfileForPersonDTO>(environment.apiHost + "/accounts/profile");
   }
 
   getProfileByEmail(email: string): Observable<any> {
