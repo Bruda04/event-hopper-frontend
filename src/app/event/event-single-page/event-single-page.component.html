@@ -41,15 +41,15 @@
   <div class="info-banner" *ngIf="!notFound && loaded">
     <div>
       <mat-icon>place</mat-icon>
-      <h3>{{ this.location }}</h3>
+      <h3 id="event_location_info">{{ this.location }}</h3>
     </div>
     <div>
       <mat-icon>calendar_today</mat-icon>
-      <h3>{{ this.time }}</h3>
+      <h3 id="event_time_info">{{ this.time }}</h3>
     </div>
     <div>
       <mat-icon>lock</mat-icon>
-      <h3>
+      <h3 id = "event_privacy_info">
         {{ this.eventDetails.privacy === 'PUBLIC' ? 'Public' :
         this.eventDetails.privacy === 'PRIVATE' ? 'Private' : 'Unknown' }}
       </h3>
