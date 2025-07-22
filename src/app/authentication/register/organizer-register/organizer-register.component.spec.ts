@@ -118,6 +118,8 @@ describe('OrganizerRegisterComponent', () => {
     });
   });
 
+
+  
   describe('confirmPassword validation', () => {
     it('should have passwordMismatch error if passwords do not match', () => {
       const password = component.registerForm.controls['password'];
