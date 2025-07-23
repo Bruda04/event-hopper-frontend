@@ -23,6 +23,6 @@ export interface User {
     workEnd: string;
     myEvents: SimpleEventDTO[];
     favoriteEvents: SimpleEventDTO[];
-    favoriteSolutions: SimpleProductDTO[]
+    favoriteSolutions: SimpleProductDTO[];
     attendingEvents: SimpleEventDTO[];
   }

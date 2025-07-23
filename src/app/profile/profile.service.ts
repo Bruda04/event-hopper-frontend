@@ -8,6 +8,9 @@ import {UpdateCompanyAccountDTO} from '../shared/dto/users/account/UpdateCompany
 import {DetailedServiceProviderDTO} from '../shared/dto/users/serviceProvider/DetailedServiceProviderDTO.model';
 import { ServiceProviderDetailsDTO } from '../shared/dto/users/serviceProvider/serviceProviderDetailsDTO.model';
 import {SimpleAccountDTO} from '../shared/dto/users/account/SimpleAccountDTO.model';
+import {ProfileForPersonDTO} from '../shared/dto/users/account/ProfileForPersonDTO.model';
+import {UpdatedAccountDTO} from '../shared/dto/users/account/UpdatedAccountDTO.model';
+import {UpdatedCompanyAccountDTO} from '../shared/dto/users/account/UpdatedCompanyAccountDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,28 +19,29 @@ export class ProfileService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getProfileDetailsForPerson(): Observable<any> {
-    return this.httpClient.get(environment.apiHost + "/accounts/profile");
+  getProfileDetailsForPerson(): Observable<ProfileForPersonDTO> {
+    return this.httpClient.get<ProfileForPersonDTO>(environment.apiHost + "/accounts/profile");
   }
 
   getProfileByEmail(email: string): Observable<any> {
     return this.httpClient.get(environment.apiHost + "/accounts/active/" + email);
   }
 
+  //doesnt return dto but optional error message
   changePassword(changePasswordDTO: ChangePasswordDTO): Observable<any> {
     return this.httpClient.post(environment.apiHost + "/accounts/change-password", changePasswordDTO);
   }
-
+  //doesnt return dto but optional error message
   deactivateAccount(): Observable<any> {
     return this.httpClient.post(environment.apiHost + "/accounts/deactivate", {});
   }
 
-  editProfileInformation(updatePersonDTO: UpdatePersonDTO): Observable<any> {
-    return this.httpClient.put(environment.apiHost + "/accounts", updatePersonDTO);
+  editProfileInformation(updatePersonDTO: UpdatePersonDTO): Observable<UpdatedAccountDTO> {
+    return this.httpClient.put<UpdatedAccountDTO>(environment.apiHost + "/accounts", updatePersonDTO);
   }
 
-  editCompanyInformation(updateCompanyAccount: UpdateCompanyAccountDTO): Observable<any> {
-    return this.httpClient.put(environment.apiHost + "/accounts/company", updateCompanyAccount);
+  editCompanyInformation(updateCompanyAccount: UpdateCompanyAccountDTO): Observable<UpdatedCompanyAccountDTO> {
+    return this.httpClient.put<UpdatedCompanyAccountDTO>(environment.apiHost + "/accounts/company", updateCompanyAccount);
   }
 
   getPerson(id: string): Observable<any> {

@@ -30,15 +30,15 @@ export class EventTypesService {
     return this.httpClient.get<EventTypeManagementDTO>(environment.apiHost + '/event-types');
   }
 
-  update(id: string, updateDTO: UpdateEventTypeDTO): Observable<any> {
-    return this.httpClient.put(environment.apiHost + '/event-types/' + id, updateDTO);
+  update(id: string, updateDTO: UpdateEventTypeDTO): Observable<SimpleEventTypeDTO> {
+    return this.httpClient.put<SimpleEventTypeDTO>(environment.apiHost + '/event-types/' + id, updateDTO);
   }
 
-  add(createEventTypeDTO: CreateEventTypeDTO): Observable<any> {
-    return this.httpClient.post(environment.apiHost + '/event-types', createEventTypeDTO);
+  add(createEventTypeDTO: CreateEventTypeDTO): Observable<SimpleEventTypeDTO> {
+    return this.httpClient.post<SimpleEventTypeDTO>(environment.apiHost + '/event-types', createEventTypeDTO);
   }
 
-  remove(id: string): Observable<any> {
-    return this.httpClient.delete(environment.apiHost + '/event-types/' + id);
+  remove(id: string): Observable<String> {
+    return this.httpClient.delete<String>(environment.apiHost + '/event-types/' + id);
   }
 }

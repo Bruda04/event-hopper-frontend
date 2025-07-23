@@ -15,11 +15,43 @@ import { MatCardModule } from '@angular/material/card';
 import { RegistrationService } from '../../services/registration/registration.service';
 import { of, throwError } from 'rxjs';
 import {ImageServiceService} from '../../../shared/services/image-service.service';
+import {PersonType} from '../../../shared/model/PersonType.model';
+import {RegistrationRequestStatus} from '../../../shared/model/RegistrationRequestStatus.model';
+import {CreatedEventOrganizerAccountDTO} from '../../../shared/dto/users/account/CreatedEventOrganizerAccountDTO.model';
 
 describe('OrganizerRegisterComponent', () => {
   let component: OrganizerRegisterComponent;
   let fixture: ComponentFixture<OrganizerRegisterComponent>;
   let registrationService: RegistrationService;
+
+  const mockResponse: CreatedEventOrganizerAccountDTO = {
+    id: '123',
+    email: 'test@example.com',
+    isActive: true,
+    isVerified: true,
+    suspensionTimeStamp: null,
+    type: PersonType.EVENT_ORGANIZER,
+    person: {
+      name:"Joe",
+      surname: 'Doe',
+      id:"",
+      profilePicture: 'http://example.com/profile.jpg',
+      type: PersonType.SERVICE_PROVIDER,
+      phoneNumber: '123456789',
+      location: {
+        id: "",
+        city: "",
+        address: ""
+      }
+    },
+    registrationRequest: {
+      id:"",
+      timestamp: "",
+      status: RegistrationRequestStatus.ACCEPTED
+
+    }
+  };
+
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -119,7 +151,7 @@ describe('OrganizerRegisterComponent', () => {
   });
 
 
-  
+
   describe('confirmPassword validation', () => {
     it('should have passwordMismatch error if passwords do not match', () => {
       const password = component.registerForm.controls['password'];
@@ -172,7 +204,7 @@ describe('OrganizerRegisterComponent', () => {
   describe('onSubmit behavior', () => {
     beforeEach(() => {
       spyOn(registrationService, 'isEmailTaken').and.returnValue(of(false));
-      spyOn(registrationService, 'registerEventOrganizer').and.returnValue(of({}));
+      spyOn(registrationService, 'registerEventOrganizer').and.returnValue(of(mockResponse));
       spyOn(component['router'], 'navigate');
     });
 

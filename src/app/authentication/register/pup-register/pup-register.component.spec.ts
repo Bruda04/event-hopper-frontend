@@ -1,15 +1,60 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { PupRegisterComponent } from './pup-register.component';
-import {ReactiveFormsModule, AbstractControl, FormGroup} from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {PupRegisterComponent} from './pup-register.component';
+import {AbstractControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {RouterTestingModule} from '@angular/router/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {of, throwError} from 'rxjs';
 import {CreateServiceProviderAccountDTO} from '../../../shared/dto/users/account/CreateServiceProviderAccountDTO.model';
+import {CreatedServiceProviderAccountDTO} from '../../../shared/dto/users/account/CreatedServiceProviderAccountDTO';
+import {RegistrationRequestStatus} from '../../../shared/model/RegistrationRequestStatus.model';
+import {PersonType} from '../../../shared/model/PersonType.model';
 
 describe('PupRegisterComponent', () => {
   let component: PupRegisterComponent;
   let fixture: ComponentFixture<PupRegisterComponent>;
+
+  const mockResponse: CreatedServiceProviderAccountDTO = {
+    id: '123',
+    email: 'test@example.com',
+    isActive: true,
+    isVerified: true,
+    suspensionTimeStamp: null,
+    type: 0,
+    person: {
+      name:"Joe",
+      surname: 'Doe',
+      id:"",
+      profilePicture: 'http://example.com/profile.jpg',
+      type: PersonType.SERVICE_PROVIDER,
+      phoneNumber: '123456789',
+      location: {
+        id: "",
+        city: "",
+        address: ""
+      },
+      companyName: 'My Company',
+      companyEmail: 'company@example.com',
+      companyDescription: 'Desc',
+      companyPhotos: [],
+      companyLocation: {
+        address: 'Some street',
+        city: 'City',
+        latitude: 0,
+        longitude: 0,
+        id: ""
+      },
+      workStart: '08:00',
+      workEnd: '16:00',
+    },
+    registrationRequest: {
+      id:"",
+      timestamp: "",
+      status: RegistrationRequestStatus.ACCEPTED
+
+    }
+  };
+
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -267,7 +312,7 @@ describe('PupRegisterComponent', () => {
       const uploadedImageUrl = 'http://image.url/company1.png';
       spyOn(component.imageService, 'uploadImage').and.returnValue(of(uploadedImageUrl));
       spyOn(component['router'], 'navigate').and.stub();
-      spyOn(component.registrationService, 'registerServiceProvider').and.returnValue(of({}));
+      spyOn(component.registrationService, 'registerServiceProvider').and.returnValue(of(mockResponse));
 
       spyOn(component, 'uploadProfilePictureAndAccount').and.callThrough();
 
@@ -285,7 +330,7 @@ describe('PupRegisterComponent', () => {
     }));
 
     it('should register account directly if no company images to upload', fakeAsync(() => {
-      spyOn(component.registrationService, 'registerServiceProvider').and.returnValue(of({}));
+      spyOn(component.registrationService, 'registerServiceProvider').and.returnValue(of(mockResponse));
       spyOn(component['router'], 'navigate').and.stub();
       spyOn(component, 'uploadProfilePictureAndAccount').and.callThrough();
 
@@ -304,7 +349,7 @@ describe('PupRegisterComponent', () => {
     it('uploadProfilePictureAndAccount should upload profile image then register', fakeAsync(() => {
       component.profileImageUpload = new File(['content'], 'profile.png');
       spyOn(component.imageService, 'uploadImage').and.returnValue(of('http://image.url/profile.png'));
-      spyOn(component.registrationService, 'registerServiceProvider').and.returnValue(of({}));
+      spyOn(component.registrationService, 'registerServiceProvider').and.returnValue(of(mockResponse));
       spyOn(component['router'], 'navigate').and.stub();
 
       const account: CreateServiceProviderAccountDTO = {
@@ -327,7 +372,7 @@ describe('PupRegisterComponent', () => {
 
     it('uploadProfilePictureAndAccount should register even if no profile image', fakeAsync(() => {
       component.profileImageUpload = null;
-      spyOn(component.registrationService, 'registerServiceProvider').and.returnValue(of({}));
+      spyOn(component.registrationService, 'registerServiceProvider').and.returnValue(of(mockResponse));
       spyOn(component.imageService, 'uploadImage').and.stub();
       spyOn(component['router'], 'navigate').and.stub();
 
