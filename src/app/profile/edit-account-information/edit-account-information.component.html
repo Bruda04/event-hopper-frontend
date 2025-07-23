@@ -8,6 +8,7 @@
         <mat-label>Full Name</mat-label>
         <input matInput placeholder="Full Name" formControlName="fullName" />
         <mat-error *ngIf="editAccountInformationForm.get('fullName')?.hasError('required')">Full Name is required</mat-error>
+        <mat-error *ngIf="editAccountInformationForm.get('fullName')?.hasError('fullNameInvalid')">Full Name is minimum 2 words</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill">

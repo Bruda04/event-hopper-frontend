@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {InvitePeopleComponent} from '../../invitation/invite-people/invite-people.component';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {EventService} from '../event.service';
 import {environment} from '../../../env/envirements';
 import {DatePipe} from '@angular/common';
@@ -35,7 +35,7 @@ export class EventSinglePageComponent {
 
 
   constructor(public dialog: MatDialog, private route: ActivatedRoute, private eventService: EventService,
-              private userService: UserService, private profileService: ProfileService) {
+              private userService: UserService, private profileService: ProfileService, private router: Router) {
 
   }
 
@@ -70,6 +70,12 @@ export class EventSinglePageComponent {
     });
 
   }
+
+  openBudgetingPage(): void {
+    const eventId = this.eventDetails.id; 
+    this.router.navigate(['/events', eventId, 'budgeting']);
+  }
+
 
   toggleFavorites(): void {
     if (!this.eventDetails.favorite) {

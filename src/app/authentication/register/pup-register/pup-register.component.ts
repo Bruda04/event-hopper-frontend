@@ -14,6 +14,11 @@ import {environment} from '../../../../env/envirements';
 import {UpdateServiceDTO} from '../../../shared/dto/solutions/updateServiceDTO.model';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 
+function phoneMinLengthValidator(control: AbstractControl): ValidationErrors | null {
+  const value = control.value?.toString() || ''; // Convert the number to a string
+  return value.length >= 8 ? null : { minlength: true };
+}
+
 
 export function fullNameValidator(control: AbstractControl): ValidationErrors | null {
   const value = control.value?.trim();
@@ -46,25 +51,50 @@ export class PupRegisterComponent {
 
 
 
-  constructor(private fb: FormBuilder, private router: Router, private registrationService: RegistrationService, private imageService: ImageServiceService) {
+  constructor(private fb: FormBuilder, private router: Router, public registrationService: RegistrationService, public imageService: ImageServiceService) {
     this.registerForm = this.fb.group({
       fullName: ['', [Validators.required, fullNameValidator]],
       email: ['', [Validators.required, Validators.email]],
-      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{8,}$')]],
+      phoneNumber: ['', [Validators.required, phoneMinLengthValidator, Validators.pattern('[0-9]*')]],
       city: ['', Validators.required],
       address: ['', Validators.required],
       companyEmail: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern('.*[A-Z].*'),
+          Validators.pattern('.*[0-9].*')
+        ]
+      ],
       confirmPassword: ['', Validators.required],
       companyName: ['', Validators.required],
-      companyPhoneNumber: ['', Validators.required],
+      companyPhoneNumber: ['', [Validators.required, phoneMinLengthValidator, Validators.pattern('[0-9]*')]],
       companyCity: ['', Validators.required],
       companyAddress: ['', Validators.required],
       description: ['', Validators.required],
       endTime: ['', Validators.required],
       startTime: ['', Validators.required],
-    });
+    },
+    { validators: this.passwordMatchValidator } // Add custom validator here
+  );
   }
+
+  // Custom validator to check if passwords match
+  passwordMatchValidator(group: FormGroup): ValidationErrors | null {
+    const password = group.get('password')?.value;
+    const confirmPasswordControl = group.get('confirmPassword');
+
+    if (password !== confirmPasswordControl?.value) {
+      confirmPasswordControl?.setErrors({ passwordMismatch: true });
+      return { passwordMismatch: true };
+    } else {
+      confirmPasswordControl?.setErrors(null);
+      return null;
+    }
+  }
+
 
   togglePasswordVisibility() {
     this.hidePassword = !this.hidePassword;

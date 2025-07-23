@@ -57,7 +57,7 @@
 }
 
 /* Make the "View Stats" button only as wide as content, not full width */
-#statsBtn {
+#statsBtn, #budgetingBtn {
   font-weight: 600;
   border-radius: 20px;
   padding: 0.4em 1.2em;
@@ -73,6 +73,20 @@
   flex-shrink: 0;
   width: auto; /* important */
   max-width: fit-content; /* important */
+}
+
+#budgetingBtn mat-icon {
+  font-size: 1.2em;
+  color: var(--primary-color);
+}
+
+#budgetingBtn:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+#budgetingBtn:hover mat-icon {
+  color: white;
 }
 
 #statsBtn mat-icon {

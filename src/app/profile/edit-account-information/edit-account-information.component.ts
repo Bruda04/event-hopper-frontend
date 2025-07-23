@@ -7,6 +7,7 @@ import {PersonType} from '../../shared/model/PersonType.model';
 import {UpdatePersonDTO} from '../../shared/dto/users/person/UpdatePersonDTO.model';
 import {SimpleLocationDTO} from '../../shared/dto/locations/SimpleLocationDTO.model';
 import {User} from '../../shared/model/user.model';
+import {fullNameValidator} from '../../authentication/register/pup-register/pup-register.component';
 
 
 function phoneMinLengthValidator(control: AbstractControl): ValidationErrors | null {
@@ -27,7 +28,7 @@ export class EditAccountInformationComponent {
               @Inject(MAT_DIALOG_DATA) public user: User, private profileService: ProfileService,) {
     this.editAccountInformationForm = this.fb.group(
       {
-        fullName: ['', Validators.required],
+        fullName: ['', [Validators.required, fullNameValidator]],
         phoneNumber: ['', [Validators.required, phoneMinLengthValidator, Validators.pattern('[0-9]*')]],
         address: ['', Validators.required],
         city: ['', Validators.required],
