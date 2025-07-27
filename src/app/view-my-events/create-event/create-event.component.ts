@@ -40,7 +40,7 @@ export class CreateEventComponent {
   imageSubmitted: boolean = false;
   showImageError: boolean = false;
   agendaForm: FormGroup;
-  agendaActivities: any[] = [];
+  agendaActivities: CreateAgendaActivityDTO[] = [];
 
   constructor(private fb: FormBuilder, private router: Router, private eventTypesService: EventTypesService,
               private eventService: EventService, private imageService: ImageServiceService) {

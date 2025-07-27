@@ -99,7 +99,7 @@ export class ProfileComponent {
 
             console.log("Images changed.")
           },
-          error: (err) =>{
+          error: (err: { error?: { message?: string } }) =>{
             console.error("Error with changing company photos", err);
           },
         })
@@ -178,14 +178,14 @@ export class ProfileComponent {
         this.profilePicture = environment.apiImagesHost + url;
 
         this.profileService.changeProfilePicture(url).subscribe({
-          next: (response) => {
+          next: () => {
             console.log("Profile picture changed.")
-          },error: (err) => {
+          },error: () => {
             console.log("Profile picture error.")
           },
         });
 
-        }, error: (err) => {
+        }, error: (err: { error?: { message?: string } }) => {
         console.error('Error uploading image:', err);
       },
     });

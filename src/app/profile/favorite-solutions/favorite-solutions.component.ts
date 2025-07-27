@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {SimpleProductDTO} from '../../shared/dto/solutions/simpleProductDTO';
 
 @Component({
   selector: 'app-favorite-solutions',
@@ -6,5 +7,5 @@ import {Component, Input} from '@angular/core';
   styleUrl: './favorite-solutions.component.css'
 })
 export class FavoriteSolutionsComponent {
-  @Input() favoriteSolutions: any[] = [];
+  @Input() favoriteSolutions: SimpleProductDTO[] = [];
 }

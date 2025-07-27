@@ -4,6 +4,7 @@ import {ProfileService} from '../profile.service';
 import {UserService} from '../../authentication/services/user.service';
 import {User} from '../../shared/model/user.model';
 import {Router} from '@angular/router';
+import {UserData} from '../../shared/model/userData.model';
 
 @Component({
   selector: 'app-confirm-deactivation',
@@ -11,7 +12,7 @@ import {Router} from '@angular/router';
   styleUrl: './confirm-deactivation.component.css'
 })
 export class ConfirmDeactivationComponent {
-  user: User;
+  user: UserData;
   isDeletable: boolean;
   errorMessage: string;
 
@@ -31,7 +32,7 @@ export class ConfirmDeactivationComponent {
   // Handle "Yes, Deactivate" button
   onConfirm(): void {
     this.profileService.deactivateAccount().subscribe({
-      next: (response) => {
+      next: () => {
         console.log('Account deactivated');
         this.userService.clearToken();
         this.dialogRef.close();

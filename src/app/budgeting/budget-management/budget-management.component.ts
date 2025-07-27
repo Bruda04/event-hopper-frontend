@@ -65,7 +65,7 @@ export class BudgetManagementComponent implements OnInit {
         this.budgetingForm.valueChanges.subscribe(() => {this.setLeftAmount()});
         console.log(this.budget);
       },
-      error: (error: any): void => {
+      error: (error: { error?: { message?: string } }): void => {
         console.error(error);
       }
     });
@@ -152,7 +152,7 @@ export class BudgetManagementComponent implements OnInit {
         this.budget = budget;
         this.populateBudgetForm();
       },
-      error: (error: any): void => {
+      error: (error: { error?: { message?: string } }): void => {
         console.error(error);
       }
     });

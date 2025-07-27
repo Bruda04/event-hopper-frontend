@@ -6,6 +6,7 @@ import SockJS from 'sockjs-client';
 import {UserService} from '../user.service';
 import {MessageService} from '../../../chat/message.service';
 import {ChatMessageDTO} from '../../../shared/dto/messages/chatMessageDTO.model';
+import {NewChatMessageDTO} from '../../../shared/dto/messages/NewChatMessageDTO.model';
 
 @Injectable({
   providedIn: 'root',
@@ -32,7 +33,7 @@ export class WebSocketService {
     );
   }
 
-  subscribeToChannel(channel: string, callback: (message: any) => void): void {
+  subscribeToChannel(channel: string, callback: (message: ChatMessageDTO | any) => void): void {
     if (this.isLoaded) {
       console.log('Subscribing to channel: ' + channel);
       this.stompClient.subscribe(
@@ -42,7 +43,7 @@ export class WebSocketService {
     }
   }
 
-  sendToChannel(channel: string, message: any): void {
+  sendToChannel(channel: string, message: NewChatMessageDTO| any): void {
     if (this.isLoaded) {
       this.stompClient.send(channel, {}, JSON.stringify(message));
     }
