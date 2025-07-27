@@ -7,5 +7,5 @@ import {SimpleProductDTO} from '../../shared/dto/solutions/simpleProductDTO';
   styleUrl: './favorite-solutions.component.css'
 })
 export class FavoriteSolutionsComponent {
-  @Input() favoriteSolutions: SimpleProductDTO[] = [];
+  @Input() favoriteSolutions: any[] = [];
 }
