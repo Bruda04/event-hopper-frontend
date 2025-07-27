@@ -17,6 +17,7 @@ import {CreateReservationProductDTO} from '../../shared/dto/reservations/CreateR
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {BookingAServiceComponent} from '../../reservation/booking-a-service/booking-a-service.component';
 import {CreateReservationServiceDTO} from '../../shared/dto/reservations/CreateReservationServiceDTO.model';
+import {UserData} from '../../shared/model/userData.model';
 
 @Component({
   selector: 'app-solution-page',
@@ -28,7 +29,7 @@ export class SolutionPageComponent implements OnInit {
   solution: SolutionDetailsDTO;
   notFound: boolean = false;
   eventTypes: string;
-  user: any;
+  user: UserData;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -73,7 +74,7 @@ export class SolutionPageComponent implements OnInit {
         next: () => {
           this.solution.favorite = !this.solution.favorite;
         },
-        error: (err) => {
+        error: () => {
           console.log('Error adding solution to favorites');
         }
       });
@@ -82,7 +83,7 @@ export class SolutionPageComponent implements OnInit {
         next: () => {
           this.solution.favorite = !this.solution.favorite;
         },
-        error: (err) => {
+        error: () => {
           console.log('Error removing solution from favorites');
         }
       });
@@ -113,7 +114,7 @@ export class SolutionPageComponent implements OnInit {
           next: () => {
             this.loadSolution();
           },
-          error: (err) => {
+          error: (err: { error?: { message?: string } }) => {
             console.error('Error creating comment');
             if (err.error?.message) {
               this.showErrorToast('Error creating comment: ' + err.error.message);
@@ -126,7 +127,7 @@ export class SolutionPageComponent implements OnInit {
           next: () => {
             this.loadSolution();
           },
-          error: (err) => {
+          error: (err: { error?: { message?: string } }) => {
             console.error('Error rating product');
             if (err.error?.message) {
               this.showErrorToast('Error rating product: ' + err.error.message);
@@ -184,7 +185,7 @@ export class SolutionPageComponent implements OnInit {
           next: (): void => {
             this.loadSolution();
           },
-          error: (err: any): void => {
+          error: (err: { error?: { message?: string } }): void => {
             console.error('Error buying product', err);
           }
         });
@@ -225,7 +226,7 @@ export class SolutionPageComponent implements OnInit {
           next: (): void => {
             this.loadSolution();
           },
-          error: (err: any): void => {
+          error: (err: { error?: { message?: string } }): void => {
             console.error('Error booking service', err);
           }
         });

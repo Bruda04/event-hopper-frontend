@@ -13,6 +13,7 @@ import {ProfileService} from '../../profile/profile.service';
 import {GetEventAgendasDTO} from '../../shared/dto/events/GetEventAgendasDTO.model';
 import {SimpleAccountDTO} from '../../shared/dto/users/account/SimpleAccountDTO.model';
 import {EventStatsDialogComponent} from '../../event-stats-dialog/event-stats-dialog.component';
+import {UserData} from '../../shared/model/userData.model';
 
 
 @Component({
@@ -28,7 +29,7 @@ export class EventSinglePageComponent {
   time: string;
   notFound: boolean = false;
   loaded: boolean = false;
-  user: any;
+  user: UserData;
 
 
   datePipe = new DatePipe('en-US');
@@ -72,7 +73,7 @@ export class EventSinglePageComponent {
   }
 
   openBudgetingPage(): void {
-    const eventId = this.eventDetails.id; 
+    const eventId = this.eventDetails.id;
     this.router.navigate(['/events', eventId, 'budgeting']);
   }
 
@@ -83,7 +84,7 @@ export class EventSinglePageComponent {
         next: () => {
           this.eventDetails.favorite = true;
         },
-        error: (err) => {
+        error: () => {
           console.log('Error adding solution to favorites');
         }
       });
@@ -92,7 +93,7 @@ export class EventSinglePageComponent {
         next: () => {
           this.eventDetails.favorite = false;
         },
-        error: (err) => {
+        error: () => {
           console.log('Error removing event from favorites');
         }
       });

@@ -80,7 +80,7 @@ export class LoginComponent {
           }
 
         },
-        error: (err) => {
+        error: (err: { error?: { message?: string } }) => {
           this.loginErrorMessage = err.error.message;
         },
       });
