@@ -1,0 +1,17 @@
+<mat-tab-group>
+  <mat-tab label="Categories">
+    <app-admin-approved-categories-management #approvedCategories></app-admin-approved-categories-management>
+  </mat-tab>
+  <mat-tab label="Category suggestions">
+    <app-admin-suggestions-management (categoryApproved)="refreshApprovedCategories()"></app-admin-suggestions-management>
+  </mat-tab>
+  <mat-tab label="Event types">
+    <app-admin-event-types-management></app-admin-event-types-management>
+  </mat-tab>
+  <mat-tab label="Comments">
+    <app-admin-comments-management></app-admin-comments-management>
+  </mat-tab>
+  <mat-tab label="Reports">
+    <app-admin-reports-management></app-admin-reports-management>
+  </mat-tab>
+</mat-tab-group>

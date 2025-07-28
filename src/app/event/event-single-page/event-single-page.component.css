@@ -1,0 +1,207 @@
+.event-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  color: var(--font-dark-blue);
+}
+
+.top-section {
+  display: flex;
+  width: 100%;
+  height: 70vh; /* fixed height */
+  overflow: hidden;
+}
+
+.event-image {
+  width: 50%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.event-details {
+  width: 50%;
+  height: 100%;
+  padding: 2%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* Container for header + stats button, pinned at top */
+.top-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5vh;
+  flex-shrink: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.header .mat-icon {
+  color: var(--disabled-color);
+  cursor: pointer;
+  font-size: 2.5em;
+  width: fit-content;
+  height: fit-content;
+}
+
+.header .mat-icon.filled {
+  color: var(--primary-color);
+}
+
+/* Make the "View Stats" button only as wide as content, not full width */
+#statsBtn, #budgetingBtn {
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 0.4em 1.2em;
+  display: inline-flex; /* inline-flex to shrink to content */
+  align-items: center;
+  gap: 0.4em;
+  background-color: white;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+  transition: all 0.3s ease;
+  margin-top: 0.5vh;
+  margin-bottom: 2vh;
+  flex-shrink: 0;
+  width: auto; /* important */
+  max-width: fit-content; /* important */
+}
+
+#budgetingBtn mat-icon {
+  font-size: 1.2em;
+  color: var(--primary-color);
+}
+
+#budgetingBtn:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+#budgetingBtn:hover mat-icon {
+  color: white;
+}
+
+#statsBtn mat-icon {
+  font-size: 1.2em;
+  color: var(--primary-color);
+}
+
+#statsBtn:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+#statsBtn:hover mat-icon {
+  color: white;
+}
+
+/* Description takes all the remaining space and scrolls if too tall */
+.description {
+  flex-grow: 1;
+  margin-top: 0.5vh;
+  margin-bottom: 0;
+  font-size: 1.1vw;
+  line-height: 1.4;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+/* Buttons pinned to bottom of event-details */
+.action-buttons {
+  display: flex;
+  gap: 1%;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  margin-top: auto; /* Push to bottom */
+  align-items: flex-end;
+}
+
+.action-buttons button {
+  font-size: 1vw;
+  padding: 0.3em 0.8em;
+  white-space: nowrap;
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: normal;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.action-buttons button:hover {
+  background-color: var(--secondary-color);
+}
+
+#inviteBtn {
+  background-color: transparent;
+  color: var(--primary-color);
+  font-weight: normal;
+  border: none;
+  padding: 0.3em 0.8em;
+  cursor: pointer;
+}
+
+.info-banner {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 100%;
+  background-color: var(--light-blue);
+  padding: 2vh 0;
+  text-align: center;
+}
+
+.info-banner h3 {
+  font-size: 1.5vw;
+  margin: 0;
+}
+
+.map-container {
+  width: 100%;
+  max-width: 90vw;
+  margin: 5vh auto;
+}
+
+.error-message,
+.loading-message {
+  font-size: 3em;
+  color: var(--font-dark-blue);
+  font-variant: all-petite-caps;
+  text-align: center;
+  margin: 15% 0;
+  line-height: 1.2;
+}
+
+
+.info-banner {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 100%;
+  background-color: var(--light-blue);
+  padding: 2vh 0;
+  text-align: center;
+}
+
+.info-banner > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em; /* space between icon and text */
+}
+
+.info-banner mat-icon {
+  font-size: 1.5vw;
+  color: var(--primary-color);
+}
+
+.info-banner h3 {
+  font-size: 1.5vw;
+  margin: 0;
+}

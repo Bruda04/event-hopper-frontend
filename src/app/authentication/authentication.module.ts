@@ -5,12 +5,20 @@ import { RegisterComponent } from './register/register.component';
 import { OrganizerRegisterComponent } from './register/organizer-register/organizer-register.component';
 import { PupRegisterComponent } from './register/pup-register/pup-register.component';
 import { LayoutModule } from '../layout/layout.module';
-import { ServicesModule } from '../services/services.module';
+import { SolutionsModule } from '../solutions/solutions.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../infrastructure/material/material.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { RouterModule } from '@angular/router';
 import { EmailConfirmationSentComponent } from './email-confirmation-sent/email-confirmation-sent.component'; // Import RouterModule
+import { ImageCropperComponent } from 'ngx-image-cropper';
+import { UserRegisterComponent } from './register/user-register/user-register.component';
+import { UpgradingComponent } from './upgrading/upgrading.component';
+import { CongradulationComponent } from './upgrading/congradulation/congradulation.component';
+import { PupRegisterUpgradingComponent } from './upgrading/pup-register-upgrading/pup-register-upgrading.component';
+import { PupConfirmationComponent } from './upgrading/pup-confirmation/pup-confirmation.component';
+import { EmailVerifiedComponent } from './register/email-verified/email-verified.component';
+
 
 @NgModule({
   declarations: [
@@ -19,15 +27,22 @@ import { EmailConfirmationSentComponent } from './email-confirmation-sent/email-
     OrganizerRegisterComponent,
     PupRegisterComponent,
     EmailConfirmationSentComponent,
+    UserRegisterComponent,
+    UpgradingComponent,
+    CongradulationComponent,
+    PupRegisterUpgradingComponent,
+    PupConfirmationComponent,
+    EmailVerifiedComponent,
   ],
   imports: [
     CommonModule,
     LayoutModule,
-    ServicesModule,
+    SolutionsModule,
     ReactiveFormsModule,
     MaterialModule,
     AppRoutingModule,
-    RouterModule
+    RouterModule,
+    ImageCropperComponent
   ],
   exports: [
     LoginComponent,

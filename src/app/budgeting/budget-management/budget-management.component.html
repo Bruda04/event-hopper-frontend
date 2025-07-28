@@ -1,0 +1,60 @@
+<div class="page-container">
+  <img src="logo.png" alt="Logo Image" class="event-image">
+  <h3 class="event-title">Budget for {{ this.budget?.event?.name }}</h3>
+
+  <form class="budgeting-form" *ngIf="budget" [formGroup]="budgetingForm">
+    <!-- Category Selection -->
+    <div class="form-group">
+      <mat-form-field appearance="fill">
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="category" multiple>
+          <mat-option *ngFor="let category of getAvailableCategories()" [value]="category">
+            {{ category.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button
+              class="add-button"
+              type="button"
+              (click)="add()"
+              [disabled]="!budgetingForm.get('category')?.value?.length">
+        <mat-icon>add</mat-icon> ADD
+      </button>
+    </div>
+
+    <!-- Scrollable Budget Items Container -->
+    <div class="budget-items-container" *ngIf="this.itemsFormArray.length">
+      <div class="budget-items-list" formArrayName="items">
+        <div *ngFor="let itemCtrl of this.itemsFormArray.controls; let i = index" [formGroupName]="i" class="budget-item">
+          <span class="category-label">{{ itemCtrl.value.category.name }}</span>
+          <mat-form-field appearance="fill">
+            <mat-label>Amount (€)</mat-label>
+            <input matInput placeholder="Enter amount" type="number" formControlName="amount" min="0"/>
+            <mat-error *ngIf="itemCtrl.get('amount')?.hasError('minAmount')">
+              Amount must be greater than {{ itemCtrl.get('amount')?.getError('minAmount') }} €
+            </mat-error>
+          </mat-form-field>
+          <button mat-raised-button class="delete-button" type="button" (click)="delete(i)"
+                  [disabled]="!this.budget.budgetItems.at(i).deletable"
+                  [ngClass]="{ 'disabled-button': !this.budget.budgetItems.at(i).deletable }"
+          >
+            <mat-icon>delete</mat-icon> DELETE
+          </button>
+          <button mat-raised-button class="view-products-button" type="button" (click)="viewProducts(i)"
+                  [disabled]="this.budget.budgetItems.at(i).purchasedProducts.length === 0"
+                  [ngClass]="{ 'disabled-button': this.budget.budgetItems.at(i).purchasedProducts.length === 0 }"
+                  >
+            <mat-icon>shopping_cart</mat-icon>PURCHASED PRODUCTS
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="left-label" *ngIf="!itemsFormArray.invalid">
+      Left to spend: <b>{{ this.budget?.leftAmount }} €</b>
+    </div>
+    <!-- Navigation Buttons -->
+    <div class="button-group">
+      <button mat-raised-button class="save-button" type="button" (click)="save()">SAVE</button>
+    </div>
+  </form>
+</div>

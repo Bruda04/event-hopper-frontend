@@ -1,0 +1,20 @@
+<mat-tab-group selectedIndex="0">
+  <mat-tab label="Products">
+    <app-pup-product-management
+      #services
+      (productChanged)="refreshPrices()"
+    ></app-pup-product-management>
+  </mat-tab>
+  <mat-tab label="Services" >
+    <app-pupservice-management
+      #services
+      (serviceChanged)="refreshPrices()"
+    ></app-pupservice-management>
+  </mat-tab>
+  <mat-tab label="Price List">
+    <app-price-list-management
+      #prices
+      (priceChanged)="refreshServices()"
+    ></app-price-list-management>
+  </mat-tab>
+</mat-tab-group>

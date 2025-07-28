@@ -1,0 +1,48 @@
+<h2 mat-dialog-title>Create new event type</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="createEventTypeForm">
+    <div class="form-container">
+      <!-- Event Name Field -->
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Enter event type name" name="name" type="text" formControlName="name" />
+      </mat-form-field>
+
+      <!-- Description Field -->
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput placeholder="Enter event type description" name="description" formControlName="description"></textarea>
+      </mat-form-field>
+
+      <!-- Suggested Categories -->
+      <div class="category-container">
+        <h6 style="text-align: center;">Suggested Categories</h6>
+        <div class="selected-categories">
+          <span *ngIf="createEventTypeForm.value.suggestedSolutionCategories.length">
+            {{ createEventTypeForm.value.suggestedSolutionCategories.join(', ') }}
+          </span>
+          <span *ngIf="!createEventTypeForm.value.suggestedSolutionCategories.length">No categories selected</span>
+        </div>
+      </div>
+
+      <!-- Dropdown for Selecting Categories -->
+      <div class="available-categories" style="text-align: center;">
+        <h6>Select Categories</h6>
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Category</mat-label>
+          <mat-select (selectionChange)="onCategorySelect($event.value)" placeholder="Select a category" multiple>
+            <mat-option *ngFor="let category of categories" [value]="category.name">
+              {{ category.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="actions-container">
+  <button mat-raised-button mat-dialog-close class="cancel-button">CANCEL</button>
+  <button mat-raised-button (click)="create()" class="primary-button">CREATE</button>
+</mat-dialog-actions>

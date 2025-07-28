@@ -1,0 +1,254 @@
+<div class="event-container">
+  <img src="logo.png" alt="Logo Image" class="event-image">
+  <h3 class="event-title">Create Event</h3>
+  <label *ngIf="currentStep === 0">Please provide us with some information about your event.</label>
+  <label *ngIf="currentStep === 1">Please create an agenda for your event.</label>
+
+  <form [formGroup]="eventForm" (ngSubmit)="onSubmit()" class="event-form">
+    <div *ngIf="currentStep === 0">
+      <div class="form-grid">
+        <!-- First Column of Inputs -->
+        <div class="form-column">
+          <mat-form-field appearance="fill">
+            <mat-label>Title</mat-label>
+            <input matInput placeholder="Title" formControlName="title" />
+            <mat-error *ngIf="eventForm.get('title')?.hasError('required')">
+              Title is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Maximum number of participants</mat-label>
+            <input matInput placeholder="Maximum number of participanss" formControlName="numParticipants" type="number"/>
+            <mat-error *ngIf="eventForm.get('numParticipants')?.hasError('required')">
+              Field is required
+            </mat-error>
+            <mat-error *ngIf="eventForm.get('numParticipants')?.hasError('min')">
+              Can't be less than 1.
+            </mat-error>
+            <mat-error *ngIf="eventForm.get('numParticipants')?.hasError('max')">
+              Can't be more than 100k.
+            </mat-error>
+          </mat-form-field>
+
+
+          <mat-form-field>
+            <mat-label>Choose a date</mat-label>
+            <input
+              #dateInput
+              matInput
+              [matDatepicker]="picker"
+              [min]="today"
+              formControlName="date">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="eventForm.get('date')?.hasError('required')">
+              Date is required.
+            </mat-error>
+            <mat-error *ngIf="eventForm.get('date')?.hasError('matDatepickerMin')">
+              Date cannot be in the past.
+            </mat-error>
+          </mat-form-field>
+
+
+          <mat-radio-group aria-label="The privacy of the event is: "   [value]="'public'">
+            <mat-label>Privacy: </mat-label>
+            <mat-radio-button value="public" (change)="eventRadioChange($event)">Public</mat-radio-button>
+            <mat-radio-button value="private" (change)="eventRadioChange($event)" >Private</mat-radio-button>
+          </mat-radio-group>
+
+
+          <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea matInput placeholder="Description" formControlName="description"></textarea>
+            <mat-error *ngIf="eventForm.get('description')?.hasError('required')">
+              Description is required
+            </mat-error>
+          </mat-form-field>
+
+
+        </div>
+
+        <!-- Second Column of Inputs -->
+        <div class="form-column">
+          <mat-form-field appearance="fill">
+            <mat-label>City</mat-label>
+            <input matInput placeholder="City" formControlName="city" />
+            <mat-error *ngIf="eventForm.get('city')?.hasError('required')">
+              City is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Address</mat-label>
+            <input matInput placeholder="Address" formControlName="address" />
+            <mat-error *ngIf="eventForm.get('address')?.hasError('required')">
+              Address is required
+            </mat-error>
+          </mat-form-field>
+
+
+          <mat-form-field appearance="fill" class="filter-field">
+            <mat-label>Event type</mat-label>
+            <mat-select formControlName="eventTypes">
+              <mat-option *ngFor="let eventType of allEventTypes" [value]="eventType">
+                {{ eventType.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="eventForm.get('eventTypes')?.hasError('required')">
+              Event type is required.
+            </mat-error>
+          </mat-form-field>
+
+
+
+
+
+
+          <div class="form-column">
+            <div class="profile-pic">
+              <input type="file" id="profilePic" (change)="onImageSelected($event)" style="display: none;" accept="image/*" />
+              <button mat-raised-button class="upload-button" type="button" (click)="triggerFileInput(0)" *ngIf="!imagePreview">
+                UPLOAD COVER PICTURE
+              </button>
+              <p class="error-image-message" *ngIf="showImageError">
+                You must upload a picture to display on the event page.
+              </p>
+              <!-- Image Preview Section -->
+              <div class="image-preview" *ngIf="imagePreview">
+                <img [src]="imagePreview" alt="Profile Preview" />
+                <button mat-icon-button aria-label="Remove Image" class="image-close-btn" type="button" (click)="clearImage()">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Agenda page -->
+    <div *ngIf="currentStep === 1">
+      <form [formGroup]="agendaForm" (ngSubmit)="addActivity()">
+        <div class="form-grid">
+          <!-- Left Column: Agenda Form -->
+          <div class="form-column">
+            <mat-form-field appearance="fill">
+              <mat-label>Activity Name</mat-label>
+              <input matInput placeholder="Enter activity name" formControlName="name" />
+              <mat-error *ngIf="agendaForm.get('name')?.hasError('required')">
+                Activity name is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Description</mat-label>
+              <textarea matInput placeholder="Activity description" formControlName="description"></textarea>
+              <mat-error *ngIf="agendaForm.get('description')?.hasError('required')">
+                Activity description is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Location</mat-label>
+              <input matInput placeholder="Enter location" formControlName="locationName" />
+              <mat-error *ngIf="agendaForm.get('locationName')?.hasError('required')">
+                Activity location is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Start Time</mat-label>
+              <input matInput type="time" formControlName="startTime" />
+              <mat-error *ngIf="agendaForm.get('startTime')?.hasError('required')">
+                Start time is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>End Time</mat-label>
+              <input matInput type="time" formControlName="endTime" />
+              <mat-error *ngIf="agendaForm.get('endTime')?.hasError('required')">
+                End time is required
+              </mat-error>
+              <mat-error *ngIf="agendaForm.get('endTime')?.hasError('invalidTimeRange')">
+                End time must be after start time.
+              </mat-error>
+              <mat-error *ngIf="agendaForm.get('endTime')?.hasError('overlappingTime')">
+                This time range overlaps with an existing activity.
+              </mat-error>
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" type="submit" id="add_activity_btn">
+              Add Activity
+            </button>
+          </div>
+
+          <!-- Right Column: Agenda Preview -->
+          <div class="form-column agenda-preview">
+            <div *ngIf="agendaActivities.length === 0" class="no-activities">
+              <p>No activities added yet.</p>
+            </div>
+
+            <div *ngFor="let activity of agendaActivities; let i = index" class="activity-card">
+              <mat-card>
+                <mat-card-header class="activity-header">
+                  <div class="header-content">
+                    <mat-card-title>{{ activity.name }}</mat-card-title>
+                    <mat-card-subtitle>{{ activity.startTime }} - {{ activity.endTime }}</mat-card-subtitle>
+                  </div>
+                  <button mat-icon-button color="warn" class="remove-button" (click)="removeActivity(i)" aria-label="Remove">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </mat-card-header>
+                <mat-card-content>
+                  <p>{{ activity.description }}</p>
+                  <p><strong>Location:</strong> {{ activity.locationName }}</p>
+                </mat-card-content>
+              </mat-card>
+
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Navigation Buttons -->
+    <div class="button-group">
+      <button mat-raised-button class="back-button" *ngIf="currentStep == 0" type="button" [routerLink]="'/my-events'">
+        BACK
+      </button>
+
+      <button mat-raised-button class="back-button" id="back-button2" *ngIf="currentStep > 0" type="button" (click)="onBack()">
+        BACK
+      </button>
+      <button mat-raised-button class="next-button" *ngIf="currentStep === 0" type="button" (click)="onNext()">
+        NEXT
+      </button>
+      <button mat-raised-button class="event-button" *ngIf="currentStep === 1" type="submit">
+        FINISH
+      </button>
+
+    </div>
+  </form>
+</div>

@@ -1,0 +1,10 @@
+<div class="component">
+  <h2>Are you sure you want to delete category</h2>
+
+  <h3 class="category-name">{{ categoryToDelete }}</h3>
+
+  <mat-dialog-actions class="actions-container">
+    <button mat-raised-button mat-dialog-close class="cancel-button">CANCEL</button>
+    <button mat-raised-button (click)="onDelete()" class="primary-button">DELETE</button>
+  </mat-dialog-actions>
+</div>

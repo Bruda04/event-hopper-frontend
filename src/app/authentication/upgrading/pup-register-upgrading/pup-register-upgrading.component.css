@@ -1,0 +1,148 @@
+:host {
+  display: block;
+  background-color: var(--primary-color);
+  min-height: 90vh;
+  padding: 2em;
+}
+
+label{
+  font-size: 12px;
+  color: white;
+}
+
+mat-error {
+  color: var(--error-color-lighter) !important;
+  font-size: 12px;
+  display: block;
+}
+
+.register-container {
+  text-align: center;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.register-image {
+  max-width: 100px;
+  height: auto;
+}
+
+.register-title {
+  color: var(--beige);
+  margin: 0px;
+}
+
+.register-form {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5em;
+}
+
+.form-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+
+mat-form-field {
+  width: 400px;
+
+}
+
+.upgrade-button {
+  width: 30%;
+  margin-top: 5px;
+  font-weight: normal;
+  background-color: var(--secondary-color) !important;
+  color: white;
+}
+
+.upload-button {
+  width: 100%;
+  margin-top: 5px;
+  font-weight: normal;
+  background-color: var(--secondary-color) !important;
+  color: white;
+}
+.profile-pic {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.image-preview {
+  position: relative;
+  display: inline-block;
+  margin-top: 1em;
+}
+
+.image-preview img {
+  max-width: 150px;
+  border-radius: 8px;
+  border: 1px solid var(--secondary-color);
+}
+
+.image-close-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: var(--error-color);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px; /* Adjust for better visual balance */
+  width: 24px; /* Circle width */
+  height: 24px; /* Circle height */
+  display: flex; /* Use flexbox for centering */
+  align-items: center; /* Vertical centering */
+  justify-content: center; /* Horizontal centering */
+  padding: 0; /* Remove default button padding */
+}
+
+.image-close-btn:hover {
+  background-color: var(--error-color);
+}
+
+
+.company-image-preview {
+  display: inline-block;
+  margin-right: 10px;
+  position: relative;
+}
+
+.company-image-preview img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.image-close-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+.upload-button {
+  width: 100%;
+  font-size: 14px;
+}
+
+.image-preview {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  gap: 10px;
+}

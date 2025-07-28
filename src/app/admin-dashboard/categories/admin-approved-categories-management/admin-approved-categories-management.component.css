@@ -1,0 +1,69 @@
+.component {
+  background-color: var(--light-beige);
+  padding: 2em;
+}
+
+.title {
+  font-size: 2.5em;
+  color: var(--font-dark-blue);
+}
+
+.toolbar {
+  display: flex;
+  justify-content: end; /* Align search container left and button right */
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+/* CREATE Button */
+.create-button {
+  height: 3em;
+  background-color: var(--secondary-color) !important;
+  color: white !important;
+}
+
+.create-button mat-icon {
+  margin-right: 0.5em;
+}
+.table-container {
+  overflow: auto;
+}
+
+.name-header,
+.name-cell {
+  text-align: left;
+  width: 1%; /* Smallest possible width */
+  white-space: nowrap; /* Prevents wrapping */
+}
+
+.actions-header,
+.actions-cell {
+  text-align: right;
+  width: 1%; /* Smallest possible width */
+  white-space: nowrap; /* Prevents wrapping */
+}
+
+.mat-table {
+  width: 100%;
+}
+
+.mat-header-row,
+.mat-row {
+  display: table-row;
+}
+
+.table-header {
+  background-color: var(--light-blue);
+}
+
+::ng-deep .mat-mdc-snackbar-surface {
+  background-color: var(--error-color) !important;
+  color: white !important;
+}
+::ng-deep .mat-mdc-snack-bar-container .mat-mdc-snack-bar-label {
+  color: white !important; /* Ensure text color is visible on orange */
+}
+::ng-deep .mat-mdc-snack-bar-container .mat-mdc-snack-bar-actions button {
+  color: white !important; /* White action button text */
+  font-weight: bold;
+}

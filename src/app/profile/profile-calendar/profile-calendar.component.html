@@ -1,0 +1,99 @@
+<div class = 'myCalendar'>
+
+<div class="row text-center">
+  <!-- Navigation Buttons -->
+  <div class="col-md-4">
+    <div class="btn-group firsBtnSet">
+      <button
+        class="btn btn-primary"
+        (click)="changeDate(-1)"
+        title="Previous"
+      >
+        Previous
+      </button>
+      <button
+        class="btn btn-outline-secondary"
+        (click)="goToToday()"
+        title="Today"
+      >
+        Today
+      </button>
+      <button
+        class="btn btn-primary"
+        (click)="changeDate(1)"
+        title="Next"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+
+  <!-- Display Current View Title -->
+  <div class="col-md-4">
+    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+  </div>
+
+  <!-- View Selection Buttons -->
+  <div class="col-md-4">
+    <div class="btn-group secondBtnSet">
+      <button
+        class="btn btn-primary"
+        (click)="setView(CalendarView.Month)"
+        [class.active]="view === CalendarView.Month"
+      >
+        Month
+      </button>
+      <button
+        class="btn btn-primary"
+        (click)="setView(CalendarView.Week)"
+        [class.active]="view === CalendarView.Week"
+      >
+        Week
+      </button>
+      <button
+        class="btn btn-primary"
+        (click)="setView(CalendarView.Day)"
+        [class.active]="view === CalendarView.Day"
+      >
+        Day
+      </button>
+    </div>
+  </div>
+</div>
+
+<br />
+  <h6>
+    <span style="display: inline-block; width: 10px; height: 10px; background-color: #e3bc08; border-radius: 50%; margin-right: 5px;"></span>
+    Your events are colored yellow,
+    <span style="display: inline-block; width: 10px; height: 10px; background-color: #1E90FF; border-radius: 50%; margin-right: 5px;"></span>
+    your attending events are blue.
+  </h6><!-- Calendar Display -->
+<div [ngSwitch]="view" class="calendar">
+  <mwl-calendar-month-view
+    *ngSwitchCase="CalendarView.Month"
+    [viewDate]="viewDate"
+    [events]="events"
+    [refresh]="refresh"
+    (eventClicked)="handleEvent('Clicked', $event.event)">
+  </mwl-calendar-month-view>
+
+
+  <mwl-calendar-week-view
+    *ngSwitchCase="CalendarView.Week"
+    [viewDate]="viewDate"
+    [events]="events"
+    [refresh]="refresh"
+    (eventClicked)="handleEvent('Clicked', $event.event)"
+  >
+  </mwl-calendar-week-view>
+
+  <mwl-calendar-day-view
+    *ngSwitchCase="CalendarView.Day"
+    [viewDate]="viewDate"
+    [events]="events"
+    [refresh]="refresh"
+    (eventClicked)="handleEvent('Clicked', $event.event)"
+  >
+  </mwl-calendar-day-view>
+  </div>
+</div>

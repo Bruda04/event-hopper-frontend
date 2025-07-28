@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>Invite people</h2>
+<mat-dialog-content *ngIf="!isLoading">
+
+  <form [formGroup]="inviteForm">
+    <!-- Input polje sa Invite dugmetom -->
+    <div class="input-pair">
+      <mat-form-field appearance="fill" class="email-input">
+        <mat-label>Email address</mat-label>
+        <input
+          matInput
+          placeholder="Enter email address"
+          formControlName="email"
+        />
+      </mat-form-field>
+
+      <button mat-fab extended class="invite-button" (click)="addEmail()">
+        <mat-icon>add</mat-icon>
+        Invite
+      </button>
+    </div>
+
+    <div *ngFor="let email of invitedEmails" class="email-list">
+      <div class="email-item">
+        <span>{{ email }}</span>
+      </div>
+        <button mat-fab extended class="delete-button" (click)="removeEmail(email)">
+            <mat-icon>close</mat-icon>
+            Delete
+        </button>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="actions-container"  *ngIf="!isLoading">
+  <button mat-raised-button mat-dialog-close class="cancel-button">CANCEL</button>
+  <button mat-raised-button color="primary" (click)="invite()" class="submit-button">SUBMIT</button>
+</mat-dialog-actions>
+
+<div *ngIf="isLoading" class="spinner-container">
+  <mat-spinner></mat-spinner>
+</div>
+

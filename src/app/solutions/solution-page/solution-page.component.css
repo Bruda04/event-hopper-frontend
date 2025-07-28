@@ -1,0 +1,242 @@
+.product-page {
+  margin: 3em;
+  font-size: 1.2em;
+  color: var(--font-dark-blue);
+}
+
+.product-container {
+  display: flex;
+  gap: 1em;
+  margin-top: 1em;
+}
+
+.image-gallery {
+  position: relative;
+  width: 50%;
+}
+
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.nav-btn:nth-child(1) {
+  left: 10px;
+}
+
+.nav-btn:nth-child(3) {
+  right: 10px;
+}
+
+.product-details {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.prices {
+  display: flex;
+  gap: 1em;
+  margin: 1em 0;
+  vertical-align: center;
+}
+
+.sale-price {
+  color: var(--primary-color);
+  font-weight: bolder;
+  font-size: 1.5em;
+}
+
+.old-price {
+  text-decoration: line-through;
+  color: var(--disabled-color);
+  font-size: 1.5em;
+}
+
+.on-sale {
+  color: var(--error-color);
+  border-radius: 3px;
+  font-size: 2em;
+}
+
+.review-btn {
+  font-weight: normal;
+  background-color: var(--secondary-color) !important;
+  color: white !important;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: flex;
+  margin-bottom: 1.2em;
+}
+
+.chat-btn {
+  font-weight: normal;
+  background-color: var(--secondary-color) !important;
+  color: white !important;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: flex;
+  width: 100%;
+}
+
+.buy-btn {
+  font-weight: normal;
+  background-color: var(--secondary-color) !important;
+  color: white !important;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: flex;
+  width: 100%;
+  margin-top: 0.75em;
+}
+
+.reviews {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.review {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  background: var(--light-blue);
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.review:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.review img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.review-content {
+  flex-grow: 1;
+}
+
+.review-content strong {
+  display: block;
+  font-size: 1.2em;
+  margin-bottom: 5px;
+}
+
+.review-content p {
+  margin: 0;
+  font-size: 1em;
+  line-height: 1.5;
+}
+
+
+.provider {
+  color: var(--font-dark-blue);
+  text-decoration: none;
+}
+
+.provider strong {
+  color: var(--secondary-color);
+  font-size: 1.5em;
+}
+
+.provider strong:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.available {
+  color: var(--error-color);
+  font-size: 1.5em;
+  margin-top: 1.2em;
+}
+
+
+::ng-deep .p-carousel-next, ::ng-deep .p-carousel-prev {
+  background-color: var(--font-dark-blue);
+  width: 2.5em;
+  height: 2.5em;
+  color: white;
+  border-radius: 50%;
+  font-size: 1rem;
+  border: none;
+  margin: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.carousel-item {
+  max-height: 30em;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.error-message, .loading {
+  font-size: 3em;
+  color: var(--font-dark-blue);
+  font-variant: all-petite-caps;
+  text-align: center;
+  margin: 15% 0;
+  line-height: 1.2;
+}
+
+.rating {
+  display: flex;
+  gap: 0.2em;
+  margin-top: 1em;
+}
+
+.rating .mat-icon {
+  color: var(--disabled-color);
+  font-size: 1.5em;
+  width: fit-content;
+  height: fit-content;
+}
+
+.rating .mat-icon.filled {
+  color: var(--primary-color);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.header .mat-icon {
+  color: var(--disabled-color);
+  cursor: pointer;
+  font-size: 2.7em;
+  width: fit-content;
+  height: fit-content;
+}
+
+.header .mat-icon.filled {
+  color: var(--primary-color);
+}
+
+::ng-deep .mat-mdc-snackbar-surface {
+  background-color: var(--error-color) !important;
+  color: white !important;
+}
+::ng-deep .mat-mdc-snack-bar-container .mat-mdc-snack-bar-label {
+  color: white !important; /* Ensure text color is visible on orange */
+}
+::ng-deep .mat-mdc-snack-bar-container .mat-mdc-snack-bar-actions button {
+  color: white !important; /* White action button text */
+  font-weight: bold;
+}

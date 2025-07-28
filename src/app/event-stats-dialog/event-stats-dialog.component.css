@@ -1,0 +1,52 @@
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 16px 24px;
+  max-height: 80vh;
+  overflow-y: auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.chart-block {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+canvas {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-top: 1px solid #ddd;
+}
+
+.main-title {
+  font-size: 26px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+h3 {
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+p {
+  font-size: 14px;
+  text-align: center;
+}
+
+.loading-block,
+.error-block {
+  padding: 32px;
+  text-align: center;
+}

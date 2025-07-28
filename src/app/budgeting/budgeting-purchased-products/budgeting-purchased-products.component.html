@@ -1,0 +1,25 @@
+<div class="component">
+  <h4>Purchased Products/Services</h4>
+  <h5> for <b>{{data.event}}</b> in category <b>{{data.category}}</b></h5>
+  <mat-dialog-content>
+    <div *ngIf="data.products?.length; else noProducts">
+      <div *ngFor="let product of data.products" class="product-card">
+        <div class="product-header">
+          <h6>{{ product.name }}</h6>
+          <button mat-icon-button class="see-more-button" (click)="openSolution(product.id)">
+            <mat-icon>open_in_new</mat-icon>
+          </button>
+        </div>
+        <p>{{ product.description | slice:0:50 }} {{product.description.length > 50? "...": null}}</p>
+      </div>
+    </div>
+
+
+    <ng-template #noProducts>
+    <p>No purchased products/services available.</p>
+  </ng-template>
+  </mat-dialog-content>
+  <mat-dialog-actions class="actions-container">
+    <button mat-raised-button mat-dialog-close class="cancel-button">CLOSE</button>
+  </mat-dialog-actions>
+</div>

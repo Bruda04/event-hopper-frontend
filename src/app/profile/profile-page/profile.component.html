@@ -1,0 +1,144 @@
+<h3 *ngIf="this.user.role === 'EVENT_ORGANIZER'">Organizer</h3>
+<h3 *ngIf="this.user.role === 'ADMIN'">Admin</h3>
+<h3 *ngIf="this.user.role === 'SERVICE_PROVIDER'">Product/service provider</h3>
+<h3 *ngIf="this.user.role === 'AUTHENTICATED_USER'">User</h3>
+
+<div class="container">
+  <div class="content">
+    <!-- Card 1: Profile Picture and Buttons -->
+    <div class="profile-picture-section">
+
+      <img [src]="this.profilePicture" alt="Profile Picture" class="profile-picture" />
+      <input type="file" id="profilePic" (change)="onFileSelected($event)" style="display: none;"  accept="image/*"/>
+      <button mat-raised-button class="btn" type="button" (click)="triggerFileInput()"
+              [ngClass]="{ 'btn-pup': user.role === 'SERVICE_PROVIDER' }">CHANGE PROFILE PICTURE</button>
+
+      <button mat-raised-button class="btn deactivate-account"
+              [ngClass]="{ 'btn-pup': user.role === 'SERVICE_PROVIDER' }"
+              *ngIf="this.user.role === 'SERVICE_PROVIDER'" (click)="openConfirmationDialog()">DEACTIVATE ACCOUNT</button>
+
+    </div>
+
+    <!-- Card 2: Regular Text -->
+    <div class="user-information-card" *ngIf ="loadedUser">
+      <div class = "information">
+        <h5>Personal information
+          <mat-icon
+            class="edit-icon"
+            (click)="openEditAccountInformation()">edit</mat-icon>
+        </h5>
+
+        <p><strong>Name:</strong> {{user.name}} {{user.surname}}</p>
+        <p><strong>Email:</strong> {{user.email}}</p>
+        <p><strong>Phone:</strong> +{{user.phoneNumber}}</p>
+        <p><strong>Address:</strong> {{user.address}}, {{user.city}}</p>
+      </div>
+      <button mat-raised-button class="btn"
+              [ngClass]="{ 'btn-pup': user.role === 'SERVICE_PROVIDER' }"
+              (click)="openChangePasswordDialog()"
+              *ngIf="this.user.role === 'SERVICE_PROVIDER'">CHANGE PASSWORD</button>
+
+
+    </div>
+
+
+    <!-- Card 3 -->
+    <div class="company-information-card" *ngIf="user.role === 'SERVICE_PROVIDER' && loadedUser">
+      <div class = "information">
+        <h5>Company
+          <mat-icon
+            class="edit-icon"
+            (click)="openEditCompanyInformation()">edit</mat-icon>
+        </h5>
+        <p><strong>Name:</strong> {{user.companyName}}</p>
+        <p><strong>Email:</strong> {{user.companyEmail}}</p>
+        <p><strong>Phone:</strong> +{{user.companyPhoneNumber}}</p>
+        <p><strong>Address:</strong> {{user.companyLocation.address}}, {{user.companyLocation.city}}</p>
+        <p><strong>Description:</strong> {{user.companyDescription}}</p>
+      </div>
+
+
+    </div>
+
+
+    <!-- Card 4 -->
+    <div class="company-information-card" *ngIf="user.role === 'SERVICE_PROVIDER'">
+      <p-carousel *ngIf="this.user.role == 'SERVICE_PROVIDER'"
+                  [value]="user.companyPhotos"
+                  [numVisible]="1"
+                  [showIndicators]="false"
+                  [circular]="true"
+                  [autoplayInterval]="5000"
+      >
+        <ng-template pTemplate="item" let-image>
+          <div class="carousel-item">
+            <img [src]="environment.apiImagesHost+image">
+          </div>
+        </ng-template>
+      </p-carousel>
+
+
+      <button mat-raised-button class="btn"
+              [ngClass]="{ 'btn-pup': user.role === 'SERVICE_PROVIDER' }"
+              *ngIf="this.user.role === 'SERVICE_PROVIDER'" (click)="openEditCompanyImages()">MANAGE PHOTOS</button>
+      <button *ngIf="this.user.role === 'SERVICE_PROVIDER'"
+              mat-raised-button class="btn"
+              [ngClass]="{ 'btn-pup': user.role === 'SERVICE_PROVIDER' }"
+              [routerLink]="'/my-solutions'">VIEW MY SOLUTIONS</button>
+    </div>
+
+
+
+    <!-- Card 5: Text and Buttons  and pup image carousel-->
+    <div class="buttons-section" *ngIf="user.role != 'SERVICE_PROVIDER'">
+
+      <button mat-raised-button class="btn"
+              [ngClass]="{ 'btn-pup': user.role === 'SERVICE_PROVIDER' }"
+              (click)="openChangePasswordDialog()"
+              *ngIf="this.user.role != 'SERVICE_PROVIDER'">CHANGE PASSWORD</button>
+
+      <button mat-raised-button class="btn"
+              *ngIf="this.user.role === 'AUTHENTICATED_USER'"
+              (click)="openUpgradingDialog()">UPGRADE PROFILE</button>
+
+      <button mat-raised-button class="btn"
+              *ngIf="this.user.role === 'ADMIN'"
+              [routerLink]="'/admin-dashboard'">ADMIN DASHBOARD</button>
+
+
+      <button mat-raised-button class="btn"
+              *ngIf="this.user.role === 'EVENT_ORGANIZER'" (click)="openViewMyEvents()">VIEW MY EVENTS</button>
+
+      <button mat-raised-button class="btn deactivate-account"
+              *ngIf="this.user.role != 'SERVICE_PROVIDER' && this.user.role != 'ADMIN'"
+              (click)="openConfirmationDialog()">DEACTIVATE ACCOUNT</button>
+
+
+
+
+    </div>
+  </div>
+
+
+</div>
+<mat-tab-group selectedIndex="0">
+  <ng-container *ngIf="loadedUser">
+
+    <mat-tab label="My Calendar">
+      <app-profile-calendar [attendingEvents]="user.attendingEvents"
+                            [myEvents]="user.myEvents"></app-profile-calendar>
+    </mat-tab>
+
+
+  <mat-tab label="Favorite Events">
+    <app-favorite-events [favoriteEvents]="this.user.favoriteEvents"></app-favorite-events>
+  </mat-tab>
+
+
+  <mat-tab label="Favorite Products/Services">
+    <app-favorite-solutions [favoriteSolutions] = "this.user.favoriteSolutions"></app-favorite-solutions>
+  </mat-tab>
+
+  </ng-container>
+
+</mat-tab-group>

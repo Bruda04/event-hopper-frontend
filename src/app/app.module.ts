@@ -4,31 +4,71 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from './layout/layout.module';
-import { ServicesModule } from './services/services.module';
+import { SolutionsModule } from './solutions/solutions.module';
 import { AuthenticationModule } from './authentication/authentication.module'; // Import AuthenticationModule here
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './infrastructure/material/material.module';
-import { HomeComponent } from './layout/home/home.component';
 import { EventModule } from './event/event.module';
-import { ProfileComponent } from './profile/profile.component';
+import {AdminDashboardModule} from './admin-dashboard/admin-dashboard.module';
+import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
+import {InvitationModule} from './invitation/invitation.module';
+import {ProfileModule} from './profile/profile.module';
+import { ServiceProviderPageComponent } from './service-provider-page/service-provider-page.component';
+import {CalendarModule, DateAdapter} from 'angular-calendar';
+import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
+
+import {HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi} from '@angular/common/http';
+import { AuthInterceptor} from './authentication/guards/AuthInterceptor';
+import { ViewMyEventsComponent } from './view-my-events/view-my-events.component';
+import { CreateEventComponent } from './view-my-events/create-event/create-event.component';
+import {BudgetingModule} from './budgeting/budgeting.module';
+import {ReservationModule} from './reservation/reservation.module';
+import {ReportModule} from './report/report.module';
+import {BlockingModule} from './blocking/blocking.module';
+import { EventStatsDialogComponent } from './event-stats-dialog/event-stats-dialog.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProfileComponent
+    ServiceProviderPageComponent,
+    ViewMyEventsComponent,
+    CreateEventComponent,
+    EventStatsDialogComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
-    AuthenticationModule, 
-    ReactiveFormsModule, 
+    AuthenticationModule,
+    ReactiveFormsModule,
     MaterialModule,
     EventModule,
-    ServicesModule
+    SolutionsModule,
+    AdminDashboardModule,
+    InvitationModule,
+    AdminDashboardModule,
+    BlockingModule,
+    ProfileModule,
+    ReservationModule,
+    BudgetingModule,
+    ReportModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
+    ReservationModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,  // Allows multiple interceptors to be used
+    },
+    provideHttpClient(withFetch(), withInterceptorsFromDi()),
+    provideAnimationsAsync(),
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

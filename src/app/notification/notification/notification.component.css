@@ -1,0 +1,65 @@
+.container {
+    width: 25em;
+    height: 30em;
+    background-color: var(--secondary-color);
+    position: fixed;
+    z-index: 1000;
+    display: flex;
+    right: 9em;
+    border-radius: 20px;
+    flex-direction: column;
+}
+
+.notifications{
+    margin-bottom: 1em;
+    padding-right: 1em;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--light-beige) var(--secondary-color);
+
+}
+
+.notifications::-webkit-scrollbar {
+    width: 1em;
+  }
+
+.notifications::-webkit-scrollbar-thumb {
+background-color: var(--light-beige);
+border-radius: 20px !important;
+border: 2px solid var(--secondary-color);
+}
+
+.notifications::-webkit-scrollbar-track {
+    background-color: var(--secondary-color);
+}
+
+mat-slide-toggle{
+    margin: 1em;
+    color: var(--light-beige) ;
+}
+
+.single-notification{
+    background-color: var(--light-beige);
+    color: var(--font-dark-blue);
+    border-radius: 20px;
+    margin: 1em;
+    padding: 1em;
+    cursor: pointer;
+}
+
+.single-notification .title {
+    font-size: 1.2em;
+    margin-bottom: 0.5em;
+  }
+
+  .single-notification .content {
+    font-size: 0.8em;
+    line-height: 1.4;
+  }
+
+  .single-notification .timestamp {
+    position: relative;
+    font-size: 0.5em;
+    text-align: right;
+    right: 1em;
+  }

@@ -2,12 +2,27 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
+import {RegistrationService} from '../../services/registration/registration.service';
+import {CreateEventOrganizerDTO} from '../../../shared/dto/users/eventOrganizer/CreateEventOrganizerDTO.model';
+import {PersonType} from '../../../shared/model/PersonType.model';
+import {CreateLocationDTO} from '../../../shared/dto/locations/CreateLocationDTO.model';
+import {CreateEventOrganizerAccountDTO} from '../../../shared/dto/users/account/CreateEventOrganizerAccountDTO.model';
+import {CreateRegistrationRequestDTO} from '../../../shared/dto/registrationRequest/CreateRegistrationRequestDTO.model';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../../../env/envirements';
+import {ImageServiceService} from '../../../shared/services/image-service.service';
 
 function phoneMinLengthValidator(control: AbstractControl): ValidationErrors | null {
   const value = control.value?.toString() || ''; // Convert the number to a string
   return value.length >= 8 ? null : { minlength: true };
 }
 
+export function fullNameValidator(control: AbstractControl): ValidationErrors | null {
+  const value = control.value?.trim();
+  if (!value) return null; // required validator handles empty case
+  const parts = value.split(/\s+/); // splits by spaces
+  return parts.length >= 2 ? null : { fullNameInvalid: true };
+}
 
 @Component({
   selector: 'app-organizer-register',
@@ -19,11 +34,14 @@ export class OrganizerRegisterComponent {
   hidePassword = true;
   hideConfirmPassword = true;
   imagePreview: string | null = null;
+  profileImageUpload: File;
+  profileImageUrl: string = "";
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private registrationService: RegistrationService, private http: HttpClient,
+                private imageService: ImageServiceService) {
     this.registerForm = this.fb.group(
       {
-        fullName: ['', Validators.required],
+        fullName: ['', [Validators.required, fullNameValidator]],
         email: ['', [Validators.required, Validators.email]],
         password: [
           '',
@@ -44,22 +62,97 @@ export class OrganizerRegisterComponent {
   }
 
   // Custom validator to check if passwords match
-  passwordMatchValidator(group: FormGroup) {
+  passwordMatchValidator(group: FormGroup): ValidationErrors | null {
     const password = group.get('password')?.value;
-    const confirmPassword = group.get('confirmPassword')?.value;
-    return password === confirmPassword ? null : { passwordMismatch: true };
+    const confirmPasswordControl = group.get('confirmPassword');
+
+    if (password !== confirmPasswordControl?.value) {
+      confirmPasswordControl?.setErrors({ passwordMismatch: true });
+      return { passwordMismatch: true };
+    } else {
+      confirmPasswordControl?.setErrors(null);
+      return null;
+    }
   }
+
 
   onSubmit() {
     if (this.registerForm.valid) {
-      console.log('Form Submitted:', this.registerForm.value);
-      this.router.navigate(['/email-confirmation-sent']);
+      this.registrationService.isEmailTaken(this.registerForm.value.email).subscribe({
+        next: (isTaken) => {
+          if (isTaken) {
+            this.registerForm.get('email')?.setErrors({ emailTaken: true });
+            return;
+          }
+
+
+          const createEventOrganizerDTO: CreateEventOrganizerDTO = {
+            name: this.registerForm.value.fullName.split(' ')[0], //first name
+            surname: this.registerForm.value.fullName.split(' ').slice(1).join(' ') || '',
+            profilePicture: "",
+            phoneNumber: this.registerForm.value.phoneNumber,
+            type: PersonType.EVENT_ORGANIZER,
+            location: {
+              address: this.registerForm.value.address,
+              city: this.registerForm.value.city,
+            } as CreateLocationDTO,
+          };
+          const createAccount: CreateEventOrganizerAccountDTO = {
+            email: this.registerForm.value.email,
+            password: this.registerForm.value.password,
+            isVerified: false,
+            suspensionTimeStamp: null,
+            type: PersonType.EVENT_ORGANIZER,
+            person: createEventOrganizerDTO,
+            registrationRequest:{} as CreateRegistrationRequestDTO,
+          }
+          if(this.profileImageUpload != null) {
+            this.imageService.uploadImage(this.profileImageUpload).subscribe({
+              next: (url: string) => {
+                createAccount.person.profilePicture = url;
+
+
+                //this also sends an email - I don't want it to wait
+                this.router.navigate(['/email-confirmation-sent']);
+                this.registrationService.registerEventOrganizer(createAccount).subscribe({
+                  next: (response) => {
+                    //this.router.navigate(['/email-confirmation-sent']);
+                  },
+                  error: (err) => {
+                    console.error('Error registering event organizer:', err);
+                  },
+                });
+              },
+              error: (err) => {
+                console.error('Error uploading image:', err);
+              },
+            });
+
+          }
+          else{
+            //this also sends an email - I don't want it to wait
+            this.router.navigate(['/email-confirmation-sent']);
+            this.registrationService.registerEventOrganizer(createAccount).subscribe({
+              next: (response) => {
+                //this.router.navigate(['/email-confirmation-sent']);
+              },
+              error: (err) => {
+                console.error('Error registering event organizer:', err);
+              },
+            });
+          }
+
+
+        },
+        error: (err) => {
+          console.error('Error finding email', err);
+        },
+      });
     } else {
       this.registerForm.markAllAsTouched();
-      console.log('Form is invalid:', this.registerForm.value);
     }
   }
-  
+
   togglePasswordVisibility() {
     this.hidePassword = !this.hidePassword;
   }
@@ -70,20 +163,29 @@ export class OrganizerRegisterComponent {
 
   onFileSelected(event: Event) {
     const inputElement = event.target as HTMLInputElement;
-    const file = inputElement.files?.[0]; // Use optional chaining to safely access the file
-    if (file) {
+    const files = inputElement.files;
+
+    if (files && files[0]) {
       const reader = new FileReader();
       reader.onload = (e: ProgressEvent<FileReader>) => {
-        this.imagePreview = e.target?.result as string; // Cast result as string since it's a Data URL
+        this.imagePreview = e.target?.result as string;
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(files[0]);
     }
+
+    this.profileImageUpload = files[0];
+    this.profileImageUrl = URL.createObjectURL(files[0]);
+  }
+
+
+  clearImage() {
+    this.imagePreview = null;
+    this.profileImageUpload = null;
+    this.profileImageUrl = '';
   }
 
   triggerFileInput() {
     const fileInput = document.getElementById('profilePic') as HTMLInputElement;
-    if (fileInput) {
-      fileInput.click();
-    }
+    fileInput?.click();
   }
 }

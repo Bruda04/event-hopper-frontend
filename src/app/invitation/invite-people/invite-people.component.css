@@ -1,0 +1,118 @@
+::ng-deep .mat-dialog-container {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+h2 {
+  align-self: center;
+  color: var(--font-dark-blue) !important;
+}
+
+/* Kontejner za input i dugme */
+.dialog-container {
+  display: flex;
+  justify-content: center; /* Horizontalno centriranje */
+  align-items: center; /* Vertikalno centriranje */
+  margin-top: 2rem; /* Razmak od vrha */
+}
+
+
+.color {
+  background-color: var(--light-blue);
+  color: var(--font-dark-blue);
+}
+
+.primary-button {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.cancel-button {
+  background-color: var(--primary-color);
+}
+
+/* Centriranje Input polja i Invite dugmeta */
+.input-pair {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 13em;
+  padding-left: 13em;
+  gap: 1em;
+  margin-bottom: 1rem;
+}
+
+.email-input {
+  flex: 1; /* Input polje rasteže se dok dugme Invite ostaje desno */
+}
+
+::ng-deep .invite-button {
+  margin-bottom: 1.4em;
+  flex-shrink: 0 !important; /* Dugme ne rasteže se */
+  background-color: var(--font-dark-blue) !important;
+  color: var(--light-beige) !important;
+  transition: background-color 0.3s ease !important;
+}
+
+.invite-button:hover {
+  background-color: var(--primary-color)!important;
+  color: white !important;
+}
+
+.email-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 13em;
+  padding-left: 13em;
+  gap: 1em;
+  margin-bottom: 1rem;
+}
+
+.email-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background-color: var(--light-blue);
+  border-radius: 10em;
+  width: 35em;
+  height: 2.5em;
+  color: var(--font-dark-blue);
+}
+
+.delete-button {
+  flex-shrink: 0 !important; /* Dugme ne rasteže se */
+  background-color: var(--error-color) !important;
+  color: var(--light-beige) !important;
+  transition: background-color 0.3s ease !important;
+}
+
+
+.actions-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.cancel-button {
+  background-color: #b81d1d;
+  color: white;
+}
+
+.submit-button {
+  background-color: #004f6f;
+  color: white;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Ili visina kontejnera */
+}
+
+mat-spinner {
+  color: var(--font-dark-blue) !important;
+}
+

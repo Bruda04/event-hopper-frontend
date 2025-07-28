@@ -1,0 +1,131 @@
+h3 {
+  margin-left: 5%;
+  margin-top: 1em;
+  margin-bottom: 0px;
+  color: var(--font-dark-blue);
+}
+
+.container {
+  margin: 0 auto;
+  padding: 0 20px 20px 20px;
+  max-width: 90%;
+  color: var(--font-dark-blue);
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.profile-picture-section, .user-information-card, .buttons-section, .company-information-card{
+  padding: 20px 10px;
+  border-radius: 5px;
+  width: 32%;
+  display: flex; /* Enable flexbox for layout */
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: center;
+  align-items: center; /* Center align elements horizontally */
+
+  text-align: center; /* Center align text */
+}
+
+.profile-picture-section, .buttons-section {
+}
+
+.information {
+  text-align: left;
+}
+
+
+.edit-icon {
+  cursor: pointer;
+}
+
+.buttons-section {
+  gap: 0.8em; /* Adds spacing between buttons */
+}
+
+.profile-picture {
+  width: 200px;
+  height: 200px; /* Ensures the image is a square */
+  border-radius: 50%; /* Crops the image into a circle */
+  object-fit: cover; /* Ensures the image is scaled and cropped to fill the circle */
+  overflow: hidden;
+}
+
+
+.btn {
+  width: 70%;
+  font-weight: normal;
+  background-color: var(--secondary-color) !important;
+  color: white !important;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin-top: 1em;
+
+  padding-top: 1.5em;
+  padding-bottom: 1.5em;
+  display: flex;
+  justify-content: center; /* Center content within the button */
+  align-items: center;
+}
+
+.btn-pup {
+  width: 100%;
+}
+
+.btn:hover {
+  background-color: var(--font-dark-blue) !important;
+  color: white;
+}
+
+.btn.deactivate-account {
+  background-color: var(--error-color) !important;
+}
+
+mat-tab-group{
+  background-color: white !important;
+}
+
+::ng-deep .p-carousel-content {
+  position: relative;
+  width: 100%;
+}
+
+::ng-deep .p-carousel-next,
+::ng-deep .p-carousel-prev {
+  background-color: var(--font-dark-blue);
+  width: 2.5em;
+  height: 2.5em;
+  color: white;
+  border-radius: 50%;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+::ng-deep .p-carousel-prev {
+  left: 0.5em; /* Adjust spacing from the left */
+}
+
+::ng-deep .p-carousel-next {
+  right: 0.5em; /* Adjust spacing from the right */
+}
+
+.carousel-item {
+  max-height: 30em;
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the image fills its container */
+}

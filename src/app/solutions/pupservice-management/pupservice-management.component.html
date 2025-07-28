@@ -1,0 +1,192 @@
+<div class="component">
+  <h2 class="title">Manage services</h2>
+
+  <div class="toolbar">
+    <div class="search-container">
+      <button class="filter-button" (click)="showFilters()">
+        <mat-icon class="filter-icon">tune</mat-icon>
+      </button>
+
+      <div class="search-bar">
+        <input
+          class="search"
+          type="search"
+          placeholder="Search"
+          (input)="setSearchContent($event)"
+        />
+        <button class="search-button" (click)="loadPagedEntities()" >
+          <mat-icon class="search-icon">search</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <button mat-raised-button class="create-button" (click)="add()">
+      <mat-icon>add</mat-icon>
+      CREATE
+    </button>
+  </div>
+
+  <div *ngIf="showFilterPanel"  @slideInOut  class="filter-panel">
+    <form [formGroup]="filterForm" class="filter-form">
+      <mat-form-field appearance="fill" class="filter-field">
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="category">
+          <mat-option *ngFor="let category of categories" [value]="category.id">
+            {{ category.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="filter-field">
+        <mat-label>Event Type</mat-label>
+        <mat-select formControlName="eventType" multiple>
+          <mat-option *ngFor="let eventType of filteredEventTypes" [value]="eventType.id">
+            {{ eventType.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Min Price Field -->
+      <mat-form-field appearance="fill" class="filter-field">
+        <mat-label>Min Price</mat-label>
+        <input matInput formControlName="minPrice" min="0" type="number" placeholder="Enter min price">
+      </mat-form-field>
+
+      <!-- Max Price Field -->
+      <mat-form-field appearance="fill" class="filter-field">
+        <mat-label>Max Price</mat-label>
+        <input matInput formControlName="maxPrice" min="0" type="number" placeholder="Enter max price">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="filter-field">
+        <mat-label>Availability</mat-label>
+        <mat-select formControlName="availability">
+          <mat-option value="available">
+            Available
+          </mat-option>
+          <mat-option value="unavailable">
+            Unavailable
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="filter-actions">
+        <button mat-mini-fab [ngStyle]="{'background-color':'var(--font-dark-blue)'}" (click)="applyFilters()">
+          <mat-icon [ngStyle]="{'color':'white'}">filter_alt</mat-icon>
+        </button>
+      </div>
+      <div class="filter-actions">
+        <button mat-mini-fab [ngStyle]="{'background-color':'var(--light-beige)'}" (click)="resetFilters()">
+          <mat-icon [ngStyle]="{'color':'var(--font-dark-blue)'}">filter_alt_off</mat-icon>
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+
+  <div class="table-container mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" class="mat-table" matSort>
+      <!-- Service Name Column -->
+      <ng-container matColumnDef="product">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="name"> Name </th>
+        <td mat-cell *matCellDef="let element">
+          {{element.name}}
+        </td>
+      </ng-container>
+
+      <!-- Description Column -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="description"> Description </th>
+        <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+      </ng-container>
+
+      <!-- Base Price Column -->
+      <ng-container matColumnDef="basePrice">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="basePrice"> Base Price </th>
+        <td mat-cell *matCellDef="let element"> {{element.price.basePrice}} € </td>
+      </ng-container>
+
+      <!-- Discount Column -->
+      <ng-container matColumnDef="discount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="discount"> Discount </th>
+        <td mat-cell *matCellDef="let element">
+          {{element.price.discount}}%
+          <mat-icon *ngIf="element.discount > 0" [ngStyle]="{'color':'var(--green-color)'}">trending_up</mat-icon>
+          <mat-icon *ngIf="element.discount == 0" [ngStyle]="{'color':'var(--error-color)'}">trending_down</mat-icon>
+        </td>
+      </ng-container>
+
+      <!-- Final Price Column -->
+      <ng-container matColumnDef="finalPrice">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="finalPrice"> Final Price </th>
+        <td mat-cell *matCellDef="let element"> {{element.price.finalPrice}} € </td>
+      </ng-container>
+
+      <!-- Visible Column -->
+      <ng-container matColumnDef="visible">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="isVisible"> Visible </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon *ngIf="element.visible" [ngStyle]="{'color':'var(--green-color)'}">check</mat-icon>
+          <mat-icon *ngIf="!element.visible" [ngStyle]="{'color':'var(--error-color)'}">close</mat-icon>
+
+        </td>
+      </ng-container>
+
+      <!-- Available Column -->
+      <ng-container matColumnDef="available">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="isAvailable"> Available </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon *ngIf="element.available" [ngStyle]="{'color':'var(--green-color)'}">check</mat-icon>
+          <mat-icon *ngIf="!element.available" [ngStyle]="{'color':'var(--error-color)'}">close</mat-icon>
+        </td>
+      </ng-container>
+
+      <!-- Duration Column -->
+      <ng-container matColumnDef="duration">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="durationMinutes"> Duration </th>
+        <td mat-cell *matCellDef="let element"> {{element.durationMinutes}} min </td>
+      </ng-container>
+
+      <!-- Cancellation Window Column -->
+      <ng-container matColumnDef="cancellationWindow">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="cancellationWindowDays"> Cancellation Window </th>
+        <td mat-cell *matCellDef="let element"> {{element.cancellationWindowDays}} day(s) </td>
+      </ng-container>
+
+      <!-- Reservation Window Column -->
+      <ng-container matColumnDef="reservationWindow">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="reservationWindowDays"> Reservation Window </th>
+        <td mat-cell *matCellDef="let element"> {{element.reservationWindowDays}} day(s) </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button (click)="edit(element)" [ngStyle]="{color: 'var(--primary-color)'}">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="remove(element.id)" [ngStyle]="{color: 'var(--error-color)'}">
+            <mat-icon>delete</mat-icon>
+          </button>
+            <mat-icon *ngIf="element.status === 'PENDING'" [ngStyle]="{color: 'var(--primary-color)'}">sync</mat-icon>
+          <button mat-icon-button (click)="goToSolution(element)" [ngStyle]="{color: 'var(--primary-color)'}" *ngIf="element.status === 'APPROVED' && element.visible == true">
+            <mat-icon>
+              open_in_new
+            </mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="table-header"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator *ngIf="pageProperties" (page)="pageChanged($event)" [length]="pageProperties.totalCount" [pageIndex]="pageProperties.page"
+                   [pageSizeOptions]="pageProperties.pageSizeOptions" [pageSize]="pageProperties.pageSize"
+                   showFirstLastButtons>
+    </mat-paginator>
+  </div>
+
+</div>
+

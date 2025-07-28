@@ -1,0 +1,42 @@
+.component {
+  text-align: center;
+  color: var(--font-dark-blue);
+  padding-right: 4em;
+  padding-left: 4em;
+}
+
+p {
+  font-size: 1em;
+  text-align: justify;
+}
+
+.header {
+  font-weight: bold;
+  font-size: 1.5em;
+  text-align: center;
+  margin-top: 1em;
+}
+
+.actions-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.5em 1em;
+  margin-bottom: 1em;
+}
+
+.actions-container button {
+  min-width: 100px;
+  color: white;
+}
+
+.primary-button {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.cancel-button {
+  background-color: var(--primary-color);
+}
+

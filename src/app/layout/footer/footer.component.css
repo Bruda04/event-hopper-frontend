@@ -1,0 +1,28 @@
+/* Footer Styles */
+.footer {
+  /*background-color: #f7f7f7; /* Light gray background */
+  background-color: #fffcef;
+  color: var(--font-dark-blue); /* Darker text color */
+  text-align: center; /* Center the text */
+  padding: 20px 10px; /* Add padding for spacing */
+  font-family: Arial, sans-serif; /* Clean font */
+  border-top: 1px solid #ddd; /* Subtle top border */
+}
+
+.footer a {
+  color: var(--primary-color); /* Highlight the link */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.footer a:hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
+.footer-content p {
+  margin: 10px 0; /* Space between paragraphs */
+  font-size: 14px; /* Slightly smaller text */
+}
+
+.footer-content em {
+}

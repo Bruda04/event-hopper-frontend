@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Select Event</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="choseEventForm">
+    <div class="form-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Event</mat-label>
+        <mat-select formControlName="event">
+          <mat-option *ngFor="let event of events" [value]="event.id">
+            {{ event.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="actions-container">
+  <button mat-raised-button mat-dialog-close class="cancel-button">CANCEL</button>
+  <button mat-raised-button (click)="chose()" class="primary-button">CHOSE</button>
+</mat-dialog-actions>

@@ -1,0 +1,13 @@
+<mat-card>
+    <img mat-card-image [src]="environment.apiImagesHost + service.pictures[0]">
+    <mat-card-header>
+      <mat-card-title>{{service.name}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{service.category.name}}</p>
+      <p>{{service.description}}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-flat-button (click) = "viewMore(service.id)">View More</button>
+    </mat-card-actions>
+  </mat-card>

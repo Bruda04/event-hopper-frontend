@@ -9,30 +9,37 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
-import { ServicesModule } from '../services/services.module';
+import { SolutionsModule } from '../solutions/solutions.module';
+import { NotificationModule } from '../notification/notification.module';
+import { FooterComponent } from './footer/footer.component';
+import {ChatModule} from "../chat/chat.module";
 
 
 @NgModule({
   declarations: [
     NavBarComponent,
-    HomeComponent],
-  imports: [
-    CommonModule,
-    MaterialModule,
-    RouterModule,
-    EventModule,
-    ServicesModule,
-    ReactiveFormsModule,
-    CarouselModule,
-    ButtonModule,
-    TagModule,
-  ],
-  exports: [
-    NavBarComponent,
-    HomeComponent ,
-    CarouselModule,
-    ButtonModule,
-    TagModule,
-  ]
+    HomeComponent,
+    FooterComponent],
+    imports: [
+        CommonModule,
+        MaterialModule,
+        RouterModule,
+        EventModule,
+        SolutionsModule,
+        ReactiveFormsModule,
+        CarouselModule,
+        ButtonModule,
+        TagModule,
+        NotificationModule,
+        ChatModule,
+    ],
+    exports: [
+        NavBarComponent,
+        HomeComponent,
+        CarouselModule,
+        ButtonModule,
+        TagModule,
+        FooterComponent,
+    ]
 })
 export class LayoutModule { }

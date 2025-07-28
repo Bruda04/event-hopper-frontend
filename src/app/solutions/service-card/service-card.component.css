@@ -1,0 +1,47 @@
+mat-card{
+    height: 18em;
+    width: 16em;
+    position: relative;
+    /* transition: transform 0.3s ease, box-shadow 0.3s ease !important; */
+}
+
+img{
+    height: 8em;
+    width: 16em;
+}
+
+mat-card-title{
+    font-size: 1em;
+}
+
+mat-card-content{
+    font-size: 0.5em;
+    line-height: normal;
+}
+
+button{
+    position: absolute;
+    background-color: var(--secondary-color) !important;
+    font-family: Poppins;
+    height: 4em;
+    width: 11em !important;
+    text-align: center;
+    text-wrap: nowrap;
+    border-radius: 20px;
+    font-size: 0.6em !important;
+    cursor: pointer;
+    box-shadow: none;
+    bottom: 2em; /* Udaljenost od dna roditelja */
+    right: 2em;
+    font-size: 0.6em;
+    transition: background-color 0.3s ease !important;  /* Animacija promene boje */
+
+}
+
+button:hover {
+    background-color: var(--primary-color) !important; /* Promena boje na hover */
+  }
+
+
+
+
