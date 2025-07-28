@@ -38,7 +38,7 @@ export class CreateServiceComponent {
               private imageService: ImageServiceService) {
     this.createServiceForm.get('category')?.valueChanges.subscribe((categoryId: string) => {
       const category: CategoryDTO = this.categories.find(cat => cat.id === categoryId);
-      this.filteredEventTypes = category?.eventTypes || [];
+      this.filteredEventTypes = category?.eventTypes.filter(et => !et.deactivated)  || [];
     });
   }
 

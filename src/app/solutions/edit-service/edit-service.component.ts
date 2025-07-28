@@ -76,7 +76,7 @@ export class EditServiceComponent implements OnInit {
 
           this.dialogRef.close(service);
         },
-        error: (err ): void => {
+        error: (err: { error?: { message?: string } }): void => {
           console.log(imageNames);
           console.log(this.uploadedImages
             .filter((image: File | null): boolean => image !== null))
