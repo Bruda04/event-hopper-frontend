@@ -168,7 +168,7 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
       minWidth: '70vw',
       minHeight: '70vh',
       data: {serviceToEdit: element,
-        eventTypes: this.categories.filter(c => element.category.id === c.id)[0]?.eventTypes || null}
+        eventTypes: this.categories.filter(c => element.category.id === c.id)[0]?.eventTypes.filter(et => !et.deactivated) || null}
     });
 
     dialogRef.afterClosed().subscribe((updatedService: UpdateServiceDTO | null) => {
@@ -273,7 +273,7 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
   loadEventTypes(): void {
     this.filterForm.get('category')?.valueChanges.subscribe((categoryId: string) => {
       const category: CategoryDTO = this.categories.find(cat => cat.id === categoryId);
-      this.filteredEventTypes = category?.eventTypes || [];
+      this.filteredEventTypes = category?.eventTypes.filter(eventType => !eventType.deactivated) || [];
     });
   }
 
