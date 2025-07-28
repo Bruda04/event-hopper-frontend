@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {SimpleEventDTO} from '../../shared/dto/events/simpleEventDTO.model';
+import {EventDTO} from '../../shared/dto/events/eventDTO.model';
 
 @Component({
   selector: 'app-favorite-events',
@@ -7,5 +7,5 @@ import {SimpleEventDTO} from '../../shared/dto/events/simpleEventDTO.model';
   styleUrl: './favorite-events.component.css'
 })
 export class FavoriteEventsComponent {
-  @Input() favoriteEvents: SimpleEventDTO[] = [];
+  @Input() favoriteEvents: any[] = [];
 }
