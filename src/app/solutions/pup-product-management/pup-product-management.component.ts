@@ -170,7 +170,7 @@ export class PupProductManagementComponent  implements OnInit, AfterViewInit {
       minWidth: '70vw',
       minHeight: '70vh',
       data: {productToEdit: element,
-        eventTypes: this.categories.filter(c => element.category.id === c.id)[0]?.eventTypes || null}
+        eventTypes: this.categories.filter(c => element.category.id === c.id)[0]?.eventTypes.filter(et => !et.deactivated) || null}
     });
 
     dialogRef.afterClosed().subscribe((updateProduct: UpdateProductDTO | null) => {
@@ -181,7 +181,7 @@ export class PupProductManagementComponent  implements OnInit, AfterViewInit {
               this.loadPagedEntities();
               this.productChanged.emit();
             },
-            error: (err) => {
+            error: (err: { error?: { message?: string } }) => {
               console.error('Error updating product');
               if (err.error?.message) {
                 this.showErrorToast("Error updating product: " + err.error.message);
@@ -273,10 +273,10 @@ export class PupProductManagementComponent  implements OnInit, AfterViewInit {
   }
 
   loadEventTypes(): void {
-    this.filterForm.get('category')?.valueChanges.subscribe((categoryId: any) => {
+    this.filterForm.get('category')?.valueChanges.subscribe((categoryId: string) => {
       const category: CategoryDTO = this.categories.find(cat => cat.id === categoryId);
-      this.filteredEventTypes = category?.eventTypes || [];
-    });
+      this.filteredEventTypes = category?.eventTypes.filter(eventType => !eventType.deactivated) || [];
+  });
   }
 
   private showErrorToast(message: string): void {

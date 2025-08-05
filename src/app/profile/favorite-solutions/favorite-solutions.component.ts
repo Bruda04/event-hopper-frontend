@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {SimpleProductDTO} from '../../shared/dto/solutions/simpleProductDTO';
 
 @Component({
   selector: 'app-favorite-solutions',

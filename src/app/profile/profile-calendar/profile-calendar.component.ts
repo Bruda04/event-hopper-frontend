@@ -4,6 +4,8 @@ import {Subject} from 'rxjs';
 import {UserService} from '../../authentication/services/user.service';
 import {User} from '../../shared/model/user.model';
 import {Router} from '@angular/router';
+import {UserData} from '../../shared/model/userData.model';
+import {SimpleEventDTO} from '../../shared/dto/events/simpleEventDTO.model';
 
 
 @Component({
@@ -12,9 +14,9 @@ import {Router} from '@angular/router';
   styleUrl: './profile-calendar.component.css'
 })
 export class ProfileCalendarComponent {
-  user: User;
-  @Input() attendingEvents: any[] = [];
-  @Input() myEvents: any[] = [];
+  user: UserData;
+  @Input() attendingEvents: SimpleEventDTO[] = [];
+  @Input() myEvents: SimpleEventDTO[] = [];
   events: CalendarEvent[] = [];
   view: CalendarView = CalendarView.Month; // Default calendar view
   CalendarView = CalendarView; // Enum for calendar views

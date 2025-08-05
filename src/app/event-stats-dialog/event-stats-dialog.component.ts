@@ -87,13 +87,13 @@ export class EventStatsDialogComponent implements OnInit {
     new Chart(this.lineChartRef.nativeElement.getContext('2d'), {
       type: 'line',
       data: {
-        labels: this.stats.ratings.map((r: any) =>
+        labels: this.stats.ratings.map((r) =>
           new Date(r.timestamp).toLocaleDateString()
         ),
         datasets: [
           {
             label: 'Average Rating',
-            data: this.stats.ratings.map((r: any) => r.averageRating),
+            data: this.stats.ratings.map((r) => r.averageRating),
             borderColor: '#3f51b5',
             fill: false,
             tension: 0.2,

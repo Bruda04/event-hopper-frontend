@@ -32,9 +32,9 @@ export class CreateProductComponent {
   constructor(public dialogRef: MatDialogRef<CreateProductComponent>,
               @Inject(MAT_DIALOG_DATA) protected categories: CategoryDTO[],
               private imageService: ImageServiceService) {
-    this.createProductForm.get('category')?.valueChanges.subscribe((categoryId: any) => {
+    this.createProductForm.get('category')?.valueChanges.subscribe((categoryId: string) => {
       const category: CategoryDTO = this.categories.find(cat => cat.id === categoryId);
-      this.filteredEventTypes = category?.eventTypes || [];
+      this.filteredEventTypes = category?.eventTypes.filter(et => !et.deactivated)  || [];
     });
   }
 
@@ -77,7 +77,7 @@ export class CreateProductComponent {
           }
           this.dialogRef.close(productDTO);
         },
-        error: (err) => {
+        error: (err: { error?: { message?: string } }) => {
           console.error('Error uploading images', err);
         }
       });

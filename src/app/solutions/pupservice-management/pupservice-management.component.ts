@@ -114,7 +114,7 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
                 this.loadPagedEntities();
                 this.serviceChanged.emit();
               },
-              error: (err) => {
+              error: (err: { error?: { message?: string } }) => {
                 console.error('Error adding service');
                 if (err.error?.message) {
                   this.showErrorToast("Error creating service: " + err.error.message);
@@ -131,7 +131,7 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
                     this.loadPagedEntities();
                     this.serviceChanged.emit();
                   },
-                  error: (err) => {
+                  error: (err: { error?: { message?: string } }) => {
                     console.error('Error adding service with suggested category');
                     if (err.error?.message) {
                       this.showErrorToast("Error creating service: " + err.error.message);
@@ -153,7 +153,7 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
           this.loadPagedEntities()
           this.serviceChanged.emit();
         },
-        error: (err) => {
+        error: (err: { error?: { message?: string } }) => {
           console.error('Error removing service');
           if (err.error?.message) {
             this.showErrorToast("Error removing service: " + err.error.message);
@@ -168,7 +168,7 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
       minWidth: '70vw',
       minHeight: '70vh',
       data: {serviceToEdit: element,
-        eventTypes: this.categories.filter(c => element.category.id === c.id)[0]?.eventTypes || null}
+        eventTypes: this.categories.filter(c => element.category.id === c.id)[0]?.eventTypes.filter(et => !et.deactivated) || null}
     });
 
     dialogRef.afterClosed().subscribe((updatedService: UpdateServiceDTO | null) => {
@@ -179,7 +179,7 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
               this.loadPagedEntities();
               this.serviceChanged.emit();
             },
-            error: (err) => {
+            error: (err: { error?: { message?: string } }) => {
               console.error('Error updating service');
               if (err.error?.message) {
                 this.showErrorToast("Error updating service: " + err.error.message);
@@ -228,7 +228,7 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
         next: (categories: CategoryDTO[]) => {
           this.categories = categories;
         },
-        error: (err) => {
+        error: () => {
           console.error('Error loading categories');
         }
       });
@@ -261,7 +261,7 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
           this.dataSource = new MatTableDataSource(response.content);
           this.pageProperties.totalCount = response.totalElements;
         },
-        error: (e) => {
+        error: (e: { error?: { message?: string } }) => {
           console.error('Error loading services', e);
           if (e.error?.message) {
             this.showErrorToast("Error loading services: " + e.error.message);
@@ -271,9 +271,9 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
   }
 
   loadEventTypes(): void {
-    this.filterForm.get('category')?.valueChanges.subscribe((categoryId: any) => {
+    this.filterForm.get('category')?.valueChanges.subscribe((categoryId: string) => {
       const category: CategoryDTO = this.categories.find(cat => cat.id === categoryId);
-      this.filteredEventTypes = category?.eventTypes || [];
+      this.filteredEventTypes = category?.eventTypes.filter(eventType => !eventType.deactivated) || [];
     });
   }
 

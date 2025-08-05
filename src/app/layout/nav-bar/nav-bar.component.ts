@@ -8,6 +8,7 @@ import {WebSocketService} from '../../authentication/services/web-sockets/web-so
 import {BookingAServiceComponent} from '../../reservation/booking-a-service/booking-a-service.component';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {InvitePeopleComponent} from '../../invitation/invite-people/invite-people.component';
+import {UserData} from '../../shared/model/userData.model';
 
 @Component({
   selector: 'app-nav-bar',
@@ -18,7 +19,7 @@ export class NavBarComponent {
   isLoginRoute: boolean = false;
   isRegisterRoute: boolean = false;
   isHomeRoute: boolean = false;
-  user: User;
+  user: UserData;
   loggedIn: boolean = false;
 
   showNotificationsPanel: boolean = false;

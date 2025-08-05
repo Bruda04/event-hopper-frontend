@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../env/envirements';
 import {LoginDTO} from '../../../shared/dto/users/account/LoginDTO.model';
+import {LoginResponse} from '../../../shared/dto/users/account/LoginResponse.model';
 
 
 @Injectable({
@@ -12,8 +13,8 @@ export class LoginService {
 
   constructor(private httpClient: HttpClient) { }
 
-  loginUser(loginDTO : LoginDTO): Observable<any> {
-      return this.httpClient.post(environment.apiHost + '/login', loginDTO);
+  loginUser(loginDTO : LoginDTO): Observable<LoginResponse> {
+      return this.httpClient.post<LoginResponse>(environment.apiHost + '/login', loginDTO);
   }
 
 

@@ -50,7 +50,7 @@ export class AdminApprovedCategoriesManagementComponent implements OnInit {
           next: (_) => {
             this.load();
           },
-          error: (err) => {
+          error: (err: { error?: { message?: string } }) => {
             console.error("Error removing category");
             if (err.error?.message) {
               this.showErrorToast("Error removing category: " + err.error.message);
@@ -75,7 +75,7 @@ export class AdminApprovedCategoriesManagementComponent implements OnInit {
           next: (_) => {
             this.load();
           },
-          error: (err) => {
+          error: (err: { error?: { message?: string } }) => {
             console.error("Error updating category");
             if (err.error?.message) {
               this.showErrorToast("Error updating category: " + err.error.message);
@@ -98,7 +98,7 @@ export class AdminApprovedCategoriesManagementComponent implements OnInit {
           next: (_) => {
             this.load();
           },
-          error: (err) => {
+          error: (err: { error?: { message?: string } }) => {
             console.error("Error creating category");
             if (err.error?.message) {
               this.showErrorToast("Error creating category: " + err.error.message);
@@ -115,7 +115,7 @@ export class AdminApprovedCategoriesManagementComponent implements OnInit {
         this.dataSource = new MatTableDataSource<CategoryDTO>(categories);
         this.dataSource.sort = this.sort;
       },
-      error: (err) => {
+      error: (err: { error?: { message?: string } }) => {
         console.error("Error loading categories");
         if (err.error?.message) {
           this.showErrorToast("Error loading categories: " + err.error.message);

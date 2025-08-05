@@ -53,7 +53,7 @@ export class PriceListManagementComponent implements OnInit {
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         },
-        error: (err) => {
+        error: (err: { error?: { message?: string } }) => {
           console.error('Error loading prices');
           if (err.error?.message) {
             this.showErrorToast("Error loading prices: " + err.error.message);
@@ -78,7 +78,7 @@ export class PriceListManagementComponent implements OnInit {
               this.loadPrices();
               this.priceChanged.emit();
             },
-            error: (err) => {
+            error: (err: { error?: { message?: string } }) => {
               console.error('Error updating price');
               if (err.error?.message) {
                 this.showErrorToast("Error updating price: " + err.error.message);

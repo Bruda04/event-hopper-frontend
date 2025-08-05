@@ -24,23 +24,23 @@ export class CategoriesService {
     return this.httpClient.get<CategorySuggestionDTO[]>(environment.apiHost + '/categories/suggestions');
   }
 
-  add(category: CreateCategoryDTO): Observable<any> {
+  add(category: CreateCategoryDTO): Observable<unknown> {
     return this.httpClient.post(environment.apiHost + '/categories', category);
   }
 
-  remove(id: string): Observable<any> {
+  remove(id: string): Observable<unknown> {
     return this.httpClient.delete(environment.apiHost + '/categories/' + id);
   }
 
-  update(id: string,category: UpdateCategoryDTO): Observable<any> {
+  update(id: string,category: UpdateCategoryDTO): Observable<unknown> {
     return this.httpClient.put(environment.apiHost + '/categories/' + id, category);
   }
 
-  approve(id: string): Observable<any> {
+  approve(id: string): Observable<unknown> {
     return this.httpClient.put(environment.apiHost + '/categories/suggestions/' + id + '/approve', {});
   }
 
-  reject(categoryId: string, substituteCategoryId: string): Observable<any> {
+  reject(categoryId: string, substituteCategoryId: string): Observable<unknown> {
     return this.httpClient.put(environment.apiHost + '/categories/suggestions/' + categoryId + '/reject/' + substituteCategoryId, {});
   }
 

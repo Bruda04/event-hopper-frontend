@@ -9,6 +9,7 @@ import {User} from '../../shared/model/user.model';
 import {
   PasswordChangedSuccessfullyComponent
 } from '../password-changed-successfully/password-changed-successfully.component';
+import {UserData} from '../../shared/model/userData.model';
 
 @Component({
   selector: 'app-change-password-dialog',
@@ -16,7 +17,7 @@ import {
   styleUrl: './change-password-dialog.component.css'
 })
 export class ChangePasswordDialogComponent {
-  user: User;
+  user: UserData;
   changePasswordForm: FormGroup;
   hideNewPassword = true;
   hideOldPassword = true;
@@ -63,7 +64,7 @@ export class ChangePasswordDialogComponent {
       }
 
       this.profileService.changePassword(changePasswordDTO).subscribe({
-        next: (response) => {
+        next: () => {
           console.log('Password changed successfully.');
           this.dialogRef.close();
           this.dialog.open(PasswordChangedSuccessfullyComponent, {

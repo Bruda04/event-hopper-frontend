@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {EventDTO} from '../../shared/dto/events/eventDTO.model';
 
 @Component({
   selector: 'app-favorite-events',

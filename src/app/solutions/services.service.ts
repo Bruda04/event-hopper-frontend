@@ -14,7 +14,7 @@ export class ServicesService {
 
   constructor(private httpClient: HttpClient) {  }
 
-  getAllForManagement(pageProperties: any,
+  getAllForManagement(pageProperties: { page: number, pageSize: number },
                       categoryId: string,
                       eventTypeIds: string[],
                       minPrice: number,
@@ -61,15 +61,15 @@ export class ServicesService {
   }
 
 
-  add(service: CreateServiceDTO): Observable<any> {
+  add(service: CreateServiceDTO): Observable<unknown> {
     return this.httpClient.post(environment.apiHost + '/services', service);
   }
 
-  remove(id: string): Observable<any> {
+  remove(id: string): Observable<unknown> {
     return this.httpClient.delete(environment.apiHost + '/services/' + id);
   }
 
-  update(id: string, service: UpdateServiceDTO): Observable<any> {
+  update(id: string, service: UpdateServiceDTO): Observable<unknown> {
    return this.httpClient.put(environment.apiHost + '/services/' + id, service);
   }
 }

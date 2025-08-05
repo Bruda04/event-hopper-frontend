@@ -36,9 +36,9 @@ export class CreateServiceComponent {
   constructor(public dialogRef: MatDialogRef<CreateServiceComponent>,
               @Inject(MAT_DIALOG_DATA) protected categories: CategoryDTO[],
               private imageService: ImageServiceService) {
-    this.createServiceForm.get('category')?.valueChanges.subscribe((categoryId: any) => {
+    this.createServiceForm.get('category')?.valueChanges.subscribe((categoryId: string) => {
       const category: CategoryDTO = this.categories.find(cat => cat.id === categoryId);
-      this.filteredEventTypes = category?.eventTypes || [];
+      this.filteredEventTypes = category?.eventTypes.filter(et => !et.deactivated)  || [];
     });
   }
 
@@ -85,7 +85,7 @@ export class CreateServiceComponent {
           }
           this.dialogRef.close(service);
         },
-        error: (err) => {
+        error: (err: { error?: { message?: string } }) => {
           console.error('Error uploading images', err);
         }
       });
