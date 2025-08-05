@@ -63,44 +63,141 @@ describe('CreateServiceComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should initialize form controls with defaults', () => {
+    it('should create the component', () => {
+        expect(component).toBeTruthy();
+    });
+
+    describe('Form initialization', () => {
+      it('should initialize form controls with defaults', () => {
         const form = component.createServiceForm;
         expect(form.get('name')?.value).toBe('');
         expect(form.get('discount')?.value).toBeNull();
         expect(form.get('acceptance')?.value).toBe('auto');
-    });
+      });
 
-    it('should update filteredEventTypes when category changes', fakeAsync(() => {
+      it('should update filteredEventTypes when category changes', fakeAsync(() => {
         component.createServiceForm.get('category')?.setValue('category1id');
         tick();
         expect(component.filteredEventTypes.length).toBe(1);
         expect(component.filteredEventTypes[0].id).toBe('eventType1id');
-    }));
-
-    it('should mark invalid when create() called with missing required', () => {
-        component.create();
-        expect(component.createServiceForm.invalid).toBeTrue();
+      }));
     });
 
-    it('should call dialogRef.close with CreateServiceDTO when form and images are valid', fakeAsync(() => {
-        // Fill form
+    describe('Form validation', () => {
+      it('should mark invalid when create() called with missing required', () => {
+          component.create();
+          expect(component.createServiceForm.invalid).toBeTrue();
+      });
+
+      it('should set errors when both category and categoryName are empty', () => {
+        const categoryControl = component.createServiceForm.get('category');
+        const categoryNameControl = component.createServiceForm.get('categoryName');
+
+        categoryControl?.setValue(null);
+        categoryNameControl?.setValue(null);
+
+        const markAllAsTouchedSpy = spyOn(component.createServiceForm, 'markAllAsTouched');
+
+        component.create();
+
+        expect(categoryControl?.errors).toEqual({ required: true });
+        expect(categoryNameControl?.errors).toEqual({ required: true });
+
+        expect(markAllAsTouchedSpy).toHaveBeenCalled();
+      });
+
+      it('should invalidate discount over 100 and under 0', () => {
+        const discountControl = component.createServiceForm.get('discount');
+
+        discountControl?.setValue(150);
+        expect(discountControl?.valid).toBeFalse();
+
+        discountControl?.setValue(-5);
+        expect(discountControl?.valid).toBeFalse();
+
+        discountControl?.setValue(50);
+        expect(discountControl?.valid).toBeTrue();
+      });
+
+      it('should invalidate basePrice when negative', () => {
+        const basePriceControl = component.createServiceForm.get('basePrice');
+        basePriceControl?.setValue(-1);
+        expect(basePriceControl?.valid).toBeFalse();
+      });
+
+      it('should invalidate duration over 1440', () => {
+        const durationControl = component.createServiceForm.get('duration');
+        durationControl?.setValue(2000);
+        expect(durationControl?.valid).toBeFalse();
+      });
+
+      it('should validate duration of 60', () => {
+        const durationControl = component.createServiceForm.get('duration');
+        durationControl?.setValue(60);
+        expect(durationControl?.valid).toBeTrue();
+      });
+    });
+
+    describe('Image handling', () => {
+      it('should update image arrays on file selection', () => {
+        const fakeFile = new File(['x'], 'x.jpg', { type: 'image/jpeg' });
+        const fakeEvent = { target: { files: [fakeFile] } } as any;
+        component.onServiceImageSelected(fakeEvent);
+        expect(component.imageUploads.length).toBe(1);
+        expect(component.imageUrls.length).toBe(1);
+      });
+
+      it('should remove image properly via clearServiceImage', () => {
+        component.imageUploads = ['A', 'B'] as any;
+        component.imageUrls = ['urlA', 'urlB'];
+        component.clearServiceImage(0);
+        expect(component.imageUrls).toEqual(['urlB']);
+      });
+
+      it('should not submit form if imageUploads is empty', () => {
         component.createServiceForm.setValue({
-            name: 'Test Service',
-            description: 'Desc',
-            basePrice: 100,
-            discount: 10,
-            category: 'category1id',
-            eventType: ['eventType1id'],
-            acceptance: 'auto',
-            available: true,
-            visible: true,
-            duration: 60,
-            reservationWindow: 5,
-            cancellationWindow: 2,
-            categoryName: ''
+          name: 'Test',
+          description: 'desc',
+          basePrice: 50,
+          discount: 0,
+          category: 'category1id',
+          eventType: ['eventType1id'],
+          acceptance: 'manual',
+          available: true,
+          visible: true,
+          duration: 30,
+          reservationWindow: 1,
+          cancellationWindow: 1,
+          categoryName: ''
         });
 
-        // Setup image
+        const spy = spyOn(component.createServiceForm, 'markAllAsTouched');
+        component.imageUploads = [];  // no images
+        component.create();
+
+        expect(dialogRef.close).not.toHaveBeenCalled();
+        expect(spy).toHaveBeenCalled();
+      });
+    });
+
+    describe('Create Logic', () => {
+      it('should call dialogRef.close with CreateServiceDTO when form and images are valid', fakeAsync(() => {
+        component.createServiceForm.setValue({
+          name: 'Test Service',
+          description: 'Desc',
+          basePrice: 100,
+          discount: 10,
+          category: 'category1id',
+          eventType: ['eventType1id'],
+          acceptance: 'auto',
+          available: true,
+          visible: true,
+          duration: 60,
+          reservationWindow: 5,
+          cancellationWindow: 2,
+          categoryName: ''
+        });
+
         const fakeFile = new File(['abc'], 'test.png', { type: 'image/png' });
         component.imageUploads = [fakeFile];
         component.imageUrls = ['fake-url'];
@@ -111,27 +208,27 @@ describe('CreateServiceComponent', () => {
 
         expect(mockImageService.uploadImage).toHaveBeenCalledTimes(1);
         expect(dialogRef.close).toHaveBeenCalledWith(jasmine.objectContaining({
-            name: 'Test Service',
-            pictures: ['1231231212.png'],
-            finalPrice: 10
+          name: 'Test Service',
+          pictures: ['1231231212.png'],
+          finalPrice: 90
         }));
-    }));
+      }));
 
-    it('should not close dialog when image upload fails', fakeAsync(() => {
+      it('should not close dialog when image upload fails', fakeAsync(() => {
         component.createServiceForm.patchValue({
-            name: 'Test',
-            description: 'desc',
-            basePrice: 50,
-            discount: 0,
-            category: 'category1id',
-            eventType: ['eventType1id'],
-            acceptance: 'manual',
-            available: true,
-            visible: true,
-            duration: 30,
-            reservationWindow: 1,
-            cancellationWindow: 1,
-            categoryName: ''
+          name: 'Test',
+          description: 'desc',
+          basePrice: 50,
+          discount: 0,
+          category: 'category1id',
+          eventType: ['eventType1id'],
+          acceptance: 'manual',
+          available: true,
+          visible: true,
+          duration: 30,
+          reservationWindow: 1,
+          cancellationWindow: 1,
+          categoryName: ''
         });
         const fakeFile = new File(['a'], 'f.png', { type: 'image/png' });
         component.imageUploads = [fakeFile];
@@ -144,37 +241,36 @@ describe('CreateServiceComponent', () => {
 
         expect(dialogRef.close).not.toHaveBeenCalled();
         expect(console.error).toHaveBeenCalledWith('Error uploading images', jasmine.any(Error));
-    }));
+      }));
 
-    it('should update image arrays on file selection', () => {
-        const fakeFile = new File(['x'], 'x.jpg', { type: 'image/jpeg' });
-        const fakeEvent = { target: { files: [fakeFile] } } as any;
-        component.onServiceImageSelected(fakeEvent);
-        expect(component.imageUploads.length).toBe(1);
-        expect(component.imageUrls.length).toBe(1);
+      it('should calculate finalPrice correctly', fakeAsync(() => {
+        component.createServiceForm.setValue({
+          name: 'Test',
+          description: 'desc',
+          basePrice: 100,
+          discount: 10,
+          category: 'category1id',
+          eventType: ['eventType1id'],
+          acceptance: 'auto',
+          available: true,
+          visible: true,
+          duration: 30,
+          reservationWindow: 2,
+          cancellationWindow: 1,
+          categoryName: ''
+        });
+
+        const file = new File(['x'], 'x.jpg', { type: 'image/jpeg' });
+        component.imageUploads = [file];
+        component.imageUrls = ['url'];
+        mockImageService.uploadImage.and.returnValue(of('image.png'));
+
+        component.create();
+        tick();
+
+        expect(dialogRef.close).toHaveBeenCalledWith(jasmine.objectContaining({
+          finalPrice: 90
+        }));
+      }));
     });
-
-    it('should remove image properly via clearServiceImage', () => {
-        component.imageUploads = ['A', 'B'] as any;
-        component.imageUrls = ['urlA', 'urlB'];
-        component.clearServiceImage(0);
-        expect(component.imageUrls).toEqual(['urlB']);
-    });
-
-  it('should set errors when both category and categoryName are empty', () => {
-    const categoryControl = component.createServiceForm.get('category');
-    const categoryNameControl = component.createServiceForm.get('categoryName');
-
-    categoryControl?.setValue(null);
-    categoryNameControl?.setValue(null);
-
-    const markAllAsTouchedSpy = spyOn(component.createServiceForm, 'markAllAsTouched');
-
-    component.create();
-
-    expect(categoryControl?.errors).toEqual({ required: true });
-    expect(categoryNameControl?.errors).toEqual({ required: true });
-
-    expect(markAllAsTouchedSpy).toHaveBeenCalled();
-  });
 });

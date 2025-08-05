@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { PUPServiceManagementComponent } from './pupservice-management.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import {of, Subject} from 'rxjs';
+import {of, Subject, throwError} from 'rxjs';
 import { ServicesService } from '../services.service';
 import { CategoriesService } from '../../admin-dashboard/categories/categories.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -80,46 +80,142 @@ describe('PUPServiceManagementComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should add service directly when category is approved', fakeAsync(() => {
-    const mockService: CreateServiceDTO = {
-      name: 'Test',
-      description: 'desc',
-      basePrice: 50,
-      discount: 0,
-      finalPrice: 50,
-      pictures: [],
-      categoryId: 'category1Id',
-      eventTypesIds: ['eventType1Id'],
-      autoAccept: false,
-      available: true,
-      visible: true,
-      durationMinutes: 30,
-      reservationWindowDays: 1,
-      cancellationWindowDays: 1,
-    };
+  it('should create component', () => {
+    expect(component).toBeTruthy();
+  });
 
-    const dialogRefSpy = jasmine.createSpyObj<MatDialogRef<any>>('MatDialogRef', ['afterClosed']);
-    dialogRefSpy.afterClosed.and.returnValue(of(mockService));
-    dialog.open.and.returnValue(dialogRefSpy);
+  describe('Creating service dialog', () => {
+    it('should add service directly when category is approved', fakeAsync(() => {
+      const mockService: CreateServiceDTO = {
+        name: 'Test',
+        description: 'desc',
+        basePrice: 50,
+        discount: 0,
+        finalPrice: 50,
+        pictures: [],
+        categoryId: 'category1Id',
+        eventTypesIds: ['eventType1Id'],
+        autoAccept: false,
+        available: true,
+        visible: true,
+        durationMinutes: 30,
+        reservationWindowDays: 1,
+        cancellationWindowDays: 1,
+      };
 
-    serviceService.add.and.returnValue(of({}));
-    const loadSpy = spyOn(component, 'loadPagedEntities');
-    const emitSpy = spyOn(component.serviceChanged, 'emit');
+      const dialogRefSpy = jasmine.createSpyObj<MatDialogRef<any>>('MatDialogRef', ['afterClosed']);
+      dialogRefSpy.afterClosed.and.returnValue(of(mockService));
+      dialog.open.and.returnValue(dialogRefSpy);
 
-    component.categories = [
-      { id: 'category1Id', name: 'Category 1', eventTypes: [] } as CategoryDTO
-    ];
+      serviceService.add.and.returnValue(of({}));
+      const loadSpy = spyOn(component, 'loadPagedEntities');
+      const emitSpy = spyOn(component.serviceChanged, 'emit');
 
-    component.add();
-    tick();
+      component.categories = [
+        { id: 'category1Id', name: 'Category 1', eventTypes: [] } as CategoryDTO
+      ];
 
-    expect(dialog.open).toHaveBeenCalled();
-    expect(serviceService.add).toHaveBeenCalledWith(mockService);
-    expect(loadSpy).toHaveBeenCalled();
-    expect(emitSpy).toHaveBeenCalled();
-  }));
+      component.add();
+      tick();
 
-  it('should make suggestion and then add service if category is not found', fakeAsync(() => {
+      expect(dialog.open).toHaveBeenCalled();
+      expect(serviceService.add).toHaveBeenCalledWith(mockService);
+      expect(loadSpy).toHaveBeenCalled();
+      expect(emitSpy).toHaveBeenCalled();
+    }));
+
+    it('should make suggestion and then add service if category is not found', fakeAsync(() => {
+      const mockService: CreateServiceDTO = {
+        name: 'Test',
+        description: 'desc',
+        basePrice: 50,
+        discount: 0,
+        finalPrice: 50,
+        pictures: [],
+        categoryId: 'Suggested',
+        eventTypesIds: ['eventType1id'],
+        autoAccept: false,
+        available: true,
+        visible: true,
+        durationMinutes: 30,
+        reservationWindowDays: 1,
+        cancellationWindowDays: 1,
+      };
+
+      const suggestedCategory: CreatedCategorySuggestionDTO = {
+        id: 'newCategoryId',
+        name: 'Suggested',
+        status: 'active',
+      };
+
+      const dialogRefSpy = jasmine.createSpyObj<MatDialogRef<any>>('MatDialogRef', ['afterClosed']);
+      dialogRefSpy.afterClosed.and.returnValue(of(mockService));
+      dialog.open.and.returnValue(dialogRefSpy);
+
+      categoriesService.makeSuggestion.and.returnValue(of(suggestedCategory));
+      serviceService.add.and.returnValue(of({}));
+
+      const loadSpy = spyOn(component, 'loadPagedEntities');
+      const emitSpy = spyOn(component.serviceChanged, 'emit');
+
+      component.categories = []; // No matching category
+
+      component.add();
+      tick();
+
+      expect(categoriesService.makeSuggestion).toHaveBeenCalledWith('Suggested');
+      expect(serviceService.add).toHaveBeenCalledWith({
+        ...mockService,
+        categoryId: 'newCategoryId'
+      });
+      expect(loadSpy).toHaveBeenCalled();
+      expect(emitSpy).toHaveBeenCalled();
+    }));
+
+    it('should do nothing if dialog is closed without creating a service', fakeAsync(() => {
+      const dialogRefSpy = jasmine.createSpyObj<MatDialogRef<any>>('MatDialogRef', ['afterClosed']);
+      dialogRefSpy.afterClosed.and.returnValue(of(null));
+      dialog.open.and.returnValue(dialogRefSpy);
+
+      component.add();
+      tick();
+
+      expect(dialog.open).toHaveBeenCalled();
+      expect(serviceService.add).not.toHaveBeenCalled();
+    }));
+
+    it('should show error toast if service creation fails', fakeAsync(() => {
+      const mockService: CreateServiceDTO = {
+        name: 'Test',
+        description: 'desc',
+        basePrice: 50,
+        discount: 0,
+        finalPrice: 50,
+        pictures: [],
+        categoryId: 'category1Id',
+        eventTypesIds: ['eventType1Id'],
+        autoAccept: false,
+        available: true,
+        visible: true,
+        durationMinutes: 30,
+        reservationWindowDays: 1,
+        cancellationWindowDays: 1,
+      };
+
+      const dialogRefSpy = jasmine.createSpyObj<MatDialogRef<any>>('MatDialogRef', ['afterClosed']);
+      dialogRefSpy.afterClosed.and.returnValue(of(mockService));
+      dialog.open.and.returnValue(dialogRefSpy);
+
+      serviceService.add.and.returnValue(throwError(() => ({ error: { message: 'Server error' } })));
+
+      component.add();
+      tick();
+
+      expect(snackBar.open).toHaveBeenCalled();
+      expect(snackBar.open.calls.mostRecent().args[0]).toBe('Error creating service: Server error');
+    }));
+
+    it('should show error toast if category suggestion fails', fakeAsync(() => {
     const mockService: CreateServiceDTO = {
       name: 'Test',
       description: 'desc',
@@ -137,33 +233,17 @@ describe('PUPServiceManagementComponent', () => {
       cancellationWindowDays: 1,
     };
 
-    const suggestedCategory: CreatedCategorySuggestionDTO = {
-      id: 'newCategoryId',
-      name: 'Suggested',
-      status: 'active',
-    };
-
     const dialogRefSpy = jasmine.createSpyObj<MatDialogRef<any>>('MatDialogRef', ['afterClosed']);
     dialogRefSpy.afterClosed.and.returnValue(of(mockService));
     dialog.open.and.returnValue(dialogRefSpy);
 
-    categoriesService.makeSuggestion.and.returnValue(of(suggestedCategory));
-    serviceService.add.and.returnValue(of({}));
-
-    const loadSpy = spyOn(component, 'loadPagedEntities');
-    const emitSpy = spyOn(component.serviceChanged, 'emit');
-
-    component.categories = []; // No matching category
+    categoriesService.makeSuggestion.and.returnValue(throwError(() => ({ error: { message: 'Suggestion failed' } })));
 
     component.add();
     tick();
 
-    expect(categoriesService.makeSuggestion).toHaveBeenCalledWith('Suggested');
-    expect(serviceService.add).toHaveBeenCalledWith({
-      ...mockService,
-      categoryId: 'newCategoryId'
-    });
-    expect(loadSpy).toHaveBeenCalled();
-    expect(emitSpy).toHaveBeenCalled();
+    expect(snackBar.open).toHaveBeenCalled();
+    expect(snackBar.open.calls.mostRecent().args[0]).toBe('Error creating service: Suggestion failed');
   }));
+  });
 });
