@@ -172,7 +172,7 @@ describe('CreateServiceComponent', () => {
         });
 
         const spy = spyOn(component.createServiceForm, 'markAllAsTouched');
-        component.imageUploads = [];  // no images
+        component.imageUploads = [];
         component.create();
 
         expect(dialogRef.close).not.toHaveBeenCalled();

@@ -111,10 +111,6 @@ describe('PUPServiceManagementComponent', () => {
       const loadSpy = spyOn(component, 'loadPagedEntities');
       const emitSpy = spyOn(component.serviceChanged, 'emit');
 
-      component.categories = [
-        { id: 'category1Id', name: 'Category 1', eventTypes: [] } as CategoryDTO
-      ];
-
       component.add();
       tick();
 
@@ -157,8 +153,6 @@ describe('PUPServiceManagementComponent', () => {
 
       const loadSpy = spyOn(component, 'loadPagedEntities');
       const emitSpy = spyOn(component.serviceChanged, 'emit');
-
-      component.categories = []; // No matching category
 
       component.add();
       tick();
