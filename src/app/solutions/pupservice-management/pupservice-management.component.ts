@@ -139,6 +139,12 @@ export class PUPServiceManagementComponent implements OnInit, AfterViewInit {
                   }
                 }
               )
+            },
+            error: (err: { error?: { message?: string } }) => {
+              console.error('Error making category suggestion');
+              if (err.error?.message) {
+                this.showErrorToast("Error creating service: " + err.error.message);
+              }
             }
           });
         }
