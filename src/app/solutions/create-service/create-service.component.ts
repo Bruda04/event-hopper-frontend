@@ -70,7 +70,7 @@ export class CreateServiceComponent {
             pictures: uploadedImages,
             basePrice: this.createServiceForm.value.basePrice,
             discount: this.createServiceForm.value.discount,
-            finalPrice: this.createServiceForm.value.basePrice * (this.createServiceForm.value.discount / 100),
+            finalPrice: this.createServiceForm.value.basePrice * (1 - this.createServiceForm.value.discount / 100),
             categoryId: this.createServiceForm.value.category,
             eventTypesIds: this.createServiceForm.value.eventType,
             autoAccept: this.createServiceForm.value.acceptance === 'auto',
