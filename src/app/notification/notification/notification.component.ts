@@ -1,4 +1,11 @@
 import { Component } from '@angular/core';
+import {User} from '../../shared/model/user.model';
+import {UserService} from '../../authentication/services/user.service';
+import {Router} from '@angular/router';
+import {NotificationService} from '../notification.service';
+import {ProfileService} from '../../profile/profile.service';
+import {ProfileForPersonDTO} from '../../shared/dto/users/account/ProfileForPersonDTO.model';
+import {NotificationDTO} from '../../shared/dto/notifications/notificationDTO.model';
 
 @Component({
   selector: 'app-notification',
@@ -7,15 +14,32 @@ import { Component } from '@angular/core';
 })
 export class NotificationComponent {
 
-    mute = false;
+  user: User;
+  mute = false;
 
-    notifications = [
-      { title: 'Metal Head Concert CANCELED',timestamp:'02/12/2024 23:05', content: 'A dialog is a type of modal window that appears in front.' },
-    { title: 'Florist “Amina” sent you a message',timestamp:'01/12/2024 10:05', content: 'A dialog is a type of modal window that appears in front.' },
-    { title: 'Anika Molaw accepted your invite!',timestamp:'29/11/2024 23:00', content: 'A dialog is a type of modal window that appears in front.' },
-    { title: '“Hiko” Gallery Opening Postponed',timestamp:'26/11/2024 17:05', content: 'A dialog is a type of modal window that appears in front.' },
- 
-    ];
+  constructor(private userService: UserService,
+              private router: Router,
+              private notificationService: NotificationService,
+              private profileService: ProfileService,
+              ) {
+    this.user = this.userService.getUserData();
+  }
+
+  notifications: NotificationDTO[] = [];
+
+  ngOnInit(): void {
+    this.profileService.getProfileDetailsForPerson().subscribe({
+
+      next:(response: ProfileForPersonDTO) => {
+        this.notifications = response.notifications;
+
+      },
+
+      error: (err) => {
+        console.error('No user found error:', err);
+      },
+    });
+  }
 
 
     toggleMute():void {
