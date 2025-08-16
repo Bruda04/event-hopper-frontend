@@ -6,6 +6,7 @@ import {NotificationService} from '../notification.service';
 import {ProfileService} from '../../profile/profile.service';
 import {ProfileForPersonDTO} from '../../shared/dto/users/account/ProfileForPersonDTO.model';
 import {NotificationDTO} from '../../shared/dto/notifications/notificationDTO.model';
+import {WebSocketService} from '../../authentication/services/web-sockets/web-socket.service';
 
 @Component({
   selector: 'app-notification',
@@ -22,7 +23,8 @@ export class NotificationComponent {
               private router: Router,
               private notificationService: NotificationService,
               private profileService: ProfileService,
-              ) {
+              private webSocketService: WebSocketService
+  ) {
     this.user = this.userService.getUserData();
   }
 
@@ -30,22 +32,27 @@ export class NotificationComponent {
 
   ngOnInit(): void {
 
-    const savedMute = localStorage.getItem('notificationsMuted');   //from local storage we get string value "true" or "false"
-    this.mute = savedMute === 'true';         //if savedMute is "true" then mute is true (boolean)
+    if (!this.webSocketService.isLoaded) {
+      this.webSocketService.initConnection();
+    }
+
+    this.webSocketService.setOnNotificationReceivedCallback((notification: any) => {
+      this.notifications.push(notification);
+      this.displayToast(notification.content);
+    });
+
+
+    const savedMute = localStorage.getItem('notificationsMuted');     //from local storage we get string value "true" or "false"
+    this.mute = savedMute === 'true';                                       //if savedMute is "true" then mute is true (boolean)
 
     this.profileService.getProfileDetailsForPerson().subscribe({
-
-      next:(response: ProfileForPersonDTO) => {
-
+      next: (response: ProfileForPersonDTO) => {
         this.notifications = response.notifications;
-
       },
-
-      error: (err) => {
-        console.error('No user found error:', err);
-      },
+      error: (err) => console.error(err)
     });
   }
+
 
   notificationClick(notification: NotificationDTO) {
     console.log(notification);
@@ -61,7 +68,7 @@ export class NotificationComponent {
     }
 
     if (eventId !== null && eventId !== undefined){
-      this.router.navigate(['/events/',productId]);
+      this.router.navigate(['/events/',eventId]);
       return
     }
   }
@@ -72,5 +79,22 @@ export class NotificationComponent {
       localStorage.setItem('notificationsMuted', this.mute.toString());
       console.log(this.mute.toString());
     }
+
+  showToast = false;
+  toastMessage = '';
+
+  displayToast(message: string) {
+    if (!this.mute){
+
+      this.toastMessage = message;
+      this.showToast = true;
+
+      // hide toast after 7 secs
+      setTimeout(() => {
+        this.showToast = false;
+      }, 7000);
+    }
+  }
+
 
 }
