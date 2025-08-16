@@ -55,13 +55,10 @@ export class NotificationComponent {
 
 
   notificationClick(notification: NotificationDTO) {
-    console.log(notification);
     let productId = notification.productID;
     let eventId = notification.eventID;
 
     this.selectedNotification = notification;
-    console.log(productId);
-    console.log(eventId);
     if (productId !== null && productId !== undefined){
       this.router.navigate(['/solutions/',productId]);
       return
@@ -77,7 +74,6 @@ export class NotificationComponent {
     toggleMute():void {
       this.mute = !this.mute;
       localStorage.setItem('notificationsMuted', this.mute.toString());
-      console.log(this.mute.toString());
     }
 
   showToast = false;
