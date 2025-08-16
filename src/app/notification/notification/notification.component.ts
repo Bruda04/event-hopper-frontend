@@ -15,6 +15,7 @@ import {NotificationDTO} from '../../shared/dto/notifications/notificationDTO.mo
 export class NotificationComponent {
 
   user: User;
+  selectedNotification: NotificationDTO | null = null;
   mute = false;
 
   constructor(private userService: UserService,
@@ -31,6 +32,7 @@ export class NotificationComponent {
     this.profileService.getProfileDetailsForPerson().subscribe({
 
       next:(response: ProfileForPersonDTO) => {
+
         this.notifications = response.notifications;
 
       },
@@ -39,6 +41,25 @@ export class NotificationComponent {
         console.error('No user found error:', err);
       },
     });
+  }
+
+  notificationClick(notification: NotificationDTO) {
+    console.log(notification);
+    let productId = notification.productID;
+    let eventId = notification.eventID;
+
+    this.selectedNotification = notification;
+    console.log(productId);
+    console.log(eventId);
+    if (productId !== null && productId !== undefined){
+      this.router.navigate(['/solutions/',productId]);
+      return
+    }
+
+    if (eventId !== null && eventId !== undefined){
+      this.router.navigate(['/events/',productId]);
+      return
+    }
   }
 
 

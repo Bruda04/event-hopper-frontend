@@ -1,9 +1,9 @@
 
-<div class="container">
+<div class="container" *ngIf="!selectedNotification" >
     <mat-slide-toggle labelPosition="before" (change)="toggleMute()">MUTE</mat-slide-toggle>
 
     <div class="notifications" >
-        <div class="single-notification" *ngFor="let notification of notifications">
+        <div class="single-notification" *ngFor="let notification of notifications" (click)="notificationClick(notification)" >
           <div class="content">
             {{ notification.content }}
           </div>
