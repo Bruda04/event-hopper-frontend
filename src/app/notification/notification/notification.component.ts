@@ -29,6 +29,10 @@ export class NotificationComponent {
   notifications: NotificationDTO[] = [];
 
   ngOnInit(): void {
+
+    const savedMute = localStorage.getItem('notificationsMuted');   //from local storage we get string value "true" or "false"
+    this.mute = savedMute === 'true';         //if savedMute is "true" then mute is true (boolean)
+
     this.profileService.getProfileDetailsForPerson().subscribe({
 
       next:(response: ProfileForPersonDTO) => {
@@ -65,6 +69,8 @@ export class NotificationComponent {
 
     toggleMute():void {
       this.mute = !this.mute;
+      localStorage.setItem('notificationsMuted', this.mute.toString());
+      console.log(this.mute.toString());
     }
 
 }
