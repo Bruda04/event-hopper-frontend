@@ -38,7 +38,6 @@ export class NotificationComponent {
 
     this.webSocketService.setOnNotificationReceivedCallback((notification: any) => {
       this.notifications.push(notification);
-      this.displayToast(notification.content);
     });
 
 
@@ -75,22 +74,6 @@ export class NotificationComponent {
       this.mute = !this.mute;
       localStorage.setItem('notificationsMuted', this.mute.toString());
     }
-
-  showToast = false;
-  toastMessage = '';
-
-  displayToast(message: string) {
-    if (!this.mute){
-
-      this.toastMessage = message;
-      this.showToast = true;
-
-      // hide toast after 7 secs
-      setTimeout(() => {
-        this.showToast = false;
-      }, 7000);
-    }
-  }
 
 
 }

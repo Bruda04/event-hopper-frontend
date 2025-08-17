@@ -26,6 +26,7 @@ import {ReservationModule} from './reservation/reservation.module';
 import {ReportModule} from './report/report.module';
 import {BlockingModule} from './blocking/blocking.module';
 import { EventStatsDialogComponent } from './event-stats-dialog/event-stats-dialog.component';
+import { ToastComponent } from './toast/toast/toast.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { EventStatsDialogComponent } from './event-stats-dialog/event-stats-dial
     ViewMyEventsComponent,
     CreateEventComponent,
     EventStatsDialogComponent,
+    ToastComponent,
   ],
   imports: [
     BrowserModule,
