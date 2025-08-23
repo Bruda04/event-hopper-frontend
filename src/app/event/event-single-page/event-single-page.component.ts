@@ -16,7 +16,6 @@ import {EventStatsDialogComponent} from '../../event-stats-dialog/event-stats-di
 import {UserData} from '../../shared/model/userData.model';
 import * as L from 'leaflet';
 import {LocationService} from '../../location/location.service';
-import {LocationDTO} from '../../shared/dto/locations/LocationDTO.model';
 
 @Component({
   selector: 'app-event-single-page',
@@ -61,8 +60,8 @@ export class EventSinglePageComponent {
             this.initMap(location.longitude, location.latitude);
 
           },
-          error: error => {
-
+          error: ():void => {
+            console.log("error finding location");
           }
         }))
 
@@ -80,7 +79,7 @@ export class EventSinglePageComponent {
   }
 
   private initMap(longitude:number, latitude:number): void {
-    this.map = L.map('map').setView([latitude, longitude],13);
+    this.map = L.map('event-map').setView([latitude, longitude],13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors'
     }).addTo(this.map);

@@ -153,3 +153,17 @@
   margin: 15% 0;
   line-height: 1.2;
 }
+
+.map-container {
+  width: 100%;
+  max-width: 90vw;
+  margin: 5vh auto;
+}
+
+
+#map {
+  height: 300px;
+  width: 100%;
+  border-radius: 12px;
+}
+
