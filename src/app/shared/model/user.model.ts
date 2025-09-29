@@ -1,6 +1,7 @@
 import {SimpleProductDTO} from '../dto/solutions/simpleProductDTO';
 import {SimpleLocationDTO} from '../dto/locations/SimpleLocationDTO.model';
 import {SimpleEventDTO} from '../dto/events/simpleEventDTO.model';
+import {NotificationDTO} from '../dto/notifications/notificationDTO.model';
 
 export interface User {
     id: string;
@@ -25,4 +26,5 @@ export interface User {
     favoriteEvents: SimpleEventDTO[];
     favoriteSolutions: SimpleProductDTO[];
     attendingEvents: SimpleEventDTO[];
+    notifications: NotificationDTO[];
   }

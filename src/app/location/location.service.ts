@@ -16,8 +16,8 @@ export class LocationService {
     return this.HttpClient.get<LocationDTO[]>(environment.apiHost + '/locations');
   }
 
-  getLocation(id: string) : Observable<LocationDTO[]> {
-    return this.HttpClient.get<LocationDTO[]>(environment.apiHost + '/locations/' + id);
+  getLocation(id: string) : Observable<LocationDTO> {
+    return this.HttpClient.get<LocationDTO>(environment.apiHost + '/locations/' + id);
   }
 
   getCities(): Observable<String[]> {

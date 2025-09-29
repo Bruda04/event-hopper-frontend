@@ -14,13 +14,16 @@ import {GetEventAgendasDTO} from '../../shared/dto/events/GetEventAgendasDTO.mod
 import {SimpleAccountDTO} from '../../shared/dto/users/account/SimpleAccountDTO.model';
 import {EventStatsDialogComponent} from '../../event-stats-dialog/event-stats-dialog.component';
 import {UserData} from '../../shared/model/userData.model';
-
+import * as L from 'leaflet';
+import {LocationService} from '../../location/location.service';
 
 @Component({
   selector: 'app-event-single-page',
   templateUrl: './event-single-page.component.html',
   styleUrl: './event-single-page.component.css'
 })
+
+
 export class EventSinglePageComponent {
   id: string;
   eventDetails: SinglePageEventDTO;
@@ -30,13 +33,14 @@ export class EventSinglePageComponent {
   notFound: boolean = false;
   loaded: boolean = false;
   user: UserData;
+  map!: L.Map;
 
 
   datePipe = new DatePipe('en-US');
 
 
   constructor(public dialog: MatDialog, private route: ActivatedRoute, private eventService: EventService,
-              private userService: UserService, private profileService: ProfileService, private router: Router) {
+              private userService: UserService, private profileService: ProfileService, private locationService: LocationService, private router: Router) {
 
   }
 
@@ -51,6 +55,16 @@ export class EventSinglePageComponent {
         this.eventDetails = event
         this.location = event.location.address + ", " + event.location.city;
 
+        this.locationService.getLocation(event.location.id).subscribe(({
+          next: location => {
+            this.initMap(location.longitude, location.latitude);
+
+          },
+          error: ():void => {
+            console.log("error finding location");
+          }
+        }))
+
         this.loaded = true;
       },
       error: () :void=>{
@@ -60,6 +74,20 @@ export class EventSinglePageComponent {
       },
     });
 
+
+
+  }
+
+  private initMap(longitude:number, latitude:number): void {
+    this.map = L.map('event-map').setView([latitude, longitude],13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(this.map);
+
+    L.marker([latitude, longitude])
+      .addTo(this.map)
+      .bindPopup('Event location')
+      .openPopup();
   }
 
 
