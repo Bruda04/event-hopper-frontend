@@ -205,22 +205,28 @@ export class SolutionPageComponent implements OnInit {
         return;
       } else{
 
-        const selectedStartTime = dialogRef.componentInstance.selectedStartTime;  // Ovo je vrednost koju ste odabrali u dijalogu
-        const selectedEndTime = dialogRef.componentInstance.selectedEndTime;  // Ovo je vrednost koju ste odabrali u dijalogu
+        const selectedStartTime = dialogRef.componentInstance.selectedStartTime;
+        const selectedEndTime = dialogRef.componentInstance.selectedEndTime;
         console.log(selectedStartTime)
         console.log(selectedEndTime);
+
 
         if (!selectedStartTime) {
           console.error('No time selected!');
           return;
         }
 
+        const offsetMinutes = selectedStartTime.getTimezoneOffset();
+        const neutralizedStartingDate = new Date(selectedStartTime.getTime() - offsetMinutes * 60 * 1000);
+        const neutralizedEndingDate = new Date(selectedEndTime.getTime() - offsetMinutes * 60 * 1000);
+
+
 
         const reservationRequest: CreateReservationServiceDTO = {
           eventId: eventId,
           productId: this.solution.id,
-          from: selectedStartTime,
-          to: selectedEndTime,
+          from: neutralizedStartingDate,
+          to: neutralizedEndingDate,
         };
         this.reservationService.bookService(reservationRequest).subscribe({
           next: (): void => {
