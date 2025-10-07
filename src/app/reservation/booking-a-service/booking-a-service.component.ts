@@ -120,6 +120,7 @@ export class BookingAServiceComponent {
   }
 
   convertTermsToString (termsDates: Date[]): void {
+    this.freeTerms = [];
     termsDates.forEach((date) => {
       let dateString = date.toString().slice(11, 16);
       this.freeTerms.push(dateString);
