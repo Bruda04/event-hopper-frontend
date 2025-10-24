@@ -1,27 +1,83 @@
-# EventHopper
+# 🌐 EventHopper Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.11.
+EventHopper Frontend is a modern **Angular** web application that provides a clean and interactive interface for event discovery, organization, and management.
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 🚀 Overview
 
-## Code scaffolding
+The frontend connects directly to the **Spring Boot** backend API, offering:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Registration and login for **three user types**:
+  - 👤 **User** – browse, follow, and attend events
+  - 🎤 **Organizer** – create and manage personal events
+  - 🛠️ **Service Provider** – offer products and services related to events
+- Creating, scheduling, and editing events
+- Sending **invitations** and **notifications** to participants
+- Searching and filtering events by category, date, or location
+- **Purchasing products** and **booking services** associated with events
+- Viewing and tracking upcoming and past events
+- Full integration between **mobile**, **web**, and **backend API** clients
 
-## Build
+🔗 **Related Repositories**
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- **Backend:** [EventHopper Backend](https://github.com/Bruda04/event-hopper-backend)
+- **Mobile App:** [EventHopper Mobile](https://github.com/Bruda04/event-hopper-mobile)
 
-## Running unit tests
+---
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## 🧰 Tech Stack
 
-## Running end-to-end tests
+| Component        | Technology                 |
+| ---------------- | -------------------------- |
+| Framework        | **Angular**                |
+| Language         | **TypeScript**             |
+| Styling          | **CSS / Angular Material** |
+| API Integration  | **REST (HTTPClient)**      |
+| State Management | **RxJS / Services**        |
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+---
 
-## Further help
+## ⚙️ Setup Instructions
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Bruda04/event-hopper-frontend.git
+cd event-hopper-frontend
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Configure Environment
+
+Edit the environment file (`src/environments/environment.ts`) and set your local backend URL:
+
+```typescript
+export const environment = {
+  production: false,
+  apiUrl: "http://localhost:8080/api",
+};
+```
+
+---
+
+### 4. Run the Application
+
+```bash
+ng serve
+```
+
+Visit [http://localhost:4200](http://localhost:4200) to access the app.
+
+---
+
+## 👥 Authors
+
+- [Marija Parežanin](https://github.com/marijaparezanin)
+- [Vanja Kostić](https://github.com/vanjakostic03)
+- [Luka Bradić](https://github.com/Bruda04)
